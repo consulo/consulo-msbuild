@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mustbe.consulo.msbuild;
+package consulo.msbuild;
 
 import org.jetbrains.annotations.NotNull;
 

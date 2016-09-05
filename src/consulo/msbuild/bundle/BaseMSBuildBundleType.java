@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mustbe.consulo.msbuild.bundle;
+package consulo.msbuild.bundle;
 
 import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.projectRoots.SdkType;
