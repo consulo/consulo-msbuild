@@ -66,7 +66,7 @@ public class WSolution
 	private List<WProject> myProjects = new ArrayList<>();
 
 	@RequiredReadAction
-	public WSolution(Project project, VirtualFile solutionVirtualFile, SlnFile file)
+	public WSolution(@NotNull Project project, @NotNull VirtualFile solutionVirtualFile, @NotNull SlnFile file)
 	{
 		myFile = file;
 		for(SlnProject slnProject : file.getProjects())

@@ -24,16 +24,21 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.SimpleModificationTracker;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.psi.util.CachedValue;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import consulo.msbuild.solution.model.WSolution;
 
 /**
  * @author VISTALL
  * @since 28-Jan-17
  */
 @State(name = "MSBuildSolutionManager", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/msbuild.xml"))
-public class MSBuildSolutionManager implements PersistentStateComponent<MSBuildSolutionManager.State>
+public class MSBuildSolutionManager extends SimpleModificationTracker implements PersistentStateComponent<MSBuildSolutionManager.State>
 {
 	protected static class State
 	{
@@ -47,6 +52,15 @@ public class MSBuildSolutionManager implements PersistentStateComponent<MSBuildS
 	}
 
 	private State myState = new State();
+	private final Project myProject;
+
+	private CachedValue<WSolution> myCachedValue;
+
+	public MSBuildSolutionManager(Project project)
+	{
+		myProject = project;
+		myCachedValue = CachedValuesManager.getManager(project).createCachedValue(() -> CachedValueProvider.Result.create(WSolution.build(myProject, getSolutionFile()), this), false);
+	}
 
 	@Nullable
 	@Override
@@ -59,6 +73,12 @@ public class MSBuildSolutionManager implements PersistentStateComponent<MSBuildS
 	public void loadState(State state)
 	{
 		XmlSerializerUtil.copyBean(state, myState);
+	}
+
+	@NotNull
+	public WSolution getSolution()
+	{
+		return myCachedValue.getValue();
 	}
 
 	public void setUrl(VirtualFile virtualFile)

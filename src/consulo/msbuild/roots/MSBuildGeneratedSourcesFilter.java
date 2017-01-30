@@ -48,7 +48,7 @@ public class MSBuildGeneratedSourcesFilter extends GeneratedSourcesFilter
 	{
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
 
-		WSolution slnFile = WSolution.build(project, solutionManager.getSolutionFile());
+		WSolution slnFile = solutionManager.getSolution();
 
 		for(WProject wProject : slnFile.getProjects())
 		{
