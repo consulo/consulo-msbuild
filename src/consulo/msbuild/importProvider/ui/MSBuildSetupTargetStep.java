@@ -24,7 +24,6 @@ import javax.swing.table.TableCellEditor;
 
 import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.util.newProjectWizard.ProjectNameStep;
-import com.intellij.ide.util.newProjectWizard.modes.WizardMode;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.ScrollPaneFactory;
@@ -44,9 +43,9 @@ public class MSBuildSetupTargetStep extends ProjectNameStep
 {
 	private List<MSBuildImportProject> myItems;
 
-	public MSBuildSetupTargetStep(WizardContext wizardContext, @Nullable WizardMode mode, VirtualFile fileByPath)
+	public MSBuildSetupTargetStep(WizardContext wizardContext, VirtualFile fileByPath)
 	{
-		super(wizardContext, mode);
+		super(wizardContext);
 
 		myItems = null; //VisualStudioImportBuilder.loadItems(fileByPath);
 

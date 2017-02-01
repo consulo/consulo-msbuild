@@ -31,7 +31,7 @@ import consulo.module.extension.impl.ModuleExtensionProviders;
  */
 public enum MSBuildImportTarget
 {
-	_NET("microsoft-dotnet"), Mono("mono-dotnet");
+	_NET("microsoft-dotnet"), Mono("mono-dotnet"), _NET_Core("dotnet-core");
 
 	public static final MSBuildImportTarget[] EMPTY_ARRAY = new MSBuildImportTarget[0];
 

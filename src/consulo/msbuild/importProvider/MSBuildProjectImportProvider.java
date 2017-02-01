@@ -46,7 +46,7 @@ public class MSBuildProjectImportProvider extends ProjectImportProvider
 		context.setProjectName(fileByPath.getNameWithoutExtension());
 		context.setProjectFileDirectory(fileByPath.getParent().getPath());
 
-		return new ModuleWizardStep[]{new MSBuildSetupTargetStep(context, null, fileByPath)};
+		return new ModuleWizardStep[]{new MSBuildSetupTargetStep(context, fileByPath)};
 	}
 
 	@Override
