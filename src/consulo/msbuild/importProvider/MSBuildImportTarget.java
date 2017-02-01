@@ -31,7 +31,7 @@ import consulo.module.extension.impl.ModuleExtensionProviders;
  */
 public enum MSBuildImportTarget
 {
-	_NET("microsoft-dotnet"), Mono("mono-dotnet"), _NET_Core("dotnet-core");
+	_NET("microsoft-dotnet"), Mono("mono-dotnet"), _NET__Core("dotnet-core");
 
 	public static final MSBuildImportTarget[] EMPTY_ARRAY = new MSBuildImportTarget[0];
 
@@ -43,7 +43,7 @@ public enum MSBuildImportTarget
 	MSBuildImportTarget(String frameworkExtensionId)
 	{
 		myFrameworkExtensionId = frameworkExtensionId;
-		myPresentableName = name().replace("_", ".");
+		myPresentableName = name().replace("__", " ").replace("_", ".");
 	}
 
 	@NotNull

@@ -49,7 +49,7 @@
 
 		<projectService serviceImplementation="consulo.msbuild.MSBuildSolutionManager"/>
 
-		<projectImportProvider implementation="consulo.msbuild.importProvider.MSBuildProjectImportProvider"/>
+		<moduleImportProvider implementation="consulo.msbuild.importProvider.MSBuildModuleImportProvider"/>
 
 		<generatedSourcesFilter implementation="consulo.msbuild.roots.MSBuildGeneratedSourcesFilter"/>
 

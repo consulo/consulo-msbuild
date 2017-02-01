@@ -17,6 +17,7 @@
 package consulo.msbuild.importProvider.ui;
 
 import java.awt.GridBagConstraints;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -25,7 +26,6 @@ import javax.swing.table.TableCellEditor;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.util.newProjectWizard.ProjectNameStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.table.TableView;
 import com.intellij.util.ui.ColumnInfo;
@@ -34,6 +34,7 @@ import com.intellij.util.ui.ListTableModel;
 import com.intellij.util.ui.table.ComboBoxTableCellEditor;
 import consulo.msbuild.importProvider.MSBuildImportProject;
 import consulo.msbuild.importProvider.MSBuildImportTarget;
+import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 
 /**
  * @author VISTALL
@@ -41,21 +42,23 @@ import consulo.msbuild.importProvider.MSBuildImportTarget;
  */
 public class MSBuildSetupTargetStep extends ProjectNameStep
 {
-	private List<MSBuildImportProject> myItems;
-
-	public MSBuildSetupTargetStep(WizardContext wizardContext, VirtualFile fileByPath)
+	public MSBuildSetupTargetStep(MSBuildModuleImportContext context, WizardContext wizardContext)
 	{
 		super(wizardContext);
-
-		myItems = null; //VisualStudioImportBuilder.loadItems(fileByPath);
-
 		ColumnInfo<MSBuildImportProject, String> nameColumn = new ColumnInfo<MSBuildImportProject, String>("Name")
 		{
 			@Nullable
 			@Override
+			public Comparator<MSBuildImportProject> getComparator()
+			{
+				return (o1, o2) -> o1.getProjectInfo().Name.compareToIgnoreCase(o2.getProjectInfo().Name);
+			}
+
+			@Nullable
+			@Override
 			public String valueOf(MSBuildImportProject tableItem)
 			{
-				return tableItem.getProjectInfo().getName();
+				return tableItem.getProjectInfo().Name;
 			}
 		};
 
@@ -99,22 +102,16 @@ public class MSBuildSetupTargetStep extends ProjectNameStep
 				return MSBuildImportTarget.class;
 			}
 		};
+
+		List<MSBuildImportProject> items = context.getMappedProjects();
+
 		ListTableModel<MSBuildImportProject> tableModel = new ListTableModel<>(new ColumnInfo[]{
 				nameColumn,
 				targetColumn
-		}, myItems);
+		}, items);
 		TableView<MSBuildImportProject> tableItemTableView = new TableView<>(tableModel);
 
 		myAdditionalContentPanel.add(ScrollPaneFactory.createScrollPane(tableItemTableView), new GridBagConstraints(0, GridBagConstraints.RELATIVE, 1, 1, 1, 1, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.BOTH, JBUI.emptyInsets(), 0, 0));
-	}
-
-	@Override
-	public void updateDataModel()
-	{
-		super.updateDataModel();
-		/*VisualStudioImportBuilder projectBuilder = (VisualStudioImportBuilder) myWizardContext.getProjectBuilder();
-		assert projectBuilder != null;
-		projectBuilder.setImportItems(myItems); */
 	}
 }

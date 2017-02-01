@@ -16,7 +16,7 @@
 
 package consulo.msbuild.importProvider;
 
-import consulo.msbuild.solution.model.WProject;
+import consulo.msbuild.solution.reader.SlnProject;
 
 /**
  * @author VISTALL
@@ -24,17 +24,17 @@ import consulo.msbuild.solution.model.WProject;
  */
 public class MSBuildImportProject
 {
-	private final WProject myProjectInfo;
+	private final SlnProject myProjectInfo;
 	private MSBuildImportTarget myTarget;
 
-	public MSBuildImportProject(WProject projectInfo, MSBuildImportTarget target)
+	public MSBuildImportProject(SlnProject projectInfo, MSBuildImportTarget target)
 	{
 		myProjectInfo = projectInfo;
 
 		myTarget = target;
 	}
 
-	public WProject getProjectInfo()
+	public SlnProject getProjectInfo()
 	{
 		return myProjectInfo;
 	}

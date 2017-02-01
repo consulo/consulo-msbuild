@@ -1,19 +1,3 @@
-/*
- * Copyright 2013-2017 consulo.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package consulo.msbuild.importProvider;
 
 import java.util.ArrayList;
@@ -21,13 +5,15 @@ import java.util.List;
 
 import javax.swing.Icon;
 
+import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.intellij.ide.util.projectWizard.ModuleWizardStep;
+import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -35,17 +21,34 @@ import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.packaging.artifacts.ModifiableArtifactModel;
-import com.intellij.projectImport.ProjectImportBuilder;
 import consulo.annotations.RequiredReadAction;
+import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.VisualStudioSolutionFileType;
+import consulo.msbuild.importProvider.ui.MSBuildSetupTargetStep;
 
 /**
  * @author VISTALL
- * @since 28-Jan-17
+ * @since 01-Feb-17
  */
-public class MSBuildProjectImportBuilder extends ProjectImportBuilder
+public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuildModuleImportContext>
 {
+	@NotNull
+	@Override
+	public MSBuildModuleImportContext createContext()
+	{
+		return new MSBuildModuleImportContext();
+	}
+
+	@NotNull
+	@Override
+	@Language("HTML")
+	public String getFileSample()
+	{
+		return "<b>Visual Studio</b> solution file (*.sln)";
+	}
+
 	@NotNull
 	@Override
 	public String getName()
@@ -53,42 +56,47 @@ public class MSBuildProjectImportBuilder extends ProjectImportBuilder
 		return "Visual Studio";
 	}
 
+	@Nullable
 	@Override
 	public Icon getIcon()
 	{
-		return MSBuildIcons.Msbuild;
+		return MSBuildIcons.VisualStudio;
 	}
 
 	@Override
-	public List getList()
+	public boolean canImport(@NotNull VirtualFile fileOrDirectory)
 	{
-		return null;
+		return fileOrDirectory.getFileType() == VisualStudioSolutionFileType.INSTANCE;
 	}
 
 	@Override
-	public boolean isMarked(Object element)
+	public String getPathToBeImported(@NotNull VirtualFile file)
 	{
-		return false;
+		return file.getPath();
 	}
 
 	@Override
-	public void setList(List list) throws ConfigurationException
+	@NotNull
+	public ModuleWizardStep[] createSteps(@NotNull WizardContext wizardContext, @NotNull MSBuildModuleImportContext context)
 	{
+		VirtualFile fileByPath = LocalFileSystem.getInstance().findFileByPath(wizardContext.getProjectFileDirectory());
+		assert fileByPath != null;
+		wizardContext.setProjectName(fileByPath.getNameWithoutExtension());
+		wizardContext.setProjectFileDirectory(fileByPath.getParent().getPath());
 
+		return new ModuleWizardStep[]{new MSBuildSetupTargetStep(context, wizardContext)};
 	}
 
-	@Override
-	public void setOpenProjectSettingsAfter(boolean on)
-	{
-
-	}
-
-	@Nullable
+	@NotNull
 	@Override
 	@RequiredReadAction
-	public List<Module> commit(Project project, ModifiableModuleModel old, ModulesProvider modulesProvider, ModifiableArtifactModel artifactModel)
+	public List<Module> commit(@NotNull MSBuildModuleImportContext context,
+			@NotNull Project project,
+			@Nullable ModifiableModuleModel old,
+			@NotNull ModulesProvider modulesProvider,
+			@Nullable ModifiableArtifactModel artifactModel)
 	{
-		String fileToImport = getFileToImport();
+		String fileToImport = context.getFileToImport();
 
 		VirtualFile solutionFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
 		assert solutionFile != null;
