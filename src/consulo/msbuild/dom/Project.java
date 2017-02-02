@@ -63,6 +63,8 @@ public interface Project extends DomElement
 	@NotNull
 	GenericAttributeValue<String> getToolsVersion();
 
+	@NotNull
+	GenericAttributeValue<String> getSdk();
 
 	/**
 	 * Returns the list of PropertyGroup children.
