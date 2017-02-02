@@ -16,6 +16,18 @@
           <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
         </module-layer>
       </module>
+      <module name="dotnet-core" dirurl="file://$PROJECT_DIR$/impl/dotnet-core" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-name="Consulo SNAPSHOT" />
+          <extension id="java" sdk-name="1.8" language-level-name="JDK_1_8" bytecode-version="1.8" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="sourceFolder" />
+        </module-layer>
+      </module>
     </modules>
   </component>
 </project>
