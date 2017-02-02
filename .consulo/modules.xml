@@ -14,6 +14,7 @@
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="sourceFolder" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
+          <orderEntry type="library" name="consulo-plugin: consulo.dotnet" level="project" />
         </module-layer>
       </module>
       <module name="dotnet-core" dirurl="file://$PROJECT_DIR$/impl/dotnet-core" current-layer="Default">

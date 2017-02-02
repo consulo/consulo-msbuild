@@ -21,6 +21,7 @@
 	<vendor>consulo.io</vendor>
 	<category>Build</category>
 	<depends>com.intellij.xml</depends>
+	<depends>consulo.dotnet</depends>
 
 	<extensionPoints>
 		<extensionPoint name="projectType" beanClass="consulo.msbuild.MSBuildProjectTypeEP">
@@ -61,6 +62,14 @@
 
 		<lang.parserDefinition language="MSBUILD_EXPRESSION" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionParserDefinition"/>
 
-		<languageInjector implementation="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector" />
+		<languageInjector implementation="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
+
+		<postStartupActivity implementation="consulo.msbuild.MSBuildStartActivity"/>
+
+		<moduleExtensionProvider key="msbuild"
+								 icon="/icons/msbuild.png"
+								 name="MSBuild"
+								 immutableClass="consulo.msbuild.module.extension.MSBuildModuleExtension"
+								 mutableClass="consulo.msbuild.module.extension.MSBuildMutableModuleExtension"/>
 	</extensions>
 </idea-plugin>

@@ -81,7 +81,7 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		return myCachedValue.getValue();
 	}
 
-	public void setUrl(VirtualFile virtualFile)
+	public void setUrl(@NotNull VirtualFile virtualFile)
 	{
 		myState.url = virtualFile.getUrl();
 	}

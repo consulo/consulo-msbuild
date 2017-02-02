@@ -1,0 +1,107 @@
+/*
+ * Copyright 2013-2017 consulo.io
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package consulo.msbuild;
+
+import java.util.Collection;
+
+import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.module.ModifiableModuleModel;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
+import com.intellij.openapi.progress.Task;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.startup.StartupActivity;
+import com.intellij.openapi.util.Comparing;
+import com.intellij.openapi.vfs.VirtualFile;
+import consulo.msbuild.module.extension.MSBuildMutableModuleExtension;
+import consulo.msbuild.solution.SolutionVirtualBuilder;
+import consulo.msbuild.solution.SolutionVirtualDirectory;
+import consulo.msbuild.solution.SolutionVirtualFile;
+import consulo.msbuild.solution.model.WProject;
+import consulo.msbuild.solution.model.WSolution;
+
+/**
+ * @author VISTALL
+ * @since 02-Feb-17
+ */
+public class MSBuildStartActivity implements StartupActivity
+{
+	@Override
+	public void runActivity(Project project)
+	{
+		Task.Backgroundable.queue(project, "Synchonize solution", indicator ->
+		{
+			MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
+
+			ModifiableModuleModel modifiableModel = ReadAction.compute(() -> ModuleManager.getInstance(project).getModifiableModel());
+
+			WSolution solution = ReadAction.compute(solutionManager::getSolution);
+
+			for(Module module : modifiableModel.getModules())
+			{
+				if(!Comparing.equal(project.getBaseDir(), module.getModuleDir()))
+				{
+					modifiableModel.disposeModule(module);
+				}
+			}
+
+			Collection<WProject> projects = solution.getProjects();
+
+			for(WProject wProject : projects)
+			{
+				VirtualFile projectFile = wProject.getVirtualFile();
+				if(projectFile == null)
+				{
+					continue;
+				}
+
+				consulo.msbuild.dom.Project domProject = wProject.getDomProject();
+				if(domProject == null)
+				{
+					continue;
+				}
+
+				Module module = modifiableModel.newModule(wProject.getName(), null);
+
+				ModifiableRootModel modifiableRootModel = ReadAction.compute(() -> ModuleRootManager.getInstance(module).getModifiableModel());
+
+				MSBuildMutableModuleExtension moduleExtension = modifiableRootModel.getExtensionWithoutCheck(MSBuildMutableModuleExtension.class);
+				assert moduleExtension != null;
+				moduleExtension.setEnabled(true);
+
+				SolutionVirtualDirectory directory = ReadAction.compute(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));
+
+				directory.visitRecursive(solutionVirtualItem ->
+				{
+					if(solutionVirtualItem instanceof SolutionVirtualFile)
+					{
+						modifiableRootModel.addContentEntry(((SolutionVirtualFile) solutionVirtualItem).getVirtualFile());
+					}
+
+					return true;
+				});
+
+				WriteCommandAction.runWriteCommandAction(project, modifiableRootModel::commit);
+			}
+
+			WriteCommandAction.runWriteCommandAction(project, modifiableModel::commit);
+		});
+	}
+}
