@@ -86,6 +86,12 @@ public class MSBuildStartActivity implements StartupActivity
 				assert moduleExtension != null;
 				moduleExtension.setEnabled(true);
 
+				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
+				if(projectType != null)
+				{
+					projectType.setupModule(modifiableRootModel);
+				}
+
 				SolutionVirtualDirectory directory = ReadAction.compute(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));
 
 				directory.visitRecursive(solutionVirtualItem ->

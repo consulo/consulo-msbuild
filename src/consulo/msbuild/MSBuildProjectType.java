@@ -16,14 +16,19 @@
 
 package consulo.msbuild;
 
+import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.util.NotNullLazyValue;
+import consulo.annotations.RequiredReadAction;
 
 /**
  * @author VISTALL
@@ -34,28 +39,53 @@ public interface MSBuildProjectType
 	@Deprecated
 	public static class Default implements MSBuildProjectType
 	{
+		@RequiredReadAction
+		@Override
+		public void setupModule(@NotNull ModifiableRootModel modifiableRootModel)
+		{
+
+		}
 	}
 
 	ExtensionPointName<MSBuildProjectTypeEP<MSBuildProjectType>> EP_NAME = ExtensionPointName.create("consulo.msbuild.projectType");
 
-	NotNullLazyValue<Set<String>> ourExtensionsValue = new NotNullLazyValue<Set<String>>()
+	NotNullLazyValue<Set<String>> ourExtensionsValue = NotNullLazyValue.createValue(() ->
 	{
-		@NotNull
-		@Override
-		protected Set<String> compute()
+		Set<String> set = new THashSet<>();
+		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
 		{
-			Set<String> set = new THashSet<>();
-			for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
-			{
-				set.add(ep.getExt());
-			}
-			return set.isEmpty() ? Collections.<String>emptySet() : set;
+			set.add(ep.getExt());
 		}
-	};
+		return set.isEmpty() ? Collections.<String>emptySet() : set;
+	});
+
+	NotNullLazyValue<Map<String, MSBuildProjectType>> ourTypeByGUIDMapValue = NotNullLazyValue.createValue(() ->
+	{
+		Map<String, MSBuildProjectType> map = new THashMap<>();
+		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
+		{
+			MSBuildProjectType instance = ep.getInstance();
+			if(instance == null)
+			{
+				continue;
+			}
+			map.put(ep.getGuid(), instance);
+		}
+		return map;
+	});
+
+	@Nullable
+	static MSBuildProjectType getProjectType(@NotNull String guid)
+	{
+		return ourTypeByGUIDMapValue.getValue().get(guid);
+	}
 
 	@NotNull
 	static Set<String> getExtensions()
 	{
 		return ourExtensionsValue.getValue();
 	}
+
+	@RequiredReadAction
+	void setupModule(@NotNull ModifiableRootModel modifiableRootModel);
 }

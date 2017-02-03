@@ -7,6 +7,8 @@
           <element id="zip-archive" name="msbuild.jar">
             <element id="module-production-resource-output" name="consulo-msbuild" />
             <element id="module-output" name="consulo-msbuild" />
+            <element id="module-output" name="csharp" />
+            <element id="module-output" name="dotnet-core" />
           </element>
         </element>
       </element>

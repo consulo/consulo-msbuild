@@ -41,6 +41,7 @@
           <orderEntry type="sourceFolder" />
           <orderEntry type="library" name="consulo-plugin: consulo.csharp" level="project" />
           <orderEntry type="module" module-name="consulo-msbuild" />
+          <orderEntry type="library" name="consulo-plugin: consulo.dotnet" level="project" />
         </module-layer>
       </module>
     </modules>

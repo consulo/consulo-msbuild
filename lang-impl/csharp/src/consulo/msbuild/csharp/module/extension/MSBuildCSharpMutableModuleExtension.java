@@ -14,27 +14,32 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.csharp;
+package consulo.msbuild.csharp.module.extension;
 
 import org.jetbrains.annotations.NotNull;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import consulo.annotations.RequiredReadAction;
-import consulo.msbuild.MSBuildProjectType;
-import consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension;
+import consulo.csharp.module.extension.CSharpSimpleMutableModuleExtension;
+import consulo.roots.ModuleRootLayer;
 
 /**
  * @author VISTALL
  * @since 03-Feb-17
  */
-public class CSharpProjectType implements MSBuildProjectType
+public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExtension implements CSharpSimpleMutableModuleExtension<MSBuildCSharpModuleExtension>
 {
-	@RequiredReadAction
-	@Override
-	public void setupModule(@NotNull ModifiableRootModel modifiableRootModel)
+	public MSBuildCSharpMutableModuleExtension(@NotNull String id, @NotNull ModuleRootLayer layer)
 	{
-		MSBuildCSharpMutableModuleExtension extension = modifiableRootModel.getExtensionWithoutCheck(MSBuildCSharpMutableModuleExtension.class);
-		assert extension != null;
+		super(id, layer);
+	}
 
-		extension.setEnabled(true);
+	@Override
+	public void setEnabled(boolean b)
+	{
+		myIsEnabled = b;
+	}
+
+	@Override
+	public boolean isModified(@NotNull MSBuildCSharpModuleExtension extension)
+	{
+		return myIsEnabled != extension.isEnabled();
 	}
 }
