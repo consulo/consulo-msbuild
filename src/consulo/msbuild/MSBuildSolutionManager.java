@@ -42,6 +42,7 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 {
 	protected static class State
 	{
+		public boolean enabled;
 		public String url;
 	}
 
@@ -81,6 +82,16 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		return myCachedValue.getValue();
 	}
 
+	public void setEnabled(boolean enabled)
+	{
+		myState.enabled = enabled;
+	}
+
+	public boolean isEnabled()
+	{
+		return myState.enabled;
+	}
+
 	public void setUrl(@NotNull VirtualFile virtualFile)
 	{
 		myState.url = virtualFile.getUrl();
@@ -89,6 +100,6 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 	@Nullable
 	public VirtualFile getSolutionFile()
 	{
-		return VirtualFileManager.getInstance().findFileByUrl(myState.url);
+		return myState.enabled ? VirtualFileManager.getInstance().findFileByUrl(myState.url) : null;
 	}
 }

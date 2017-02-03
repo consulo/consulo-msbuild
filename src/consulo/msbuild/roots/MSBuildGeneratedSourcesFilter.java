@@ -47,6 +47,10 @@ public class MSBuildGeneratedSourcesFilter extends GeneratedSourcesFilter
 	public static boolean isGeneratedFile(@NotNull VirtualFile virtualFile, @NotNull Project project)
 	{
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
+		if(!solutionManager.isEnabled())
+		{
+			return false;
+		}
 
 		WSolution slnFile = solutionManager.getSolution();
 

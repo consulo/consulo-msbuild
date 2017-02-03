@@ -53,6 +53,11 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		super(project);
 	}
 
+	@Override
+	public boolean isInitiallyVisible()
+	{
+		return MSBuildSolutionManager.getInstance(myProject).isEnabled();
+	}
 
 	@Override
 	protected ProjectAbstractTreeStructureBase createStructure()

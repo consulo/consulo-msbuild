@@ -46,10 +46,14 @@ public class MSBuildStartActivity implements StartupActivity
 	@Override
 	public void runActivity(Project project)
 	{
+		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
+		if(!solutionManager.isEnabled())
+		{
+			return;
+		}
+
 		Task.Backgroundable.queue(project, "Synchonize solution", indicator ->
 		{
-			MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
-
 			ModifiableModuleModel modifiableModel = ReadAction.compute(() -> ModuleManager.getInstance(project).getModifiableModel());
 
 			WSolution solution = ReadAction.compute(solutionManager::getSolution);

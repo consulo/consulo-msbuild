@@ -101,6 +101,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		VirtualFile solutionFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
 		assert solutionFile != null;
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
+		solutionManager.setEnabled(true);
 		solutionManager.setUrl(solutionFile);
 
 		VirtualFile parent = solutionFile.getParent();
