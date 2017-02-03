@@ -17,22 +17,20 @@
 package consulo.msbuild.csharp;
 
 import org.jetbrains.annotations.NotNull;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import consulo.annotations.RequiredReadAction;
-import consulo.msbuild.MSBuildProjectType;
 import consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension;
+import consulo.msbuild.impl.DotNetBasedProjectType;
+import consulo.roots.ModifiableModuleRootLayer;
 
 /**
  * @author VISTALL
  * @since 03-Feb-17
  */
-public class CSharpProjectType implements MSBuildProjectType
+public class CSharpProjectType extends DotNetBasedProjectType
 {
-	@RequiredReadAction
 	@Override
-	public void setupModule(@NotNull ModifiableRootModel modifiableRootModel)
+	public void setupModuleImpl(@NotNull ModifiableModuleRootLayer rootLayer)
 	{
-		MSBuildCSharpMutableModuleExtension extension = modifiableRootModel.getExtensionWithoutCheck(MSBuildCSharpMutableModuleExtension.class);
+		MSBuildCSharpMutableModuleExtension extension = rootLayer.getExtensionWithoutCheck(MSBuildCSharpMutableModuleExtension.class);
 		assert extension != null;
 
 		extension.setEnabled(true);

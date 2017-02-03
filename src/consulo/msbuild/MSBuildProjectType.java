@@ -26,9 +26,9 @@ import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.util.NotNullLazyValue;
-import consulo.annotations.RequiredReadAction;
+import consulo.msbuild.dom.Project;
+import consulo.roots.ModifiableModuleRootLayer;
 
 /**
  * @author VISTALL
@@ -39,9 +39,8 @@ public interface MSBuildProjectType
 	@Deprecated
 	public static class Default implements MSBuildProjectType
 	{
-		@RequiredReadAction
 		@Override
-		public void setupModule(@NotNull ModifiableRootModel modifiableRootModel)
+		public void setupModule(Project domProject, @NotNull ModifiableModuleRootLayer modifiableRootModel)
 		{
 
 		}
@@ -86,6 +85,5 @@ public interface MSBuildProjectType
 		return ourExtensionsValue.getValue();
 	}
 
-	@RequiredReadAction
-	void setupModule(@NotNull ModifiableRootModel modifiableRootModel);
+	void setupModule(Project domProject, @NotNull ModifiableModuleRootLayer modifiableRootModel);
 }

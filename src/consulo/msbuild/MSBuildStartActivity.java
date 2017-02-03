@@ -36,6 +36,7 @@ import consulo.msbuild.solution.SolutionVirtualDirectory;
 import consulo.msbuild.solution.SolutionVirtualFile;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
+import consulo.roots.ModifiableModuleRootLayer;
 
 /**
  * @author VISTALL
@@ -93,7 +94,7 @@ public class MSBuildStartActivity implements StartupActivity
 				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
 				if(projectType != null)
 				{
-					projectType.setupModule(modifiableRootModel);
+					projectType.setupModule(domProject, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
 				}
 
 				SolutionVirtualDirectory directory = ReadAction.compute(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));

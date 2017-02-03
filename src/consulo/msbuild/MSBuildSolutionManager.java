@@ -44,6 +44,8 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 	{
 		public boolean enabled;
 		public String url;
+
+		
 	}
 
 	@NotNull
