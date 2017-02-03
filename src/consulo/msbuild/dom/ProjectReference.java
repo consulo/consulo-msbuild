@@ -4,9 +4,9 @@
 package consulo.msbuild.dom;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
 import com.intellij.util.xml.Required;
@@ -63,9 +63,9 @@ public interface ProjectReference extends DomElement
 	@NotNull
 	GenericAttributeValue<String> getCondition();
 
-	@Nullable
-	DomElement getProject();
+	@NotNull
+	GenericDomValue<String> getProject();
 
-	@Nullable
-	DomElement getName();
+	@NotNull
+	GenericDomValue<String> getName();
 }

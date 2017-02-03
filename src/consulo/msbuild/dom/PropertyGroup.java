@@ -6,9 +6,9 @@ package consulo.msbuild.dom;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import com.intellij.util.xml.CustomChildren;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
 
@@ -52,20 +52,6 @@ public interface PropertyGroup extends DomElement
 	GenericAttributeValue<String> getLabel();
 
 
-	/**
-	 * Returns the list of Property children.
-	 *
-	 * @return the list of Property children.
-	 */
-	@NotNull
-	List<GenericDomValue<String>> getProperties();
-
-	/**
-	 * Adds new child to the list of Property children.
-	 *
-	 * @return created child
-	 */
-	GenericDomValue<String> addProperty();
-
-
+	@CustomChildren
+	List<Property> getPropertries();
 }

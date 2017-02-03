@@ -103,7 +103,11 @@ public class MSBuildStartActivity implements StartupActivity
 				{
 					if(solutionVirtualItem instanceof SolutionVirtualFile)
 					{
-						modifiableRootModel.addContentEntry(((SolutionVirtualFile) solutionVirtualItem).getVirtualFile());
+						VirtualFile virtualFile = ((SolutionVirtualFile) solutionVirtualItem).getVirtualFile();
+						if(virtualFile != null)
+						{
+							modifiableRootModel.addContentEntry(virtualFile);
+						}
 					}
 
 					return true;

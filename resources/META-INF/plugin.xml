@@ -34,6 +34,8 @@
 		<standardResource url="http://schemas.microsoft.com/developer/msbuild/2003" path="/standardSchemes/Microsoft.Build.xsd"/>
 
 		<dom.fileDescription implementation="consulo.msbuild.MSBuildDomDescriptor"/>
+
+		<dom.extender domClass="consulo.msbuild.dom.PropertyGroup" extenderClass="consulo.msbuild.dom.extender.MSBuildPropertyGroupDomExtender"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">

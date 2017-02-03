@@ -24,7 +24,11 @@ import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
 import consulo.msbuild.MSBuildProjectType;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
+import consulo.msbuild.dom.ProjectReference;
+import consulo.msbuild.dom.Property;
+import consulo.msbuild.dom.PropertyGroup;
 import consulo.msbuild.dom.Reference;
+import consulo.msbuild.dom.walk.Walker;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.ModuleRootLayerImpl;
 
@@ -45,8 +49,31 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 		ReadAction.run(() ->
 		{
-			List<ItemGroup> itemGroups = domProject.getItemGroups();
-			for(ItemGroup itemGroup : itemGroups)
+			Walker walker = new Walker(domProject);
+
+			walker.walk(PropertyGroup.class, propertyGroup ->
+			{
+				//TODO [VISTALL] STUB
+				String stringValue = propertyGroup.getCondition().getStringValue();
+				if(stringValue != null)
+				{
+					return;
+				}
+
+				List<Property> propertries = propertyGroup.getPropertries();
+				for(Property propertry : propertries)
+				{
+					String xmlElementName = propertry.getXmlElementName();
+
+					switch(xmlElementName)
+					{
+						case "TargetFrameworkVersion":
+							break;
+					}
+				}
+			});
+
+			walker.walk(ItemGroup.class, itemGroup ->
 			{
 				List<Reference> references = itemGroup.getReferences();
 				for(Reference reference : references)
@@ -57,7 +84,18 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 						rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, stringValue));
 					}
 				}
-			}
+
+				List<ProjectReference> projectReferences = itemGroup.getProjectReferences();
+				for(ProjectReference projectReference : projectReferences)
+				{
+					String name = projectReference.getName().getStringValue();
+					if(name == null)
+					{
+						continue;
+					}
+					rootLayer.addInvalidModuleEntry(name);
+				}
+			});
 		});
 	}
 }
