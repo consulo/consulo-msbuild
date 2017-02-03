@@ -41,7 +41,7 @@
 
 		<fileTypeFactory implementation="consulo.msbuild.MSBuildFileTypeFactory"/>
 
-		<projectViewPane implementation="consulo.msbuild.projectView.SolutionViewPane"/>
+		<projectService serviceImplementation="consulo.msbuild.projectView.SolutionViewPane"/>
 
 		<projectService serviceImplementation="consulo.msbuild.MSBuildSolutionManager"/>
 
@@ -66,5 +66,8 @@
 								 name="MSBuild"
 								 immutableClass="consulo.msbuild.module.extension.MSBuildModuleExtension"
 								 mutableClass="consulo.msbuild.module.extension.MSBuildMutableModuleExtension"/>
+
+		<toolWindow id="Solution Exporer" anchor="left" icon="AllIcons.Toolwindows.WebToolWindow" requireModuleExtensions="msbuild"
+					factoryClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowFactory"/>
 	</extensions>
 </idea-plugin>
