@@ -20,7 +20,6 @@ import javax.swing.Icon;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.xml.XmlFile;
@@ -44,20 +43,7 @@ public class MSBuildDomDescriptor extends DomFileDescription<Project>
 	public boolean isMyFile(@NotNull XmlFile file)
 	{
 		VirtualFile virtualFile = file.getVirtualFile();
-		if(virtualFile == null)
-		{
-			return false;
-		}
-
-		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : MSBuildProjectType.EP_NAME.getExtensions())
-		{
-			String key = ep.getExt();
-			if(Comparing.equal(virtualFile.getExtension(), key))
-			{
-				return true;
-			}
-		}
-		return false;
+		return virtualFile != null && MSBuildProjectType.getExtensions().contains(virtualFile.getExtension());
 	}
 
 	@Nullable

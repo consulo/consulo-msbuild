@@ -16,7 +16,14 @@
 
 package consulo.msbuild;
 
+import gnu.trove.THashSet;
+
+import java.util.Collections;
+import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.util.NotNullLazyValue;
 
 /**
  * @author VISTALL
@@ -24,9 +31,31 @@ import com.intellij.openapi.extensions.ExtensionPointName;
  */
 public interface MSBuildProjectType
 {
+	@Deprecated
 	public static class Default implements MSBuildProjectType
 	{
 	}
 
 	ExtensionPointName<MSBuildProjectTypeEP<MSBuildProjectType>> EP_NAME = ExtensionPointName.create("consulo.msbuild.projectType");
+
+	NotNullLazyValue<Set<String>> ourExtensionsValue = new NotNullLazyValue<Set<String>>()
+	{
+		@NotNull
+		@Override
+		protected Set<String> compute()
+		{
+			Set<String> set = new THashSet<>();
+			for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
+			{
+				set.add(ep.getExt());
+			}
+			return set.isEmpty() ? Collections.<String>emptySet() : set;
+		}
+	};
+
+	@NotNull
+	static Set<String> getExtensions()
+	{
+		return ourExtensionsValue.getValue();
+	}
 }

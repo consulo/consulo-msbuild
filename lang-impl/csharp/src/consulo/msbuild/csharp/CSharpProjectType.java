@@ -14,27 +14,14 @@
  * limitations under the License.
  */
 
-package consulo.msbuild;
+package consulo.msbuild.csharp;
 
-import org.jetbrains.annotations.NotNull;
-import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import consulo.msbuild.MSBuildProjectType;
 
 /**
  * @author VISTALL
- * @since 28-Jan-17
+ * @since 03-Feb-17
  */
-public class MSBuildFileTypeFactory extends FileTypeFactory
+public class CSharpProjectType implements MSBuildProjectType
 {
-	@Override
-	public void createFileTypes(@NotNull FileTypeConsumer consumer)
-	{
-		consumer.consume(VisualStudioSolutionFileType.INSTANCE);
-
-		for(String ext : MSBuildProjectType.getExtensions())
-		{
-			consumer.consume(XmlFileType.INSTANCE, ext);
-		}
-	}
 }
