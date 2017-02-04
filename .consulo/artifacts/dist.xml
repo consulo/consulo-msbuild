@@ -9,6 +9,8 @@
             <element id="module-output" name="consulo-msbuild" />
             <element id="module-output" name="csharp" />
             <element id="module-output" name="dotnet-core" />
+            <element id="module-output" name="api" />
+            <element id="module-output" name="dotnet" />
           </element>
         </element>
       </element>

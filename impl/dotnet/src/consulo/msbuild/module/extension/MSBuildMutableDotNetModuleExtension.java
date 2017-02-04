@@ -26,9 +26,9 @@ import consulo.roots.ModuleRootLayer;
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildMutableModuleExtension extends MSBuildModuleExtension implements DotNetSimpleMutableModuleExtension<MSBuildModuleExtension>
+public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExtension implements DotNetSimpleMutableModuleExtension<MSBuildDotNetModuleExtension>
 {
-	public MSBuildMutableModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
+	public MSBuildMutableDotNetModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
 	}
@@ -47,7 +47,7 @@ public class MSBuildMutableModuleExtension extends MSBuildModuleExtension implem
 	}
 
 	@Override
-	public boolean isModified(@NotNull MSBuildModuleExtension msBuildModuleExtension)
+	public boolean isModified(@NotNull MSBuildDotNetModuleExtension msBuildModuleExtension)
 	{
 		return myIsEnabled != msBuildModuleExtension.isEnabled();
 	}

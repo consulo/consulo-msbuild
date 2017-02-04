@@ -14,29 +14,32 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.module.extension;
+package consulo.msbuild.importProvider.item;
 
-import org.jetbrains.annotations.NotNull;
-import com.intellij.openapi.projectRoots.SdkType;
-import consulo.dotnet.module.extension.BaseDotNetSimpleModuleExtension;
-import consulo.msbuild.bundle.MSBuildBundleType;
-import consulo.roots.ModuleRootLayer;
+import consulo.msbuild.solution.reader.SlnProject;
 
 /**
  * @author VISTALL
- * @since 02-Feb-17
+ * @since 30-Jan-17
  */
-public class MSBuildModuleExtension extends BaseDotNetSimpleModuleExtension<MSBuildModuleExtension>
+public class MSBuildDotNetImportProject extends MSBuildImportProject
 {
-	public MSBuildModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
+	private MSBuildDotNetImportTarget myTarget;
+
+	public MSBuildDotNetImportProject(SlnProject projectInfo, MSBuildDotNetImportTarget target)
 	{
-		super(id, moduleRootLayer);
+		super(projectInfo);
+
+		myTarget = target;
 	}
 
-	@NotNull
-	@Override
-	public Class<? extends SdkType> getSdkTypeClass()
+	public MSBuildDotNetImportTarget getTarget()
 	{
-		return MSBuildBundleType.class;
+		return myTarget;
+	}
+
+	public void setTarget(MSBuildDotNetImportTarget target)
+	{
+		myTarget = target;
 	}
 }

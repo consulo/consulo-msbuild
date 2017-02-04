@@ -15,9 +15,10 @@
           <orderEntry type="sourceFolder" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
           <orderEntry type="library" name="consulo-plugin: consulo.dotnet" level="project" />
+          <orderEntry type="module" module-name="api" />
         </module-layer>
       </module>
-      <module name="dotnet-core" dirurl="file://$PROJECT_DIR$/impl/dotnet-core" current-layer="Default">
+      <module name="impl/dotnet-core" dirurl="file://$PROJECT_DIR$/impl/dotnet-core" current-layer="Default">
         <module-layer name="Default">
           <extension id="consulo-plugin" sdk-name="Consulo SNAPSHOT" />
           <extension id="java" sdk-name="1.8" language-level-name="JDK_1_8" bytecode-version="1.8" />
@@ -27,9 +28,10 @@
           <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="sourceFolder" />
+          <orderEntry type="module" module-name="dotnet" />
         </module-layer>
       </module>
-      <module name="csharp" dirurl="file://$PROJECT_DIR$/lang-impl/csharp" current-layer="Default">
+      <module name="lang-impl/csharp" dirurl="file://$PROJECT_DIR$/lang-impl/csharp" current-layer="Default">
         <module-layer name="Default">
           <extension id="consulo-plugin" sdk-name="Consulo SNAPSHOT" />
           <extension id="java" sdk-name="1.8" language-level-name="JDK_1_8" bytecode-version="1.8" />
@@ -40,8 +42,36 @@
           <orderEntry type="module-extension-sdk" extension-id="java" />
           <orderEntry type="sourceFolder" />
           <orderEntry type="library" name="consulo-plugin: consulo.csharp" level="project" />
-          <orderEntry type="module" module-name="consulo-msbuild" />
           <orderEntry type="library" name="consulo-plugin: consulo.dotnet" level="project" />
+          <orderEntry type="module" module-name="dotnet" />
+        </module-layer>
+      </module>
+      <module name="impl/dotnet" dirurl="file://$PROJECT_DIR$/impl/dotnet" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-name="Consulo SNAPSHOT" />
+          <extension id="java" sdk-name="1.8" language-level-name="JDK_1_8" bytecode-version="1.8" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="sourceFolder" />
+          <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
+          <orderEntry type="library" name="consulo-plugin: consulo.dotnet" level="project" />
+          <orderEntry type="module" module-name="api" exported="" />
+        </module-layer>
+      </module>
+      <module name="api" dirurl="file://$PROJECT_DIR$/api" current-layer="Default">
+        <module-layer name="Default">
+          <extension id="consulo-plugin" sdk-name="Consulo SNAPSHOT" />
+          <extension id="java" sdk-name="1.8" language-level-name="JDK_1_8" bytecode-version="1.8" />
+          <content url="file://$MODULE_DIR$">
+            <content-folder type="PRODUCTION" url="file://$MODULE_DIR$/src" />
+          </content>
+          <orderEntry type="module-extension-sdk" extension-id="consulo-plugin" />
+          <orderEntry type="module-extension-sdk" extension-id="java" />
+          <orderEntry type="sourceFolder" />
+          <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
         </module-layer>
       </module>
     </modules>

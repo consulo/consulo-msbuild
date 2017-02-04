@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.importProvider;
+package consulo.msbuild.importProvider.item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,29 +29,29 @@ import consulo.module.extension.impl.ModuleExtensionProviders;
  * @author VISTALL
  * @since 30-Jan-17
  */
-public enum MSBuildImportTarget
+public enum MSBuildDotNetImportTarget
 {
 	_NET("microsoft-dotnet"), Mono("mono-dotnet"), _NET__Core("dotnet-core");
 
-	public static final MSBuildImportTarget[] EMPTY_ARRAY = new MSBuildImportTarget[0];
+	public static final MSBuildDotNetImportTarget[] EMPTY_ARRAY = new MSBuildDotNetImportTarget[0];
 
-	public static ArrayFactory<MSBuildImportTarget> ARRAY_FACTORY = count -> count == 0 ? EMPTY_ARRAY : new MSBuildImportTarget[count];
+	public static ArrayFactory<MSBuildDotNetImportTarget> ARRAY_FACTORY = count -> count == 0 ? EMPTY_ARRAY : new MSBuildDotNetImportTarget[count];
 
 	private final String myPresentableName;
 	private final String myFrameworkExtensionId;
 
-	MSBuildImportTarget(String frameworkExtensionId)
+	MSBuildDotNetImportTarget(String frameworkExtensionId)
 	{
 		myFrameworkExtensionId = frameworkExtensionId;
 		myPresentableName = name().replace("__", " ").replace("_", ".");
 	}
 
 	@NotNull
-	public static MSBuildImportTarget[] getAvailableTargets()
+	public static MSBuildDotNetImportTarget[] getAvailableTargets()
 	{
-		MSBuildImportTarget[] values = values();
-		List<MSBuildImportTarget> list = new ArrayList<>(values.length);
-		for(MSBuildImportTarget visualStudioImportTarget : values)
+		MSBuildDotNetImportTarget[] values = values();
+		List<MSBuildDotNetImportTarget> list = new ArrayList<>(values.length);
+		for(MSBuildDotNetImportTarget visualStudioImportTarget : values)
 		{
 			ModuleExtensionProviderEP providerEP = ModuleExtensionProviders.findProvider(visualStudioImportTarget.getFrameworkExtensionId());
 			if(providerEP != null)
@@ -59,7 +59,7 @@ public enum MSBuildImportTarget
 				list.add(visualStudioImportTarget);
 			}
 		}
-		return ContainerUtil.toArray(list, MSBuildImportTarget.ARRAY_FACTORY);
+		return ContainerUtil.toArray(list, MSBuildDotNetImportTarget.ARRAY_FACTORY);
 	}
 
 	public String getFrameworkExtensionId()

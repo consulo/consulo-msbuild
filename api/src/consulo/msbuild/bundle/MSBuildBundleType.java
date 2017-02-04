@@ -33,7 +33,7 @@ import com.intellij.execution.util.ExecUtil;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.MicrosoftVisualStudioVersion;
+import consulo.msbuild.MSBuildVersion;
 
 /**
  * @author VISTALL
@@ -73,21 +73,21 @@ public class MSBuildBundleType  extends BaseMSBuildBundleType
 			return Collections.emptyList();
 		}
 
-		Map<MicrosoftVisualStudioVersion, String> compilerPaths = new TreeMap<MicrosoftVisualStudioVersion, String>();
+		Map<MSBuildVersion, String> compilerPaths = new TreeMap<>();
 		collectVisualStudioCompilerPaths(compilerPaths, "ProgramFiles");
 		collectVisualStudioCompilerPaths(compilerPaths, "ProgramFiles(x86)");
 
 		return compilerPaths.values();
 	}
 
-	private void collectVisualStudioCompilerPaths(Map<MicrosoftVisualStudioVersion, String> map, String env)
+	private void collectVisualStudioCompilerPaths(Map<MSBuildVersion, String> map, String env)
 	{
 		String programFiles = System.getenv(env);
 		if(programFiles != null)
 		{
 			File msbuildDir = new File(programFiles, "MSBuild");
 
-			for(MicrosoftVisualStudioVersion version : MicrosoftVisualStudioVersion.values())
+			for(MSBuildVersion version : MSBuildVersion.values())
 			{
 				File compilerPath = new File(msbuildDir, version.getInternalVersion());
 				if(compilerPath.exists())

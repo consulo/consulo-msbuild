@@ -29,6 +29,11 @@ import consulo.msbuild.dom.Property;
 import consulo.msbuild.dom.PropertyGroup;
 import consulo.msbuild.dom.Reference;
 import consulo.msbuild.dom.walk.Walker;
+import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
+import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
+import consulo.msbuild.importProvider.item.MSBuildImportProject;
+import consulo.msbuild.module.extension.MSBuildMutableDotNetModuleExtension;
+import consulo.msbuild.solution.reader.SlnProject;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.ModuleRootLayerImpl;
 
@@ -40,9 +45,21 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 {
 	public abstract void setupModuleImpl(@NotNull ModifiableModuleRootLayer modifiableRootModel);
 
+	@NotNull
+	@Override
+	public MSBuildImportProject createImportItem(SlnProject project)
+	{
+		return new MSBuildDotNetImportProject(project, MSBuildDotNetImportTarget._NET);
+	}
+
 	@Override
 	public final void setupModule(Project domProject, @NotNull ModifiableModuleRootLayer rootLayer)
 	{
+		// setup .NET extension
+		MSBuildMutableDotNetModuleExtension moduleExtension = rootLayer.getExtensionWithoutCheck(MSBuildMutableDotNetModuleExtension.class);
+		assert moduleExtension != null;
+		moduleExtension.setEnabled(true);
+
 		setupModuleImpl(rootLayer);
 
 		rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, "mscorlib"));

@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.solution.reader;
+package consulo.msbuild.importProvider.item;
+
+import consulo.msbuild.solution.reader.SlnProject;
 
 /**
  * @author VISTALL
- * @since 30-Jan-17
+ * @since 04-Feb-17
  */
-public enum SlnSectionType
+public abstract class MSBuildImportProject
 {
-	PreProcess, PostProcess
+	private final SlnProject myProjectInfo;
+
+	public MSBuildImportProject(SlnProject projectInfo)
+	{
+		myProjectInfo = projectInfo;
+	}
+
+	public SlnProject getProjectInfo()
+	{
+		return myProjectInfo;
+	}
 }

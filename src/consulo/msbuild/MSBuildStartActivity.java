@@ -30,7 +30,6 @@ import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.startup.StartupActivity;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.vfs.VirtualFile;
-import consulo.msbuild.module.extension.MSBuildMutableModuleExtension;
 import consulo.msbuild.solution.SolutionVirtualBuilder;
 import consulo.msbuild.solution.SolutionVirtualDirectory;
 import consulo.msbuild.solution.SolutionVirtualFile;
@@ -86,10 +85,6 @@ public class MSBuildStartActivity implements StartupActivity
 				Module module = modifiableModel.newModule(wProject.getName(), null);
 
 				ModifiableRootModel modifiableRootModel = ReadAction.compute(() -> ModuleRootManager.getInstance(module).getModifiableModel());
-
-				MSBuildMutableModuleExtension moduleExtension = modifiableRootModel.getExtensionWithoutCheck(MSBuildMutableModuleExtension.class);
-				assert moduleExtension != null;
-				moduleExtension.setEnabled(true);
 
 				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
 				if(projectType != null)

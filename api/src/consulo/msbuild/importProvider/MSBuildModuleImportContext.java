@@ -10,7 +10,8 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import consulo.moduleImport.ModuleImportContext;
-import consulo.msbuild.MSBuildGUID;
+import consulo.msbuild.MSBuildProjectType;
+import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.msbuild.solution.reader.SlnFile;
 import consulo.msbuild.solution.reader.SlnProject;
 
@@ -36,11 +37,16 @@ public class MSBuildModuleImportContext extends ModuleImportContext
 
 		for(SlnProject project : mySlnFile.getProjects())
 		{
-			if(!MSBuildGUID.SolutionFolder.equals(project.TypeGuid))
+			// it will always return null for MSBuildGUID.SolutionFolder
+			MSBuildProjectType projectType = MSBuildProjectType.getProjectType(project.TypeGuid);
+			if(projectType == null)
 			{
-				myItems.add(new MSBuildImportProject(project, MSBuildImportTarget._NET));
+				continue;
 			}
+
+			myItems.add(projectType.createImportItem(project));
 		}
+
 		return super.setFileToImport(fileToImport);
 	}
 

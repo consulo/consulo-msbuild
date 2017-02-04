@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.intellij.ide.util.newProjectWizard.ProjectNameStep;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.application.WriteAction;
@@ -26,7 +27,7 @@ import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.VisualStudioSolutionFileType;
-import consulo.msbuild.importProvider.ui.MSBuildSetupTargetStep;
+import consulo.msbuild.importProvider.item.MSBuildImportProject;
 
 /**
  * @author VISTALL
@@ -84,7 +85,14 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		wizardContext.setProjectName(fileByPath.getNameWithoutExtension());
 		wizardContext.setProjectFileDirectory(fileByPath.getParent().getPath());
 
-		return new ModuleWizardStep[]{new MSBuildSetupTargetStep(context, wizardContext)};
+		List<ModuleWizardStep> wizardSteps = new ArrayList<>();
+		for(MSBuildImportProject project : context.getMappedProjects())
+		{
+
+		}
+
+		wizardSteps.add(new ProjectNameStep(wizardContext));
+		return wizardSteps.toArray(new ModuleWizardStep[wizardSteps.size()]);
 	}
 
 	@NotNull

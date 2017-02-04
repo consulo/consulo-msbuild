@@ -14,38 +14,15 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.importProvider;
-
-import consulo.msbuild.solution.reader.SlnProject;
+package consulo.msbuild.solution.reader;
 
 /**
  * @author VISTALL
  * @since 30-Jan-17
+ *
+ *  * https://github.com/mono/monodevelop/blob/master/main/src/core/MonoDevelop.Core/MonoDevelop.Projects.MSBuild/SlnFile.cs
  */
-public class MSBuildImportProject
+public enum SlnSectionType
 {
-	private final SlnProject myProjectInfo;
-	private MSBuildImportTarget myTarget;
-
-	public MSBuildImportProject(SlnProject projectInfo, MSBuildImportTarget target)
-	{
-		myProjectInfo = projectInfo;
-
-		myTarget = target;
-	}
-
-	public SlnProject getProjectInfo()
-	{
-		return myProjectInfo;
-	}
-
-	public MSBuildImportTarget getTarget()
-	{
-		return myTarget;
-	}
-
-	public void setTarget(MSBuildImportTarget target)
-	{
-		myTarget = target;
-	}
+	PreProcess, PostProcess
 }

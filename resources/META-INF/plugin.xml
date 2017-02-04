@@ -21,7 +21,9 @@
 	<vendor>consulo.io</vendor>
 	<category>Build</category>
 	<depends>com.intellij.xml</depends>
-	<depends>consulo.dotnet</depends>
+
+	<!--.NET Support-->
+	<depends optional="true" config-file="consulo.dotnet.xml">consulo.dotnet</depends>
 	<depends optional="true" config-file="consulo.csharp.xml">consulo.csharp</depends>
 
 	<extensionPoints>
@@ -63,13 +65,7 @@
 
 		<postStartupActivity implementation="consulo.msbuild.MSBuildStartActivity"/>
 
-		<moduleExtensionProvider key="msbuild"
-								 icon="/icons/msbuild.png"
-								 name="MSBuild"
-								 immutableClass="consulo.msbuild.module.extension.MSBuildModuleExtension"
-								 mutableClass="consulo.msbuild.module.extension.MSBuildMutableModuleExtension"/>
-
-		<toolWindow id="Solution Exporer" anchor="left" icon="AllIcons.Toolwindows.WebToolWindow" requireModuleExtensions="msbuild"
+		<toolWindow id="Solution Exporer" anchor="left" icon="AllIcons.Toolwindows.WebToolWindow" requireModuleExtensions="@@msbuidList"
 					factoryClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowFactory"/>
 	</extensions>
 </idea-plugin>

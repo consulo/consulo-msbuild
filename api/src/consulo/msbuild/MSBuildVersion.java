@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
  * @author VISTALL
  * @since 09.03.2015
  */
-public enum MicrosoftVisualStudioVersion
+public enum MSBuildVersion
 {
 	Visual_Studio("4.0"),
 	Visual_Studio_97("5.0"),
@@ -40,7 +40,7 @@ public enum MicrosoftVisualStudioVersion
 	private final String myInternalVersion;
 	private final String myPresentableName;
 
-	MicrosoftVisualStudioVersion(String internalVersion)
+	MSBuildVersion(String internalVersion)
 	{
 		myInternalVersion = internalVersion;
 		myPresentableName = name().replace("_", " ");

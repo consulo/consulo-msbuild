@@ -19,6 +19,8 @@ package consulo.msbuild.solution.reader;
 /**
  * @author VISTALL
  * @since 30-Jan-17
+ *
+ * https://github.com/mono/monodevelop/blob/master/main/src/core/MonoDevelop.Core/MonoDevelop.Projects.MSBuild/SlnFile.cs
  */
 public class InvalidSolutionFormatException extends RuntimeException
 {
