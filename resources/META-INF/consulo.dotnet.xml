@@ -27,4 +27,8 @@
 			<add>msbuild-dotnet</add>
 		</addTo.listOfElements>
 	</extensions>
+
+	<extensions defaultExtensionNs="consulo.msbuild">
+		<setupStep importProjectClass="consulo.msbuild.importProvider.item.MSBuildDotNetImportProject" stepClass="consulo.msbuild.importProvider.ui.MSBuildDotNetSetupTargetStep" />
+	</extensions>
 </idea-plugin>

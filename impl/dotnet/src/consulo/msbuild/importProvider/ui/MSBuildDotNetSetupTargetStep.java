@@ -32,6 +32,7 @@ import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.LabeledComponent;
 import com.intellij.ui.ScrollPaneFactory;
+import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.table.TableView;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.JBUI;
@@ -139,6 +140,7 @@ public class MSBuildDotNetSetupTargetStep extends ModuleWizardStep
 		tableItemTableView.setEnabled(false);
 
 		myPanel = JBUI.Panels.verticalPanel();
+		myPanel.addComponent(new TitledSeparator(".NET Projects Setting:"));
 		myPanel.addComponent(LabeledComponent.left(targetComboBox, "Default .NET framework"));
 		myPanel.addComponent(ScrollPaneFactory.createScrollPane(tableItemTableView));
 	}

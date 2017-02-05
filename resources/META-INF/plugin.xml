@@ -30,6 +30,10 @@
 		<extensionPoint name="projectType" beanClass="consulo.msbuild.MSBuildProjectTypeEP">
 			<with attribute="implementationClass" implements="consulo.msbuild.MSBuildProjectType"/>
 		</extensionPoint>
+		<extensionPoint name="setupStep" beanClass="consulo.msbuild.importProvider.MSBuildSetupStepEP">
+			<with attribute="importProjectClass" implements="consulo.msbuild.importProvider.item.MSBuildImportProject"/>
+			<with attribute="stepClass" implements="com.intellij.ide.util.projectWizard.ModuleWizardStep"/>
+		</extensionPoint>
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="com.intellij.xml">

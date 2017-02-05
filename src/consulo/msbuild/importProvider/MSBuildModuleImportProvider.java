@@ -1,7 +1,9 @@
 package consulo.msbuild.importProvider;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.Icon;
 
@@ -22,6 +24,7 @@ import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.packaging.artifacts.ModifiableArtifactModel;
+import com.intellij.util.containers.ContainerUtil;
 import consulo.annotations.RequiredReadAction;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
@@ -85,10 +88,22 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		wizardContext.setProjectName(fileByPath.getNameWithoutExtension());
 		wizardContext.setProjectFileDirectory(fileByPath.getParent().getPath());
 
+		MSBuildSetupStepEP[] extensions = MSBuildSetupStepEP.EP.getExtensions();
+
+		Set<Class> classes = new LinkedHashSet<>();
 		List<ModuleWizardStep> wizardSteps = new ArrayList<>();
 		for(MSBuildImportProject project : context.getMappedProjects())
 		{
+			classes.add(project.getClass());
+		}
 
+		for(Class aClass : classes)
+		{
+			MSBuildSetupStepEP stepEP = ContainerUtil.find(extensions, it -> it.getImportProjectClass() == aClass);
+			if(stepEP != null)
+			{
+				wizardSteps.add(stepEP.createStep(context, wizardContext));
+			}
 		}
 
 		wizardSteps.add(new ProjectNameStep(wizardContext));
