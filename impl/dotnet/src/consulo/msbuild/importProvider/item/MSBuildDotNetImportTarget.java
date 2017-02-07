@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.util.ArrayFactory;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.module.extension.ModuleExtensionProviderEP;
@@ -31,7 +33,9 @@ import consulo.module.extension.impl.ModuleExtensionProviders;
  */
 public enum MSBuildDotNetImportTarget
 {
-	_NET("microsoft-dotnet"), Mono("mono-dotnet"), _NET__Core("dotnet-core");
+	_NET("microsoft-dotnet", "MICROSOFT_DOTNET_SDK"),
+	Mono("mono-dotnet", "MONO_DOTNET_SDK"),
+	_NET__Core("dotnet-core", "DOTNET_CORE_SDK");
 
 	public static final MSBuildDotNetImportTarget[] EMPTY_ARRAY = new MSBuildDotNetImportTarget[0];
 
@@ -39,11 +43,19 @@ public enum MSBuildDotNetImportTarget
 
 	private final String myPresentableName;
 	private final String myFrameworkExtensionId;
+	private final String mySdkTypeId;
 
-	MSBuildDotNetImportTarget(String frameworkExtensionId)
+	MSBuildDotNetImportTarget(@NotNull String frameworkExtensionId, @NotNull String sdkTypeId)
 	{
 		myFrameworkExtensionId = frameworkExtensionId;
+		mySdkTypeId = sdkTypeId;
 		myPresentableName = name().replace("__", " ").replace("_", ".");
+	}
+
+	@Nullable
+	public SdkType getSdkType()
+	{
+		return ContainerUtil.find(SdkType.EP_NAME.getExtensions(), it -> it.getName().equals(mySdkTypeId));
 	}
 
 	@NotNull

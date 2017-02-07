@@ -16,13 +16,21 @@
 
 package consulo.msbuild.impl;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkTable;
+import com.intellij.openapi.projectRoots.SdkType;
+import com.intellij.openapi.util.Comparing;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.util.containers.ContainerUtil;
 import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
+import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.MSBuildProjectType;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.dom.ItemGroup;
@@ -93,14 +101,25 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 					return;
 				}
 
-				List<Property> propertries = propertyGroup.getPropertries();
-				for(Property propertry : propertries)
+				List<Property> properties = propertyGroup.getProperties();
+				for(Property property : properties)
 				{
-					String xmlElementName = propertry.getXmlElementName();
+					String xmlElementName = property.getXmlElementName();
 
 					switch(xmlElementName)
 					{
 						case "TargetFrameworkVersion":
+							String textValue = property.getText();
+							Pair<String, Sdk> sdkPair = findSdk(moduleExtension.getTarget(), textValue);
+							MutableModuleInheritableNamedPointer<Sdk> pointer = moduleExtension.getInheritableSdk();
+							if(sdkPair.getSecond() != null)
+							{
+								pointer.set(null, sdkPair.getSecond());
+							}
+							else
+							{
+								pointer.set(null, sdkPair.getFirst());
+							}
 							break;
 					}
 				}
@@ -130,5 +149,53 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 				}
 			});
 		});
+	}
+
+	@NotNull
+	private Pair<String, Sdk> findSdk(@NotNull MSBuildDotNetImportTarget target, @Nullable String sdkVersion)
+	{
+		if(sdkVersion == null)
+		{
+			return Pair.create("??", null);
+		}
+
+		if(StringUtil.startsWithChar(sdkVersion, 'v'))
+		{
+			sdkVersion = sdkVersion.substring(1, sdkVersion.length());
+		}
+
+		SdkType sdkType = target.getSdkType();
+		if(sdkType == null)
+		{
+			return Pair.create(sdkVersion, null);
+		}
+
+		SdkTable sdkTable = SdkTable.getInstance();
+		List<Sdk> sdksOfType = sdkTable.getSdksOfType(sdkType);
+
+		// we need sort predefined first
+		ContainerUtil.sort(sdksOfType, new Comparator<Sdk>()
+		{
+			@Override
+			public int compare(Sdk o1, Sdk o2)
+			{
+				return getWeight(o2) - getWeight(o1);
+			}
+
+			private int getWeight(Sdk sdk)
+			{
+				return sdk.isPredefined() ? 100 : 0;
+			}
+		});
+
+		for(Sdk sdk : sdksOfType)
+		{
+			String versionString = sdk.getVersionString();
+			if(Comparing.equal(versionString, sdkVersion))
+			{
+				return Pair.create(null, sdk);
+			}
+		}
+		return Pair.create(sdkVersion, null);
 	}
 }

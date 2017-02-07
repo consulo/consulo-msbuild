@@ -17,10 +17,12 @@
 package consulo.msbuild.dom;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
+import com.intellij.util.xml.TagValue;
 
 /**
  * @author VISTALL
@@ -32,4 +34,8 @@ public interface Property extends DomElement
 {
 	@NotNull
 	GenericAttributeValue<String> getCondition();
+
+	@Nullable
+	@TagValue
+	String getText();
 }

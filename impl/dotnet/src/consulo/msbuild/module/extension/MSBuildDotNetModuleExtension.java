@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.projectRoots.SdkType;
 import consulo.annotations.RequiredReadAction;
 import consulo.dotnet.module.extension.BaseDotNetSimpleModuleExtension;
-import consulo.msbuild.bundle.MSBuildBundleType;
+import consulo.dotnet.sdk.DotNetSdkType;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.roots.ModuleRootLayer;
 
@@ -47,7 +47,7 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 	@Override
 	public Class<? extends SdkType> getSdkTypeClass()
 	{
-		return MSBuildBundleType.class;
+		return DotNetSdkType.class;
 	}
 
 	@RequiredReadAction

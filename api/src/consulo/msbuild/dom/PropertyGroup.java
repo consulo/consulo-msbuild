@@ -53,5 +53,5 @@ public interface PropertyGroup extends DomElement
 
 
 	@CustomChildren
-	List<Property> getPropertries();
+	List<Property> getProperties();
 }
