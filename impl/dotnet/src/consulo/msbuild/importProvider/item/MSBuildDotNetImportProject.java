@@ -16,6 +16,9 @@
 
 package consulo.msbuild.importProvider.item;
 
+import org.jetbrains.annotations.NotNull;
+import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.solution.reader.SlnProject;
 
 /**
@@ -25,12 +28,14 @@ import consulo.msbuild.solution.reader.SlnProject;
 public class MSBuildDotNetImportProject extends MSBuildImportProject
 {
 	private MSBuildDotNetImportTarget myTarget;
+	private MSBuildModuleImportContext myContext;
 
-	public MSBuildDotNetImportProject(SlnProject projectInfo, MSBuildDotNetImportTarget target)
+	public MSBuildDotNetImportProject(SlnProject projectInfo, MSBuildModuleImportContext context, MSBuildDotNetImportTarget target)
 	{
 		super(projectInfo);
+		myContext = context;
 
-		myTarget = target;
+		setTarget(target);
 	}
 
 	public MSBuildDotNetImportTarget getTarget()
@@ -38,8 +43,11 @@ public class MSBuildDotNetImportProject extends MSBuildImportProject
 		return myTarget;
 	}
 
-	public void setTarget(MSBuildDotNetImportTarget target)
+	public void setTarget(@NotNull MSBuildDotNetImportTarget target)
 	{
 		myTarget = target;
+
+		MSBuildSolutionManager.ProjectOptions options = myContext.getOptions(myProjectInfo.Name);
+		options.target = target.name();
 	}
 }

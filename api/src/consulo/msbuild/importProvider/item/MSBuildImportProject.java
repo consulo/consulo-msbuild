@@ -24,7 +24,7 @@ import consulo.msbuild.solution.reader.SlnProject;
  */
 public abstract class MSBuildImportProject
 {
-	private final SlnProject myProjectInfo;
+	protected final SlnProject myProjectInfo;
 
 	public MSBuildImportProject(SlnProject projectInfo)
 	{

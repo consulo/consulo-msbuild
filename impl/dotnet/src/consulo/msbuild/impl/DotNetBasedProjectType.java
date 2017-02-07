@@ -19,9 +19,12 @@ package consulo.msbuild.impl;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.util.text.StringUtil;
 import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
 import consulo.msbuild.MSBuildProjectType;
+import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.ProjectReference;
@@ -29,6 +32,7 @@ import consulo.msbuild.dom.Property;
 import consulo.msbuild.dom.PropertyGroup;
 import consulo.msbuild.dom.Reference;
 import consulo.msbuild.dom.walk.Walker;
+import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
@@ -47,18 +51,30 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 	@NotNull
 	@Override
-	public MSBuildImportProject createImportItem(SlnProject project)
+	public MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context)
 	{
-		return new MSBuildDotNetImportProject(project, MSBuildDotNetImportTarget._NET);
+		return new MSBuildDotNetImportProject(project, context, MSBuildDotNetImportTarget._NET);
+	}
+
+	private static MSBuildDotNetImportTarget findTarget(@Nullable MSBuildSolutionManager.ProjectOptions projectOptions)
+	{
+		String value = projectOptions == null ? null : projectOptions.target;
+		if(value == null)
+		{
+			return MSBuildDotNetImportTarget._NET;
+		}
+
+		return StringUtil.parseEnum(value, MSBuildDotNetImportTarget._NET, MSBuildDotNetImportTarget.class);
 	}
 
 	@Override
-	public final void setupModule(Project domProject, @NotNull ModifiableModuleRootLayer rootLayer)
+	public final void setupModule(@NotNull Project domProject, @Nullable MSBuildSolutionManager.ProjectOptions projectOptions, @NotNull ModifiableModuleRootLayer rootLayer)
 	{
 		// setup .NET extension
 		MSBuildMutableDotNetModuleExtension moduleExtension = rootLayer.getExtensionWithoutCheck(MSBuildMutableDotNetModuleExtension.class);
 		assert moduleExtension != null;
 		moduleExtension.setEnabled(true);
+		moduleExtension.setTarget(findTarget(projectOptions));
 
 		setupModuleImpl(rootLayer);
 

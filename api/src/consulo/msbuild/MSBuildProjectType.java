@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import consulo.msbuild.dom.Project;
+import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.roots.ModifiableModuleRootLayer;
@@ -77,8 +78,8 @@ public interface MSBuildProjectType
 		return ourExtensionsValue.getValue();
 	}
 
-	void setupModule(Project domProject, @NotNull ModifiableModuleRootLayer modifiableRootModel);
+	void setupModule(@NotNull Project domProject, @Nullable MSBuildSolutionManager.ProjectOptions projectOptions, @NotNull ModifiableModuleRootLayer modifiableRootModel);
 
 	@NotNull
-	MSBuildImportProject createImportItem(SlnProject project);
+	MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context);
 }

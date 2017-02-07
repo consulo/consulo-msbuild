@@ -3,6 +3,7 @@ package consulo.msbuild.importProvider;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.Icon;
@@ -126,6 +127,10 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
 		solutionManager.setEnabled(true);
 		solutionManager.setUrl(solutionFile);
+		for(Map.Entry<String, MSBuildSolutionManager.ProjectOptions> entry : context.getProjectOptions().entrySet())
+		{
+			solutionManager.putOptions(entry.getKey(), entry.getValue());
+		}
 
 		VirtualFile parent = solutionFile.getParent();
 

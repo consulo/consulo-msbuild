@@ -16,6 +16,9 @@
 
 package consulo.msbuild;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -40,12 +43,17 @@ import consulo.msbuild.solution.model.WSolution;
 @State(name = "MSBuildSolutionManager", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/msbuild.xml"))
 public class MSBuildSolutionManager extends SimpleModificationTracker implements PersistentStateComponent<MSBuildSolutionManager.State>
 {
+	public final static class ProjectOptions
+	{
+		public String target;
+	}
+
 	protected static class State
 	{
 		public boolean enabled;
 		public String url;
 
-		
+		public Map<String, ProjectOptions> projects = new HashMap<>();
 	}
 
 	@NotNull
@@ -76,6 +84,17 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 	public void loadState(State state)
 	{
 		XmlSerializerUtil.copyBean(state, myState);
+	}
+
+	public void putOptions(String projectName, ProjectOptions projectOptions)
+	{
+		myState.projects.put(projectName, projectOptions);
+	}
+
+	@Nullable
+	public ProjectOptions getOptions(@NotNull String name)
+	{
+		return myState.projects.get(name);
 	}
 
 	@NotNull

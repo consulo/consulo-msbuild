@@ -82,6 +82,8 @@ public class MSBuildStartActivity implements StartupActivity
 					continue;
 				}
 
+				MSBuildSolutionManager.ProjectOptions projectOptions = solutionManager.getOptions(wProject.getName());
+
 				Module module = modifiableModel.newModule(wProject.getName(), null);
 
 				ModifiableRootModel modifiableRootModel = ReadAction.compute(() -> ModuleRootManager.getInstance(module).getModifiableModel());
@@ -89,7 +91,7 @@ public class MSBuildStartActivity implements StartupActivity
 				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
 				if(projectType != null)
 				{
-					projectType.setupModule(domProject, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
+					projectType.setupModule(domProject, projectOptions, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
 				}
 
 				SolutionVirtualDirectory directory = ReadAction.compute(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));
