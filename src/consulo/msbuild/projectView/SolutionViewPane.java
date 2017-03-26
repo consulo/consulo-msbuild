@@ -354,7 +354,10 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 
 				VirtualFile solutionFile = solutionManager.getSolutionFile();
 
-				assert solutionFile != null;
+				if(solutionFile == null)
+				{
+					return new SolutionViewErrorRootNode(project, settings);
+				}
 
 				return new SolutionViewRootNode(project, solutionFile, settings);
 			}
