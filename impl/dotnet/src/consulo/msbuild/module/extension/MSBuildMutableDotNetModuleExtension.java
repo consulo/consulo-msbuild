@@ -25,7 +25,7 @@ import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.Component;
 import consulo.ui.Components;
-import consulo.ui.Labels;
+import consulo.ui.LabeledComponents;
 import consulo.ui.Layouts;
 import consulo.ui.RequiredUIAccess;
 import consulo.ui.VerticalLayout;
@@ -47,7 +47,7 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	public Component createConfigurationComponent(@NotNull Runnable updateOnCheck)
 	{
 		VerticalLayout vertical = Layouts.vertical();
-		vertical.add(Labels.left("Target: ", Components.label(myTarget.name())));
+		vertical.add(LabeledComponents.left("Target", Components.label(myTarget.name())));
 		return vertical;
 	}
 
