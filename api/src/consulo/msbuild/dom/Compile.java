@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import com.intellij.util.xml.Convert;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
 import com.intellij.util.xml.Required;
@@ -64,4 +65,6 @@ public interface Compile extends DomElement, SimpleItem
 	 */
 	@NotNull
 	GenericAttributeValue<String> getCondition();
+
+	GenericDomValue<String> getDesignTimeSharedInput();
 }

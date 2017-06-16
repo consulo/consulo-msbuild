@@ -34,7 +34,13 @@
 			<with attribute="importProjectClass" implements="consulo.msbuild.importProvider.item.MSBuildImportProject"/>
 			<with attribute="stepClass" implements="com.intellij.ide.util.projectWizard.ModuleWizardStep"/>
 		</extensionPoint>
+		<extensionPoint name="variableProvider" interface="consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider"/>
 	</extensionPoints>
+
+	<extensions defaultExtensionNs="consulo.msbuild">
+		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildExtensionsPath"/>
+		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsVersion"/>
+	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xml">
 		<standardResource url="http://schemas.microsoft.com/developer/msbuild/2003" path="/standardSchemes/Microsoft.Build.xsd"/>
@@ -63,10 +69,13 @@
 
 		<localInspection language="XML" implementationClass="consulo.msbuild.codeInspection.MSBuildDomElementsInspection" displayName="MSBuild validation" groupName="MSBuild"/>
 
-		<lang.braceMatcher language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.editor.MSBuildExpressionPairBraceMatcher" />
+		<lang.braceMatcher language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.editor.MSBuildExpressionPairBraceMatcher"/>
 		<lang.parserDefinition language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionParserDefinition"/>
 
-		<highlightVisitor implementation="consulo.msbuild.dom.expression.MSBuildExpressionHighlightVisitor" />
+		<lang.syntaxHighlighterFactory language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.editor.MSBuildExpressionSyntaxHighlighterFactory"/>
+		<highlightVisitor implementation="consulo.msbuild.dom.expression.MSBuildExpressionHighlightVisitor"/>
+
+		<psi.referenceContributor language="XML" implementation="consulo.msbuild.dom.expression.editor.MSBuildExpressionReferenceContributor"/>
 
 		<languageInjector implementation="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
 

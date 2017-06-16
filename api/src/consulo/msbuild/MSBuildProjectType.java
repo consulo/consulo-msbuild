@@ -39,11 +39,17 @@ import consulo.roots.ModifiableModuleRootLayer;
  */
 public interface MSBuildProjectType
 {
+	String PROPS_EXT = "props";
+	String TARGET_EXT = "target";
+
 	ExtensionPointName<MSBuildProjectTypeEP<MSBuildProjectType>> EP_NAME = ExtensionPointName.create("consulo.msbuild.projectType");
 
 	NotNullLazyValue<Set<String>> ourExtensionsValue = NotNullLazyValue.createValue(() ->
 	{
 		Set<String> set = new THashSet<>();
+		set.add(PROPS_EXT);
+		set.add(TARGET_EXT);
+
 		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
 		{
 			set.add(ep.getExt());

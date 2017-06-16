@@ -6,6 +6,7 @@ package consulo.msbuild.dom;
 import org.jetbrains.annotations.NotNull;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
 import com.intellij.util.xml.Required;
@@ -61,4 +62,7 @@ public interface EmbeddedResource extends DomElement, SimpleItem
 	 */
 	@NotNull
 	GenericAttributeValue<String> getCondition();
+
+	@NotNull
+	GenericDomValue<String> getLastGenOutput();
 }

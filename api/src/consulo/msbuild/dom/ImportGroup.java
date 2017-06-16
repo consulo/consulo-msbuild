@@ -8,6 +8,8 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.NameStrategy;
+import com.intellij.util.xml.NameStrategyForAttributes;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ImportGroupType interface.
@@ -18,6 +20,8 @@ import com.intellij.util.xml.GenericAttributeValue;
  *
  * @author VISTALL
  */
+@NameStrategy(MSBuildNameStrategy.class)
+@NameStrategyForAttributes(MSBuildNameStrategy.class)
 public interface ImportGroup extends DomElement
 {
 

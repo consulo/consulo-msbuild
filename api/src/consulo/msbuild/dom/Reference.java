@@ -9,7 +9,6 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
-import com.intellij.util.xml.Required;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ReferenceElemType interface.
@@ -27,7 +26,6 @@ public interface Reference extends DomElement
 	 * @return the value of the simple content.
 	 */
 	@NotNull
-	@Required
 	String getValue();
 
 	/**

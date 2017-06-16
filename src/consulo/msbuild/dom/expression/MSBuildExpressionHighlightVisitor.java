@@ -21,12 +21,14 @@ import com.intellij.codeInsight.daemon.impl.HighlightInfo;
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
 import com.intellij.codeInsight.daemon.impl.HighlightVisitor;
 import com.intellij.codeInsight.daemon.impl.analysis.HighlightInfoHolder;
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionElementVisitor;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionFile;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionMacroReference;
+import consulo.msbuild.dom.expression.lang.psi.MSBuildLightMacroValue;
 
 /**
  * @author VISTALL
@@ -51,6 +53,12 @@ public class MSBuildExpressionHighlightVisitor extends MSBuildExpressionElementV
 		{
 			String text = "'" + reference.getText() + "' is not resolved";
 			myHighlightInfoHolder.add(HighlightInfo.newHighlightInfo(HighlightInfoType.WARNING).descriptionAndTooltip(text).range(reference).create());
+		}
+		else if(resolved instanceof MSBuildLightMacroValue)
+		{
+			String value = ((MSBuildLightMacroValue) resolved).getValue();
+			myHighlightInfoHolder.add(HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION).textAttributes(DefaultLanguageHighlighterColors.INSTANCE_FIELD).descriptionAndTooltip(value).range
+					(reference).create());
 		}
 	}
 

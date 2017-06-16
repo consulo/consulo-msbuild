@@ -20,13 +20,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.impl.source.resolve.ResolveCache;
 import com.intellij.util.IncorrectOperationException;
 import consulo.annotations.RequiredReadAction;
 import consulo.annotations.RequiredWriteAction;
+import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
 /**
  * @author VISTALL
@@ -60,7 +64,22 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 	@Override
 	public PsiElement resolve()
 	{
-		return null;
+		return ResolveCache.getInstance(getProject()).resolveWithCaching(this, (reference, incompleteCode) ->
+		{
+			String text = getText();
+			for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensions())
+			{
+				if(Comparing.equal(provider.getName(), text))
+				{
+					String value = provider.evaluate(new MSBuildEvaluateContext(this));
+					if(value != null)
+					{
+						return new MSBuildLightMacroValue(getProject(), text, value);
+					}
+				}
+			}
+			return null;
+		}, false, true);
 	}
 
 	@RequiredReadAction
