@@ -34,6 +34,7 @@ public interface Import extends DomElement
 	 * @return the value of the Condition child.
 	 */
 	@NotNull
+	@Injectable
 	GenericAttributeValue<String> getCondition();
 
 
@@ -48,6 +49,7 @@ public interface Import extends DomElement
 	 */
 	@NotNull
 	@Required
+	@Injectable
 	GenericAttributeValue<String> getProject();
 
 
@@ -62,6 +64,4 @@ public interface Import extends DomElement
 	 */
 	@NotNull
 	GenericAttributeValue<String> getLabel();
-
-
 }

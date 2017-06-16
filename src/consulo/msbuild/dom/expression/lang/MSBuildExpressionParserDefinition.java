@@ -17,7 +17,6 @@
 package consulo.msbuild.dom.expression.lang;
 
 import org.jetbrains.annotations.NotNull;
-import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
@@ -27,7 +26,8 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import consulo.lang.LanguageVersion;
-import consulo.msbuild.dom.expression.lang.lexer.MSExpressionLexer;
+import consulo.msbuild.dom.expression.lang.lexer.MSBuildExpressionLexer;
+import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionFile;
 
 /**
  * @author VISTALL
@@ -41,7 +41,7 @@ public class MSBuildExpressionParserDefinition implements ParserDefinition
 	@Override
 	public Lexer createLexer(@NotNull LanguageVersion languageVersion)
 	{
-		return new MSExpressionLexer();
+		return new MSBuildExpressionLexer();
 	}
 
 	@NotNull
@@ -82,9 +82,7 @@ public class MSBuildExpressionParserDefinition implements ParserDefinition
 	@Override
 	public PsiFile createFile(@NotNull FileViewProvider viewProvider)
 	{
-		return new PsiFileBase(viewProvider, MSBuildExpressionLanguage.INSTANCE)
-		{
-		};
+		return new MSBuildExpressionFile(viewProvider);
 	}
 
 	@NotNull

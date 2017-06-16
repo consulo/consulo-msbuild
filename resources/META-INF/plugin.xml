@@ -63,7 +63,10 @@
 
 		<localInspection language="XML" implementationClass="consulo.msbuild.codeInspection.MSBuildDomElementsInspection" displayName="MSBuild validation" groupName="MSBuild"/>
 
-		<lang.parserDefinition language="MSBUILD_EXPRESSION" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionParserDefinition"/>
+		<lang.braceMatcher language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.editor.MSBuildExpressionPairBraceMatcher" />
+		<lang.parserDefinition language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionParserDefinition"/>
+
+		<highlightVisitor implementation="consulo.msbuild.dom.expression.MSBuildExpressionHighlightVisitor" />
 
 		<languageInjector implementation="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
 

@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.dom.expression.lang;
+package consulo.msbuild.dom.expression.lang.psi;
 
-import com.intellij.lang.Language;
+import com.intellij.psi.tree.IElementType;
+import consulo.msbuild.dom.expression.lang.MSBuildExpressionLanguage;
+import consulo.psi.tree.ElementTypeAsPsiFactory;
 
 /**
  * @author VISTALL
- * @since 02-Feb-17
+ * @since 16-Jun-17
  */
-public class MSBuildExpressionLanguage extends Language
+public interface MSBuildExpressionElements
 {
-	public static final MSBuildExpressionLanguage INSTANCE = new MSBuildExpressionLanguage();
-
-	private MSBuildExpressionLanguage()
-	{
-		super("MSBUILD_EXPRESSION");
-	}
+	IElementType MACRO = new ElementTypeAsPsiFactory("MACRO", MSBuildExpressionLanguage.INSTANCE, MSBuildExpressionMacro.class);
+	IElementType MACRO_REFERENCE = new ElementTypeAsPsiFactory("MACRO_REFERENCE", MSBuildExpressionLanguage.INSTANCE, MSBuildExpressionMacroReference.class);
 }

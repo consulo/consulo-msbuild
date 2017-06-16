@@ -19,9 +19,12 @@ package consulo.msbuild.dom.expression.lang;
 import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilderUtil;
 import com.intellij.lang.PsiParser;
 import com.intellij.psi.tree.IElementType;
 import consulo.lang.LanguageVersion;
+import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionElements;
+import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionTokens;
 
 /**
  * @author VISTALL
@@ -36,7 +39,33 @@ public class MSBuildExpressionParser implements PsiParser
 		PsiBuilder.Marker mark = builder.mark();
 		while(!builder.eof())
 		{
-			builder.advanceLexer();
+			if(builder.getTokenType() == MSBuildExpressionTokens.MACRO_START)
+			{
+				PsiBuilder.Marker macroMarker = builder.mark();
+
+				builder.advanceLexer();
+
+				if(builder.getTokenType() == MSBuildExpressionTokens.MACRO_NAME)
+				{
+					PsiBuilder.Marker refMarker = builder.mark();
+					builder.advanceLexer();
+					refMarker.done(MSBuildExpressionElements.MACRO_REFERENCE);
+				}
+				else
+				{
+					builder.error("Name expected");
+				}
+
+				if(!PsiBuilderUtil.expect(builder, MSBuildExpressionTokens.MACRO_STOP))
+				{
+					builder.error("')' expected");
+				}
+				macroMarker.done(MSBuildExpressionElements.MACRO);
+			}
+			else
+			{
+				builder.advanceLexer();
+			}
 		}
 		mark.done(root);
 		return builder.getTreeBuilt();

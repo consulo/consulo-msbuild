@@ -17,17 +17,25 @@
 package consulo.msbuild.dom.expression.lang;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.InjectedLanguagePlaces;
 import com.intellij.psi.LanguageInjector;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
+import com.intellij.util.xml.GenericAttributeValue;
 import consulo.annotations.RequiredReadAction;
+import consulo.msbuild.dom.Injectable;
+import consulo.msbuild.dom.Project;
 
 /**
  * @author VISTALL
@@ -41,15 +49,41 @@ public class MSBuildExpressionXmlInjector implements LanguageInjector
 	{
 		if(host instanceof XmlAttributeValue || host instanceof XmlText)
 		{
-			
+			PsiFile containingFile = host.getContainingFile();
+
+			if(containingFile instanceof XmlFile)
+			{
+				DomFileElement<Project> fileElement = DomManager.getDomManager(host.getProject()).getFileElement((XmlFile) containingFile, Project.class);
+				if(fileElement == null)
+				{
+					return;
+				}
+
+				DomElement domElement = getDomElement(host);
+				if(domElement == null)
+				{
+					return;
+				}
+
+				if(domElement instanceof GenericAttributeValue && domElement.getAnnotation(Injectable.class) != null)
+				{
+					injectionPlacesRegistrar.addPlace(MSBuildExpressionLanguage.INSTANCE, ElementManipulators.getValueTextRange(host), null, null);
+				}
+			}
 		}
 	}
 
+	@Nullable
 	private static DomElement getDomElement(PsiElement element)
 	{
 		if(element instanceof XmlAttributeValue)
 		{
-			return DomManager.getDomManager(element.getProject()).getDomElement((XmlAttribute) element.getParent());
+			PsiElement parent = element.getParent();
+			if(!(parent instanceof XmlAttribute))
+			{
+				return null;
+			}
+			return DomManager.getDomManager(element.getProject()).getDomElement((XmlAttribute) parent);
 		}
 		else if(element instanceof XmlText)
 		{

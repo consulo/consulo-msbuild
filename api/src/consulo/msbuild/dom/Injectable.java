@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.dom.expression.lang;
+package consulo.msbuild.dom;
 
-import com.intellij.psi.tree.IElementType;
+import java.lang.annotation.*;
 
 /**
  * @author VISTALL
- * @since 02-Feb-17
+ * @since 16-Jun-17
  */
-public interface MSBuildExpressionTokens
+@Retention(RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target(ElementType.METHOD)
+public @interface Injectable
 {
-	IElementType CHAR = new IElementType("CHAR", MSBuildExpressionLanguage.INSTANCE);
-	IElementType MACRO_CHAR = new IElementType("MACRO_CHAR", MSBuildExpressionLanguage.INSTANCE);
-
-	IElementType MACRO_START = new IElementType("MACRO_START", MSBuildExpressionLanguage.INSTANCE);
-	IElementType LPAR = new IElementType("LPAR", MSBuildExpressionLanguage.INSTANCE);
-	IElementType RPAR = new IElementType("RPAR", MSBuildExpressionLanguage.INSTANCE);
 }
