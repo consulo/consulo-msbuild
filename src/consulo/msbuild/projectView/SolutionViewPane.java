@@ -367,14 +367,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	protected ProjectViewTree createTree(DefaultTreeModel treeModel)
 	{
-		return new ProjectViewTree(myProject, treeModel)
-		{
-			@Override
-			public DefaultMutableTreeNode getSelectedNode()
-			{
-				return SolutionViewPane.this.getSelectedNode();
-			}
-		};
+		return new ProjectViewTree(myProject, treeModel) {};
 	}
 
 	public JComponent getComponent()
