@@ -22,13 +22,13 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
 /**
  * @author VISTALL
- * @since 16-Jun-17
+ * @since 17-Jun-17
  */
-public class MSBuildToolsVersion extends MSBuildVariableProvider
+public class MSBuildToolsPath extends MSBuildVariableProvider
 {
 	@Override
-	public String evaluateUnsafe(@NotNull MSBuildEvaluateContext context)
+	public String evaluateUnsafe(@NotNull MSBuildEvaluateContext context) throws Exception
 	{
-		return "14.0";
+		return context.evaluateUnsafe(MSBuildExtensionsPath.class) + "\\" + context.evaluateUnsafe(MSBuildToolsVersion.class) + "\\bin";
 	}
 }

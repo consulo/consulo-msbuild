@@ -34,7 +34,7 @@ public interface Import extends DomElement
 	 * @return the value of the Condition child.
 	 */
 	@NotNull
-	@PathReferenceSet
+	@ExpressionFragment
 	GenericAttributeValue<String> getCondition();
 
 
@@ -49,7 +49,7 @@ public interface Import extends DomElement
 	 */
 	@NotNull
 	@Required
-	@PathReferenceSet
+	@ExpressionFragment
 	GenericAttributeValue<String> getProject();
 
 

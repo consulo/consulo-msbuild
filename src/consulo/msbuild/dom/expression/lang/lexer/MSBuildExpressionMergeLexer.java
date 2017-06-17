@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.dom;
+package consulo.msbuild.dom.expression.lang.lexer;
 
-import java.lang.annotation.*;
+import com.intellij.lexer.MergingLexerAdapter;
+import com.intellij.psi.tree.TokenSet;
+import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionTokens;
 
 /**
  * @author VISTALL
- * @since 16-Jun-17
+ * @since 17-Jun-17
  */
-@Retention(RetentionPolicy.RUNTIME)
-@java.lang.annotation.Target(ElementType.METHOD)
-public @interface PathReferenceSet
+public class MSBuildExpressionMergeLexer extends MergingLexerAdapter
 {
+	public MSBuildExpressionMergeLexer()
+	{
+		super(new MSBuildExpressionLexer(), TokenSet.create(MSBuildExpressionTokens.TEXT));
+	}
 }

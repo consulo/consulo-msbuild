@@ -22,6 +22,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.psi.PsiElement;
 import consulo.annotations.RequiredReadAction;
+import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
 /**
  * @author VISTALL
@@ -36,6 +37,18 @@ public class MSBuildEvaluateContext
 	public MSBuildEvaluateContext(@NotNull PsiElement element)
 	{
 		myElement = element;
+	}
+
+	@Nullable
+	public String evaluateUnsafe(@NotNull Class<? extends MSBuildVariableProvider> variableClazz) throws Exception
+	{
+		MSBuildVariableProvider provider = MSBuildVariableProvider.findProvider(variableClazz.getSimpleName());
+		if(provider == null)
+		{
+			throw new IllegalArgumentException();
+		}
+
+		return provider.evaluateUnsafe(this);
 	}
 
 	@RequiredReadAction

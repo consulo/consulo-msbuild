@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.dom.expression;
+package consulo.msbuild.dom.expression.editor;
 
 import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
@@ -56,9 +56,7 @@ public class MSBuildExpressionHighlightVisitor extends MSBuildExpressionElementV
 		}
 		else if(resolved instanceof MSBuildLightMacroValue)
 		{
-			String value = ((MSBuildLightMacroValue) resolved).getValue();
-			myHighlightInfoHolder.add(HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION).textAttributes(DefaultLanguageHighlighterColors.INSTANCE_FIELD).descriptionAndTooltip(value).range
-					(reference).create());
+			myHighlightInfoHolder.add(HighlightInfo.newHighlightInfo(HighlightInfoType.INFORMATION).textAttributes(DefaultLanguageHighlighterColors.INSTANCE_FIELD).range(reference).create());
 		}
 	}
 

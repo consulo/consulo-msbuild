@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.dom.expression.evaluate.variable.impl;
+package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
-import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
+import java.lang.annotation.*;
 
 /**
  * @author VISTALL
  * @since 16-Jun-17
  */
-public class MSBuildToolsVersion extends MSBuildVariableProvider
+@Retention(RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target(ElementType.METHOD)
+public @interface ExpressionFragment
 {
-	@Override
-	public String evaluateUnsafe(@NotNull MSBuildEvaluateContext context)
-	{
-		return "14.0";
-	}
 }

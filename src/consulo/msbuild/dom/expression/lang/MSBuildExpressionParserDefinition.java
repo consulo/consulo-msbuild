@@ -26,7 +26,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import consulo.lang.LanguageVersion;
-import consulo.msbuild.dom.expression.lang.lexer.MSBuildExpressionLexer;
+import consulo.msbuild.dom.expression.lang.lexer.MSBuildExpressionMergeLexer;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionFile;
 
 /**
@@ -41,7 +41,7 @@ public class MSBuildExpressionParserDefinition implements ParserDefinition
 	@Override
 	public Lexer createLexer(@NotNull LanguageVersion languageVersion)
 	{
-		return new MSBuildExpressionLexer();
+		return new MSBuildExpressionMergeLexer();
 	}
 
 	@NotNull

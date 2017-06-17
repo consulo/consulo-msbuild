@@ -30,6 +30,8 @@ public interface MSBuildExpressionTokens extends TokenType
 
 	IElementType SINGLE_QUOTE = new IElementType("SINGLE_QUOTE", MSBuildExpressionLanguage.INSTANCE);
 
+	IElementType PATH_SEPARATOR = new IElementType("PATH_SEPARATOR", MSBuildExpressionLanguage.INSTANCE);
+
 	IElementType MACRO_START = new IElementType("MACRO_OPEN", MSBuildExpressionLanguage.INSTANCE);
 
 	IElementType MACRO_STOP = new IElementType("MACRO_STOP", MSBuildExpressionLanguage.INSTANCE);

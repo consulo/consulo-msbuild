@@ -27,7 +27,7 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 public class MSBuildExtensionsPath extends MSBuildVariableProvider
 {
 	@Override
-	public String evaluate(@NotNull MSBuildEvaluateContext context)
+	public String evaluateUnsafe(@NotNull MSBuildEvaluateContext context)
 	{
 		return "C:\\Program Files (x86)\\MSBuild";
 	}

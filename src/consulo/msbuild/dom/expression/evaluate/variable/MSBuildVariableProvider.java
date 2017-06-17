@@ -16,8 +16,14 @@
 
 package consulo.msbuild.dom.expression.evaluate.variable;
 
+import gnu.trove.THashMap;
+
+import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.util.NotNullLazyValue;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 
 /**
@@ -27,6 +33,22 @@ import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 public abstract class MSBuildVariableProvider
 {
 	public static final ExtensionPointName<MSBuildVariableProvider> EP_NAME = ExtensionPointName.create("consulo.msbuild.variableProvider");
+
+	private static NotNullLazyValue<Map<String, MSBuildVariableProvider>> ourValue = NotNullLazyValue.createValue(() ->
+	{
+		Map<String, MSBuildVariableProvider> map = new THashMap<>();
+		for(MSBuildVariableProvider provider : EP_NAME.getExtensions())
+		{
+			map.put(provider.getName(), provider);
+		}
+		return map;
+	});
+
+	@Nullable
+	public static MSBuildVariableProvider findProvider(String name)
+	{
+		return ourValue.getValue().get(name);
+	}
 
 	private final String myName;
 
@@ -41,5 +63,19 @@ public abstract class MSBuildVariableProvider
 		return myName;
 	}
 
-	public abstract String evaluate(@NotNull MSBuildEvaluateContext context);
+	@Nullable
+	public String evaluate(@NotNull MSBuildEvaluateContext context)
+	{
+		try
+		{
+			return evaluateUnsafe(context);
+		}
+		catch(Exception ignored)
+		{
+		}
+		return null;
+	}
+
+	@Nullable
+	public abstract String evaluateUnsafe(@NotNull MSBuildEvaluateContext context) throws Exception;
 }

@@ -40,7 +40,7 @@ import consulo.roots.ModifiableModuleRootLayer;
 public interface MSBuildProjectType
 {
 	String PROPS_EXT = "props";
-	String TARGET_EXT = "target";
+	String TARGETS_EXT = "targets";
 
 	ExtensionPointName<MSBuildProjectTypeEP<MSBuildProjectType>> EP_NAME = ExtensionPointName.create("consulo.msbuild.projectType");
 
@@ -48,7 +48,7 @@ public interface MSBuildProjectType
 	{
 		Set<String> set = new THashSet<>();
 		set.add(PROPS_EXT);
-		set.add(TARGET_EXT);
+		set.add(TARGETS_EXT);
 
 		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
 		{

@@ -36,6 +36,8 @@ public class MSBuildExpressionParser implements PsiParser
 	@Override
 	public ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder, @NotNull LanguageVersion languageVersion)
 	{
+		PsiBuilder.Marker last = null;
+
 		PsiBuilder.Marker mark = builder.mark();
 		while(!builder.eof())
 		{
@@ -61,10 +63,18 @@ public class MSBuildExpressionParser implements PsiParser
 					builder.error("')' expected");
 				}
 				macroMarker.done(MSBuildExpressionElements.MACRO);
+				last = macroMarker;
 			}
+			/*else if(builder.getTokenType() == MSBuildExpressionTokens.PATH_SEPARATOR)
+			{
+				PsiBuilder.Marker marker = last == null ? builder.mark() : last.precede();
+
+
+			} */
 			else
 			{
 				builder.advanceLexer();
+				last = null;
 			}
 		}
 		mark.done(root);

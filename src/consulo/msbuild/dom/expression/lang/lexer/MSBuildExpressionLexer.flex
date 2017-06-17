@@ -18,7 +18,6 @@ import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionTokens;
 IDENTIFIER=[:jletter:] [:jletterdigit:]*
 
 %state MACRO
-
 %%
 
 <YYINITIAL>
@@ -27,6 +26,8 @@ IDENTIFIER=[:jletter:] [:jletterdigit:]*
 
    "'"          { return MSBuildExpressionTokens.SINGLE_QUOTE; }
 
+   "\\"         { return MSBuildExpressionTokens.PATH_SEPARATOR; }
+   
    [^]          { return MSBuildExpressionTokens.TEXT; }
 }
 

@@ -20,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
@@ -59,6 +58,12 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 		return new TextRange(0, element.getTextLength());
 	}
 
+	@Override
+	public PsiReference getReference()
+	{
+		return this;
+	}
+
 	@RequiredReadAction
 	@Nullable
 	@Override
@@ -67,15 +72,13 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 		return ResolveCache.getInstance(getProject()).resolveWithCaching(this, (reference, incompleteCode) ->
 		{
 			String text = getText();
-			for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensions())
+			MSBuildVariableProvider provider = MSBuildVariableProvider.findProvider(text);
+			if(provider != null)
 			{
-				if(Comparing.equal(provider.getName(), text))
+				String value = provider.evaluate(new MSBuildEvaluateContext(this));
+				if(value != null)
 				{
-					String value = provider.evaluate(new MSBuildEvaluateContext(this));
-					if(value != null)
-					{
-						return new MSBuildLightMacroValue(getProject(), text, value);
-					}
+					return new MSBuildLightMacroValue(getProject(), text, value);
 				}
 			}
 			return null;

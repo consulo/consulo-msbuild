@@ -18,6 +18,7 @@ package consulo.msbuild.dom.expression.lang;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.InjectedLanguagePlaces;
 import com.intellij.psi.LanguageInjector;
 import com.intellij.psi.PsiElement;
@@ -33,7 +34,7 @@ import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.GenericAttributeValue;
 import consulo.annotations.RequiredReadAction;
-import consulo.msbuild.dom.PathReferenceSet;
+import consulo.msbuild.dom.ExpressionFragment;
 import consulo.msbuild.dom.Project;
 
 /**
@@ -64,9 +65,9 @@ public class MSBuildExpressionXmlInjector implements LanguageInjector
 					return;
 				}
 
-				if(domElement instanceof GenericAttributeValue && domElement.getAnnotation(PathReferenceSet.class) != null)
+				if(domElement instanceof GenericAttributeValue && domElement.getAnnotation(ExpressionFragment.class) != null)
 				{
-			//		injectionPlacesRegistrar.addPlace(MSBuildExpressionLanguage.INSTANCE, ElementManipulators.getValueTextRange(host), null, null);
+					injectionPlacesRegistrar.addPlace(MSBuildExpressionLanguage.INSTANCE, ElementManipulators.getValueTextRange(host), null, null);
 				}
 			}
 		}

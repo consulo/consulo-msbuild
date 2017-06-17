@@ -26,7 +26,7 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
-import consulo.msbuild.dom.expression.lang.lexer.MSBuildExpressionLexer;
+import consulo.msbuild.dom.expression.lang.lexer.MSBuildExpressionMergeLexer;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionTokens;
 
 /**
@@ -41,13 +41,14 @@ public class MSBuildExpressionSyntaxHighlighter extends SyntaxHighlighterBase
 	{
 		safeMap(ourKeys, MSBuildExpressionTokens.MACRO_START, DefaultLanguageHighlighterColors.KEYWORD);
 		safeMap(ourKeys, MSBuildExpressionTokens.MACRO_STOP, DefaultLanguageHighlighterColors.KEYWORD);
+		safeMap(ourKeys, MSBuildExpressionTokens.PATH_SEPARATOR, DefaultLanguageHighlighterColors.KEYWORD);
 	}
 
 	@NotNull
 	@Override
 	public Lexer getHighlightingLexer()
 	{
-		return new MSBuildExpressionLexer();
+		return new MSBuildExpressionMergeLexer();
 	}
 
 	@NotNull

@@ -33,7 +33,7 @@ public class MSBuildFileTypeFactory extends FileTypeFactory
 		consumer.consume(VisualStudioSolutionFileType.INSTANCE);
 		consumer.consume(XmlFileType.INSTANCE, "resx;settings;config");
 		consumer.consume(XmlFileType.INSTANCE, MSBuildProjectType.PROPS_EXT);
-		consumer.consume(XmlFileType.INSTANCE, MSBuildProjectType.TARGET_EXT);
+		consumer.consume(XmlFileType.INSTANCE, MSBuildProjectType.TARGETS_EXT);
 
 		for(String ext : MSBuildProjectType.getExtensions())
 		{
