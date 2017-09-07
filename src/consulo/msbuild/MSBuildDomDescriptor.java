@@ -36,7 +36,7 @@ public class MSBuildDomDescriptor extends DomFileDescription<Project>
 	{
 		super(Project.class, "Project");
 
-		registerNamespacePolicy(null, "http://schemas.microsoft.com/developer/msbuild/2003");
+		registerNamespacePolicy("", "http://schemas.microsoft.com/developer/msbuild/2003");
 	}
 
 	@Override
