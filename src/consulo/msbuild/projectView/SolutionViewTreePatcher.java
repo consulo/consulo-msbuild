@@ -105,11 +105,4 @@ public class SolutionViewTreePatcher implements TreeStructureProvider
 		}
 		return nodes;
 	}
-
-	@Nullable
-	@Override
-	public Object getData(Collection<AbstractTreeNode> selected, String dataName)
-	{
-		return null;
-	}
 }

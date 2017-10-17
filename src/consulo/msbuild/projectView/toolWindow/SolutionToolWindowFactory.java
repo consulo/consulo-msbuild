@@ -42,6 +42,6 @@ public class SolutionToolWindowFactory implements ToolWindowFactory
 		JComponent component = viewPane.getComponent();
 		component.setBorder(null);
 
-		contentManager.addContent(ContentFactory.SERVICE.getInstance().createContent(component, null, true));
+		contentManager.addContent(ContentFactory.getInstance().createContent(component, null, true));
 	}
 }
