@@ -18,6 +18,7 @@ package consulo.msbuild;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.module.ModifiableModuleModel;
@@ -36,6 +37,7 @@ import consulo.msbuild.solution.SolutionVirtualFile;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
 import consulo.roots.ModifiableModuleRootLayer;
+import consulo.ui.UIAccess;
 
 /**
  * @author VISTALL
@@ -44,7 +46,7 @@ import consulo.roots.ModifiableModuleRootLayer;
 public class MSBuildStartActivity implements StartupActivity
 {
 	@Override
-	public void runActivity(Project project)
+	public void runActivity(@NotNull UIAccess uiAccess, @NotNull Project project)
 	{
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
 		if(!solutionManager.isEnabled())
@@ -52,7 +54,7 @@ public class MSBuildStartActivity implements StartupActivity
 			return;
 		}
 
-		Task.Backgroundable.queue(project, "Synchonize solution", indicator ->
+		Task.Backgroundable.queue(project, "Synchronize solution", indicator ->
 		{
 			ModifiableModuleModel modifiableModel = ReadAction.compute(() -> ModuleManager.getInstance(project).getModifiableModel());
 
