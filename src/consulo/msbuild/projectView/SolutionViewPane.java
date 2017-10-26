@@ -343,7 +343,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	}
 
 	@Override
-	protected ProjectAbstractTreeStructureBase createStructure()
+	public ProjectAbstractTreeStructureBase createStructure()
 	{
 		return new ProjectTreeStructure(myProject, ID)
 		{
