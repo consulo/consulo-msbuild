@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.google.common.base.Throwables;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotations.RequiredReadAction;
@@ -44,6 +44,8 @@ public class WSolution
 {
 	public static final String SECTION_NESTED_PROJECTS = "NestedProjects";
 
+	private static final Logger LOGGER = Logger.getInstance(WSolution.class);
+
 	@NotNull
 	@RequiredReadAction
 	public static WSolution build(@NotNull Project project, @NotNull VirtualFile solutionVirtualFile)
@@ -55,7 +57,7 @@ public class WSolution
 		}
 		catch(IOException e)
 		{
-			throw Throwables.propagate(e);
+			LOGGER.error(e);
 		}
 
 		return new WSolution(project, solutionVirtualFile, slnFile);
