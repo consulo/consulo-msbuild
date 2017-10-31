@@ -1,5 +1,6 @@
 package consulo.msbuild.importProvider;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import com.intellij.ide.util.newProjectWizard.ProjectNameStep;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.application.WriteAction;
+import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
@@ -69,9 +71,9 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 	}
 
 	@Override
-	public boolean canImport(@NotNull VirtualFile fileOrDirectory)
+	public boolean canImport(@NotNull File fileOrDirectory)
 	{
-		return fileOrDirectory.getFileType() == VisualStudioSolutionFileType.INSTANCE;
+		return !fileOrDirectory.isDirectory() && FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
 	}
 
 	@Override
