@@ -22,10 +22,6 @@
 								 name="MSBuild (.NET)"
 								 immutableClass="consulo.msbuild.module.extension.MSBuildDotNetModuleExtension"
 								 mutableClass="consulo.msbuild.module.extension.MSBuildMutableDotNetModuleExtension"/>
-
-		<addTo.listOfElements name="msbuidList">
-			<add>msbuild-dotnet</add>
-		</addTo.listOfElements>
 	</extensions>
 
 	<extensions defaultExtensionNs="consulo.msbuild">
