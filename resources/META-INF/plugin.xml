@@ -82,7 +82,7 @@
 
 		<postStartupActivity implementation="consulo.msbuild.MSBuildStartActivity"/>
 
-		<toolWindow id="Solution Exporer" anchor="left" icon="AllIcons.Toolwindows.WebToolWindow" requireModuleExtensions="@@msbuidList"
-					factoryClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowFactory"/>
+		<toolWindow id="Solution Exporer" anchor="left" icon="AllIcons.Toolwindows.WebToolWindow" factoryClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowFactory"
+					conditionClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowCondition"/>
 	</extensions>
 </idea-plugin>
