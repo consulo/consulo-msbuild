@@ -141,7 +141,7 @@ public class MSBuildDotNetSetupTargetStep extends ModuleWizardStep
 
 		myPanel = JBUI.Panels.verticalPanel();
 		myPanel.addComponent(new TitledSeparator(".NET Projects Setting:"));
-		myPanel.addComponent(LabeledComponent.left(targetComboBox, "Default .NET framework"));
+		myPanel.addComponent(LabeledComponent.create(targetComboBox, "Default .NET framework"));
 		myPanel.addComponent(ScrollPaneFactory.createScrollPane(tableItemTableView));
 	}
 

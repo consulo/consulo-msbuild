@@ -31,6 +31,7 @@ public class CSharpProjectType extends DotNetBasedProjectType
 	public void setupModuleImpl(@NotNull ModifiableModuleRootLayer rootLayer)
 	{
 		MSBuildCSharpMutableModuleExtension extension = rootLayer.getExtensionWithoutCheck(MSBuildCSharpMutableModuleExtension.class);
+
 		assert extension != null;
 
 		extension.setEnabled(true);
