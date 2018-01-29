@@ -16,10 +16,9 @@
 
 package consulo.msbuild.dom;
 
-import com.intellij.openapi.paths.PathReference;
-import com.intellij.util.xml.Convert;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.converters.PathReferenceConverter;
+import com.intellij.util.xml.TagValue;
 
 /**
  * @author VISTALL
@@ -27,6 +26,7 @@ import com.intellij.util.xml.converters.PathReferenceConverter;
  */
 public interface ReferenceHintPath extends DomElement
 {
-	@Convert(PathReferenceConverter.class)
-	PathReference getValue();
+	@TagValue
+	@Nullable
+	String getValue();
 }

@@ -93,7 +93,7 @@ public class MSBuildStartActivity implements StartupActivity
 				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
 				if(projectType != null)
 				{
-					projectType.setupModule(domProject, projectOptions, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
+					projectType.setupModule(projectFile, domProject, projectOptions, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
 				}
 
 				SolutionVirtualDirectory directory = ReadAction.compute(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));

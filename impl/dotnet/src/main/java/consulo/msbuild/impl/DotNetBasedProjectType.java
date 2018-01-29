@@ -16,6 +16,8 @@
 
 package consulo.msbuild.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,10 +27,17 @@ import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
+import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.containers.ContainerUtil;
+import com.intellij.util.io.URLUtil;
+import consulo.dotnet.dll.DotNetModuleFileType;
 import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.MSBuildProjectType;
@@ -48,6 +57,7 @@ import consulo.msbuild.module.extension.MSBuildMutableDotNetModuleExtension;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.ModuleRootLayerImpl;
+import consulo.roots.types.BinariesOrderRootType;
 
 /**
  * @author VISTALL
@@ -76,7 +86,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 	}
 
 	@Override
-	public final void setupModule(@NotNull Project domProject, @Nullable MSBuildSolutionManager.ProjectOptions projectOptions, @NotNull ModifiableModuleRootLayer rootLayer)
+	public final void setupModule(@NotNull VirtualFile projectFile, @NotNull Project domProject, @Nullable MSBuildSolutionManager.ProjectOptions projectOptions, @NotNull ModifiableModuleRootLayer rootLayer)
 	{
 		// setup .NET extension
 		MSBuildMutableDotNetModuleExtension moduleExtension = rootLayer.getExtensionWithoutCheck(MSBuildMutableDotNetModuleExtension.class);
@@ -130,10 +140,38 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 				List<Reference> references = itemGroup.getReferences();
 				for(Reference reference : references)
 				{
-					String stringValue = reference.getInclude().getStringValue();
-					if(stringValue != null)
+					String hintPath = reference.getHintPath().getValue();
+					if(hintPath != null)
 					{
-						rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, stringValue));
+						File file = new File(hintPath);
+						if(!file.isAbsolute())
+						{
+							file = new File(VfsUtil.virtualToIoFile(projectFile.getParent()), FileUtil.toSystemIndependentName(hintPath));
+						}
+
+						String fullPath = file.getPath();
+						try
+						{
+							fullPath = file.getCanonicalPath();
+						}
+						catch(IOException ignored)
+						{
+						}
+
+						String url = VirtualFileManager.constructUrl(DotNetModuleFileType.PROTOCOL, FileUtil.toSystemIndependentName(fullPath)) + URLUtil.ARCHIVE_SEPARATOR;
+
+						Library library = rootLayer.getModuleLibraryTable().createLibrary(file.getName());
+						Library.ModifiableModel modifiableModel = library.getModifiableModel();
+						modifiableModel.addRoot(url, BinariesOrderRootType.getInstance());
+						modifiableModel.commit();
+					}
+					else
+					{
+						String includeName = reference.getInclude().getStringValue();
+						if(includeName != null)
+						{
+							rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, includeName));
+						}
 					}
 				}
 

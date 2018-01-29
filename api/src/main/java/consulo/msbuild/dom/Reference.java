@@ -4,7 +4,6 @@
 package consulo.msbuild.dom;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
@@ -61,6 +60,6 @@ public interface Reference extends DomElement
 	@NotNull
 	GenericAttributeValue<String> getCondition();
 
-	@Nullable
+	@NotNull
 	ReferenceHintPath getHintPath();
 }
