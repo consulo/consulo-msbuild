@@ -28,7 +28,7 @@ import consulo.roots.ModuleRootLayer;
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtension<MSBuildDotNetModuleExtension>
+public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>
 {
 	protected MSBuildDotNetImportTarget myTarget = MSBuildDotNetImportTarget._NET;
 

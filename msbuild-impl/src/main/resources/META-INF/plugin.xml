@@ -52,7 +52,12 @@
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
+		<compiler implementation="consulo.msbuild.compiler.MSBuildCompiler" />
+
+		<compiler.moduleScopeFactory implementation="consulo.msbuild.compiler.MSBuildCompileModuleScopeFactory" />
+
 		<sdkType implementation="consulo.msbuild.bundle.MSBuildBundleType"/>
+		<predefinedBundlesProvider implementation="consulo.msbuild.bundle.MSBuildBundleProvider"/>
 
 		<fileTypeFactory implementation="consulo.msbuild.MSBuildFileTypeFactory"/>
 

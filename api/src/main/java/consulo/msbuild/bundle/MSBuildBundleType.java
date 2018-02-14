@@ -17,10 +17,11 @@
 package consulo.msbuild.bundle;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.Icon;
 
@@ -34,13 +35,54 @@ import com.intellij.openapi.util.SystemInfo;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildVersion;
+import consulo.platform.Platform;
 
 /**
  * @author VISTALL
  * @since 08.06.2015
  */
-public class MSBuildBundleType  extends BaseMSBuildBundleType
+public class MSBuildBundleType extends BaseMSBuildBundleType
 {
+	public static class MSBuildInfo
+	{
+		private File myPath;
+		private String myBitness;
+		private MSBuildVersion myVersion;
+		@Nullable
+		private String myEdition;
+
+		public MSBuildInfo(File path, String bitness, MSBuildVersion version, @Nullable String edition)
+		{
+			myPath = path;
+			myBitness = bitness;
+			myVersion = version;
+			myEdition = edition;
+		}
+
+		public File getPath()
+		{
+			return myPath;
+		}
+
+		public String buildName()
+		{
+			StringBuilder builder = new StringBuilder();
+			builder.append("MSBuild ");
+			builder.append(myVersion.getInternalVersion());
+			if(myEdition != null)
+			{
+				builder.append(" [VS ");
+				builder.append(myVersion.getYearVersion());
+				builder.append(" ");
+				builder.append(myEdition);
+				builder.append(" ");
+				builder.append(myBitness);
+				builder.append("]");
+			}
+			return builder.toString();
+		}
+	}
+
 	@NotNull
 	public static String getExecutable(String home)
 	{
@@ -58,41 +100,65 @@ public class MSBuildBundleType  extends BaseMSBuildBundleType
 		super("MSBUILD_BUNDLE");
 	}
 
-	@Override
-	public boolean canCreatePredefinedSdks()
-	{
-		return true;
-	}
-
 	@NotNull
 	@Override
 	public Collection<String> suggestHomePaths()
+	{
+		return findMSBuilds().stream().map(msBuildInfo -> msBuildInfo.getPath().getPath()).collect(Collectors.toList());
+	}
+
+	@NotNull
+	public List<MSBuildInfo> findMSBuilds()
 	{
 		if(!SystemInfo.isWindows)
 		{
 			return Collections.emptyList();
 		}
 
-		Map<MSBuildVersion, String> compilerPaths = new TreeMap<>();
-		collectVisualStudioCompilerPaths(compilerPaths, "ProgramFiles");
-		collectVisualStudioCompilerPaths(compilerPaths, "ProgramFiles(x86)");
+		List<MSBuildInfo> list = new ArrayList<>();
 
-		return compilerPaths.values();
+		collectVisualStudioCompilerPaths(list, "ProgramFiles", SystemInfo.is64Bit ? "x64" : "x86");
+		collectVisualStudioCompilerPaths(list, "ProgramFiles(x86)", "x86");
+
+		return list;
 	}
 
-	private void collectVisualStudioCompilerPaths(Map<MSBuildVersion, String> map, String env)
+	private void collectVisualStudioCompilerPaths(List<MSBuildInfo> list, String env, String bitness)
 	{
-		String programFiles = System.getenv(env);
+		String programFiles = Platform.current().getEnvironmentVariable(env);
 		if(programFiles != null)
 		{
 			File msbuildDir = new File(programFiles, "MSBuild");
 
-			for(MSBuildVersion version : MSBuildVersion.values())
+			if(msbuildDir.exists())
 			{
-				File compilerPath = new File(msbuildDir, version.getInternalVersion());
-				if(compilerPath.exists())
+				for(MSBuildVersion version : MSBuildVersion.values())
 				{
-					map.put(version, compilerPath.getPath());
+					File compilerPath = new File(msbuildDir, version.getInternalVersion());
+					if(compilerPath.exists())
+					{
+						list.add(new MSBuildInfo(compilerPath, bitness, version, null));
+					}
+				}
+			}
+
+			File vsDirectory = new File(programFiles, "Microsoft Visual Studio");
+			if(vsDirectory.exists())
+			{
+				for(MSBuildVersion version : MSBuildVersion.values())
+				{
+					for(String visualStudioEdition : MSBuildVersion.ourVisualStudioEditions)
+					{
+						File vsTargetDirectory = new File(vsDirectory, version.getYearVersion() + "/" + visualStudioEdition);
+						if(vsTargetDirectory.exists())
+						{
+							File msBuildDirectory = new File(vsTargetDirectory, "MSBuild/" + version.getInternalVersion());
+							if(msBuildDirectory.exists())
+							{
+								list.add(new MSBuildInfo(msBuildDirectory, bitness, version, visualStudioEdition));
+							}
+						}
+					}
 				}
 			}
 		}

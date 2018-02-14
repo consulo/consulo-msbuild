@@ -24,26 +24,40 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum MSBuildVersion
 {
-	Visual_Studio("4.0"),
-	Visual_Studio_97("5.0"),
-	Visual_Studio_6("6.0"),
-	Visual_Studio_2002("7.0"),
-	Visual_Studio_2003("7.1"),
-	Visual_Studio_2005("8.0"),
-	Visual_Studio_2008("9.0"),
-	Visual_Studio_2010("10.0"),
-	Visual_Studio_2012("11.0"),
-	Visual_Studio_2013("12.0"),
-	Visual_Studio_2015("14.0"),
-	Visual_Studio_2017("15.0");
+	Visual_Studio("4.0", "4.0"),
+	Visual_Studio_97("5.0", "5.0"),
+	Visual_Studio_6("6.0", "6.0"),
 
+	Visual_Studio_2002("2002", "7.0"),
+	Visual_Studio_2003("2003", "7.1"),
+	Visual_Studio_2005("2005", "8.0"),
+	Visual_Studio_2008("2008", "9.0"),
+	Visual_Studio_2010("2010", "10.0"),
+	Visual_Studio_2012("2012", "11.0"),
+	Visual_Studio_2013("2013", "12.0"),
+	Visual_Studio_2015("2015", "14.0"),
+	Visual_Studio_2017("2017", "15.0");
+
+	public static final String[] ourVisualStudioEditions = new String[]{
+			"Community",
+			"Professional"
+	};
+
+	private final String myYearVersion;
 	private final String myInternalVersion;
 	private final String myPresentableName;
 
-	MSBuildVersion(String internalVersion)
+	MSBuildVersion(@NotNull String yearVersion, String internalVersion)
 	{
+		myYearVersion = yearVersion;
 		myInternalVersion = internalVersion;
 		myPresentableName = name().replace("_", " ");
+	}
+
+	@NotNull
+	public String getYearVersion()
+	{
+		return myYearVersion;
 	}
 
 	@NotNull
