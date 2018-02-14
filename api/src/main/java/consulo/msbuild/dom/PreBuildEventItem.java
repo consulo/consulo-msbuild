@@ -5,7 +5,7 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -27,7 +27,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -40,7 +40,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -53,7 +53,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -66,7 +66,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -80,7 +80,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -93,7 +93,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -102,7 +102,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of Message children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMessages();
 
 	/**
@@ -118,7 +118,7 @@ public interface PreBuildEventItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of Command children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCommands();
 
 	/**

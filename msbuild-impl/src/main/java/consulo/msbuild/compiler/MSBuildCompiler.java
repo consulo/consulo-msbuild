@@ -1,6 +1,7 @@
 package consulo.msbuild.compiler;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompileScope;
 import com.intellij.openapi.compiler.TranslatingCompiler;
@@ -29,21 +30,21 @@ public class MSBuildCompiler implements TranslatingCompiler
 		System.out.println("test");
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public FileType[] getInputFileTypes()
 	{
 		return FileType.EMPTY_ARRAY;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public FileType[] getOutputFileTypes()
 	{
 		return FileType.EMPTY_ARRAY;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getDescription()
 	{

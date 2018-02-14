@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the BuildAssemblyName child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getBuildAssemblyName();
 
@@ -33,7 +34,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the BuildAssemblyPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getBuildAssemblyPath();
 
@@ -43,7 +44,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the DelaySign child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
 
 
@@ -52,7 +53,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -61,7 +62,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the KeyContainer child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
 
@@ -70,7 +71,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the KeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
 
 
@@ -79,7 +80,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -88,7 +89,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the References child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getReferences();
 
 
@@ -97,7 +98,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the SdkToolsPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSdkToolsPath();
 
 
@@ -106,7 +107,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the SerializationAssembly child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSerializationAssembly();
 
 
@@ -115,7 +116,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the ShouldGenerateSerializer child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<Boolean> getShouldGenerateSerializer();
 
@@ -125,7 +126,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -134,7 +135,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -143,7 +144,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -152,7 +153,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -161,7 +162,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -170,7 +171,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the UseProxyTypes child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<Boolean> getUseProxyTypes();
 
@@ -184,7 +185,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -197,7 +198,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -212,7 +213,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -227,7 +228,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -240,7 +241,7 @@ public interface SGen extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

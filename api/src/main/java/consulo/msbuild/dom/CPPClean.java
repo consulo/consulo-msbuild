@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the DeletedFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDeletedFiles();
 
 
@@ -32,7 +33,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the DoDelete child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDoDelete();
 
 
@@ -41,7 +42,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the FilePatternsToDeleteOnClean child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFilePatternsToDeleteOnClean();
 
@@ -51,7 +52,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the FilesExcludedFromClean child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFilesExcludedFromClean();
 
 
@@ -60,7 +61,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the FoldersToClean child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFoldersToClean();
 
@@ -74,7 +75,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -87,7 +88,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -102,7 +103,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -117,7 +118,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -130,7 +131,7 @@ public interface CPPClean extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -16,7 +16,7 @@
 
 package consulo.msbuild.dom.expression.editor;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
 import com.intellij.codeInsight.daemon.impl.HighlightVisitor;
@@ -39,7 +39,7 @@ public class MSBuildExpressionHighlightVisitor extends MSBuildExpressionElementV
 	private HighlightInfoHolder myHighlightInfoHolder;
 
 	@Override
-	public boolean suitableForFile(@NotNull PsiFile psiFile)
+	public boolean suitableForFile(@Nonnull PsiFile psiFile)
 	{
 		return psiFile instanceof MSBuildExpressionFile;
 	}
@@ -61,20 +61,20 @@ public class MSBuildExpressionHighlightVisitor extends MSBuildExpressionElementV
 	}
 
 	@Override
-	public void visit(@NotNull PsiElement psiElement)
+	public void visit(@Nonnull PsiElement psiElement)
 	{
 		psiElement.accept(this);
 	}
 
 	@Override
-	public boolean analyze(@NotNull PsiFile psiFile, boolean b, @NotNull HighlightInfoHolder highlightInfoHolder, @NotNull Runnable runnable)
+	public boolean analyze(@Nonnull PsiFile psiFile, boolean b, @Nonnull HighlightInfoHolder highlightInfoHolder, @Nonnull Runnable runnable)
 	{
 		myHighlightInfoHolder = highlightInfoHolder;
 		runnable.run();
 		return true;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public HighlightVisitor clone()
 	{

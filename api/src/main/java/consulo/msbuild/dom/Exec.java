@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.Attribute;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
@@ -24,7 +25,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the Command child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getCommand();
 
@@ -34,7 +35,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the CustomErrorRegularExpression child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCustomErrorRegularExpression();
 
 
@@ -43,7 +44,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the CustomWarningRegularExpression child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCustomWarningRegularExpression();
 
 
@@ -52,7 +53,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -61,7 +62,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreExitCode child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreExitCode();
 
 
@@ -70,7 +71,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreStandardErrorWarningFormat child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreStandardErrorWarningFormat();
 
 
@@ -79,7 +80,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -88,7 +89,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the Outputs child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("Outputs")
 	GenericAttributeValue<String> getOutputsAttr();
 
@@ -98,7 +99,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -107,7 +108,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -116,7 +117,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the StdErrEncoding child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStdErrEncoding();
 
 
@@ -125,7 +126,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the StdOutEncoding child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStdOutEncoding();
 
 
@@ -134,7 +135,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -143,7 +144,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -152,7 +153,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -161,7 +162,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the WorkingDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWorkingDirectory();
 
 
@@ -174,7 +175,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -187,7 +188,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -202,7 +203,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -217,7 +218,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -230,7 +231,7 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

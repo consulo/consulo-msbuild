@@ -3,7 +3,7 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -25,7 +25,7 @@ public interface ComFilesOutputGroupOutputs extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -38,7 +38,7 @@ public interface ComFilesOutputGroupOutputs extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -51,7 +51,7 @@ public interface ComFilesOutputGroupOutputs extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -64,7 +64,7 @@ public interface ComFilesOutputGroupOutputs extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -78,7 +78,7 @@ public interface ComFilesOutputGroupOutputs extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -91,7 +91,7 @@ public interface ComFilesOutputGroupOutputs extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -100,7 +100,7 @@ public interface ComFilesOutputGroupOutputs extends DomElement, SimpleItem
 	 *
 	 * @return the value of the TargetPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericDomValue<String> getTargetPath();
 
 

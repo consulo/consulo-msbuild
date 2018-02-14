@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the AcceptableNonZeroExitCodes child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAcceptableNonZeroExitCodes();
 
 
@@ -32,7 +33,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ActiveToolSwitchesValues child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getActiveToolSwitchesValues();
 
 
@@ -41,7 +42,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalDependencies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalDependencies();
 
 
@@ -50,7 +51,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalLibraryDirectories child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalLibraryDirectories();
 
 
@@ -59,7 +60,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalOptions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalOptions();
 
 
@@ -68,7 +69,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the DisplayLibrary child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDisplayLibrary();
 
 
@@ -77,7 +78,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -86,7 +87,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ErrorReporting child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getErrorReporting();
 
 
@@ -95,7 +96,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ExcludedInputPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExcludedInputPaths();
 
 
@@ -104,7 +105,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ExportNamedFunctions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExportNamedFunctions();
 
 
@@ -113,7 +114,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ForceSymbolReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getForceSymbolReferences();
 
 
@@ -122,7 +123,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreAllDefaultLibraries child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreAllDefaultLibraries();
 
 
@@ -131,7 +132,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreSpecificDefaultLibraries child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getIgnoreSpecificDefaultLibraries();
 
 
@@ -140,7 +141,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the LinkLibraryDependencies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLinkLibraryDependencies();
 
 
@@ -149,7 +150,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the LinkTimeCodeGeneration child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLinkTimeCodeGeneration();
 
 
@@ -158,7 +159,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -167,7 +168,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the MinimalRebuildFromTracking child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getMinimalRebuildFromTracking();
 
 
@@ -176,7 +177,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the MinimumRequiredVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMinimumRequiredVersion();
 
 
@@ -185,7 +186,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ModuleDefinitionFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getModuleDefinitionFile();
 
 
@@ -194,7 +195,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the OutputFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputFile();
 
 
@@ -203,7 +204,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the PathOverride child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPathOverride();
 
 
@@ -212,7 +213,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the RemoveObjects child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemoveObjects();
 
 
@@ -221,7 +222,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the SkippedExecution child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSkippedExecution();
 
 
@@ -230,7 +231,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the Sources child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSources();
 
@@ -240,7 +241,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the SourcesCompiled child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSourcesCompiled();
 
 
@@ -249,7 +250,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -258,7 +259,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -267,7 +268,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the SubSystem child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSubSystem();
 
 
@@ -276,7 +277,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the SuppressStartupBanner child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSuppressStartupBanner();
 
 
@@ -285,7 +286,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TargetMachine child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetMachine();
 
 
@@ -294,7 +295,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -303,7 +304,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TLogReadFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogReadFiles();
 
 
@@ -312,7 +313,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TLogWriteFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogWriteFiles();
 
 
@@ -321,7 +322,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -330,7 +331,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -339,7 +340,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TrackedInputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedInputFilesToIgnore();
 
 
@@ -348,7 +349,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TrackedOutputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedOutputFilesToIgnore();
 
 
@@ -357,7 +358,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TrackerLogDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackerLogDirectory();
 
 
@@ -366,7 +367,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TrackFileAccess child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTrackFileAccess();
 
 
@@ -375,7 +376,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the TreatLibWarningAsErrors child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTreatLibWarningAsErrors();
 
 
@@ -384,7 +385,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the UseUnicodeResponseFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseUnicodeResponseFiles();
 
 
@@ -393,7 +394,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the Verbose child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getVerbose();
 
 
@@ -406,7 +407,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -419,7 +420,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -434,7 +435,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -449,7 +450,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -462,7 +463,7 @@ public interface LIB extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

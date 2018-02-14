@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalSearchPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAdditionalSearchPaths();
 
@@ -33,7 +34,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the ContainedComComponents child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getContainedComComponents();
 
 
@@ -42,7 +43,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the ContainedLooseEtcFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getContainedLooseEtcFiles();
 
 
@@ -51,7 +52,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the ContainedLooseTlbFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getContainedLooseTlbFiles();
 
 
@@ -60,7 +61,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the ContainedPrerequisiteAssemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getContainedPrerequisiteAssemblies();
 
 
@@ -69,7 +70,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the ContainedTypeLibraries child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getContainedTypeLibraries();
 
 
@@ -78,7 +79,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the ContainingReferenceFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getContainingReferenceFiles();
 
 
@@ -87,7 +88,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the NativeReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getNativeReferences();
 
@@ -101,7 +102,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -114,7 +115,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -129,7 +130,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -144,7 +145,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -157,7 +158,7 @@ public interface ResolveNativeReference extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

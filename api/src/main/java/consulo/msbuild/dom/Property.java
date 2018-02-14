@@ -16,8 +16,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
@@ -32,7 +32,7 @@ import com.intellij.util.xml.TagValue;
 @NameStrategyForAttributes(MSBuildNameStrategy.class)
 public interface Property extends DomElement
 {
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 	@Nullable

@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalLibPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalLibPaths();
 
 
@@ -32,7 +33,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalLinkLibraryPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalLinkLibraryPaths();
 
 
@@ -41,7 +42,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalOptions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalOptions();
 
 
@@ -50,7 +51,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Clean child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getClean();
 
 
@@ -59,7 +60,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Configuration child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getConfiguration();
 
 
@@ -68,7 +69,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Override child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOverride();
 
 
@@ -77,7 +78,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Platform child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPlatform();
 
 
@@ -86,7 +87,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Projects child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getProjects();
 
@@ -96,7 +97,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Rebuild child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getRebuild();
 
 
@@ -105,7 +106,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the SolutionFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSolutionFile();
 
 
@@ -114,7 +115,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -123,7 +124,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -132,7 +133,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the UseEnvironment child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseEnvironment();
 
 
@@ -141,7 +142,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the UserEnvironment child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUserEnvironment();
 
 
@@ -154,7 +155,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -167,7 +168,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -182,7 +183,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -197,7 +198,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -210,7 +211,7 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

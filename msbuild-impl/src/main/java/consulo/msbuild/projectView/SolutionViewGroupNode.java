@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectViewNode;
@@ -47,12 +47,12 @@ public class SolutionViewGroupNode extends ProjectViewNode<SolutionVirtualFile>
 	}
 
 	@Override
-	public boolean contains(@NotNull VirtualFile file)
+	public boolean contains(@Nonnull VirtualFile file)
 	{
 		return false;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	@RequiredDispatchThread
 	public Collection<? extends AbstractTreeNode> getChildren()

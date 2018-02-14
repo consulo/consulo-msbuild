@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
@@ -35,7 +36,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -48,7 +49,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -57,7 +58,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the list of Item children.
 	 */
-	@NotNull
+	@Nonnull
 	List<SimpleItem> getItems();
 
 	/**
@@ -73,7 +74,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the list of Link children.
 	 */
-	@NotNull
+	@Nonnull
 	List<LinkItem> getLinks();
 
 	/**
@@ -89,7 +90,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the list of ResourceCompile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<ResourceCompile> getResourceCompiles();
 
 	/**
@@ -105,7 +106,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the list of ResourceCompile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<EmbeddedResource> getEmbeddedResources();
 
 	/**
@@ -120,7 +121,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the list of ResourceCompile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Compile> getCompiles();
 
 	/**
@@ -130,13 +131,13 @@ public interface ItemGroup extends DomElement
 	 */
 	Compile addCompile();
 
-	@NotNull
+	@Nonnull
 	List<None> getNones();
 
-	@NotNull
+	@Nonnull
 	List<ProjectReference> getProjectReferences();
 
-	@NotNull
+	@Nonnull
 	List<PackageReference> getPackageReferences();
 
 	/**
@@ -144,7 +145,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the list of PreBuildEvent children.
 	 */
-	@NotNull
+	@Nonnull
 	List<PreBuildEventItem> getPreBuildEvents();
 
 	/**
@@ -160,7 +161,7 @@ public interface ItemGroup extends DomElement
 	 *
 	 * @return the list of PostBuildEvent children.
 	 */
-	@NotNull
+	@Nonnull
 	List<PostBuildEventItem> getPostBuildEvents();
 
 	/**

@@ -16,7 +16,8 @@
 
 package consulo.msbuild.dom.extender;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.reflect.DomExtender;
 import com.intellij.util.xml.reflect.DomExtensionsRegistrar;
 import consulo.msbuild.dom.Property;
@@ -29,7 +30,7 @@ import consulo.msbuild.dom.PropertyGroup;
 public class MSBuildPropertyGroupDomExtender extends DomExtender<PropertyGroup>
 {
 	@Override
-	public void registerExtensions(@NotNull PropertyGroup propertyGroup, @NotNull DomExtensionsRegistrar domExtensionsRegistrar)
+	public void registerExtensions(@Nonnull PropertyGroup propertyGroup, @Nonnull DomExtensionsRegistrar domExtensionsRegistrar)
 	{
 		domExtensionsRegistrar.registerCustomChildrenExtension(Property.class);
 	}

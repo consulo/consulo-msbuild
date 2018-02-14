@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the Code child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCode();
 
 
@@ -31,7 +32,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the File child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFile();
 
 
@@ -40,7 +41,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the HelpKeyword child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getHelpKeyword();
 
 
@@ -49,7 +50,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the Text child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getText();
 
 
@@ -62,7 +63,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -75,7 +76,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -90,7 +91,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -105,7 +106,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -118,7 +119,7 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

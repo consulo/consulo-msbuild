@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -21,7 +22,7 @@ public interface Page extends DomElement
 	 *
 	 * @return the value of the simple content.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	String getValue();
 
@@ -30,7 +31,7 @@ public interface Page extends DomElement
 	 *
 	 * @param value the new value to set
 	 */
-	void setValue(@NotNull String value);
+	void setValue(@Nonnull String value);
 
 
 	/**
@@ -42,7 +43,7 @@ public interface Page extends DomElement
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -55,7 +56,7 @@ public interface Page extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 

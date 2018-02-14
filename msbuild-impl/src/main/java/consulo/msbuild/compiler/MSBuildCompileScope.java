@@ -1,6 +1,7 @@
 package consulo.msbuild.compiler;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.compiler.impl.FileIndexCompileScope;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.FileIndex;
@@ -23,7 +24,7 @@ public class MSBuildCompileScope extends FileIndexCompileScope
 		return false;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Module[] getAffectedModules()
 	{

@@ -18,7 +18,7 @@ package consulo.msbuild;
 
 import java.util.Collection;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.module.ModifiableModuleModel;
@@ -46,7 +46,7 @@ import consulo.ui.UIAccess;
 public class MSBuildStartActivity implements StartupActivity
 {
 	@Override
-	public void runActivity(@NotNull UIAccess uiAccess, @NotNull Project project)
+	public void runActivity(@Nonnull UIAccess uiAccess, @Nonnull Project project)
 	{
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
 		if(!solutionManager.isEnabled())

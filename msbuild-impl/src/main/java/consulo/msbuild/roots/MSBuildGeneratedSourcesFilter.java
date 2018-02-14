@@ -16,7 +16,8 @@
 
 package consulo.msbuild.roots;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.GeneratedSourcesFilter;
 import com.intellij.openapi.util.Comparing;
@@ -38,13 +39,13 @@ public class MSBuildGeneratedSourcesFilter extends GeneratedSourcesFilter
 {
 	@RequiredReadAction
 	@Override
-	public boolean isGeneratedSource(@NotNull VirtualFile virtualFile, @NotNull Project project)
+	public boolean isGeneratedSource(@Nonnull VirtualFile virtualFile, @Nonnull Project project)
 	{
 		return isGeneratedFile(virtualFile, project);
 	}
 
 	@RequiredReadAction
-	public static boolean isGeneratedFile(@NotNull VirtualFile virtualFile, @NotNull Project project)
+	public static boolean isGeneratedFile(@Nonnull VirtualFile virtualFile, @Nonnull Project project)
 	{
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
 		if(!solutionManager.isEnabled())

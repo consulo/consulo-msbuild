@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the OutputExtension child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getOutputExtension();
 
@@ -33,7 +34,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the OutputFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputFile();
 
 
@@ -42,7 +43,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the OutputPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputPath();
 
 
@@ -51,7 +52,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the SourceFile child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSourceFile();
 
@@ -65,7 +66,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -78,7 +79,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -93,7 +94,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -108,7 +109,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -121,7 +122,7 @@ public interface GetOutputFileName extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

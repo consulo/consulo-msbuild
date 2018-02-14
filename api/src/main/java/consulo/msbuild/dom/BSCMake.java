@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -26,7 +27,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -39,7 +40,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -52,7 +53,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -65,7 +66,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -79,7 +80,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -92,7 +93,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -101,7 +102,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the PreserveSBR child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getPreserveSBR();
 
@@ -111,7 +112,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalOptions child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getAdditionalOptions();
 
@@ -121,7 +122,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the SuppressStartupBanner child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getSuppressStartupBanner();
 
@@ -131,7 +132,7 @@ public interface BSCMake extends DomElement, Task
 	 *
 	 * @return the value of the OutputFile child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getOutputFile();
 

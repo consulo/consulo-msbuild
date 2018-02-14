@@ -21,14 +21,14 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.SelectInManager;
 import com.intellij.ide.SelectInTarget;
 import com.intellij.ide.impl.ProjectViewSelectInTarget;
@@ -97,7 +97,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		}
 
 		@Override
-		public Object getData(@NotNull Key<?> dataId)
+		public Object getData(@Nonnull Key<?> dataId)
 		{
 			final AbstractProjectViewPane currentProjectViewPane = SolutionViewPane.this;
 			if(currentProjectViewPane != null)
@@ -323,8 +323,8 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		} */
 	}
 
-	@NotNull
-	public static SolutionViewPane getInstance(@NotNull Project project)
+	@Nonnull
+	public static SolutionViewPane getInstance(@Nonnull Project project)
 	{
 		return ServiceManager.getService(project, SolutionViewPane.class);
 	}
@@ -406,7 +406,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return MSBuildIcons.Msbuild;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getId()
 	{

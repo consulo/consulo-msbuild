@@ -21,8 +21,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.util.xml.DomElement;
 
 /**
@@ -33,19 +34,19 @@ public class SolutionVirtualCompositeItem extends SolutionVirtualItem
 {
 	protected Map<String, SolutionVirtualItem> myChildren = new TreeMap<>();
 
-	public SolutionVirtualCompositeItem(@NotNull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element)
+	public SolutionVirtualCompositeItem(@Nonnull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element)
 	{
 		super(name, parent, element);
 	}
 
-	@NotNull
+	@Nonnull
 	public Collection<SolutionVirtualItem> getChildren()
 	{
 		return myChildren.values();
 	}
 
 	@Override
-	public boolean visitRecursive(@NotNull Predicate<SolutionVirtualItem> processor)
+	public boolean visitRecursive(@Nonnull Predicate<SolutionVirtualItem> processor)
 	{
 		if(!processor.test(this))
 		{

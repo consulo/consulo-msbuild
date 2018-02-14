@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalLibPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalLibPaths();
 
 
@@ -31,7 +32,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the AddModules child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAddModules();
 
 
@@ -40,7 +41,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the AllowUnsafeBlocks child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getAllowUnsafeBlocks();
 
 
@@ -49,7 +50,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the BaseAddress child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBaseAddress();
 
 
@@ -58,7 +59,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the CheckForOverflowUnderflow child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getCheckForOverflowUnderflow();
 
 
@@ -67,7 +68,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the CodePage child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCodePage();
 
 
@@ -76,7 +77,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the DebugType child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDebugType();
 
 
@@ -85,7 +86,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the DefineConstants child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDefineConstants();
 
 
@@ -94,7 +95,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the DelaySign child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
 
 
@@ -103,7 +104,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the DisabledWarnings child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDisabledWarnings();
 
 
@@ -112,7 +113,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the DocumentationFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDocumentationFile();
 
 
@@ -121,7 +122,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the EmitDebugInformation child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getEmitDebugInformation();
 
 
@@ -130,7 +131,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -139,7 +140,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the ErrorReport child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getErrorReport();
 
 
@@ -148,7 +149,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the FileAlignment child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFileAlignment();
 
 
@@ -157,7 +158,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the GenerateFullPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateFullPaths();
 
 
@@ -166,7 +167,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the KeyContainer child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
 
@@ -175,7 +176,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the KeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
 
 
@@ -184,7 +185,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the LangVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLangVersion();
 
 
@@ -193,7 +194,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the LinkResources child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLinkResources();
 
 
@@ -202,7 +203,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -211,7 +212,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the MainEntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMainEntryPoint();
 
 
@@ -220,7 +221,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the ModuleAssemblyName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getModuleAssemblyName();
 
 
@@ -229,7 +230,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the NoConfig child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getNoConfig();
 
 
@@ -238,7 +239,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the NoLogo child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getNoLogo();
 
 
@@ -247,7 +248,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the NoStandardLib child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getNoStandardLib();
 
 
@@ -256,7 +257,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the NoWin32Manifest child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getNoWin32Manifest();
 
 
@@ -265,7 +266,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Optimize child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOptimize();
 
 
@@ -274,7 +275,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the OutputAssembly child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputAssembly();
 
 
@@ -283,7 +284,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the PdbFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPdbFile();
 
 
@@ -292,7 +293,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Platform child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPlatform();
 
 
@@ -301,7 +302,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the References child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getReferences();
 
 
@@ -310,7 +311,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Resources child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResources();
 
 
@@ -319,7 +320,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the ResponseFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResponseFiles();
 
 
@@ -328,7 +329,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Sources child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSources();
 
 
@@ -337,7 +338,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -346,7 +347,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -355,7 +356,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the TargetType child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetType();
 
 
@@ -364,7 +365,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -373,7 +374,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -382,7 +383,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -391,7 +392,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the TreatWarningsAsErrors child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTreatWarningsAsErrors();
 
 
@@ -400,7 +401,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the UseHostCompilerIfAvailable child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseHostCompilerIfAvailable();
 
 
@@ -409,7 +410,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Utf8Output child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUtf8Output();
 
 
@@ -418,7 +419,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the WarningLevel child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWarningLevel();
 
 
@@ -427,7 +428,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the WarningsAsErrors child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWarningsAsErrors();
 
 
@@ -436,7 +437,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the WarningsNotAsErrors child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWarningsNotAsErrors();
 
 
@@ -445,7 +446,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Win32Icon child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWin32Icon();
 
 
@@ -454,7 +455,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Win32Manifest child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWin32Manifest();
 
 
@@ -463,7 +464,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Win32Resource child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWin32Resource();
 
 
@@ -476,7 +477,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -489,7 +490,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -504,7 +505,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -519,7 +520,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -532,7 +533,7 @@ public interface Csc extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -16,7 +16,8 @@
 
 package consulo.msbuild.projectView;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.projectView.ViewSettings;
 import com.intellij.ide.projectView.impl.nodes.PsiFileNode;
 import com.intellij.openapi.project.Project;
@@ -44,7 +45,7 @@ public class SolutionViewFileNode extends PsiFileNode
 		return myRestrictPatcher;
 	}
 
-	@NotNull
+	@Nonnull
 	public SolutionVirtualFile getSolutionVirtualFile()
 	{
 		return mySolutionVirtualFile;

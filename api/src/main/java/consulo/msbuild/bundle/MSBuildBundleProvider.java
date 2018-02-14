@@ -2,7 +2,8 @@ package consulo.msbuild.bundle;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.projectRoots.impl.SdkImpl;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -16,7 +17,7 @@ import consulo.bundle.PredefinedBundlesProvider;
 public class MSBuildBundleProvider extends PredefinedBundlesProvider
 {
 	@Override
-	public void createBundles(@NotNull Consumer<SdkImpl> consumer)
+	public void createBundles(@Nonnull Consumer<SdkImpl> consumer)
 	{
 		MSBuildBundleType type = MSBuildBundleType.getInstance();
 		List<MSBuildBundleType.MSBuildInfo> msBuilds = type.findMSBuilds();

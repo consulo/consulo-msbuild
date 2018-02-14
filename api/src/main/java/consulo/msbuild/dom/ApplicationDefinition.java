@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -26,7 +27,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -39,7 +40,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -52,7 +53,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -65,7 +66,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -79,7 +80,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -92,7 +93,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -101,7 +102,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the DependentUpon child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getDependentUpon();
 
@@ -115,7 +116,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Generator child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getGenerator();
 
@@ -125,7 +126,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the LastGenOutput child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getLastGenOutput();
 
@@ -135,7 +136,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the CustomToolNamespace child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getCustomToolNamespace();
 
@@ -149,7 +150,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Link child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getLink();
 
@@ -159,7 +160,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Group child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getGroup();
 
@@ -169,7 +170,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the SubType child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getSubType();
 
@@ -183,7 +184,7 @@ public interface ApplicationDefinition extends DomElement, SimpleItem
 	 *
 	 * @return the value of the CopyToOutputDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getCopyToOutputDirectory();
 

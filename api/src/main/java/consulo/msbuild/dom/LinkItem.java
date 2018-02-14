@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -27,7 +28,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -40,7 +41,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -53,7 +54,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -66,7 +67,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -80,7 +81,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -93,7 +94,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -102,7 +103,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of AdditionalDependencies children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalDependencieses();
 
 	/**
@@ -118,7 +119,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of OutputFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getOutputFiles();
 
 	/**
@@ -134,7 +135,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of AssemblyDebug children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAssemblyDebugs();
 
 	/**
@@ -150,7 +151,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SubSystem children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSubSystems();
 
 	/**
@@ -166,7 +167,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ShowProgress children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getShowProgresses();
 
 	/**
@@ -182,7 +183,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of GenerateDebugInformation children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateDebugInformations();
 
 	/**
@@ -198,7 +199,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of EnableCOMDATFolding children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getEnableCOMDATFoldings();
 
 	/**
@@ -214,7 +215,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of OptimizeReferences children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getOptimizeReferenceses();
 
 	/**
@@ -230,7 +231,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of Version children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getVersions();
 
 	/**
@@ -246,7 +247,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of Driver children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getDrivers();
 
 	/**
@@ -262,7 +263,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of RandomizedBaseAddress children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getRandomizedBaseAddresses();
 
 	/**
@@ -278,7 +279,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SuppressStartupBanner children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSuppressStartupBanners();
 
 	/**
@@ -294,7 +295,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of AdditionalLibraryDirectories children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalLibraryDirectorieses();
 
 	/**
@@ -310,7 +311,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of Profile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getProfiles();
 
 	/**
@@ -326,7 +327,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of LinkStatus children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getLinkStatuses();
 
 	/**
@@ -342,7 +343,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of FixedBaseAddress children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getFixedBaseAddresses();
 
 	/**
@@ -358,7 +359,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of DataExecutionPrevention children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getDataExecutionPreventions();
 
 	/**
@@ -374,7 +375,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SwapRunFromCD children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSwapRunFromCDs();
 
 	/**
@@ -390,7 +391,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SwapRunFromNET children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSwapRunFromNETs();
 
 	/**
@@ -406,7 +407,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of RegisterOutput children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getRegisterOutputs();
 
 	/**
@@ -422,7 +423,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of AllowIsolation children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAllowIsolations();
 
 	/**
@@ -438,7 +439,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of EnableUAC children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getEnableUACs();
 
 	/**
@@ -454,7 +455,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of UACExecutionLevel children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getUACExecutionLevels();
 
 	/**
@@ -470,7 +471,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of UACUIAccess children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getUACUIAccesses();
 
 	/**
@@ -486,7 +487,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of PreventDllBinding children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getPreventDllBindings();
 
 	/**
@@ -502,7 +503,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of IgnoreStandardIncludePath children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getIgnoreStandardIncludePaths();
 
 	/**
@@ -518,7 +519,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of GenerateMapFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateMapFiles();
 
 	/**
@@ -534,7 +535,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of IgnoreEmbeddedIDL children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getIgnoreEmbeddedIDLs();
 
 	/**
@@ -550,7 +551,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of TypeLibraryResourceID children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTypeLibraryResourceIDs();
 
 	/**
@@ -566,7 +567,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of LinkErrorReporting children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getLinkErrorReportings();
 
 	/**
@@ -582,7 +583,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of MapExports children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMapExportses();
 
 	/**
@@ -598,7 +599,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of TargetMachine children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTargetMachines();
 
 	/**
@@ -614,7 +615,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of TreatLinkerWarningAsErrors children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTreatLinkerWarningAsErrorses();
 
 	/**
@@ -630,7 +631,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ForceFileOutput children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getForceFileOutputs();
 
 	/**
@@ -646,7 +647,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of CreateHotPatchableImage children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCreateHotPatchableImages();
 
 	/**
@@ -662,7 +663,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SpecifySectionAttributes children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSpecifySectionAttributeses();
 
 	/**
@@ -678,7 +679,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of MSDOSStubFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMSDOSStubFileNames();
 
 	/**
@@ -694,7 +695,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of IgnoreAllDefaultLibraries children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getIgnoreAllDefaultLibrarieses();
 
 	/**
@@ -710,7 +711,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of IgnoreSpecificDefaultLibraries children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getIgnoreSpecificDefaultLibrarieses();
 
 	/**
@@ -726,7 +727,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ModuleDefinitionFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getModuleDefinitionFiles();
 
 	/**
@@ -742,7 +743,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of AddModuleNamesToAssembly children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAddModuleNamesToAssemblies();
 
 	/**
@@ -758,7 +759,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of EmbedManagedResourceFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getEmbedManagedResourceFiles();
 
 	/**
@@ -774,7 +775,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ForceSymbolReferences children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getForceSymbolReferenceses();
 
 	/**
@@ -790,7 +791,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of DelayLoadDLLs children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getDelayLoadDLLses();
 
 	/**
@@ -806,7 +807,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of AssemblyLinkResource children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAssemblyLinkResources();
 
 	/**
@@ -822,7 +823,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of AdditionalManifestDependencies children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalManifestDependencieses();
 
 	/**
@@ -838,7 +839,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of StripPrivateSymbols children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getStripPrivateSymbolses();
 
 	/**
@@ -854,7 +855,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of MapFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMapFileNames();
 
 	/**
@@ -870,7 +871,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of MinimumRequiredVersion children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMinimumRequiredVersions();
 
 	/**
@@ -886,7 +887,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of HeapReserveSize children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getHeapReserveSizes();
 
 	/**
@@ -902,7 +903,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of HeapCommitSize children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getHeapCommitSizes();
 
 	/**
@@ -918,7 +919,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of StackReserveSize children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getStackReserveSizes();
 
 	/**
@@ -934,7 +935,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of StackCommitSize children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getStackCommitSizes();
 
 	/**
@@ -950,7 +951,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of LargeAddressAware children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getLargeAddressAwares();
 
 	/**
@@ -966,7 +967,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of TerminalServerAware children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTerminalServerAwares();
 
 	/**
@@ -982,7 +983,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of FunctionOrder children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getFunctionOrders();
 
 	/**
@@ -998,7 +999,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ProfileGuidedDatabase children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getProfileGuidedDatabases();
 
 	/**
@@ -1014,7 +1015,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of LinkTimeCodeGeneration children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getLinkTimeCodeGenerations();
 
 	/**
@@ -1030,7 +1031,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of MidlCommandFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMidlCommandFiles();
 
 	/**
@@ -1046,7 +1047,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of MergedIDLBaseFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMergedIDLBaseFileNames();
 
 	/**
@@ -1062,7 +1063,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of TypeLibraryFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTypeLibraryFiles();
 
 	/**
@@ -1078,7 +1079,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of EntryPointSymbol children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getEntryPointSymbols();
 
 	/**
@@ -1094,7 +1095,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of BaseAddress children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getBaseAddresses();
 
 	/**
@@ -1110,7 +1111,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ProgramDatabaseFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getProgramDatabaseFiles();
 
 	/**
@@ -1126,7 +1127,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SupportUnloadOfDelayLoadedDLL children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSupportUnloadOfDelayLoadedDLLs();
 
 	/**
@@ -1142,7 +1143,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SupportNobindOfDelayLoadedDLL children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSupportNobindOfDelayLoadedDLLs();
 
 	/**
@@ -1158,7 +1159,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ImportLibrary children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getImportLibraries();
 
 	/**
@@ -1174,7 +1175,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of MergeSections children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMergeSectionses();
 
 	/**
@@ -1190,7 +1191,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of CLRThreadAttribute children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCLRThreadAttributes();
 
 	/**
@@ -1206,7 +1207,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of CLRImageType children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCLRImageTypes();
 
 	/**
@@ -1222,7 +1223,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of KeyFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getKeyFiles();
 
 	/**
@@ -1238,7 +1239,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of KeyContainer children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getKeyContainers();
 
 	/**
@@ -1254,7 +1255,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of DelaySign children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getDelaySigns();
 
 	/**
@@ -1270,7 +1271,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of CLRUnmanagedCodeCheck children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCLRUnmanagedCodeChecks();
 
 	/**
@@ -1286,7 +1287,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of SectionAlignment children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSectionAlignments();
 
 	/**
@@ -1302,7 +1303,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of CLRSupportLastError children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCLRSupportLastErrors();
 
 	/**
@@ -1318,7 +1319,7 @@ public interface LinkItem extends DomElement, SimpleItem
 	 *
 	 * @return the list of ImageHasSafeExceptionHandlers children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getImageHasSafeExceptionHandlerses();
 
 	/**

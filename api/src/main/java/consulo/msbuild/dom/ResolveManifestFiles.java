@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the DeploymentManifestEntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDeploymentManifestEntryPoint();
 
 
@@ -31,7 +32,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the EntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEntryPoint();
 
 
@@ -40,7 +41,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the ExtraFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExtraFiles();
 
 
@@ -49,7 +50,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the Files child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFiles();
 
 
@@ -58,7 +59,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the ManagedAssemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getManagedAssemblies();
 
 
@@ -67,7 +68,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the NativeAssemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getNativeAssemblies();
 
 
@@ -76,7 +77,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the OutputAssemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputAssemblies();
 
 
@@ -85,7 +86,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the OutputDeploymentManifestEntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputDeploymentManifestEntryPoint();
 
 
@@ -94,7 +95,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the OutputEntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputEntryPoint();
 
 
@@ -103,7 +104,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the OutputFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputFiles();
 
 
@@ -112,7 +113,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the PublishFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPublishFiles();
 
 
@@ -121,7 +122,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the SatelliteAssemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSatelliteAssemblies();
 
 
@@ -130,7 +131,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the SigningManifests child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSigningManifests();
 
 
@@ -139,7 +140,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the TargetCulture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetCulture();
 
 
@@ -148,7 +149,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkVersion();
 
 
@@ -161,7 +162,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -174,7 +175,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -189,7 +190,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -204,7 +205,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -217,7 +218,7 @@ public interface ResolveManifestFiles extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

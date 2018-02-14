@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -27,7 +28,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -40,7 +41,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -53,7 +54,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -66,7 +67,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -80,7 +81,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -93,7 +94,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -102,7 +103,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of MkTypLibCompatible children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getMkTypLibCompatibles();
 
 	/**
@@ -118,7 +119,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ValidateAllParameters children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<Boolean>> getValidateAllParameterses();
 
 	/**
@@ -134,7 +135,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of PreprocessorDefinitions children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getPreprocessorDefinitionses();
 
 	/**
@@ -150,7 +151,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of TypeLibraryName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTypeLibraryNames();
 
 	/**
@@ -166,7 +167,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ErrorCheckRefPointers children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getErrorCheckRefPointerses();
 
 	/**
@@ -182,7 +183,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ErrorCheckStubData children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getErrorCheckStubDatas();
 
 	/**
@@ -198,7 +199,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ErrorCheckBounds children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getErrorCheckBoundses();
 
 	/**
@@ -214,7 +215,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of HeaderFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getHeaderFileNames();
 
 	/**
@@ -230,7 +231,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ErrorCheckEnumRange children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getErrorCheckEnumRanges();
 
 	/**
@@ -246,7 +247,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ErrorCheckAllocations children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getErrorCheckAllocationses();
 
 	/**
@@ -262,7 +263,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of WarnAsError children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getWarnAsErrors();
 
 	/**
@@ -278,7 +279,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of GenerateTypeLibrary children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateTypeLibraries();
 
 	/**
@@ -294,7 +295,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of AdditionalIncludeDirectories children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalIncludeDirectorieses();
 
 	/**
@@ -310,7 +311,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of IgnoreStandardIncludePath children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getIgnoreStandardIncludePaths();
 
 	/**
@@ -326,7 +327,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of SuppressStartupBanner children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSuppressStartupBanners();
 
 	/**
@@ -342,7 +343,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of DefaultCharType children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getDefaultCharTypes();
 
 	/**
@@ -358,7 +359,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of TargetEnvironment children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTargetEnvironments();
 
 	/**
@@ -374,7 +375,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of GenerateStublessProxies children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateStublessProxieses();
 
 	/**
@@ -390,7 +391,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of SuppressCompilerWarnings children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSuppressCompilerWarningses();
 
 	/**
@@ -406,7 +407,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ApplicationConfigurationMode children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getApplicationConfigurationModes();
 
 	/**
@@ -422,7 +423,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of LocaleID children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getLocaleIDs();
 
 	/**
@@ -438,7 +439,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of OutputDirectory children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getOutputDirectories();
 
 	/**
@@ -454,7 +455,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of DllDataFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getDllDataFileNames();
 
 	/**
@@ -470,7 +471,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of InterfaceIdentifierFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getInterfaceIdentifierFileNames();
 
 	/**
@@ -486,7 +487,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ProxyFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getProxyFileNames();
 
 	/**
@@ -502,7 +503,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of GenerateClientFiles children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateClientFileses();
 
 	/**
@@ -518,7 +519,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of GenerateServerFiles children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateServerFileses();
 
 	/**
@@ -534,7 +535,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ClientStubFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getClientStubFiles();
 
 	/**
@@ -550,7 +551,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of ServerStubFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getServerStubFiles();
 
 	/**
@@ -566,7 +567,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of TypeLibFormat children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTypeLibFormats();
 
 	/**
@@ -582,7 +583,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of CPreprocessOptions children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCPreprocessOptionses();
 
 	/**
@@ -598,7 +599,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of UndefinePreprocessorDefinitions children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getUndefinePreprocessorDefinitionses();
 
 	/**
@@ -614,7 +615,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of EnableErrorChecks children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getEnableErrorCheckses();
 
 	/**
@@ -630,7 +631,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of RedirectOutputAndErrors children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getRedirectOutputAndErrorses();
 
 	/**
@@ -646,7 +647,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of AdditionalOptions children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalOptionses();
 
 	/**
@@ -662,7 +663,7 @@ public interface MIDL extends DomElement, Task
 	 *
 	 * @return the list of StructMemberAlignment children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getStructMemberAlignments();
 
 	/**

@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -26,7 +27,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -39,7 +40,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -52,7 +53,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -65,7 +66,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -79,7 +80,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -92,7 +93,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -105,7 +106,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Visible child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getVisible();
 
@@ -115,7 +116,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the ProductName child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getProductName();
 
@@ -125,7 +126,7 @@ public interface BootstrapperFile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Install child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getInstall();
 

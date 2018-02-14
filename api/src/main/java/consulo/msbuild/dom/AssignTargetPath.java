@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface AssignTargetPath extends DomElement, Task
 	 *
 	 * @return the value of the Files child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFiles();
 
 
@@ -32,7 +33,7 @@ public interface AssignTargetPath extends DomElement, Task
 	 *
 	 * @return the value of the RootFolder child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getRootFolder();
 
@@ -46,7 +47,7 @@ public interface AssignTargetPath extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -59,7 +60,7 @@ public interface AssignTargetPath extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -74,7 +75,7 @@ public interface AssignTargetPath extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -89,7 +90,7 @@ public interface AssignTargetPath extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -102,7 +103,7 @@ public interface AssignTargetPath extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

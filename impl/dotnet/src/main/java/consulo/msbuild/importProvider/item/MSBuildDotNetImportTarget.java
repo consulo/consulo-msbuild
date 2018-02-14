@@ -19,8 +19,8 @@ package consulo.msbuild.importProvider.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.util.ArrayFactory;
 import com.intellij.util.containers.ContainerUtil;
@@ -45,7 +45,7 @@ public enum MSBuildDotNetImportTarget
 	private final String myFrameworkExtensionId;
 	private final String mySdkTypeId;
 
-	MSBuildDotNetImportTarget(@NotNull String frameworkExtensionId, @NotNull String sdkTypeId)
+	MSBuildDotNetImportTarget(@Nonnull String frameworkExtensionId, @Nonnull String sdkTypeId)
 	{
 		myFrameworkExtensionId = frameworkExtensionId;
 		mySdkTypeId = sdkTypeId;
@@ -58,7 +58,7 @@ public enum MSBuildDotNetImportTarget
 		return ContainerUtil.find(SdkType.EP_NAME.getExtensions(), it -> it.getName().equals(mySdkTypeId));
 	}
 
-	@NotNull
+	@Nonnull
 	public static MSBuildDotNetImportTarget[] getAvailableTargets()
 	{
 		MSBuildDotNetImportTarget[] values = values();

@@ -16,7 +16,8 @@
 
 package consulo.msbuild.dom.expression.lang.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.psi.FileViewProvider;
 import consulo.msbuild.dom.expression.lang.MSBuildExpressionLanguage;
@@ -27,7 +28,7 @@ import consulo.msbuild.dom.expression.lang.MSBuildExpressionLanguage;
  */
 public class MSBuildExpressionFile extends PsiFileBase
 {
-	public MSBuildExpressionFile(@NotNull FileViewProvider viewProvider)
+	public MSBuildExpressionFile(@Nonnull FileViewProvider viewProvider)
 	{
 		super(viewProvider, MSBuildExpressionLanguage.INSTANCE);
 	}

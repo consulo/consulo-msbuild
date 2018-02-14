@@ -16,7 +16,8 @@
 
 package consulo.msbuild.dom.expression.lang;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilderUtil;
@@ -32,9 +33,9 @@ import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionTokens;
  */
 public class MSBuildExpressionParser implements PsiParser
 {
-	@NotNull
+	@Nonnull
 	@Override
-	public ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder, @NotNull LanguageVersion languageVersion)
+	public ASTNode parse(@Nonnull IElementType root, @Nonnull PsiBuilder builder, @Nonnull LanguageVersion languageVersion)
 	{
 		PsiBuilder.Marker last = null;
 

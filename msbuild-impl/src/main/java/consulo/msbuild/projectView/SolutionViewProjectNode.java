@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectViewNode;
@@ -52,7 +52,7 @@ public class SolutionViewProjectNode extends ProjectViewNode<WProject> implement
 	}
 
 	@Override
-	public boolean contains(@NotNull VirtualFile file)
+	public boolean contains(@Nonnull VirtualFile file)
 	{
 		return false;
 	}
@@ -63,7 +63,7 @@ public class SolutionViewProjectNode extends ProjectViewNode<WProject> implement
 		return getValue().getId();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	@RequiredDispatchThread
 	public Collection<? extends AbstractTreeNode> getChildren()
@@ -82,7 +82,7 @@ public class SolutionViewProjectNode extends ProjectViewNode<WProject> implement
 		return nodes;
 	}
 
-	@NotNull
+	@Nonnull
 	@RequiredReadAction
 	public static Collection<AbstractTreeNode> buildNodes(com.intellij.openapi.project.Project project,
 			Supplier<Collection<SolutionVirtualItem>> values,

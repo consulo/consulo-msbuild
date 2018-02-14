@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the LayoutResfilesPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getLayoutResfilesPath();
 
@@ -33,7 +34,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the ResourcesResfilesPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getResourcesResfilesPath();
 
@@ -43,7 +44,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the PriResfilesPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPriResfilesPath();
 
@@ -53,7 +54,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the PriConfigXmlPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPriConfigXmlPath();
 
@@ -63,7 +64,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the PriInitialPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPriInitialPath();
 
 
@@ -72,7 +73,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the DefaultResourceLanguage child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getDefaultResourceLanguage();
 
@@ -82,7 +83,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the DefaultResourceQualifiers child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getDefaultResourceQualifiers();
 
@@ -92,7 +93,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the ConvertDotsToSlashes child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getConvertDotsToSlashes();
 
 
@@ -101,7 +102,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the IntermediateExtension child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getIntermediateExtension();
 
@@ -111,7 +112,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the PriConfigXmlPackagingSnippetPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPriConfigXmlPackagingSnippetPath();
 
 
@@ -120,7 +121,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the PriConfigXmlDefaultSnippetPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPriConfigXmlDefaultSnippetPath();
 
 
@@ -129,7 +130,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the TargetPlatformIdentifier child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
 
@@ -139,7 +140,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the TargetPlatformVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformVersion();
 
@@ -153,7 +154,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -166,7 +167,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -181,7 +182,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -196,7 +197,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -209,7 +210,7 @@ public interface CreatePriConfigXmlForFullIndex extends DomElement, CreatePriCon
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

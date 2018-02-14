@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the AssemblyNamespace child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblyNamespace();
 
 
@@ -31,7 +32,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the AssemblyVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblyVersion();
 
 
@@ -40,7 +41,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the DelaySign child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
 
 
@@ -49,7 +50,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -58,7 +59,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the KeyContainer child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
 
@@ -67,7 +68,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the KeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
 
 
@@ -76,7 +77,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -85,7 +86,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the NoLogo child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getNoLogo();
 
 
@@ -94,7 +95,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the OutputAssembly child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputAssembly();
 
 
@@ -103,7 +104,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the PreventClassMembers child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getPreventClassMembers();
 
 
@@ -112,7 +113,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the SafeArrayAsSystemArray child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSafeArrayAsSystemArray();
 
 
@@ -121,7 +122,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the SdkToolsPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSdkToolsPath();
 
 
@@ -130,7 +131,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the Silent child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSilent();
 
 
@@ -139,7 +140,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -148,7 +149,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -157,7 +158,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -166,7 +167,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -175,7 +176,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -184,7 +185,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the Transform child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTransform();
 
 
@@ -193,7 +194,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the TypeLibName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTypeLibName();
 
 
@@ -202,7 +203,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the Verbose child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getVerbose();
 
 
@@ -215,7 +216,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -228,7 +229,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -243,7 +244,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -258,7 +259,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -271,7 +272,7 @@ public interface TlbImp extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

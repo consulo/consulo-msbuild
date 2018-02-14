@@ -16,7 +16,7 @@
 
 package consulo.msbuild.solution;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -26,8 +26,8 @@ public enum SolutionVirtualFileSubType
 {
 	Form, Designer, __generator, __unknown;
 
-	@NotNull
-	public static SolutionVirtualFileSubType find(@NotNull String name)
+	@Nonnull
+	public static SolutionVirtualFileSubType find(@Nonnull String name)
 	{
 		for(SolutionVirtualFileSubType type : values())
 		{

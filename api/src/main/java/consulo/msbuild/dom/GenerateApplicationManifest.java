@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the AssemblyName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblyName();
 
 
@@ -31,7 +32,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the AssemblyVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblyVersion();
 
 
@@ -40,7 +41,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the ClrVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getClrVersion();
 
 
@@ -49,7 +50,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the ConfigFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getConfigFile();
 
 
@@ -58,7 +59,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Dependencies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDependencies();
 
 
@@ -67,7 +68,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Description child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDescription();
 
 
@@ -76,7 +77,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the EntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEntryPoint();
 
 
@@ -85,7 +86,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the ErrorReportUrl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getErrorReportUrl();
 
 
@@ -94,7 +95,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the FileAssociations child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFileAssociations();
 
 
@@ -103,7 +104,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Files child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFiles();
 
 
@@ -112,7 +113,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the HostInBrowser child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getHostInBrowser();
 
 
@@ -121,7 +122,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the IconFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getIconFile();
 
 
@@ -130,7 +131,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the InputManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInputManifest();
 
 
@@ -139,7 +140,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the IsolatedComReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getIsolatedComReferences();
 
 
@@ -148,7 +149,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the ManifestType child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getManifestType();
 
 
@@ -157,7 +158,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the MaxTargetPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMaxTargetPath();
 
 
@@ -166,7 +167,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the OSVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOSVersion();
 
 
@@ -175,7 +176,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the OutputManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputManifest();
 
 
@@ -184,7 +185,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Platform child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPlatform();
 
 
@@ -193,7 +194,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Product child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getProduct();
 
 
@@ -202,7 +203,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Publisher child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPublisher();
 
 
@@ -211,7 +212,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the RequiresMinimumFramework35SP1 child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getRequiresMinimumFramework35SP1();
 
 
@@ -220,7 +221,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the SuiteName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSuiteName();
 
 
@@ -229,7 +230,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the SupportUrl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSupportUrl();
 
 
@@ -238,7 +239,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetCulture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetCulture();
 
 
@@ -247,7 +248,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkMoniker child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkMoniker();
 
 
@@ -256,7 +257,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkProfile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkProfile();
 
 
@@ -265,7 +266,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkSubset child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkSubset();
 
 
@@ -274,7 +275,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkVersion();
 
 
@@ -283,7 +284,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the TrustInfoFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrustInfoFile();
 
 
@@ -292,7 +293,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the UseApplicationTrust child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseApplicationTrust();
 
 
@@ -305,7 +306,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -318,7 +319,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -333,7 +334,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -348,7 +349,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -361,7 +362,7 @@ public interface GenerateApplicationManifest extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

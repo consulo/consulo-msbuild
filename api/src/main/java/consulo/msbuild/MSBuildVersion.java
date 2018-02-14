@@ -16,7 +16,7 @@
 
 package consulo.msbuild;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -47,20 +47,20 @@ public enum MSBuildVersion
 	private final String myInternalVersion;
 	private final String myPresentableName;
 
-	MSBuildVersion(@NotNull String yearVersion, String internalVersion)
+	MSBuildVersion(@Nonnull String yearVersion, String internalVersion)
 	{
 		myYearVersion = yearVersion;
 		myInternalVersion = internalVersion;
 		myPresentableName = name().replace("_", " ");
 	}
 
-	@NotNull
+	@Nonnull
 	public String getYearVersion()
 	{
 		return myYearVersion;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getPresentableName()
 	{
 		return myPresentableName;

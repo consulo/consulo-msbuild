@@ -16,8 +16,9 @@
 
 package consulo.msbuild.dom.expression.lang.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
@@ -37,7 +38,7 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
  */
 public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implements PsiReference
 {
-	public MSBuildExpressionMacroReference(@NotNull ASTNode node)
+	public MSBuildExpressionMacroReference(@Nonnull ASTNode node)
 	{
 		super(node);
 	}
@@ -50,7 +51,7 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 	}
 
 	@RequiredReadAction
-	@NotNull
+	@Nonnull
 	@Override
 	public TextRange getRangeInElement()
 	{
@@ -86,7 +87,7 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 	}
 
 	@RequiredReadAction
-	@NotNull
+	@Nonnull
 	@Override
 	public String getCanonicalText()
 	{
@@ -102,7 +103,7 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 
 	@RequiredWriteAction
 	@Override
-	public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException
+	public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException
 	{
 		return null;
 	}
@@ -122,7 +123,7 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 	}
 
 	@Override
-	public void accept(@NotNull PsiElementVisitor visitor)
+	public void accept(@Nonnull PsiElementVisitor visitor)
 	{
 		if(visitor instanceof MSBuildExpressionElementVisitor)
 		{

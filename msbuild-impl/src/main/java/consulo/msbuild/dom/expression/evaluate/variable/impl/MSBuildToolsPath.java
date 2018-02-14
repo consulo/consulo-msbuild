@@ -16,7 +16,7 @@
 
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
@@ -27,7 +27,7 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 public class MSBuildToolsPath extends MSBuildVariableProvider
 {
 	@Override
-	public String evaluateUnsafe(@NotNull MSBuildEvaluateContext context) throws Exception
+	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws Exception
 	{
 		return context.evaluateUnsafe(MSBuildExtensionsPath.class) + "\\" + context.evaluateUnsafe(MSBuildToolsVersion.class) + "\\bin";
 	}

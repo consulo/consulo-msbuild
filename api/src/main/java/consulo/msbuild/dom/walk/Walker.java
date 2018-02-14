@@ -19,7 +19,7 @@ package consulo.msbuild.dom.walk;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.util.xml.DomElement;
 import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.dom.ItemGroup;
@@ -43,7 +43,7 @@ public class Walker
 
 	@RequiredReadAction
 	@SuppressWarnings("unchecked")
-	public <T extends DomElement> void walk(@NotNull Class<T> clazz, @NotNull Consumer<T> consumer)
+	public <T extends DomElement> void walk(@Nonnull Class<T> clazz, @Nonnull Consumer<T> consumer)
 	{
 		//TODO [VISTALL] stub!
 

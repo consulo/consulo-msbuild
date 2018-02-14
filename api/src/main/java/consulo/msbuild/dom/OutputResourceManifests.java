@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -21,7 +22,7 @@ public interface OutputResourceManifests extends DomElement
 	 *
 	 * @return the value of the simple content.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	String getValue();
 
@@ -30,7 +31,7 @@ public interface OutputResourceManifests extends DomElement
 	 *
 	 * @param value the new value to set
 	 */
-	void setValue(@NotNull String value);
+	void setValue(@Nonnull String value);
 
 
 	/**
@@ -38,7 +39,7 @@ public interface OutputResourceManifests extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 

@@ -16,7 +16,7 @@
 
 package consulo.msbuild.dom.expression.lang.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 
@@ -26,7 +26,7 @@ import com.intellij.lang.ASTNode;
  */
 public class MSBuildExpressionMacro extends ASTWrapperPsiElement
 {
-	public MSBuildExpressionMacro(@NotNull ASTNode node)
+	public MSBuildExpressionMacro(@Nonnull ASTNode node)
 	{
 		super(node);
 	}

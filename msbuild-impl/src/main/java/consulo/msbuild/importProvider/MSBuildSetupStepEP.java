@@ -19,7 +19,8 @@ package consulo.msbuild.importProvider;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.extensions.AbstractExtensionPointBean;
@@ -67,13 +68,13 @@ public class MSBuildSetupStepEP extends AbstractExtensionPointBean
 		}
 	});
 
-	@NotNull
+	@Nonnull
 	public Class<? extends MSBuildImportProject> getImportProjectClass()
 	{
 		return myImportProjectClassValue.getValue();
 	}
 
-	@NotNull
+	@Nonnull
 	public ModuleWizardStep createStep(MSBuildModuleImportContext context, WizardContext wizardContext)
 	{
 		try

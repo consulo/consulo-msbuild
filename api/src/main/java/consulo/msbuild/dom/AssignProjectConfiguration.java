@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the AssignedProjects child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssignedProjects();
 
 
@@ -32,7 +33,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the CurrentProjectConfiguration child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCurrentProjectConfiguration();
 
 
@@ -41,7 +42,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the CurrentProjectPlatform child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCurrentProjectPlatform();
 
 
@@ -50,7 +51,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the DefaultToVcxPlatformMapping child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDefaultToVcxPlatformMapping();
 
 
@@ -59,7 +60,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the ProjectReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getProjectReferences();
 
@@ -69,7 +70,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the ResolveConfigurationPlatformUsingMappings child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getResolveConfigurationPlatformUsingMappings();
 
 
@@ -78,7 +79,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the SolutionConfigurationContents child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSolutionConfigurationContents();
 
 
@@ -87,7 +88,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the UnassignedProjects child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUnassignedProjects();
 
 
@@ -96,7 +97,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the VcxToDefaultPlatformMapping child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getVcxToDefaultPlatformMapping();
 
 
@@ -109,7 +110,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -122,7 +123,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -137,7 +138,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -152,7 +153,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -165,7 +166,7 @@ public interface AssignProjectConfiguration extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

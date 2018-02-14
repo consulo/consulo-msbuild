@@ -24,8 +24,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -46,9 +47,9 @@ public class WSolution
 
 	private static final Logger LOGGER = Logger.getInstance(WSolution.class);
 
-	@NotNull
+	@Nonnull
 	@RequiredReadAction
-	public static WSolution build(@NotNull Project project, @NotNull VirtualFile solutionVirtualFile)
+	public static WSolution build(@Nonnull Project project, @Nonnull VirtualFile solutionVirtualFile)
 	{
 		SlnFile slnFile = new SlnFile();
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(solutionVirtualFile.getInputStream(), StandardCharsets.UTF_8)))
@@ -68,7 +69,7 @@ public class WSolution
 	private List<WProject> myProjects = new ArrayList<>();
 
 	@RequiredReadAction
-	public WSolution(@NotNull Project project, @NotNull VirtualFile solutionVirtualFile, @NotNull SlnFile file)
+	public WSolution(@Nonnull Project project, @Nonnull VirtualFile solutionVirtualFile, @Nonnull SlnFile file)
 	{
 		myFile = file;
 		for(SlnProject slnProject : file.getProjects())

@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Collection;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.util.Ref;
 
 /**
@@ -50,7 +50,7 @@ public class SlnFile
 		return sections;
 	}
 
-	@NotNull
+	@Nonnull
 	public Collection<SlnProject> getProjects()
 	{
 		return projects;

@@ -3,7 +3,7 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
@@ -33,7 +33,7 @@ public interface Import extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	@ExpressionFragment
 	GenericAttributeValue<String> getCondition();
 
@@ -47,7 +47,7 @@ public interface Import extends DomElement
 	 *
 	 * @return the value of the Project child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	@ExpressionFragment
 	GenericAttributeValue<String> getProject();
@@ -62,6 +62,6 @@ public interface Import extends DomElement
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 }

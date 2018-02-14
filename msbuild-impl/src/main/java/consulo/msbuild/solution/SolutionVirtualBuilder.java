@@ -18,7 +18,7 @@ package consulo.msbuild.solution;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.io.FileUtilRt;
 import com.intellij.openapi.util.text.StringUtil;
@@ -35,7 +35,7 @@ import consulo.msbuild.dom.SimpleItem;
  */
 public class SolutionVirtualBuilder
 {
-	public static SolutionVirtualDirectory build(@NotNull Project domProject, @NotNull VirtualFile baseDir)
+	public static SolutionVirtualDirectory build(@Nonnull Project domProject, @Nonnull VirtualFile baseDir)
 	{
 		SolutionVirtualDirectory root = new SolutionVirtualDirectory("", null);
 
@@ -51,7 +51,7 @@ public class SolutionVirtualBuilder
 		return root;
 	}
 
-	private static void addAll(List<? extends SimpleItem> list, @NotNull VirtualFile baseDir, @NotNull SolutionVirtualDirectory root)
+	private static void addAll(List<? extends SimpleItem> list, @Nonnull VirtualFile baseDir, @Nonnull SolutionVirtualDirectory root)
 	{
 		for(SimpleItem simpleItem : list)
 		{

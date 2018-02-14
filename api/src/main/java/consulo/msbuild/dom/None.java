@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -30,7 +31,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -43,7 +44,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -56,7 +57,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -69,7 +70,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -83,7 +84,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -96,7 +97,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -105,7 +106,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the DependentUpon child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getDependentUpon();
 
@@ -119,7 +120,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Generator child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getGenerator();
 
@@ -129,7 +130,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the LastGenOutput child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getLastGenOutput();
 
@@ -139,7 +140,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the CustomToolNamespace child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getCustomToolNamespace();
 
@@ -153,7 +154,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Link child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getLink();
 
@@ -167,7 +168,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Visible child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getVisible();
 
@@ -177,7 +178,7 @@ public interface None extends DomElement, SimpleItem
 	 *
 	 * @return the value of the CopyToOutputDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getCopyToOutputDirectory();
 

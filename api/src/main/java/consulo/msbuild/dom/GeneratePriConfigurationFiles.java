@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the LayoutResfilesPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getLayoutResfilesPath();
 
@@ -33,7 +34,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the ResourcesResfilesPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getResourcesResfilesPath();
 
@@ -43,7 +44,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the PriResfilesPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPriResfilesPath();
 
@@ -53,7 +54,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the LayoutFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getLayoutFiles();
 
@@ -63,7 +64,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the PRIResourceFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPRIResourceFiles();
 
@@ -73,7 +74,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the PriFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPriFiles();
 
@@ -83,7 +84,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the IntermediateExtension child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getIntermediateExtension();
 
@@ -97,7 +98,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -110,7 +111,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -125,7 +126,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -140,7 +141,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -153,7 +154,7 @@ public interface GeneratePriConfigurationFiles extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

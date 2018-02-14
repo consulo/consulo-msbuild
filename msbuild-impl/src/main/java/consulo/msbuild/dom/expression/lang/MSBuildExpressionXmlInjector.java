@@ -16,8 +16,8 @@
 
 package consulo.msbuild.dom.expression.lang;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.InjectedLanguagePlaces;
 import com.intellij.psi.LanguageInjector;
@@ -45,7 +45,7 @@ public class MSBuildExpressionXmlInjector implements LanguageInjector
 {
 	@Override
 	@RequiredReadAction
-	public void getLanguagesToInject(@NotNull PsiLanguageInjectionHost host, @NotNull InjectedLanguagePlaces injectionPlacesRegistrar)
+	public void getLanguagesToInject(@Nonnull PsiLanguageInjectionHost host, @Nonnull InjectedLanguagePlaces injectionPlacesRegistrar)
 	{
 		if(host instanceof XmlAttributeValue || host instanceof XmlText)
 		{

@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -31,7 +32,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the Name child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getName();
 
@@ -45,7 +46,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the DependsOnTargets child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDependsOnTargets();
 
 
@@ -59,7 +60,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the Inputs child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInputs();
 
 
@@ -73,7 +74,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the Outputs child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputs();
 
 
@@ -86,7 +87,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -100,7 +101,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the KeepDuplicateOutputs child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeepDuplicateOutputs();
 
 
@@ -114,7 +115,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the Returns child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getReturns();
 
 
@@ -127,7 +128,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the BeforeTargets child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBeforeTargets();
 
 
@@ -140,7 +141,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the AfterTargets child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAfterTargets();
 
 
@@ -153,7 +154,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -162,7 +163,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the list of OnError children.
 	 */
-	@NotNull
+	@Nonnull
 	List<OnError> getOnErrors();
 
 	/**
@@ -178,7 +179,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the list of Task children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Task> getTasks();
 
 	/**
@@ -194,7 +195,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the list of PropertyGroup children.
 	 */
-	@NotNull
+	@Nonnull
 	List<PropertyGroup> getPropertyGroups();
 
 	/**
@@ -210,7 +211,7 @@ public interface Target extends DomElement
 	 *
 	 * @return the list of ItemGroup children.
 	 */
-	@NotNull
+	@Nonnull
 	List<ItemGroup> getItemGroups();
 
 	/**

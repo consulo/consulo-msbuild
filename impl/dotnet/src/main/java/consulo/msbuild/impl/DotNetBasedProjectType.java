@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
@@ -65,9 +65,9 @@ import consulo.roots.types.BinariesOrderRootType;
  */
 public abstract class DotNetBasedProjectType implements MSBuildProjectType
 {
-	public abstract void setupModuleImpl(@NotNull ModifiableModuleRootLayer modifiableRootModel);
+	public abstract void setupModuleImpl(@Nonnull ModifiableModuleRootLayer modifiableRootModel);
 
-	@NotNull
+	@Nonnull
 	@Override
 	public MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context)
 	{
@@ -86,7 +86,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 	}
 
 	@Override
-	public final void setupModule(@NotNull VirtualFile projectFile, @NotNull Project domProject, @Nullable MSBuildSolutionManager.ProjectOptions projectOptions, @NotNull ModifiableModuleRootLayer rootLayer)
+	public final void setupModule(@Nonnull VirtualFile projectFile, @Nonnull Project domProject, @Nullable MSBuildSolutionManager.ProjectOptions projectOptions, @Nonnull ModifiableModuleRootLayer rootLayer)
 	{
 		// setup .NET extension
 		MSBuildMutableDotNetModuleExtension moduleExtension = rootLayer.getExtensionWithoutCheck(MSBuildMutableDotNetModuleExtension.class);
@@ -189,8 +189,8 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		});
 	}
 
-	@NotNull
-	private Pair<String, Sdk> findSdk(@NotNull MSBuildDotNetImportTarget target, @Nullable String sdkVersion)
+	@Nonnull
+	private Pair<String, Sdk> findSdk(@Nonnull MSBuildDotNetImportTarget target, @Nullable String sdkVersion)
 	{
 		if(sdkVersion == null)
 		{

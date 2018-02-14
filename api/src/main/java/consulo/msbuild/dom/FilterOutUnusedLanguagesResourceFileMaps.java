@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the FileMaps child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFileMaps();
 
@@ -33,7 +34,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the FileNamePrefix child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFileNamePrefix();
 
@@ -43,7 +44,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the MapSuffix child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getMapSuffix();
 
@@ -53,7 +54,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the Languages child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getLanguages();
 
@@ -63,7 +64,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the FilteredFileMaps child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFilteredFileMaps();
 
 
@@ -76,7 +77,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -89,7 +90,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -104,7 +105,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -119,7 +120,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -132,7 +133,7 @@ public interface FilterOutUnusedLanguagesResourceFileMaps extends DomElement, Ta
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

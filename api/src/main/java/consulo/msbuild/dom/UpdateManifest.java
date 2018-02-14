@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getApplicationManifest();
 
@@ -33,7 +34,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkVersion();
 
 
@@ -42,7 +43,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getApplicationPath();
 
@@ -52,7 +53,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the InputManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getInputManifest();
 
@@ -62,7 +63,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the OutputManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputManifest();
 
 
@@ -75,7 +76,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -88,7 +89,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -103,7 +104,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -118,7 +119,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -131,7 +132,7 @@ public interface UpdateManifest extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

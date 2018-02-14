@@ -16,8 +16,8 @@
 
 package consulo.msbuild.module.extension;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.projectRoots.Sdk;
 import consulo.dotnet.module.extension.DotNetSimpleMutableModuleExtension;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
@@ -35,7 +35,7 @@ import consulo.ui.VerticalLayout;
  */
 public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExtension implements DotNetSimpleMutableModuleExtension<MSBuildDotNetModuleExtension>
 {
-	public MSBuildMutableDotNetModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
+	public MSBuildMutableDotNetModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
 	}
@@ -43,7 +43,7 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	@RequiredUIAccess
 	@Nullable
 	@Override
-	public Component createConfigurationComponent(@NotNull Runnable updateOnCheck)
+	public Component createConfigurationComponent(@Nonnull Runnable updateOnCheck)
 	{
 		VerticalLayout vertical = VerticalLayout.create();
 		vertical.add(LabeledComponents.left("Target", Label.create(myTarget.name())));
@@ -56,7 +56,7 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 		return this;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public MutableModuleInheritableNamedPointer<Sdk> getInheritableSdk()
 	{
@@ -70,7 +70,7 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	}
 
 	@Override
-	public boolean isModified(@NotNull MSBuildDotNetModuleExtension msBuildModuleExtension)
+	public boolean isModified(@Nonnull MSBuildDotNetModuleExtension msBuildModuleExtension)
 	{
 		return myIsEnabled != msBuildModuleExtension.isEnabled();
 	}

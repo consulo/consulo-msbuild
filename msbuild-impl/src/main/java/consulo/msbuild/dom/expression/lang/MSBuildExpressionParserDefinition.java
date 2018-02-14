@@ -16,7 +16,8 @@
 
 package consulo.msbuild.dom.expression.lang;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
@@ -37,55 +38,55 @@ public class MSBuildExpressionParserDefinition implements ParserDefinition
 {
 	private static final IFileElementType FILE = new IFileElementType("FILE", MSBuildExpressionLanguage.INSTANCE);
 
-	@NotNull
+	@Nonnull
 	@Override
-	public Lexer createLexer(@NotNull LanguageVersion languageVersion)
+	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
 	{
 		return new MSBuildExpressionMergeLexer();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public PsiParser createParser(@NotNull LanguageVersion languageVersion)
+	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
 	{
 		return new MSBuildExpressionParser();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public IFileElementType getFileNodeType()
 	{
 		return FILE;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public TokenSet getWhitespaceTokens(@NotNull LanguageVersion languageVersion)
+	public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion)
 	{
 		return TokenSet.EMPTY;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public TokenSet getCommentTokens(@NotNull LanguageVersion languageVersion)
+	public TokenSet getCommentTokens(@Nonnull LanguageVersion languageVersion)
 	{
 		return TokenSet.EMPTY;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public TokenSet getStringLiteralElements(@NotNull LanguageVersion languageVersion)
+	public TokenSet getStringLiteralElements(@Nonnull LanguageVersion languageVersion)
 	{
 		return TokenSet.EMPTY;
 	}
 
 	@Override
-	public PsiFile createFile(@NotNull FileViewProvider viewProvider)
+	public PsiFile createFile(@Nonnull FileViewProvider viewProvider)
 	{
 		return new MSBuildExpressionFile(viewProvider);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right)
 	{

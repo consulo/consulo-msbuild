@@ -16,8 +16,8 @@
 
 package consulo.csharp.compiler.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.csharp.compiler.CSharpCompilerProvider;
@@ -37,7 +37,7 @@ public class MSBundleCompilerProvider extends CSharpCompilerProvider
 {
 	@Nullable
 	@Override
-	public SdkType getBundleType(@NotNull DotNetSimpleModuleExtension<?> moduleExtension)
+	public SdkType getBundleType(@Nonnull DotNetSimpleModuleExtension<?> moduleExtension)
 	{
 		// hack - due we can known about MSBuild plugin or Microsoft .NET, double depends option file is not supported
 		if(moduleExtension.getId().equals("microsoft-dotnet"))
@@ -48,9 +48,9 @@ public class MSBundleCompilerProvider extends CSharpCompilerProvider
 	}
 
 	@Override
-	public void setupCompiler(@NotNull DotNetModuleExtension<?> netExtension,
-			@NotNull CSharpModuleExtension<?> csharpExtension,
-			@NotNull MSBaseDotNetCompilerOptionsBuilder builder,
+	public void setupCompiler(@Nonnull DotNetModuleExtension<?> netExtension,
+			@Nonnull CSharpModuleExtension<?> csharpExtension,
+			@Nonnull MSBaseDotNetCompilerOptionsBuilder builder,
 			@Nullable VirtualFile compilerSdkHome) throws DotNetCompileFailedException
 	{
 		if(compilerSdkHome == null)

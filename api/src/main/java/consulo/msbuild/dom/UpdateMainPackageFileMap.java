@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the Input child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getInput();
 
@@ -33,7 +34,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the Output child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getOutput();
 
@@ -43,7 +44,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the SplitResourcesPriPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSplitResourcesPriPath();
 
@@ -53,7 +54,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the DefaultResourceLanguage child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getDefaultResourceLanguage();
 
@@ -63,7 +64,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the DefaultResourceQualifiers child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getDefaultResourceQualifiers();
 
@@ -77,7 +78,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -90,7 +91,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -105,7 +106,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -120,7 +121,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -133,7 +134,7 @@ public interface UpdateMainPackageFileMap extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

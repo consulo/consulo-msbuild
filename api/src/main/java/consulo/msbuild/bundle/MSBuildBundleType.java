@@ -23,10 +23,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.ProcessOutput;
@@ -83,13 +83,13 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	public static String getExecutable(String home)
 	{
 		return home + "/bin/MSBuild.exe";
 	}
 
-	@NotNull
+	@Nonnull
 	public static MSBuildBundleType getInstance()
 	{
 		return EP_NAME.findExtension(MSBuildBundleType.class);
@@ -100,14 +100,14 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 		super("MSBUILD_BUNDLE");
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Collection<String> suggestHomePaths()
 	{
 		return findMSBuilds().stream().map(msBuildInfo -> msBuildInfo.getPath().getPath()).collect(Collectors.toList());
 	}
 
-	@NotNull
+	@Nonnull
 	public List<MSBuildInfo> findMSBuilds()
 	{
 		if(!SystemInfo.isWindows)
@@ -185,7 +185,7 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getPresentableName()
 	{

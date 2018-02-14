@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the MakePriExeFullPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getMakePriExeFullPath();
 
@@ -33,7 +34,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the PriConfigXmlPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPriConfigXmlPath();
 
@@ -43,7 +44,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the IndexFilesForQualifiersCollection child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getIndexFilesForQualifiersCollection();
 
 
@@ -52,7 +53,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the ProjectPriIndexName child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getProjectPriIndexName();
 
@@ -62,7 +63,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the MappingFileFormat child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMappingFileFormat();
 
 
@@ -71,7 +72,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the InsertReverseMap child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInsertReverseMap();
 
 
@@ -80,7 +81,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the ProjectDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getProjectDirectory();
 
@@ -90,7 +91,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the OutputFileName child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getOutputFileName();
 
@@ -100,7 +101,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the MakePriExtensionPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMakePriExtensionPath();
 
 
@@ -109,7 +110,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the QualifiersPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getQualifiersPath();
 
 
@@ -118,7 +119,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the GeneratedFilesListPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getGeneratedFilesListPath();
 
 
@@ -127,7 +128,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the AdditionalMakepriExeParameters child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalMakepriExeParameters();
 
 
@@ -136,7 +137,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the MultipleQualifiersPerDimensionFoundPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMultipleQualifiersPerDimensionFoundPath();
 
 
@@ -145,7 +146,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the IntermediateExtension child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getIntermediateExtension();
 
@@ -155,7 +156,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the ExitCode child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExitCode();
 
 
@@ -164,7 +165,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the YieldDuringToolExecution child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getYieldDuringToolExecution();
 
 
@@ -173,7 +174,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the UseCommandProcessor child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseCommandProcessor();
 
 
@@ -182,7 +183,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the EchoOff child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getEchoOff();
 
 
@@ -191,7 +192,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -200,7 +201,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -209,7 +210,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -218,7 +219,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -227,7 +228,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -236,7 +237,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -245,7 +246,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -258,7 +259,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -271,7 +272,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -286,7 +287,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -301,7 +302,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -314,7 +315,7 @@ public interface GenerateProjectPriFile extends DomElement, ToolTask
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationExecutableName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getApplicationExecutableName();
 
 
@@ -32,7 +33,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the AppxManifestInput child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAppxManifestInput();
 
@@ -42,7 +43,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the CertificateThumbprint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCertificateThumbprint();
 
 
@@ -51,7 +52,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the CertificateFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCertificateFile();
 
 
@@ -60,7 +61,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the PackageArchitecture child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPackageArchitecture();
 
@@ -70,7 +71,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the FrameworkSdkReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFrameworkSdkReferences();
 
@@ -80,7 +81,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the NonFrameworkSdkReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getNonFrameworkSdkReferences();
 
@@ -90,7 +91,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the AppxManifestOutput child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAppxManifestOutput();
 
@@ -100,7 +101,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the DefaultResourceLanguage child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getDefaultResourceLanguage();
 
@@ -110,7 +111,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the QualifiersPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getQualifiersPath();
 
@@ -120,7 +121,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ManagedWinmdInprocImplementation child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getManagedWinmdInprocImplementation();
 
@@ -130,7 +131,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the WinmdFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getWinmdFiles();
 
@@ -140,7 +141,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the SDKWinmdFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSDKWinmdFiles();
 
@@ -150,7 +151,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the OSMinVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOSMinVersion();
 
 
@@ -159,7 +160,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the OSMaxVersionTested child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOSMaxVersionTested();
 
 
@@ -168,7 +169,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the OSMinVersionReplaceManifestVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOSMinVersionReplaceManifestVersion();
 
 
@@ -177,7 +178,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the OSMaxVersionTestedReplaceManifestVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOSMaxVersionTestedReplaceManifestVersion();
 
 
@@ -186,7 +187,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the EnableSigningChecks child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getEnableSigningChecks();
 
 
@@ -195,7 +196,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ManifestMetadata child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getManifestMetadata();
 
 
@@ -204,7 +205,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetPlatformIdentifier child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
 
 
@@ -213,7 +214,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the PackageSigningEnabled child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getPackageSigningEnabled();
 
 
@@ -226,7 +227,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -239,7 +240,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -254,7 +255,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -269,7 +270,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -282,7 +283,7 @@ public interface GenerateAppxManifest extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

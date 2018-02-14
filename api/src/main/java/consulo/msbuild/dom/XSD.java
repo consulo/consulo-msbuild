@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the AcceptableNonZeroExitCodes child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAcceptableNonZeroExitCodes();
 
 
@@ -32,7 +33,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the ActiveToolSwitchesValues child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getActiveToolSwitchesValues();
 
 
@@ -41,7 +42,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalOptions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalOptions();
 
 
@@ -50,7 +51,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -59,7 +60,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the ExcludedInputPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExcludedInputPaths();
 
 
@@ -68,7 +69,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the GenerateFromSchema child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getGenerateFromSchema();
 
 
@@ -77,7 +78,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the Language child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLanguage();
 
 
@@ -86,7 +87,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -95,7 +96,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the MinimalRebuildFromTracking child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getMinimalRebuildFromTracking();
 
 
@@ -104,7 +105,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the Namespace child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getNamespace();
 
 
@@ -113,7 +114,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the PathOverride child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPathOverride();
 
 
@@ -122,7 +123,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the SkippedExecution child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSkippedExecution();
 
 
@@ -131,7 +132,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the Sources child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSources();
 
@@ -141,7 +142,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the SourcesCompiled child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSourcesCompiled();
 
 
@@ -150,7 +151,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -159,7 +160,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -168,7 +169,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the SuppressStartupBanner child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSuppressStartupBanner();
 
 
@@ -177,7 +178,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -186,7 +187,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the TLogReadFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogReadFiles();
 
 
@@ -195,7 +196,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the TLogWriteFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogWriteFiles();
 
 
@@ -204,7 +205,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -213,7 +214,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -222,7 +223,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the TrackedInputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedInputFilesToIgnore();
 
 
@@ -231,7 +232,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the TrackedOutputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedOutputFilesToIgnore();
 
 
@@ -240,7 +241,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the TrackerLogDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackerLogDirectory();
 
 
@@ -249,7 +250,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the TrackFileAccess child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTrackFileAccess();
 
 
@@ -262,7 +263,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -275,7 +276,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -290,7 +291,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -305,7 +306,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -318,7 +319,7 @@ public interface XSD extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
@@ -25,7 +26,7 @@ public interface PackageReference extends DomElement
 	 *
 	 * @return the value of the simple content.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	String getValue();
 
@@ -34,7 +35,7 @@ public interface PackageReference extends DomElement
 	 *
 	 * @param value the new value to set
 	 */
-	void setValue(@NotNull String value);
+	void setValue(@Nonnull String value);
 
 
 	/**
@@ -46,7 +47,7 @@ public interface PackageReference extends DomElement
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -59,7 +60,7 @@ public interface PackageReference extends DomElement
 	 *
 	 * @return the value of the Version child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getVersion();
 
 
@@ -72,7 +73,7 @@ public interface PackageReference extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 

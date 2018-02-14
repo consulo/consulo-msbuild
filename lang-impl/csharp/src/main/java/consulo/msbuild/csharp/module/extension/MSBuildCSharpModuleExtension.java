@@ -16,7 +16,7 @@
 
 package consulo.msbuild.csharp.module.extension;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.csharp.module.extension.BaseCSharpModuleExtension;
 import consulo.csharp.module.extension.CSharpSimpleModuleExtension;
 import consulo.roots.ModuleRootLayer;
@@ -27,7 +27,7 @@ import consulo.roots.ModuleRootLayer;
  */
 public class MSBuildCSharpModuleExtension extends BaseCSharpModuleExtension<MSBuildCSharpModuleExtension> implements CSharpSimpleModuleExtension<MSBuildCSharpModuleExtension>
 {
-	public MSBuildCSharpModuleExtension(@NotNull String id, @NotNull ModuleRootLayer layer)
+	public MSBuildCSharpModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer layer)
 	{
 		super(id, layer);
 	}

@@ -16,8 +16,8 @@
 
 package consulo.msbuild.solution;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.xml.DomElement;
 
@@ -38,7 +38,7 @@ public class SolutionVirtualFile extends SolutionVirtualItem
 
 	private boolean myGenerated;
 
-	public SolutionVirtualFile(@NotNull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element, @Nullable VirtualFile virtualFile)
+	public SolutionVirtualFile(@Nonnull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element, @Nullable VirtualFile virtualFile)
 	{
 		super(name, parent, element);
 		myVirtualFile = virtualFile;

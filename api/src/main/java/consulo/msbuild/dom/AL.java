@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the AlgorithmId child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAlgorithmId();
 
 
@@ -32,7 +33,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the BaseAddress child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBaseAddress();
 
 
@@ -41,7 +42,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the CompanyName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCompanyName();
 
 
@@ -50,7 +51,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Configuration child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getConfiguration();
 
 
@@ -59,7 +60,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Copyright child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCopyright();
 
 
@@ -68,7 +69,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Culture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCulture();
 
 
@@ -77,7 +78,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the DelaySign child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
 
 
@@ -86,7 +87,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Description child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDescription();
 
 
@@ -95,7 +96,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the EmbedResources child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEmbedResources();
 
 
@@ -104,7 +105,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -113,7 +114,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the EvidenceFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEvidenceFile();
 
 
@@ -122,7 +123,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the FileVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFileVersion();
 
 
@@ -131,7 +132,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Flags child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFlags();
 
 
@@ -140,7 +141,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the GenerateFullPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateFullPaths();
 
 
@@ -149,7 +150,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the KeyContainer child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
 
@@ -158,7 +159,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the KeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
 
 
@@ -167,7 +168,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the LinkResources child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLinkResources();
 
 
@@ -176,7 +177,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -185,7 +186,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the MainEntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMainEntryPoint();
 
 
@@ -194,7 +195,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the OutputAssembly child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getOutputAssembly();
 
@@ -204,7 +205,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Platform child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPlatform();
 
 
@@ -213,7 +214,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the ProductName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getProductName();
 
 
@@ -222,7 +223,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the ProductVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getProductVersion();
 
 
@@ -231,7 +232,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the ResponseFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResponseFiles();
 
 
@@ -240,7 +241,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the SdkToolsPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSdkToolsPath();
 
 
@@ -249,7 +250,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the SourceModules child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSourceModules();
 
 
@@ -258,7 +259,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -267,7 +268,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -276,7 +277,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the TargetType child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetType();
 
 
@@ -285,7 +286,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the TemplateFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTemplateFile();
 
 
@@ -294,7 +295,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -303,7 +304,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Title child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTitle();
 
 
@@ -312,7 +313,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -321,7 +322,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -330,7 +331,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Trademark child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrademark();
 
 
@@ -339,7 +340,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Version child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getVersion();
 
 
@@ -348,7 +349,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Win32Icon child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWin32Icon();
 
 
@@ -357,7 +358,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Win32Resource child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWin32Resource();
 
 
@@ -370,7 +371,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -383,7 +384,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -398,7 +399,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -413,7 +414,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -426,7 +427,7 @@ public interface AL extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

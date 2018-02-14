@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the AcceptableNonZeroExitCodes child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAcceptableNonZeroExitCodes();
 
 
@@ -32,7 +33,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ActiveToolSwitchesValues child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getActiveToolSwitchesValues();
 
 
@@ -41,7 +42,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalIncludeDirectories child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalIncludeDirectories();
 
 
@@ -50,7 +51,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalOptions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalOptions();
 
 
@@ -59,7 +60,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalUsingDirectories child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalUsingDirectories();
 
 
@@ -68,7 +69,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the AssemblerListingLocation child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblerListingLocation();
 
 
@@ -77,7 +78,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the AssemblerOutput child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblerOutput();
 
 
@@ -86,7 +87,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the BasicRuntimeChecks child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBasicRuntimeChecks();
 
 
@@ -95,7 +96,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the BrowseInformation child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getBrowseInformation();
 
 
@@ -104,7 +105,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the BrowseInformationFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBrowseInformationFile();
 
 
@@ -113,7 +114,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the BufferSecurityCheck child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getBufferSecurityCheck();
 
 
@@ -122,7 +123,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the CallingConvention child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCallingConvention();
 
 
@@ -131,7 +132,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the CompileAs child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCompileAs();
 
 
@@ -140,7 +141,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the CompileAsManaged child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCompileAsManaged();
 
 
@@ -149,7 +150,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the CreateHotpatchableImage child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getCreateHotpatchableImage();
 
 
@@ -158,7 +159,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the DebugInformationFormat child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDebugInformationFormat();
 
 
@@ -167,7 +168,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the DisableLanguageExtensions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDisableLanguageExtensions();
 
 
@@ -176,7 +177,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the DisableSpecificWarnings child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDisableSpecificWarnings();
 
 
@@ -185,7 +186,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the EnableEnhancedInstructionSet child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnableEnhancedInstructionSet();
 
 
@@ -194,7 +195,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the EnableFiberSafeOptimizations child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getEnableFiberSafeOptimizations();
 
 
@@ -203,7 +204,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the EnablePREfast child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getEnablePREfast();
 
 
@@ -212,7 +213,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -221,7 +222,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ErrorReporting child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getErrorReporting();
 
 
@@ -230,7 +231,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ExceptionHandling child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExceptionHandling();
 
 
@@ -239,7 +240,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ExcludedInputPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExcludedInputPaths();
 
 
@@ -248,7 +249,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ExpandAttributedSource child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getExpandAttributedSource();
 
 
@@ -257,7 +258,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the FavorSizeOrSpeed child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFavorSizeOrSpeed();
 
 
@@ -266,7 +267,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the FloatingPointExceptions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getFloatingPointExceptions();
 
 
@@ -275,7 +276,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the FloatingPointModel child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFloatingPointModel();
 
 
@@ -284,7 +285,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ForceConformanceInForLoopScope child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getForceConformanceInForLoopScope();
 
 
@@ -293,7 +294,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ForcedIncludeFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getForcedIncludeFiles();
 
 
@@ -302,7 +303,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ForcedUsingFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getForcedUsingFiles();
 
 
@@ -311,7 +312,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the FunctionLevelLinking child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getFunctionLevelLinking();
 
 
@@ -320,7 +321,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the GenerateXMLDocumentationFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateXMLDocumentationFiles();
 
 
@@ -329,7 +330,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreStandardIncludePath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreStandardIncludePath();
 
 
@@ -338,7 +339,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the InlineFunctionExpansion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInlineFunctionExpansion();
 
 
@@ -347,7 +348,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the IntrinsicFunctions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIntrinsicFunctions();
 
 
@@ -356,7 +357,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -365,7 +366,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the MinimalRebuild child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getMinimalRebuild();
 
 
@@ -374,7 +375,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the MinimalRebuildFromTracking child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getMinimalRebuildFromTracking();
 
 
@@ -383,7 +384,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the MultiProcessorCompilation child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getMultiProcessorCompilation();
 
 
@@ -392,7 +393,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ObjectFileName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getObjectFileName();
 
 
@@ -401,7 +402,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ObjectFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getObjectFiles();
 
 
@@ -410,7 +411,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the OmitDefaultLibName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOmitDefaultLibName();
 
 
@@ -419,7 +420,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the OmitFramePointers child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOmitFramePointers();
 
 
@@ -428,7 +429,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the OpenMPSupport child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOpenMPSupport();
 
 
@@ -437,7 +438,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the Optimization child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOptimization();
 
 
@@ -446,7 +447,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PathOverride child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPathOverride();
 
 
@@ -455,7 +456,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PrecompiledHeader child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPrecompiledHeader();
 
 
@@ -464,7 +465,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PrecompiledHeaderFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPrecompiledHeaderFile();
 
 
@@ -473,7 +474,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PrecompiledHeaderOutputFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPrecompiledHeaderOutputFile();
 
 
@@ -482,7 +483,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PreprocessKeepComments child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getPreprocessKeepComments();
 
 
@@ -491,7 +492,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PreprocessorDefinitions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPreprocessorDefinitions();
 
 
@@ -500,7 +501,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PreprocessOutput child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPreprocessOutput();
 
 
@@ -509,7 +510,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PreprocessSuppressLineNumbers child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getPreprocessSuppressLineNumbers();
 
 
@@ -518,7 +519,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the PreprocessToFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getPreprocessToFile();
 
 
@@ -527,7 +528,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ProcessorNumber child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getProcessorNumber();
 
 
@@ -536,7 +537,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ProgramDataBaseFileName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getProgramDataBaseFileName();
 
 
@@ -545,7 +546,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the RuntimeLibrary child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntimeLibrary();
 
 
@@ -554,7 +555,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the RuntimeTypeInfo child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getRuntimeTypeInfo();
 
 
@@ -563,7 +564,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ShowIncludes child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getShowIncludes();
 
 
@@ -572,7 +573,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the SkippedExecution child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSkippedExecution();
 
 
@@ -581,7 +582,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the SmallerTypeCheck child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSmallerTypeCheck();
 
 
@@ -590,7 +591,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the Sources child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSources();
 
@@ -600,7 +601,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the SourcesCompiled child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSourcesCompiled();
 
 
@@ -609,7 +610,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -618,7 +619,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -627,7 +628,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the StringPooling child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getStringPooling();
 
 
@@ -636,7 +637,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the StructMemberAlignment child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStructMemberAlignment();
 
 
@@ -645,7 +646,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the SuppressStartupBanner child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSuppressStartupBanner();
 
 
@@ -654,7 +655,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -663,7 +664,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TLogReadFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogReadFiles();
 
 
@@ -672,7 +673,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TLogWriteFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogWriteFiles();
 
 
@@ -681,7 +682,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -690,7 +691,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -699,7 +700,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TrackedInputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedInputFilesToIgnore();
 
 
@@ -708,7 +709,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TrackedOutputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedOutputFilesToIgnore();
 
 
@@ -717,7 +718,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TrackerLogDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackerLogDirectory();
 
 
@@ -726,7 +727,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TrackFileAccess child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTrackFileAccess();
 
 
@@ -735,7 +736,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TreatSpecificWarningsAsErrors child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTreatSpecificWarningsAsErrors();
 
 
@@ -744,7 +745,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TreatWarningAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTreatWarningAsError();
 
 
@@ -753,7 +754,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the TreatWChar_tAsBuiltInType child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTreatWChar_tAsBuiltInType();
 
 
@@ -762,7 +763,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the UndefineAllPreprocessorDefinitions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUndefineAllPreprocessorDefinitions();
 
 
@@ -771,7 +772,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the UndefinePreprocessorDefinitions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUndefinePreprocessorDefinitions();
 
 
@@ -780,7 +781,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the UseFullPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseFullPaths();
 
 
@@ -789,7 +790,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the UseUnicodeForAssemblerListing child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseUnicodeForAssemblerListing();
 
 
@@ -798,7 +799,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the WarningLevel child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWarningLevel();
 
 
@@ -807,7 +808,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the WholeProgramOptimization child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getWholeProgramOptimization();
 
 
@@ -816,7 +817,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the XMLDocumentationFileName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getXMLDocumentationFileName();
 
 
@@ -829,7 +830,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -842,7 +843,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -857,7 +858,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -872,7 +873,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -885,7 +886,7 @@ public interface CL extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

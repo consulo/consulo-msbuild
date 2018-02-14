@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Input child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getInput();
 
@@ -33,7 +34,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the SourceAppxManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSourceAppxManifest();
 
@@ -43,7 +44,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the AppxManifestSchema child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAppxManifestSchema();
 
@@ -53,7 +54,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the StoreAssociationFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStoreAssociationFile();
 
 
@@ -62,7 +63,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetPlatformIdentifier child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
 
@@ -72,7 +73,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the TargetPlatformVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformVersion();
 
@@ -82,7 +83,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the OSMinVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getOSMinVersion();
 
@@ -92,7 +93,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the OSMaxVersionTested child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getOSMaxVersionTested();
 
@@ -102,7 +103,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the PlatformVersionDescriptions child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPlatformVersionDescriptions();
 
@@ -112,7 +113,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ResolvedSDKReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getResolvedSDKReferences();
 
@@ -122,7 +123,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the StrictManifestValidationEnabled child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getStrictManifestValidationEnabled();
 
 
@@ -131,7 +132,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ValidateWinmds child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getValidateWinmds();
 
 
@@ -140,7 +141,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the NonFrameworkSdkReferences child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getNonFrameworkSdkReferences();
 
 
@@ -149,7 +150,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the WinmdFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getWinmdFiles();
 
 
@@ -158,7 +159,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the SDKWinmdFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSDKWinmdFiles();
 
 
@@ -167,7 +168,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ManagedWinmdInprocImplementation child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getManagedWinmdInprocImplementation();
 
 
@@ -176,7 +177,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ValidateManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getValidateManifest();
 
 
@@ -185,7 +186,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Resources child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResources();
 
 
@@ -198,7 +199,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -211,7 +212,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -226,7 +227,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -241,7 +242,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -254,7 +255,7 @@ public interface ValidateAppxManifest extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -16,9 +16,9 @@
 
 package consulo.msbuild.projectView.toolWindow;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -33,7 +33,7 @@ import consulo.msbuild.projectView.SolutionViewPane;
 public class SolutionToolWindowFactory implements ToolWindowFactory
 {
 	@Override
-	public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow)
+	public void createToolWindowContent(@Nonnull Project project, @Nonnull ToolWindow toolWindow)
 	{
 		ContentManager contentManager = toolWindow.getContentManager();
 

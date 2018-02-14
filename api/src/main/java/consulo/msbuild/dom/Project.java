@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DefinesXml;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
@@ -34,7 +35,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the value of the DefaultTargets child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDefaultTargets();
 
 
@@ -47,7 +48,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the value of the InitialTargets child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInitialTargets();
 
 
@@ -60,10 +61,10 @@ public interface Project extends DomElement
 	 *
 	 * @return the value of the ToolsVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolsVersion();
 
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSdk();
 
 	/**
@@ -71,7 +72,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of PropertyGroup children.
 	 */
-	@NotNull
+	@Nonnull
 	@SubTagList("PropertyGroup")
 	List<PropertyGroup> getPropertyGroups();
 
@@ -89,7 +90,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of ItemGroup children.
 	 */
-	@NotNull
+	@Nonnull
 	@SubTagList("ItemGroup")
 	List<ItemGroup> getItemGroups();
 
@@ -107,7 +108,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of ItemDefinitionGroup children.
 	 */
-	@NotNull
+	@Nonnull
 	@SubTagList("ItemDefinitionGroup")
 	List<ItemDefinitionGroup> getItemDefinitionGroups();
 
@@ -125,7 +126,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of Choose children.
 	 */
-	@NotNull
+	@Nonnull
 	@SubTagList("Choose")
 	List<Choose> getChooses();
 
@@ -143,7 +144,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of UsingTask children.
 	 */
-	@NotNull
+	@Nonnull
 	@SubTagList("UsingTask")
 	List<UsingTask> getUsingTasks();
 
@@ -165,7 +166,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of ProjectExtensions children.
 	 */
-	@NotNull
+	@Nonnull
 	@SubTagList("ProjectExtensions")
 	List<GenericDomValue<String>> getProjectExtensionses();
 
@@ -183,7 +184,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of Target children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Target> getTargets();
 
 	/**
@@ -199,7 +200,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of Import children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Import> getImports();
 
 	/**
@@ -215,7 +216,7 @@ public interface Project extends DomElement
 	 *
 	 * @return the list of ImportGroup children.
 	 */
-	@NotNull
+	@Nonnull
 	List<ImportGroup> getImportGroups();
 
 	/**

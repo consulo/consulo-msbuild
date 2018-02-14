@@ -18,8 +18,8 @@ package consulo.msbuild.solution;
 
 import java.util.function.Predicate;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.util.xml.DomElement;
 
 /**
@@ -33,7 +33,7 @@ public abstract class SolutionVirtualItem
 	private SolutionVirtualDirectory myParent;
 	private DomElement myElement;
 
-	public SolutionVirtualItem(@NotNull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element)
+	public SolutionVirtualItem(@Nonnull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element)
 	{
 		myName = name;
 		myParent = parent;
@@ -46,13 +46,13 @@ public abstract class SolutionVirtualItem
 		return myParent;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		return myName;
 	}
 
-	public boolean visitRecursive(@NotNull Predicate<SolutionVirtualItem> processor)
+	public boolean visitRecursive(@Nonnull Predicate<SolutionVirtualItem> processor)
 	{
 		return processor.test(this);
 	}

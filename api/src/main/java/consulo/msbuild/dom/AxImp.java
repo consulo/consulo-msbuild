@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the ActiveXControlName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getActiveXControlName();
 
 
@@ -31,7 +32,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the DelaySign child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
 
 
@@ -40,7 +41,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -49,7 +50,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the GenerateSource child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateSource();
 
 
@@ -58,7 +59,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the KeyContainer child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
 
@@ -67,7 +68,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the KeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
 
 
@@ -76,7 +77,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -85,7 +86,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the NoLogo child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getNoLogo();
 
 
@@ -94,7 +95,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the OutputAssembly child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputAssembly();
 
 
@@ -103,7 +104,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the RuntimeCallableWrapperAssembly child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntimeCallableWrapperAssembly();
 
 
@@ -112,7 +113,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the SdkToolsPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSdkToolsPath();
 
 
@@ -121,7 +122,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the Silent child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSilent();
 
 
@@ -130,7 +131,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -139,7 +140,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -148,7 +149,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -157,7 +158,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -166,7 +167,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -175,7 +176,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the Verbose child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getVerbose();
 
 
@@ -188,7 +189,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -201,7 +202,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -216,7 +217,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -231,7 +232,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -244,7 +245,7 @@ public interface AxImp extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the CaseSensitive child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getCaseSensitive();
 
 
@@ -32,7 +33,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the FindLastMatch child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getFindLastMatch();
 
 
@@ -41,7 +42,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the ItemFound child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getItemFound();
 
 
@@ -50,7 +51,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the ItemSpecToFind child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getItemSpecToFind();
 
@@ -60,7 +61,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the List child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getList();
 
@@ -70,7 +71,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the MatchFileNameOnly child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getMatchFileNameOnly();
 
 
@@ -83,7 +84,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -96,7 +97,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -111,7 +112,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -126,7 +127,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -139,7 +140,7 @@ public interface FindInList extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

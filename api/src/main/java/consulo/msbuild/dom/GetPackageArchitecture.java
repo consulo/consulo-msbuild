@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the Platform child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPlatform();
 
@@ -33,7 +34,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the ProjectArchitecture child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getProjectArchitecture();
 
@@ -43,7 +44,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the RecursiveProjectArchitecture child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getRecursiveProjectArchitecture();
 
@@ -53,7 +54,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the PackageArchitecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPackageArchitecture();
 
 
@@ -66,7 +67,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -79,7 +80,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -94,7 +95,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -109,7 +110,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -122,7 +123,7 @@ public interface GetPackageArchitecture extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

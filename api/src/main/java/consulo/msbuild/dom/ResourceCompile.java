@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.Attribute;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
@@ -28,7 +29,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("Condition")
 	GenericAttributeValue<String> getConditionAttr();
 
@@ -42,7 +43,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("Include")
 	GenericAttributeValue<String> getIncludeAttr();
 
@@ -56,7 +57,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("Exclude")
 	GenericAttributeValue<String> getExcludeAttr();
 
@@ -70,7 +71,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("Remove")
 	GenericAttributeValue<String> getRemoveAttr();
 
@@ -85,7 +86,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("Update")
 	GenericAttributeValue<String> getUpdateAttr();
 
@@ -99,7 +100,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	@Attribute("Label")
 	GenericAttributeValue<String> getLabelAttr();
 
@@ -109,7 +110,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of Culture children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getCultures();
 
 	/**
@@ -125,7 +126,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of PreprocessorDefinitions children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getPreprocessorDefinitionses();
 
 	/**
@@ -141,7 +142,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of AdditionalIncludeDirectories children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalIncludeDirectorieses();
 
 	/**
@@ -161,7 +162,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -174,7 +175,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -187,7 +188,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -200,7 +201,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -214,7 +215,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -227,7 +228,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -236,7 +237,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of UndefinePreprocessorDefinitions children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getUndefinePreprocessorDefinitionses();
 
 	/**
@@ -252,7 +253,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of IgnoreStandardIncludePath children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getIgnoreStandardIncludePaths();
 
 	/**
@@ -268,7 +269,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of ShowProgress children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getShowProgresses();
 
 	/**
@@ -284,7 +285,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of NullTerminateStrings children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getNullTerminateStringses();
 
 	/**
@@ -300,7 +301,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of SuppressStartupBanner children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSuppressStartupBanners();
 
 	/**
@@ -316,7 +317,7 @@ public interface ResourceCompile extends DomElement, SimpleItem
 	 *
 	 * @return the list of ResourceOutputFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getResourceOutputFileNames();
 
 	/**

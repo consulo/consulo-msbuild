@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -30,7 +31,7 @@ public interface ItemDefinitionGroup extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -43,7 +44,7 @@ public interface ItemDefinitionGroup extends DomElement
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -52,7 +53,7 @@ public interface ItemDefinitionGroup extends DomElement
 	 *
 	 * @return the list of Item children.
 	 */
-	@NotNull
+	@Nonnull
 	List<SimpleItem> getItems();
 
 	/**
@@ -68,7 +69,7 @@ public interface ItemDefinitionGroup extends DomElement
 	 *
 	 * @return the list of Link children.
 	 */
-	@NotNull
+	@Nonnull
 	List<LinkItem> getLinks();
 
 	/**
@@ -84,7 +85,7 @@ public interface ItemDefinitionGroup extends DomElement
 	 *
 	 * @return the list of ResourceCompile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<ResourceCompile> getResourceCompiles();
 
 	/**
@@ -100,7 +101,7 @@ public interface ItemDefinitionGroup extends DomElement
 	 *
 	 * @return the list of PreBuildEvent children.
 	 */
-	@NotNull
+	@Nonnull
 	List<PreBuildEventItem> getPreBuildEvents();
 
 	/**
@@ -116,7 +117,7 @@ public interface ItemDefinitionGroup extends DomElement
 	 *
 	 * @return the list of PostBuildEvent children.
 	 */
-	@NotNull
+	@Nonnull
 	List<PostBuildEventItem> getPostBuildEvents();
 
 	/**

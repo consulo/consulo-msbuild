@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -25,7 +26,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -38,7 +39,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -51,7 +52,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -64,7 +65,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -78,7 +79,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -91,7 +92,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -104,7 +105,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the DependentUpon child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericDomValue<String> getDependentUpon();
 
 
@@ -117,7 +118,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Link child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericDomValue<String> getLink();
 
 
@@ -130,7 +131,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the SubType child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericDomValue<String> getSubType();
 
 
@@ -143,7 +144,7 @@ public interface AppxManifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Visible child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericDomValue<Boolean> getVisible();
 
 

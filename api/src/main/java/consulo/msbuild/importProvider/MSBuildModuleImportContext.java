@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.moduleImport.ModuleImportContext;
 import consulo.msbuild.MSBuildProjectType;
 import consulo.msbuild.MSBuildSolutionManager;
@@ -54,8 +54,8 @@ public class MSBuildModuleImportContext extends ModuleImportContext
 		return super.setFileToImport(fileToImport);
 	}
 
-	@NotNull
-	public MSBuildSolutionManager.ProjectOptions getOptions(@NotNull String name)
+	@Nonnull
+	public MSBuildSolutionManager.ProjectOptions getOptions(@Nonnull String name)
 	{
 		return myProjectOptions.computeIfAbsent(name, s -> new MSBuildSolutionManager.ProjectOptions());
 	}
@@ -70,7 +70,7 @@ public class MSBuildModuleImportContext extends ModuleImportContext
 		return myItems;
 	}
 
-	@NotNull
+	@Nonnull
 	public SlnFile getSlnFile()
 	{
 		return mySlnFile;

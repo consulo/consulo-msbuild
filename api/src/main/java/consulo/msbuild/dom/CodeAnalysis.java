@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the AlternativeToolName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAlternativeToolName();
 
 
@@ -31,7 +32,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the AnalysisTimeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAnalysisTimeout();
 
 
@@ -40,7 +41,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the ApplyLogFileXsl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getApplyLogFileXsl();
 
 
@@ -49,7 +50,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Assemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblies();
 
 
@@ -58,7 +59,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the ConsoleXsl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getConsoleXsl();
 
 
@@ -67,7 +68,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Culture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCulture();
 
 
@@ -76,7 +77,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the DependentAssemblyPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDependentAssemblyPaths();
 
 
@@ -85,7 +86,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Dictionaries child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDictionaries();
 
 
@@ -94,7 +95,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the FilesWritten child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFilesWritten();
 
 
@@ -103,7 +104,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the ForceOutput child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getForceOutput();
 
 
@@ -112,7 +113,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the GenerateSuccessFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateSuccessFile();
 
 
@@ -121,7 +122,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreInvalidTargets child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreInvalidTargets();
 
 
@@ -130,7 +131,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreGeneratedCode child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreGeneratedCode();
 
 
@@ -139,7 +140,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Imports child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getImports();
 
 
@@ -148,7 +149,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the LogFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLogFile();
 
 
@@ -157,7 +158,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the LogFileXsl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLogFileXsl();
 
 
@@ -166,7 +167,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the OutputToConsole child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOutputToConsole();
 
 
@@ -175,7 +176,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the OverrideRuleVisibilities child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getOverrideRuleVisibilities();
 
 
@@ -184,7 +185,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the PlatformPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPlatformPath();
 
 
@@ -193,7 +194,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Project child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getProject();
 
 
@@ -202,7 +203,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Quiet child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getQuiet();
 
 
@@ -211,7 +212,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the References child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getReferences();
 
 
@@ -220,7 +221,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the RuleAssemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuleAssemblies();
 
 
@@ -229,7 +230,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Rules child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRules();
 
 
@@ -238,7 +239,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the SaveMessagesToReport child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSaveMessagesToReport();
 
 
@@ -247,7 +248,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the SearchGlobalAssemblyCache child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSearchGlobalAssemblyCache();
 
 
@@ -256,7 +257,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Summary child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSummary();
 
 
@@ -265,7 +266,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the SuccessFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSuccessFile();
 
 
@@ -274,7 +275,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -283,7 +284,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the TreatWarningsAsErrors child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTreatWarningsAsErrors();
 
 
@@ -292,7 +293,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -301,7 +302,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the UpdateProject child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUpdateProject();
 
 
@@ -314,7 +315,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -327,7 +328,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -342,7 +343,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -357,7 +358,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -370,7 +371,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the Assemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblies();
 
 
@@ -31,7 +32,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the CreateDesktopShortcut child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getCreateDesktopShortcut();
 
 
@@ -40,7 +41,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the DeploymentManifestEntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getDeploymentManifestEntryPoint();
 
 
@@ -49,7 +50,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the EntryPoint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEntryPoint();
 
 
@@ -58,7 +59,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the ErrorReportUrl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getErrorReportUrl();
 
 
@@ -67,7 +68,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the Files child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFiles();
 
 
@@ -76,7 +77,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the ReferencedAssemblies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getReferencedAssemblies();
 
 
@@ -85,7 +86,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the RequiresMinimumFramework35SP1 child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getRequiresMinimumFramework35SP1();
 
 
@@ -94,7 +95,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the SigningManifests child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSigningManifests();
 
 
@@ -103,7 +104,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the SuiteName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSuiteName();
 
 
@@ -112,7 +113,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkVersion();
 
 
@@ -125,7 +126,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -138,7 +139,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -153,7 +154,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -168,7 +169,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -181,7 +182,7 @@ public interface RequiresFramework35SP1Assembly extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

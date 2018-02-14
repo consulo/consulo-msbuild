@@ -20,8 +20,8 @@ import gnu.trove.THashMap;
 
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
@@ -57,14 +57,14 @@ public abstract class MSBuildVariableProvider
 		myName = getClass().getSimpleName();
 	}
 
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		return myName;
 	}
 
 	@Nullable
-	public String evaluate(@NotNull MSBuildEvaluateContext context)
+	public String evaluate(@Nonnull MSBuildEvaluateContext context)
 	{
 		try
 		{
@@ -77,5 +77,5 @@ public abstract class MSBuildVariableProvider
 	}
 
 	@Nullable
-	public abstract String evaluateUnsafe(@NotNull MSBuildEvaluateContext context) throws Exception;
+	public abstract String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws Exception;
 }

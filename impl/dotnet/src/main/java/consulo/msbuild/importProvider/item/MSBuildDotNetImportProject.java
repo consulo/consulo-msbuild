@@ -16,7 +16,8 @@
 
 package consulo.msbuild.importProvider.item;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.solution.reader.SlnProject;
@@ -43,7 +44,7 @@ public class MSBuildDotNetImportProject extends MSBuildImportProject
 		return myTarget;
 	}
 
-	public void setTarget(@NotNull MSBuildDotNetImportTarget target)
+	public void setTarget(@Nonnull MSBuildDotNetImportTarget target)
 	{
 		myTarget = target;
 

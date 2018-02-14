@@ -16,7 +16,7 @@
 
 package consulo.msbuild.dom.expression.lang.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.impl.light.LightElement;
 import consulo.msbuild.dom.expression.lang.MSBuildExpressionLanguage;
@@ -43,7 +43,7 @@ public class MSBuildLightMacroValue extends LightElement
 		return true;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getValue()
 	{
 		return myValue;

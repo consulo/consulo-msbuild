@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the Output child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getOutput();
 
@@ -33,7 +34,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the MakeAppxExeFullPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getMakeAppxExeFullPath();
 
@@ -43,7 +44,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the Parameters child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getParameters();
 
 
@@ -52,7 +53,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the ExitCode child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExitCode();
 
 
@@ -61,7 +62,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the YieldDuringToolExecution child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getYieldDuringToolExecution();
 
 
@@ -70,7 +71,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the UseCommandProcessor child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUseCommandProcessor();
 
 
@@ -79,7 +80,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the EchoOff child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getEchoOff();
 
 
@@ -88,7 +89,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -97,7 +98,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -106,7 +107,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -115,7 +116,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -124,7 +125,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -133,7 +134,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -142,7 +143,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -155,7 +156,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -168,7 +169,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -183,7 +184,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -198,7 +199,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -211,7 +212,7 @@ public interface MakeAppxWithOutput extends DomElement, MakeAppx
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

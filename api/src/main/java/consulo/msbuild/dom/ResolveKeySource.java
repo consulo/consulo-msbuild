@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the AutoClosePasswordPromptShow child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAutoClosePasswordPromptShow();
 
 
@@ -31,7 +32,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the AutoClosePasswordPromptTimeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAutoClosePasswordPromptTimeout();
 
 
@@ -40,7 +41,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the CertificateFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCertificateFile();
 
 
@@ -49,7 +50,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the CertificateThumbprint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCertificateThumbprint();
 
 
@@ -58,7 +59,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the KeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
 
 
@@ -67,7 +68,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the ResolvedKeyContainer child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResolvedKeyContainer();
 
 
@@ -76,7 +77,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the ResolvedKeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResolvedKeyFile();
 
 
@@ -85,7 +86,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the ResolvedThumbprint child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResolvedThumbprint();
 
 
@@ -94,7 +95,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the ShowImportDialogDespitePreviousFailures child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getShowImportDialogDespitePreviousFailures();
 
 
@@ -103,7 +104,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the SuppressAutoClosePasswordPrompt child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSuppressAutoClosePasswordPrompt();
 
 
@@ -116,7 +117,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -129,7 +130,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -144,7 +145,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -159,7 +160,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -172,7 +173,7 @@ public interface ResolveKeySource extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

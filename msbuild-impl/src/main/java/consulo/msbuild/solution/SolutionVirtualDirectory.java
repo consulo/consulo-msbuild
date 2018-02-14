@@ -16,7 +16,7 @@
 
 package consulo.msbuild.solution;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -29,8 +29,8 @@ public class SolutionVirtualDirectory extends SolutionVirtualCompositeItem
 		super(name, parent, null);
 	}
 
-	@NotNull
-	public SolutionVirtualDirectory createOrGetDirectory(@NotNull String name)
+	@Nonnull
+	public SolutionVirtualDirectory createOrGetDirectory(@Nonnull String name)
 	{
 		return (SolutionVirtualDirectory) myChildren.computeIfAbsent(name, s -> new SolutionVirtualDirectory(name, this));
 	}

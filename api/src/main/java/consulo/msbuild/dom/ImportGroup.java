@@ -5,7 +5,7 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
@@ -34,7 +34,7 @@ public interface ImportGroup extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -47,7 +47,7 @@ public interface ImportGroup extends DomElement
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -56,7 +56,7 @@ public interface ImportGroup extends DomElement
 	 *
 	 * @return the list of Import children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Import> getImports();
 
 	/**

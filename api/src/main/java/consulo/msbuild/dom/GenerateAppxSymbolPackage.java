@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the PdbCopyExeFullPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPdbCopyExeFullPath();
 
@@ -33,7 +34,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the PdbFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPdbFiles();
 
@@ -43,7 +44,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the StrippedDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getStrippedDirectory();
 
@@ -53,7 +54,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the AppxSymbolPackageOutput child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAppxSymbolPackageOutput();
 
@@ -63,7 +64,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the ProjectName child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getProjectName();
 
@@ -73,7 +74,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the StrippedPdbs child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStrippedPdbs();
 
 
@@ -86,7 +87,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -99,7 +100,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -114,7 +115,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -129,7 +130,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -142,7 +143,7 @@ public interface GenerateAppxSymbolPackage extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

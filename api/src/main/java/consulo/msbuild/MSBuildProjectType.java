@@ -23,8 +23,9 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -74,22 +75,22 @@ public interface MSBuildProjectType
 	});
 
 	@Nullable
-	static MSBuildProjectType getProjectType(@NotNull String guid)
+	static MSBuildProjectType getProjectType(@Nonnull String guid)
 	{
 		return ourTypeByGUIDMapValue.getValue().get(guid);
 	}
 
-	@NotNull
+	@Nonnull
 	static Set<String> getExtensions()
 	{
 		return ourExtensionsValue.getValue();
 	}
 
-	void setupModule(@NotNull VirtualFile projectFile,
-			@NotNull Project domProject,
+	void setupModule(@Nonnull VirtualFile projectFile,
+			@Nonnull Project domProject,
 			@Nullable MSBuildSolutionManager.ProjectOptions projectOptions,
-			@NotNull ModifiableModuleRootLayer modifiableRootModel);
+			@Nonnull ModifiableModuleRootLayer modifiableRootModel);
 
-	@NotNull
+	@Nonnull
 	MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context);
 }

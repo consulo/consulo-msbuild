@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationDependencies child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getApplicationDependencies();
 
 
@@ -32,7 +33,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the BaseManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBaseManifest();
 
 
@@ -41,7 +42,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the ExcludedPermissions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExcludedPermissions();
 
 
@@ -50,7 +51,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkMoniker child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkMoniker();
 
 
@@ -59,7 +60,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the TargetZone child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetZone();
 
 
@@ -68,7 +69,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the TrustInfoFile child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTrustInfoFile();
 
@@ -82,7 +83,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -95,7 +96,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -110,7 +111,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -125,7 +126,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -138,7 +139,7 @@ public interface GenerateTrustInfo extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

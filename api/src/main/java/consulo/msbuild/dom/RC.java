@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the AcceptableNonZeroExitCodes child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAcceptableNonZeroExitCodes();
 
 
@@ -32,7 +33,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the ActiveToolSwitchesValues child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getActiveToolSwitchesValues();
 
 
@@ -41,7 +42,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalIncludeDirectories child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalIncludeDirectories();
 
 
@@ -50,7 +51,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the AdditionalOptions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAdditionalOptions();
 
 
@@ -59,7 +60,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the Culture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCulture();
 
 
@@ -68,7 +69,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -77,7 +78,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the ExcludedInputPaths child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExcludedInputPaths();
 
 
@@ -86,7 +87,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the IgnoreStandardIncludePath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreStandardIncludePath();
 
 
@@ -95,7 +96,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -104,7 +105,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the MinimalRebuildFromTracking child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getMinimalRebuildFromTracking();
 
 
@@ -113,7 +114,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the NullTerminateStrings child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getNullTerminateStrings();
 
 
@@ -122,7 +123,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the PathOverride child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPathOverride();
 
 
@@ -131,7 +132,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the PreprocessorDefinitions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPreprocessorDefinitions();
 
 
@@ -140,7 +141,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the ResourceOutputFileName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getResourceOutputFileName();
 
 
@@ -149,7 +150,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the ShowProgress child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getShowProgress();
 
 
@@ -158,7 +159,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the SkippedExecution child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getSkippedExecution();
 
 
@@ -167,7 +168,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the Source child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSource();
 
@@ -177,7 +178,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the SourcesCompiled child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSourcesCompiled();
 
 
@@ -186,7 +187,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -195,7 +196,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -204,7 +205,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -213,7 +214,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the TLogReadFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogReadFiles();
 
 
@@ -222,7 +223,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the TLogWriteFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTLogWriteFiles();
 
 
@@ -231,7 +232,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -240,7 +241,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -249,7 +250,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the TrackedInputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedInputFilesToIgnore();
 
 
@@ -258,7 +259,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the TrackedOutputFilesToIgnore child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackedOutputFilesToIgnore();
 
 
@@ -267,7 +268,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the TrackerLogDirectory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTrackerLogDirectory();
 
 
@@ -276,7 +277,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the TrackFileAccess child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getTrackFileAccess();
 
 
@@ -285,7 +286,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the UndefinePreprocessorDefinitions child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUndefinePreprocessorDefinitions();
 
 
@@ -298,7 +299,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -311,7 +312,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -326,7 +327,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -341,7 +342,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -354,7 +355,7 @@ public interface RC extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

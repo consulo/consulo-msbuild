@@ -16,8 +16,9 @@
 
 package consulo.msbuild.solution.model;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -92,13 +93,13 @@ public class WProject
 		return myFailReason;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getTypeGUID()
 	{
 		return myProject.TypeGuid;
 	}
 
-	@NotNull
+	@Nonnull
 	public String getId()
 	{
 		return myProject.Id;

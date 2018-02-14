@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the AllowPartiallyTrustedCallers child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getAllowPartiallyTrustedCallers();
 
 
@@ -31,7 +32,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Clean child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getClean();
 
 
@@ -40,7 +41,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Debug child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDebug();
 
 
@@ -49,7 +50,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the DelaySign child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
 
 
@@ -58,7 +59,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the EnvironmentVariables child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
 
@@ -67,7 +68,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the FixedNames child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getFixedNames();
 
 
@@ -76,7 +77,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Force child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getForce();
 
 
@@ -85,7 +86,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the KeyContainer child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
 
@@ -94,7 +95,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the KeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
 
 
@@ -103,7 +104,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
 
@@ -112,7 +113,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the MetabasePath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMetabasePath();
 
 
@@ -121,7 +122,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the PhysicalPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPhysicalPath();
 
 
@@ -130,7 +131,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the StandardErrorImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
 
 
@@ -139,7 +140,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the StandardOutputImportance child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
 
@@ -148,7 +149,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the TargetFrameworkMoniker child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkMoniker();
 
 
@@ -157,7 +158,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the TargetPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTargetPath();
 
 
@@ -166,7 +167,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Timeout child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTimeout();
 
 
@@ -175,7 +176,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the ToolExe child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
 
@@ -184,7 +185,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the ToolPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
 
@@ -193,7 +194,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Updateable child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getUpdateable();
 
 
@@ -202,7 +203,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the VirtualPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getVirtualPath();
 
 
@@ -215,7 +216,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -228,7 +229,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -243,7 +244,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -258,7 +259,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -271,7 +272,7 @@ public interface AspNetCompiler extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

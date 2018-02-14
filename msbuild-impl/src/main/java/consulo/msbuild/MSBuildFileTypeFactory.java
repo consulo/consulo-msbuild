@@ -16,7 +16,7 @@
 
 package consulo.msbuild;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
@@ -28,7 +28,7 @@ import com.intellij.openapi.fileTypes.FileTypeFactory;
 public class MSBuildFileTypeFactory extends FileTypeFactory
 {
 	@Override
-	public void createFileTypes(@NotNull FileTypeConsumer consumer)
+	public void createFileTypes(@Nonnull FileTypeConsumer consumer)
 	{
 		consumer.consume(VisualStudioSolutionFileType.INSTANCE);
 		consumer.consume(XmlFileType.INSTANCE, "resx;settings;config");

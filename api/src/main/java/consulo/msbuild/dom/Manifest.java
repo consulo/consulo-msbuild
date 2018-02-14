@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -27,7 +28,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -40,7 +41,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -53,7 +54,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -66,7 +67,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -80,7 +81,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -93,7 +94,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -102,7 +103,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of AssemblyIdentity children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAssemblyIdentities();
 
 	/**
@@ -118,7 +119,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of AdditionalManifestFiles children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalManifestFileses();
 
 	/**
@@ -134,7 +135,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of InputResourceManifests children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getInputResourceManifestses();
 
 	/**
@@ -150,7 +151,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of EnableDPIAwareness children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getEnableDPIAwarenesses();
 
 	/**
@@ -166,7 +167,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of TypeLibraryFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getTypeLibraryFiles();
 
 	/**
@@ -182,7 +183,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of OutputManifestFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getOutputManifestFiles();
 
 	/**
@@ -198,7 +199,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of SuppressStartupBanner children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSuppressStartupBanners();
 
 	/**
@@ -214,7 +215,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of VerboseOutput children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getVerboseOutputs();
 
 	/**
@@ -230,7 +231,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of ResourceOutputFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getResourceOutputFileNames();
 
 	/**
@@ -246,7 +247,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of GenerateCatalogFiles children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateCatalogFileses();
 
 	/**
@@ -262,7 +263,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of DependencyInformationFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getDependencyInformationFiles();
 
 	/**
@@ -278,7 +279,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of ManifestFromManagedAssembly children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getManifestFromManagedAssemblies();
 
 	/**
@@ -294,7 +295,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of SuppressDependencyElement children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getSuppressDependencyElements();
 
 	/**
@@ -310,7 +311,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of GenerateCategoryTags children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getGenerateCategoryTagses();
 
 	/**
@@ -326,7 +327,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of RegistrarScriptFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getRegistrarScriptFiles();
 
 	/**
@@ -342,7 +343,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of ComponentFileName children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getComponentFileNames();
 
 	/**
@@ -358,7 +359,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of ReplacementsFile children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getReplacementsFiles();
 
 	/**
@@ -374,7 +375,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of UpdateFileHashesSearchPath children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getUpdateFileHashesSearchPaths();
 
 	/**
@@ -390,7 +391,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of AdditionalOptions children.
 	 */
-	@NotNull
+	@Nonnull
 	List<GenericDomValue<String>> getAdditionalOptionses();
 
 	/**
@@ -406,7 +407,7 @@ public interface Manifest extends DomElement, SimpleItem
 	 *
 	 * @return the list of OutputResourceManifests children.
 	 */
-	@NotNull
+	@Nonnull
 	List<OutputResourceManifests> getOutputResourceManifestses();
 
 	/**

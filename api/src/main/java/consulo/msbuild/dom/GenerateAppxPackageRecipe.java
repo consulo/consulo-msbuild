@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the AppxManifestXml child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAppxManifestXml();
 
@@ -33,7 +34,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the SourceAppxManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSourceAppxManifest();
 
@@ -43,7 +44,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the SolutionConfiguration child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSolutionConfiguration();
 
@@ -53,7 +54,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the PayloadFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPayloadFiles();
 
@@ -63,7 +64,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the FrameworkSdkPackages child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFrameworkSdkPackages();
 
@@ -73,7 +74,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the RecipeFile child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getRecipeFile();
 
@@ -83,7 +84,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the SystemBinaries child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSystemBinaries();
 
@@ -93,7 +94,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the ReservedFileNames child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getReservedFileNames();
 
@@ -103,7 +104,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the QueryNamespacePrefix child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getQueryNamespacePrefix();
 
@@ -113,7 +114,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the QueryNamespace81Prefix child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getQueryNamespace81Prefix();
 
@@ -123,7 +124,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the ManifestFileNameQueries child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getManifestFileNameQueries();
 
@@ -133,7 +134,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the ManifestImageFileNameQueries child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getManifestImageFileNameQueries();
 
@@ -143,7 +144,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the PackageArchitecture child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPackageArchitecture();
 
@@ -153,7 +154,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the ProjectDir child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getProjectDir();
 
@@ -163,7 +164,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the TargetPlatformIdentifier child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
 
@@ -173,7 +174,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the IndexedPayloadFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getIndexedPayloadFiles();
 
 
@@ -182,7 +183,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the MakePriExtensionPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getMakePriExtensionPath();
 
 
@@ -195,7 +196,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -208,7 +209,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -223,7 +224,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -238,7 +239,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -251,7 +252,7 @@ public interface GenerateAppxPackageRecipe extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

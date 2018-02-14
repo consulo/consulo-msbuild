@@ -16,7 +16,7 @@
 
 package consulo.msbuild.module.extension;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.projectRoots.SdkType;
 import consulo.annotations.RequiredReadAction;
 import consulo.dotnet.module.extension.BaseDotNetSimpleModuleExtension;
@@ -32,18 +32,18 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 {
 	protected MSBuildDotNetImportTarget myTarget = MSBuildDotNetImportTarget._NET;
 
-	public MSBuildDotNetModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
+	public MSBuildDotNetModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
 	}
 
-	@NotNull
+	@Nonnull
 	public MSBuildDotNetImportTarget getTarget()
 	{
 		return myTarget;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public Class<? extends SdkType> getSdkTypeClass()
 	{
@@ -52,7 +52,7 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 
 	@RequiredReadAction
 	@Override
-	public void commit(@NotNull MSBuildDotNetModuleExtension mutableModuleExtension)
+	public void commit(@Nonnull MSBuildDotNetModuleExtension mutableModuleExtension)
 	{
 		super.commit(mutableModuleExtension);
 		myTarget = mutableModuleExtension.myTarget;

@@ -16,10 +16,11 @@
 
 package consulo.msbuild;
 
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.Iconable;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.xml.XmlFile;
@@ -40,7 +41,7 @@ public class MSBuildDomDescriptor extends DomFileDescription<Project>
 	}
 
 	@Override
-	public boolean isMyFile(@NotNull XmlFile file)
+	public boolean isMyFile(@Nonnull XmlFile file)
 	{
 		VirtualFile virtualFile = file.getVirtualFile();
 		return virtualFile != null && MSBuildProjectType.getExtensions().contains(virtualFile.getExtension());

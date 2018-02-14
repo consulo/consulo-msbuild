@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
@@ -26,7 +27,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -39,7 +40,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Include child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getInclude();
 
 
@@ -52,7 +53,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Exclude child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getExclude();
 
 
@@ -65,7 +66,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Remove child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRemove();
 
 
@@ -79,7 +80,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Update child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getUpdate();
 
 
@@ -92,7 +93,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Label child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getLabel();
 
 
@@ -101,7 +102,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Configuration child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getConfiguration();
 
@@ -111,7 +112,7 @@ public interface ProjectConfiguration extends DomElement, SimpleItem
 	 *
 	 * @return the value of the Platform child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericDomValue<String> getPlatform();
 

@@ -16,8 +16,8 @@
 
 package consulo.msbuild.dom.expression.evaluate;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.psi.PsiElement;
@@ -34,13 +34,13 @@ public class MSBuildEvaluateContext
 
 	private Module myModule;
 
-	public MSBuildEvaluateContext(@NotNull PsiElement element)
+	public MSBuildEvaluateContext(@Nonnull PsiElement element)
 	{
 		myElement = element;
 	}
 
 	@Nullable
-	public String evaluateUnsafe(@NotNull Class<? extends MSBuildVariableProvider> variableClazz) throws Exception
+	public String evaluateUnsafe(@Nonnull Class<? extends MSBuildVariableProvider> variableClazz) throws Exception
 	{
 		MSBuildVariableProvider provider = MSBuildVariableProvider.findProvider(variableClazz.getSimpleName());
 		if(provider == null)

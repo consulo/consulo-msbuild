@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface UpdateAppxManifestForBundle extends DomElement, Task
 	 *
 	 * @return the value of the FinalAppxManifest child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFinalAppxManifest();
 
@@ -33,7 +34,7 @@ public interface UpdateAppxManifestForBundle extends DomElement, Task
 	 *
 	 * @return the value of the AppxManifestForBundle child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAppxManifestForBundle();
 
@@ -47,7 +48,7 @@ public interface UpdateAppxManifestForBundle extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -60,7 +61,7 @@ public interface UpdateAppxManifestForBundle extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -75,7 +76,7 @@ public interface UpdateAppxManifestForBundle extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -90,7 +91,7 @@ public interface UpdateAppxManifestForBundle extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -103,7 +104,7 @@ public interface UpdateAppxManifestForBundle extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

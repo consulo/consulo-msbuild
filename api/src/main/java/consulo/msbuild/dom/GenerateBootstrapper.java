@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getApplicationFile();
 
 
@@ -31,7 +32,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getApplicationName();
 
 
@@ -40,7 +41,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationRequiresElevation child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getApplicationRequiresElevation();
 
 
@@ -49,7 +50,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the ApplicationUrl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getApplicationUrl();
 
 
@@ -58,7 +59,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the BootstrapperComponentFiles child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBootstrapperComponentFiles();
 
 
@@ -67,7 +68,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the BootstrapperItems child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBootstrapperItems();
 
 
@@ -76,7 +77,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the BootstrapperKeyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getBootstrapperKeyFile();
 
 
@@ -85,7 +86,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the ComponentsLocation child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getComponentsLocation();
 
 
@@ -94,7 +95,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the ComponentsUrl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getComponentsUrl();
 
 
@@ -103,7 +104,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the CopyComponents child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getCopyComponents();
 
 
@@ -112,7 +113,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the Culture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCulture();
 
 
@@ -121,7 +122,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the FallbackCulture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getFallbackCulture();
 
 
@@ -130,7 +131,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the OutputPath child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getOutputPath();
 
 
@@ -139,7 +140,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the Path child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPath();
 
 
@@ -148,7 +149,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the SupportUrl child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getSupportUrl();
 
 
@@ -157,7 +158,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the Validate child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getValidate();
 
 
@@ -170,7 +171,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -183,7 +184,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -198,7 +199,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -213,7 +214,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -226,7 +227,7 @@ public interface GenerateBootstrapper extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

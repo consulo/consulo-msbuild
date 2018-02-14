@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -23,7 +24,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the AppConfigFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAppConfigFile();
 
 
@@ -32,7 +33,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the PrimaryList child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPrimaryList();
 
@@ -42,7 +43,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the SecondaryList child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSecondaryList();
 
@@ -52,7 +53,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the TargetPath child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPath();
 
@@ -66,7 +67,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -79,7 +80,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -94,7 +95,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -109,7 +110,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -122,7 +123,7 @@ public interface FindAppConfigFile extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**

@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -29,7 +30,7 @@ public interface When extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getCondition();
 
@@ -39,7 +40,7 @@ public interface When extends DomElement
 	 *
 	 * @return the value of the PropertyGroup child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	PropertyGroup getPropertyGroup();
 
@@ -49,7 +50,7 @@ public interface When extends DomElement
 	 *
 	 * @return the value of the ItemGroup child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	ItemGroup getItemGroup();
 
@@ -59,7 +60,7 @@ public interface When extends DomElement
 	 *
 	 * @return the value of the Choose child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	Choose getChoose();
 

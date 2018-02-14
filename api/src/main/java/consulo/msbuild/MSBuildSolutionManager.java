@@ -19,8 +19,9 @@ package consulo.msbuild;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
@@ -56,8 +57,8 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		public Map<String, ProjectOptions> projects = new HashMap<>();
 	}
 
-	@NotNull
-	public static MSBuildSolutionManager getInstance(@NotNull Project project)
+	@Nonnull
+	public static MSBuildSolutionManager getInstance(@Nonnull Project project)
 	{
 		return ServiceManager.getService(project, MSBuildSolutionManager.class);
 	}
@@ -92,12 +93,12 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 	}
 
 	@Nullable
-	public ProjectOptions getOptions(@NotNull String name)
+	public ProjectOptions getOptions(@Nonnull String name)
 	{
 		return myState.projects.get(name);
 	}
 
-	@NotNull
+	@Nonnull
 	public WSolution getSolution()
 	{
 		return myCachedValue.getValue();
@@ -113,7 +114,7 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		return myState.enabled;
 	}
 
-	public void setUrl(@NotNull VirtualFile virtualFile)
+	public void setUrl(@Nonnull VirtualFile virtualFile)
 	{
 		myState.url = virtualFile.getUrl();
 	}

@@ -18,9 +18,9 @@ package consulo.msbuild.projectView;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectView;
@@ -47,7 +47,7 @@ public class SolutionViewDirectoryNode extends ProjectViewNode<SolutionVirtualDi
 	}
 
 	@Override
-	public boolean contains(@NotNull VirtualFile file)
+	public boolean contains(@Nonnull VirtualFile file)
 	{
 		return false;
 	}
@@ -63,7 +63,7 @@ public class SolutionViewDirectoryNode extends ProjectViewNode<SolutionVirtualDi
 		return 0;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	@RequiredReadAction
 	public Collection<? extends AbstractTreeNode> getChildren()

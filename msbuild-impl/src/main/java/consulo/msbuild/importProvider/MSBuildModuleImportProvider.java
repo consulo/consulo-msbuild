@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
 import org.intellij.lang.annotations.Language;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.util.newProjectWizard.ProjectNameStep;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
@@ -41,14 +41,14 @@ import consulo.msbuild.importProvider.item.MSBuildImportProject;
  */
 public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuildModuleImportContext>
 {
-	@NotNull
+	@Nonnull
 	@Override
 	public MSBuildModuleImportContext createContext()
 	{
 		return new MSBuildModuleImportContext();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	@Language("HTML")
 	public String getFileSample()
@@ -56,7 +56,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		return "<b>Visual Studio</b> solution file (*.sln)";
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getName()
 	{
@@ -71,20 +71,20 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 	}
 
 	@Override
-	public boolean canImport(@NotNull File fileOrDirectory)
+	public boolean canImport(@Nonnull File fileOrDirectory)
 	{
 		return !fileOrDirectory.isDirectory() && FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
 	}
 
 	@Override
-	public String getPathToBeImported(@NotNull VirtualFile file)
+	public String getPathToBeImported(@Nonnull VirtualFile file)
 	{
 		return file.getPath();
 	}
 
 	@Override
-	@NotNull
-	public ModuleWizardStep[] createSteps(@NotNull WizardContext wizardContext, @NotNull MSBuildModuleImportContext context)
+	@Nonnull
+	public ModuleWizardStep[] createSteps(@Nonnull WizardContext wizardContext, @Nonnull MSBuildModuleImportContext context)
 	{
 		VirtualFile fileByPath = LocalFileSystem.getInstance().findFileByPath(wizardContext.getProjectFileDirectory());
 		assert fileByPath != null;
@@ -113,13 +113,13 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		return wizardSteps.toArray(new ModuleWizardStep[wizardSteps.size()]);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	@RequiredReadAction
-	public List<Module> commit(@NotNull MSBuildModuleImportContext context,
-			@NotNull Project project,
+	public List<Module> commit(@Nonnull MSBuildModuleImportContext context,
+			@Nonnull Project project,
 			@Nullable ModifiableModuleModel old,
-			@NotNull ModulesProvider modulesProvider,
+			@Nonnull ModulesProvider modulesProvider,
 			@Nullable ModifiableArtifactModel artifactModel)
 	{
 		String fileToImport = context.getFileToImport();

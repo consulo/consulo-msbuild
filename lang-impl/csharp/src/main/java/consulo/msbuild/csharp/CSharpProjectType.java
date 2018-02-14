@@ -16,7 +16,7 @@
 
 package consulo.msbuild.csharp;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension;
 import consulo.msbuild.impl.DotNetBasedProjectType;
 import consulo.roots.ModifiableModuleRootLayer;
@@ -28,7 +28,7 @@ import consulo.roots.ModifiableModuleRootLayer;
 public class CSharpProjectType extends DotNetBasedProjectType
 {
 	@Override
-	public void setupModuleImpl(@NotNull ModifiableModuleRootLayer rootLayer)
+	public void setupModuleImpl(@Nonnull ModifiableModuleRootLayer rootLayer)
 	{
 		MSBuildCSharpMutableModuleExtension extension = rootLayer.getExtensionWithoutCheck(MSBuildCSharpMutableModuleExtension.class);
 

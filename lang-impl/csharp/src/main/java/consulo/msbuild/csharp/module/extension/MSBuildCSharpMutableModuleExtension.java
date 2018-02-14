@@ -16,7 +16,7 @@
 
 package consulo.msbuild.csharp.module.extension;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import consulo.csharp.module.extension.CSharpSimpleMutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
 
@@ -26,7 +26,7 @@ import consulo.roots.ModuleRootLayer;
  */
 public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExtension implements CSharpSimpleMutableModuleExtension<MSBuildCSharpModuleExtension>
 {
-	public MSBuildCSharpMutableModuleExtension(@NotNull String id, @NotNull ModuleRootLayer layer)
+	public MSBuildCSharpMutableModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer layer)
 	{
 		super(id, layer);
 	}
@@ -38,7 +38,7 @@ public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExte
 	}
 
 	@Override
-	public boolean isModified(@NotNull MSBuildCSharpModuleExtension extension)
+	public boolean isModified(@Nonnull MSBuildCSharpModuleExtension extension)
 	{
 		return myIsEnabled != extension.isEnabled();
 	}

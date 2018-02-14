@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -29,7 +30,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -42,7 +43,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the AssemblyName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblyName();
 
 
@@ -55,7 +56,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the AssemblyFile child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAssemblyFile();
 
 
@@ -68,7 +69,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the TaskName child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTaskName();
 
@@ -82,7 +83,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the TaskFactory child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getTaskFactory();
 
 
@@ -97,7 +98,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -112,7 +113,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -121,7 +122,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the ParameterGroup child.
 	 */
-	@NotNull
+	@Nonnull
 	ParameterGroup getParameterGroup();
 
 
@@ -130,7 +131,7 @@ public interface UsingTask extends DomElement
 	 *
 	 * @return the value of the Task child.
 	 */
-	@NotNull
+	@Nonnull
 	UsingTaskBody getTask();
 
 

@@ -3,7 +3,8 @@
 
 package consulo.msbuild.dom;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.Required;
@@ -25,7 +26,7 @@ public interface Output extends DomElement
 	 *
 	 * @return the value of the TaskParameter child.
 	 */
-	@NotNull
+	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTaskParameter();
 
@@ -39,7 +40,7 @@ public interface Output extends DomElement
 	 *
 	 * @return the value of the ItemName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getItemName();
 
 
@@ -52,7 +53,7 @@ public interface Output extends DomElement
 	 *
 	 * @return the value of the PropertyName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getPropertyName();
 
 
@@ -65,7 +66,7 @@ public interface Output extends DomElement
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 

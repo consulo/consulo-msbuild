@@ -5,7 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 
@@ -22,7 +23,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the AppxManifestItems child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getAppxManifestItems();
 
 
@@ -31,7 +32,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the CustomAppxManifestItems child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCustomAppxManifestItems();
 
 
@@ -40,7 +41,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the AppxPackageProject child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getAppxPackageProject();
 
 
@@ -49,7 +50,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the IdentityName child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getIdentityName();
 
 
@@ -58,7 +59,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the IdentityVersion child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getIdentityVersion();
 
 
@@ -71,7 +72,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the Condition child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
 
@@ -84,7 +85,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the ContinueOnError child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<Boolean> getContinueOnError();
 
 
@@ -99,7 +100,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the Architecture child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getArchitecture();
 
 
@@ -114,7 +115,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the value of the Runtime child.
 	 */
-	@NotNull
+	@Nonnull
 	GenericAttributeValue<String> getRuntime();
 
 
@@ -127,7 +128,7 @@ public interface ValidateAppxManifestItems extends DomElement, Task
 	 *
 	 * @return the list of Output children.
 	 */
-	@NotNull
+	@Nonnull
 	List<Output> getOutputs();
 
 	/**
