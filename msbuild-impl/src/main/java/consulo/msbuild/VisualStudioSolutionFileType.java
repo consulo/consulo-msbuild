@@ -18,10 +18,10 @@ package consulo.msbuild;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.openapi.fileTypes.PlainTextLanguage;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -59,7 +59,7 @@ public class VisualStudioSolutionFileType extends LanguageFileType
 
 	@Nullable
 	@Override
-	public Icon getIcon()
+	public Image getIcon()
 	{
 		return MSBuildIcons.VisualStudio;
 	}

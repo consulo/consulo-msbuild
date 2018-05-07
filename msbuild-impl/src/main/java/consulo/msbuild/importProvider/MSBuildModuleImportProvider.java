@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import org.intellij.lang.annotations.Language;
 import com.intellij.ide.util.newProjectWizard.ProjectNameStep;
@@ -34,6 +33,7 @@ import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.VisualStudioSolutionFileType;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -65,7 +65,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 
 	@Nullable
 	@Override
-	public Icon getIcon()
+	public Image getIcon()
 	{
 		return MSBuildIcons.VisualStudio;
 	}

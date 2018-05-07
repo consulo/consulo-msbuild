@@ -24,9 +24,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
-
 import javax.annotation.Nullable;
+
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.ProcessOutput;
@@ -36,6 +35,7 @@ import com.intellij.util.containers.ContainerUtil;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildVersion;
 import consulo.platform.Platform;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -194,7 +194,7 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 
 	@Nullable
 	@Override
-	public Icon getIcon()
+	public Image getIcon()
 	{
 		return MSBuildIcons.Msbuild;
 	}
