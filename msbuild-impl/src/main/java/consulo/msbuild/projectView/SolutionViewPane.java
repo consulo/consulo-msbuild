@@ -55,6 +55,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiUtilCore;
 import consulo.annotations.RequiredReadAction;
+import consulo.awt.TargetAWT;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
 
@@ -403,7 +404,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	public Icon getIcon()
 	{
-		return MSBuildIcons.Msbuild;
+		return TargetAWT.to(MSBuildIcons.Msbuild);
 	}
 
 	@Nonnull

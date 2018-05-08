@@ -27,6 +27,7 @@ import com.intellij.ide.projectView.ViewSettings;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import consulo.awt.TargetAWT;
 import consulo.msbuild.MSBuildIcons;
 
 /**
@@ -56,7 +57,7 @@ public class SolutionViewErrorRootNode extends ProjectViewNode<Project>
 	@Override
 	protected void update(PresentationData presentation)
 	{
-		presentation.setIcon(MSBuildIcons.VisualStudio);
+		presentation.setIcon(TargetAWT.to(MSBuildIcons.VisualStudio));
 		presentation.setPresentableText("Solution");
 	}
 }
