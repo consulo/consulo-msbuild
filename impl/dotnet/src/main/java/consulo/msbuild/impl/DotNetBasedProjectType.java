@@ -23,7 +23,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.openapi.application.ReadAction;
+
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
@@ -37,6 +37,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.io.URLUtil;
+import consulo.application.AccessRule;
 import consulo.dotnet.dll.DotNetModuleFileType;
 import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
@@ -98,7 +99,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 		rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, "mscorlib"));
 
-		ReadAction.run(() ->
+		AccessRule.read(() ->
 		{
 			Walker walker = new Walker(domProject);
 

@@ -19,7 +19,7 @@ package consulo.msbuild;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
-import com.intellij.openapi.application.ReadAction;
+
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
@@ -31,6 +31,7 @@ import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.startup.StartupActivity;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.vfs.VirtualFile;
+import consulo.application.AccessRule;
 import consulo.msbuild.solution.SolutionVirtualBuilder;
 import consulo.msbuild.solution.SolutionVirtualDirectory;
 import consulo.msbuild.solution.SolutionVirtualFile;
@@ -56,9 +57,9 @@ public class MSBuildStartActivity implements StartupActivity
 
 		Task.Backgroundable.queue(project, "Synchronize solution", indicator ->
 		{
-			ModifiableModuleModel modifiableModel = ReadAction.compute(() -> ModuleManager.getInstance(project).getModifiableModel());
+			ModifiableModuleModel modifiableModel = AccessRule.read(() -> ModuleManager.getInstance(project).getModifiableModel());
 
-			WSolution solution = ReadAction.compute(solutionManager::getSolution);
+			WSolution solution = AccessRule.read(solutionManager::getSolution);
 
 			for(Module module : modifiableModel.getModules())
 			{
@@ -88,7 +89,7 @@ public class MSBuildStartActivity implements StartupActivity
 
 				Module module = modifiableModel.newModule(wProject.getName(), null);
 
-				ModifiableRootModel modifiableRootModel = ReadAction.compute(() -> ModuleRootManager.getInstance(module).getModifiableModel());
+				ModifiableRootModel modifiableRootModel = AccessRule.read(() -> ModuleRootManager.getInstance(module).getModifiableModel());
 
 				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
 				if(projectType != null)
@@ -96,7 +97,7 @@ public class MSBuildStartActivity implements StartupActivity
 					projectType.setupModule(projectFile, domProject, projectOptions, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
 				}
 
-				SolutionVirtualDirectory directory = ReadAction.compute(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));
+				SolutionVirtualDirectory directory = AccessRule.read(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));
 
 				directory.visitRecursive(solutionVirtualItem ->
 				{
