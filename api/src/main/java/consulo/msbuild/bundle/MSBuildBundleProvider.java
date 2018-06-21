@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.openapi.projectRoots.impl.SdkImpl;
+import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkModificator;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.Consumer;
 import consulo.bundle.PredefinedBundlesProvider;
 
 /**
@@ -17,7 +17,7 @@ import consulo.bundle.PredefinedBundlesProvider;
 public class MSBuildBundleProvider extends PredefinedBundlesProvider
 {
 	@Override
-	public void createBundles(@Nonnull Consumer<SdkImpl> consumer)
+	public void createBundles(@Nonnull Context context)
 	{
 		MSBuildBundleType type = MSBuildBundleType.getInstance();
 		List<MSBuildBundleType.MSBuildInfo> msBuilds = type.findMSBuilds();
@@ -34,11 +34,12 @@ public class MSBuildBundleProvider extends PredefinedBundlesProvider
 					continue;
 				}
 
-				SdkImpl sdk = createSdkWithName(type, buildInfo.buildName());
-				sdk.setHomePath(path);
-				sdk.setVersionString(type.getVersionString(sdk));
+				Sdk sdk = context.createSdkWithName(type, buildInfo.buildName());
 
-				consumer.consume(sdk);
+				SdkModificator modificator = sdk.getSdkModificator();
+				modificator.setHomePath(path);
+				modificator.setVersionString(type.getVersionString(path));
+				modificator.commitChanges();
 			}
 		}
 	}
