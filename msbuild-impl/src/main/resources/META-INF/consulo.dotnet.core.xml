@@ -1,0 +1,5 @@
+<idea-plugin>
+	<extensions defaultExtensionNs="consulo.msbuild.dotnet">
+		<importTarget implementation="consulo.msbuild.dotnet.core.DotNetCoreImportTarget" />
+	</extensions>
+</idea-plugin>

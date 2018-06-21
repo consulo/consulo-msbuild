@@ -94,6 +94,16 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>consulo.msbuild-impl.dotnet.microsoft</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>consulo.msbuild-impl.dotnet.mono</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>consulo.msbuild-lang.impl.csharp</artifactId>
 			<version>${project.version}</version>
 		</dependency>

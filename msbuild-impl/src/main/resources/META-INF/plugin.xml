@@ -24,6 +24,10 @@
 
 	<!--.NET Support-->
 	<depends optional="true" config-file="consulo.dotnet.xml">consulo.dotnet</depends>
+	<depends optional="true" config-file="consulo.dotnet.mono.xml">consulo.dotnet.mono</depends>
+	<depends optional="true" config-file="consulo.dotnet.microsoft.xml">consulo.dotnet.microsoft</depends>
+	<depends optional="true" config-file="consulo.dotnet.core.xml">consulo.dotnet.core</depends>
+
 	<depends optional="true" config-file="consulo.csharp.xml">consulo.csharp</depends>
 
 	<extensionPoints>
@@ -35,6 +39,8 @@
 			<with attribute="stepClass" implements="com.intellij.ide.util.projectWizard.ModuleWizardStep"/>
 		</extensionPoint>
 		<extensionPoint name="variableProvider" interface="consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider"/>
+
+		<extensionPoint name="dotnet.importTarget" interface="consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget"/>
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="consulo.msbuild">
@@ -52,9 +58,9 @@
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<compiler implementation="consulo.msbuild.compiler.MSBuildCompiler" />
+		<compiler implementation="consulo.msbuild.compiler.MSBuildCompiler"/>
 
-		<compiler.moduleScopeFactory implementation="consulo.msbuild.compiler.MSBuildCompileModuleScopeFactory" />
+		<compiler.moduleScopeFactory implementation="consulo.msbuild.compiler.MSBuildCompileModuleScopeFactory"/>
 
 		<sdkType implementation="consulo.msbuild.bundle.MSBuildBundleType"/>
 		<predefinedBundlesProvider implementation="consulo.msbuild.bundle.MSBuildBundleProvider"/>

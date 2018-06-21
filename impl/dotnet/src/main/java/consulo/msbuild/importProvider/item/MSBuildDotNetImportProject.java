@@ -49,6 +49,6 @@ public class MSBuildDotNetImportProject extends MSBuildImportProject
 		myTarget = target;
 
 		MSBuildSolutionManager.ProjectOptions options = myContext.getOptions(myProjectInfo.Name);
-		options.target = target.name();
+		options.target = target.getFrameworkExtensionId();
 	}
 }

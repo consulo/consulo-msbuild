@@ -22,7 +22,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
+import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
@@ -31,6 +33,7 @@ import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.LabeledComponent;
+import com.intellij.ui.ColoredListCellRenderer;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.table.TableView;
@@ -53,9 +56,14 @@ public class MSBuildDotNetSetupTargetStep extends ModuleWizardStep
 
 	public MSBuildDotNetSetupTargetStep(MSBuildModuleImportContext context, WizardContext wizardContext)
 	{
-		ComboBox<MSBuildDotNetImportTarget> targetComboBox = new ComboBox<>(new MSBuildDotNetImportTarget[]{
-				MSBuildDotNetImportTarget._NET,
-				MSBuildDotNetImportTarget.Mono
+		ComboBox<MSBuildDotNetImportTarget> targetComboBox = new ComboBox<>(MSBuildDotNetImportTarget.EP_NAME.getExtensions());
+		targetComboBox.setRenderer(new ColoredListCellRenderer<MSBuildDotNetImportTarget>()
+		{
+			@Override
+			protected void customizeCellRenderer(@Nonnull JList<? extends MSBuildDotNetImportTarget> jList, MSBuildDotNetImportTarget target, int i, boolean b, boolean b1)
+			{
+				append(target.getPresentableName());
+			}
 		});
 
 		ColumnInfo<MSBuildDotNetImportProject, String> nameColumn = new ColumnInfo<MSBuildDotNetImportProject, String>("Name")

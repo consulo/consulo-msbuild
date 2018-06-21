@@ -46,7 +46,7 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	public Component createConfigurationComponent(@Nonnull Runnable updateOnCheck)
 	{
 		VerticalLayout vertical = VerticalLayout.create();
-		vertical.add(LabeledComponents.left("Target", Label.create(myTarget.name())));
+		vertical.add(LabeledComponents.left("Target", Label.create(myTarget.getPresentableName())));
 		return vertical;
 	}
 

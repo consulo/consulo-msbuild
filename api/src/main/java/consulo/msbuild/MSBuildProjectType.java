@@ -77,7 +77,12 @@ public interface MSBuildProjectType
 	@Nullable
 	static MSBuildProjectType getProjectType(@Nonnull String guid)
 	{
-		return ourTypeByGUIDMapValue.getValue().get(guid);
+		MSBuildProjectType projectType = ourTypeByGUIDMapValue.getValue().get(guid);
+		if(projectType == null || !projectType.isAvaliable())
+		{
+			return null;
+		}
+		return projectType;
 	}
 
 	@Nonnull
@@ -93,4 +98,9 @@ public interface MSBuildProjectType
 
 	@Nonnull
 	MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context);
+
+	default boolean isAvaliable()
+	{
+		return true;
+	}
 }

@@ -54,6 +54,7 @@ import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
+import consulo.msbuild.importProvider.item.UnknownBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.MSBuildMutableDotNetModuleExtension;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.roots.ModifiableModuleRootLayer;
@@ -72,7 +73,13 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 	@Override
 	public MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context)
 	{
-		return new MSBuildDotNetImportProject(project, context, MSBuildDotNetImportTarget._NET);
+		return new MSBuildDotNetImportProject(project, context, MSBuildDotNetImportTarget.EP_NAME.getExtensions()[0]);
+	}
+
+	@Override
+	public boolean isAvaliable()
+	{
+		return MSBuildDotNetImportTarget.EP_NAME.getExtensions().length > 0;
 	}
 
 	private static MSBuildDotNetImportTarget findTarget(@Nullable MSBuildSolutionManager.ProjectOptions projectOptions)
@@ -80,10 +87,10 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		String value = projectOptions == null ? null : projectOptions.target;
 		if(value == null)
 		{
-			return MSBuildDotNetImportTarget._NET;
+			return UnknownBuildDotNetImportTarget.INSTANCE;
 		}
 
-		return StringUtil.parseEnum(value, MSBuildDotNetImportTarget._NET, MSBuildDotNetImportTarget.class);
+		return MSBuildDotNetImportTarget.findById(value);
 	}
 
 	@Override
@@ -201,6 +208,11 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		if(StringUtil.startsWithChar(sdkVersion, 'v'))
 		{
 			sdkVersion = sdkVersion.substring(1, sdkVersion.length());
+		}
+
+		if(target == UnknownBuildDotNetImportTarget.INSTANCE)
+		{
+			return Pair.create(sdkVersion, null);
 		}
 
 		SdkType sdkType = target.getSdkType();

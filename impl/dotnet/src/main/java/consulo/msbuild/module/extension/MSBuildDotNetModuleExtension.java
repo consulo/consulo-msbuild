@@ -22,6 +22,7 @@ import consulo.annotations.RequiredReadAction;
 import consulo.dotnet.module.extension.BaseDotNetSimpleModuleExtension;
 import consulo.dotnet.sdk.DotNetSdkType;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
+import consulo.msbuild.importProvider.item.UnknownBuildDotNetImportTarget;
 import consulo.roots.ModuleRootLayer;
 
 /**
@@ -30,7 +31,7 @@ import consulo.roots.ModuleRootLayer;
  */
 public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>
 {
-	protected MSBuildDotNetImportTarget myTarget = MSBuildDotNetImportTarget._NET;
+	protected MSBuildDotNetImportTarget myTarget = UnknownBuildDotNetImportTarget.INSTANCE;
 
 	public MSBuildDotNetModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{

@@ -16,71 +16,52 @@
 
 package consulo.msbuild.importProvider.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.projectRoots.SdkType;
-import com.intellij.util.ArrayFactory;
-import com.intellij.util.containers.ContainerUtil;
-import consulo.module.extension.ModuleExtensionProviderEP;
-import consulo.module.extension.impl.ModuleExtensionProviders;
 
 /**
  * @author VISTALL
  * @since 30-Jan-17
  */
-public enum MSBuildDotNetImportTarget
+public abstract class MSBuildDotNetImportTarget
 {
-	_NET("microsoft-dotnet", "MICROSOFT_DOTNET_SDK"),
-	Mono("mono-dotnet", "MONO_DOTNET_SDK"),
-	_NET__Core("dotnet-core", "DOTNET_CORE_SDK");
-
-	public static final MSBuildDotNetImportTarget[] EMPTY_ARRAY = new MSBuildDotNetImportTarget[0];
-
-	public static ArrayFactory<MSBuildDotNetImportTarget> ARRAY_FACTORY = count -> count == 0 ? EMPTY_ARRAY : new MSBuildDotNetImportTarget[count];
+	public static final ExtensionPointName<MSBuildDotNetImportTarget> EP_NAME = ExtensionPointName.create("consulo.msbuild.dotnet.importTarget");
 
 	private final String myPresentableName;
 	private final String myFrameworkExtensionId;
-	private final String mySdkTypeId;
 
-	MSBuildDotNetImportTarget(@Nonnull String frameworkExtensionId, @Nonnull String sdkTypeId)
+	protected MSBuildDotNetImportTarget(@Nonnull String name, @Nonnull String frameworkExtensionId)
 	{
 		myFrameworkExtensionId = frameworkExtensionId;
-		mySdkTypeId = sdkTypeId;
-		myPresentableName = name().replace("__", " ").replace("_", ".");
-	}
-
-	@Nullable
-	public SdkType getSdkType()
-	{
-		return ContainerUtil.find(SdkType.EP_NAME.getExtensions(), it -> it.getName().equals(mySdkTypeId));
+		myPresentableName = name;
 	}
 
 	@Nonnull
-	public static MSBuildDotNetImportTarget[] getAvailableTargets()
+	public static MSBuildDotNetImportTarget findById(@Nonnull String id)
 	{
-		MSBuildDotNetImportTarget[] values = values();
-		List<MSBuildDotNetImportTarget> list = new ArrayList<>(values.length);
-		for(MSBuildDotNetImportTarget visualStudioImportTarget : values)
+		for(MSBuildDotNetImportTarget target : EP_NAME.getExtensions())
 		{
-			ModuleExtensionProviderEP providerEP = ModuleExtensionProviders.findProvider(visualStudioImportTarget.getFrameworkExtensionId());
-			if(providerEP != null)
+			if(id.equals(target.getFrameworkExtensionId()))
 			{
-				list.add(visualStudioImportTarget);
+				return target;
 			}
 		}
-		return ContainerUtil.toArray(list, MSBuildDotNetImportTarget.ARRAY_FACTORY);
+		return UnknownBuildDotNetImportTarget.INSTANCE;
 	}
 
+	@Nonnull
+	public abstract SdkType getSdkType();
+
+	@Nonnull
 	public String getFrameworkExtensionId()
 	{
 		return myFrameworkExtensionId;
 	}
 
-	@Override
-	public String toString()
+	@Nonnull
+	public String getPresentableName()
 	{
 		return myPresentableName;
 	}
