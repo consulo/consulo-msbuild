@@ -23,7 +23,6 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -55,9 +54,9 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiUtilCore;
 import consulo.annotations.RequiredReadAction;
-import consulo.awt.TargetAWT;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -401,10 +400,11 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return "Solution Explorer";
 	}
 
+	@Nonnull
 	@Override
-	public Icon getIcon()
+	public Image getIcon()
 	{
-		return TargetAWT.to(MSBuildIcons.Msbuild);
+		return MSBuildIcons.Msbuild;
 	}
 
 	@Nonnull
