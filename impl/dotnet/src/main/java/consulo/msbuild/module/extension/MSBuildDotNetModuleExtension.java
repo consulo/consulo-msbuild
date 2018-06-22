@@ -17,12 +17,16 @@
 package consulo.msbuild.module.extension;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.projectRoots.SdkType;
 import consulo.annotations.RequiredReadAction;
 import consulo.dotnet.module.extension.BaseDotNetSimpleModuleExtension;
 import consulo.dotnet.sdk.DotNetSdkType;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
+import consulo.msbuild.importProvider.item.MSBuildImportTarget;
 import consulo.msbuild.importProvider.item.UnknownBuildDotNetImportTarget;
+import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 import consulo.roots.ModuleRootLayer;
 
 /**
@@ -39,7 +43,8 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 	}
 
 	@Nonnull
-	public MSBuildDotNetImportTarget getTarget()
+	@Override
+	public MSBuildImportTarget getImportTarget()
 	{
 		return myTarget;
 	}
@@ -57,5 +62,19 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 	{
 		super.commit(mutableModuleExtension);
 		myTarget = mutableModuleExtension.myTarget;
+	}
+
+	@Nonnull
+	@Override
+	public MSBuildBundleInfo getBundleInfo()
+	{
+		return myTarget.getBundleInfoList().get(0);
+	}
+
+	@Nullable
+	@Override
+	public Object resolveAutoSdk()
+	{
+		return myTarget.resolveAutoSdk(this);
 	}
 }

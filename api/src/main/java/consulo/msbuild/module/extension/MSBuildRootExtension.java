@@ -1,6 +1,11 @@
 package consulo.msbuild.module.extension;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import consulo.module.extension.ModuleExtension;
+import consulo.msbuild.importProvider.item.MSBuildImportTarget;
+import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 
 /**
  * @author VISTALL
@@ -8,4 +13,12 @@ import consulo.module.extension.ModuleExtension;
  */
 public interface MSBuildRootExtension<T extends MSBuildRootExtension<T>> extends ModuleExtension<T>
 {
+	@Nonnull
+	MSBuildBundleInfo getBundleInfo();
+
+	@Nullable
+	Object resolveAutoSdk();
+
+	@Nonnull
+	MSBuildImportTarget getImportTarget();
 }

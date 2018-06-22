@@ -100,7 +100,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		MSBuildMutableDotNetModuleExtension moduleExtension = rootLayer.getExtensionWithoutCheck(MSBuildMutableDotNetModuleExtension.class);
 		assert moduleExtension != null;
 		moduleExtension.setEnabled(true);
-		moduleExtension.setTarget(findTarget(projectOptions));
+		moduleExtension.setImportTarget(findTarget(projectOptions));
 
 		setupModuleImpl(rootLayer);
 
@@ -128,7 +128,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 					{
 						case "TargetFrameworkVersion":
 							String textValue = property.getText();
-							Pair<String, Sdk> sdkPair = findSdk(moduleExtension.getTarget(), textValue);
+							Pair<String, Sdk> sdkPair = findSdk((MSBuildDotNetImportTarget) moduleExtension.getImportTarget(), textValue);
 							MutableModuleInheritableNamedPointer<Sdk> pointer = moduleExtension.getInheritableSdk();
 							if(sdkPair.getSecond() != null)
 							{

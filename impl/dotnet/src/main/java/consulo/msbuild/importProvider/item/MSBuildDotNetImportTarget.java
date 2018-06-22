@@ -16,16 +16,23 @@
 
 package consulo.msbuild.importProvider.item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.projectRoots.SdkType;
+import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
+import consulo.msbuild.module.extension.resolve.AutomaticBundleInfo;
+import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 
 /**
  * @author VISTALL
  * @since 30-Jan-17
  */
-public abstract class MSBuildDotNetImportTarget
+public abstract class MSBuildDotNetImportTarget implements MSBuildImportTarget
 {
 	public static final ExtensionPointName<MSBuildDotNetImportTarget> EP_NAME = ExtensionPointName.create("consulo.msbuild.dotnet.importTarget");
 
@@ -54,6 +61,31 @@ public abstract class MSBuildDotNetImportTarget
 	@Nonnull
 	public abstract SdkType getSdkType();
 
+	@Nullable
+	public Object resolveAutoSdk(@Nonnull MSBuildDotNetModuleExtension moduleExtension)
+	{
+		List<MSBuildBundleInfo> bundleInfoList = getBundleInfoList();
+		for(MSBuildBundleInfo info : bundleInfoList)
+		{
+			if(info == AutomaticBundleInfo.INSTANCE)
+			{
+				continue;
+			}
+
+			return info.resolveSdk(this, moduleExtension);
+		}
+
+		return null;
+	}
+
+	@Nonnull
+	public List<MSBuildBundleInfo> getBundleInfoList()
+	{
+		List<MSBuildBundleInfo> list = new ArrayList<>();
+		list.add(AutomaticBundleInfo.INSTANCE);
+		return list;
+	}
+
 	@Nonnull
 	public String getFrameworkExtensionId()
 	{
@@ -62,6 +94,12 @@ public abstract class MSBuildDotNetImportTarget
 
 	@Nonnull
 	public String getPresentableName()
+	{
+		return myPresentableName;
+	}
+
+	@Override
+	public String toString()
 	{
 		return myPresentableName;
 	}

@@ -7,8 +7,11 @@ import com.intellij.openapi.compiler.CompileScope;
 import com.intellij.openapi.compiler.TranslatingCompiler;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.Chunk;
+import consulo.msbuild.module.extension.MSBuildRootExtension;
 
 /**
  * @author VISTALL
@@ -27,7 +30,24 @@ public class MSBuildCompiler implements TranslatingCompiler
 	{
 		Module module = chunk.getNodes().iterator().next();
 
-		System.out.println("test");
+		MSBuildRootExtension extension = ModuleUtilCore.getExtension(module, MSBuildRootExtension.class);
+
+		if(extension == null)
+		{
+			return;
+		}
+
+		Object sdk = extension.getBundleInfo().resolveSdk(extension.getImportTarget(), extension);
+
+		if(sdk == null)
+		{
+			return;
+		}
+
+		if(sdk instanceof Sdk)
+		{
+			System.out.println("test");
+		}
 	}
 
 	@Nonnull

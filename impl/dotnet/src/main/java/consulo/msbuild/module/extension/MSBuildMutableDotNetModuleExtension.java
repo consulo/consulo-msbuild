@@ -18,10 +18,14 @@ package consulo.msbuild.module.extension;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import com.intellij.openapi.projectRoots.Sdk;
+import consulo.bundle.BundleHolder;
+import consulo.bundle.ui.BundleBox;
 import consulo.dotnet.module.extension.DotNetSimpleMutableModuleExtension;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
+import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.Component;
 import consulo.ui.Label;
@@ -47,10 +51,21 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	{
 		VerticalLayout vertical = VerticalLayout.create();
 		vertical.add(LabeledComponents.left("Target", Label.create(myTarget.getPresentableName())));
+
+		BundleBox bundleBox = new BundleBox(BundleHolder.EMPTY, null, false);
+
+		for(MSBuildBundleInfo bundleInfo : myTarget.getBundleInfoList())
+		{
+			bundleBox.addCustomBundleItem(bundleInfo.getId(), bundleInfo.getName(), bundleInfo.getIcon());
+		}
+
+		bundleBox.setSelectedBundle(getBundleInfo().getId());
+
+		vertical.add(LabeledComponents.leftFilled("SDK", bundleBox));
 		return vertical;
 	}
 
-	public MSBuildDotNetModuleExtension setTarget(MSBuildDotNetImportTarget target)
+	public MSBuildDotNetModuleExtension setImportTarget(MSBuildDotNetImportTarget target)
 	{
 		myTarget = target;
 		return this;
