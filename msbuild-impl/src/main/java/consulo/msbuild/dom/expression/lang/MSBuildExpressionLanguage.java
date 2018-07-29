@@ -16,7 +16,10 @@
 
 package consulo.msbuild.dom.expression.lang;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.Language;
+import consulo.lang.LanguageVersion;
 
 /**
  * @author VISTALL
@@ -24,10 +27,40 @@ import com.intellij.lang.Language;
  */
 public class MSBuildExpressionLanguage extends Language
 {
+	public static class PathVersion extends LanguageVersion
+	{
+		public static final PathVersion INSTANCE = new PathVersion();
+
+		public PathVersion()
+		{
+			super("PATH", "Path", MSBuildExpressionLanguage.INSTANCE);
+		}
+	}
+
+	public static class ExpressionVersion extends LanguageVersion
+	{
+		public static final ExpressionVersion INSTANCE = new ExpressionVersion();
+
+		public ExpressionVersion()
+		{
+			super("EXPRESSION", "Expression", MSBuildExpressionLanguage.INSTANCE);
+		}
+	}
+
 	public static final MSBuildExpressionLanguage INSTANCE = new MSBuildExpressionLanguage();
 
 	private MSBuildExpressionLanguage()
 	{
 		super("MSBuildExpression");
+	}
+
+	@Nonnull
+	@Override
+	protected LanguageVersion[] findVersions()
+	{
+		return new LanguageVersion[]{
+				ExpressionVersion.INSTANCE,
+				PathVersion.INSTANCE
+		};
 	}
 }

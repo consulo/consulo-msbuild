@@ -19,10 +19,17 @@ package consulo.msbuild.module.extension;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.intellij.execution.ExecutionException;
+import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
 import consulo.annotations.RequiredReadAction;
+import consulo.dotnet.DotNetTarget;
+import consulo.dotnet.execution.DebugConnectionInfo;
 import consulo.dotnet.module.extension.BaseDotNetSimpleModuleExtension;
+import consulo.dotnet.module.extension.DotNetRunModuleExtension;
 import consulo.dotnet.sdk.DotNetSdkType;
+import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.importProvider.item.MSBuildImportTarget;
 import consulo.msbuild.importProvider.item.UnknownBuildDotNetImportTarget;
@@ -33,7 +40,8 @@ import consulo.roots.ModuleRootLayer;
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>
+public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>,
+		DotNetRunModuleExtension<MSBuildDotNetModuleExtension>
 {
 	protected MSBuildDotNetImportTarget myTarget = UnknownBuildDotNetImportTarget.INSTANCE;
 
@@ -47,6 +55,12 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 	public MSBuildImportTarget getImportTarget()
 	{
 		return myTarget;
+	}
+
+	@Override
+	public void build(MSBuildCompileContext context)
+	{
+		myTarget.build(context);
 	}
 
 	@Nonnull
@@ -76,5 +90,46 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 	public Object resolveAutoSdk()
 	{
 		return myTarget.resolveAutoSdk(this);
+	}
+
+	@Nonnull
+	@Override
+	public String getFileName()
+	{
+		return getModule().getName() + ".exe";
+	}
+
+	@Nonnull
+	@Override
+	public String getOutputDir()
+	{
+		return getModule().getModuleDirPath() + "/Bin";
+	}
+
+	@Override
+	public boolean isAllowDebugInfo()
+	{
+		return true;
+	}
+
+	@Nonnull
+	@Override
+	public DotNetTarget getTarget()
+	{
+		return DotNetTarget.EXECUTABLE;
+	}
+
+	@Nonnull
+	@Override
+	public String getDebugFileExtension()
+	{
+		return "pdb";
+	}
+
+	@Nonnull
+	@Override
+	public GeneralCommandLine createDefaultCommandLine(@Nonnull Sdk sdk, @Nullable DebugConnectionInfo debugConnectionInfo) throws ExecutionException
+	{
+		return myTarget.createDefaultCommandLine(this, sdk, debugConnectionInfo);
 	}
 }

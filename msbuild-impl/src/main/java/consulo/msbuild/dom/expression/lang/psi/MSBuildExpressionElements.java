@@ -27,5 +27,12 @@ import consulo.psi.tree.ElementTypeAsPsiFactory;
 public interface MSBuildExpressionElements
 {
 	IElementType MACRO = new ElementTypeAsPsiFactory("MACRO", MSBuildExpressionLanguage.INSTANCE, MSBuildExpressionMacro.class);
+
 	IElementType MACRO_REFERENCE = new ElementTypeAsPsiFactory("MACRO_REFERENCE", MSBuildExpressionLanguage.INSTANCE, MSBuildExpressionMacroReference.class);
+
+	IElementType MERGED_VALUE = new ElementTypeAsPsiFactory("MERGED_VALUE", MSBuildExpressionLanguage.INSTANCE, MSBuildMergedValue.class);
+
+	IElementType BINARY_EXPRESSION = new ElementTypeAsPsiFactory("BINARY_EXPRESSION", MSBuildExpressionLanguage.INSTANCE, MSBuildBinaryExpression.class);
+
+	IElementType FUNCTION_CALL_EXPRESSION = new ElementTypeAsPsiFactory("FUNCTION_CALL_EXPRESSION", MSBuildExpressionLanguage.INSTANCE, MSBuildFunctionCallExpression.class);
 }

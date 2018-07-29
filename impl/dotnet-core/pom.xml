@@ -56,6 +56,13 @@
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>consulo.dotnet</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>consulo.dotnet.core</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>

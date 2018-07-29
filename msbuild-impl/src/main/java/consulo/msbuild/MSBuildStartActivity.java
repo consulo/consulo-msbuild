@@ -85,7 +85,11 @@ public class MSBuildStartActivity implements StartupActivity
 					continue;
 				}
 
-				MSBuildSolutionManager.ProjectOptions projectOptions = solutionManager.getOptions(wProject.getName());
+				MSBuildSolutionManager.ProjectOptions projectOptions = solutionManager.getOptionsByProjectName(wProject.getName());
+				if(projectOptions != null)
+				{
+					projectOptions.moduleName = wProject.getName();
+				}
 
 				Module module = modifiableModel.newModule(wProject.getName(), null);
 

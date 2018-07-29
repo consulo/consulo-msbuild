@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import consulo.module.extension.ModuleExtension;
+import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.importProvider.item.MSBuildImportTarget;
 import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 
@@ -21,4 +22,6 @@ public interface MSBuildRootExtension<T extends MSBuildRootExtension<T>> extends
 
 	@Nonnull
 	MSBuildImportTarget getImportTarget();
+
+	void build(MSBuildCompileContext context);
 }

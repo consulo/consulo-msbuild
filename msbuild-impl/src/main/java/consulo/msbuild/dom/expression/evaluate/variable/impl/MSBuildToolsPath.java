@@ -17,6 +17,8 @@
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
 import javax.annotation.Nonnull;
+
+import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
@@ -26,6 +28,7 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
  */
 public class MSBuildToolsPath extends MSBuildVariableProvider
 {
+	@RequiredReadAction
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws Exception
 	{

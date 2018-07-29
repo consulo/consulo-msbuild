@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
+import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 
 /**
@@ -77,5 +78,6 @@ public abstract class MSBuildVariableProvider
 	}
 
 	@Nullable
+	@RequiredReadAction
 	public abstract String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws Exception;
 }

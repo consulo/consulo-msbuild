@@ -12,6 +12,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
+import consulo.msbuild.dom.annotation.ExpressionFragment;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:PropertyGroupType interface.
@@ -37,6 +38,7 @@ public interface PropertyGroup extends DomElement
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+	@ExpressionFragment
 	GenericAttributeValue<String> getCondition();
 
 

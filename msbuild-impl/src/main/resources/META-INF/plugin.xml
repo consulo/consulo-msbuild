@@ -89,7 +89,8 @@
 
 		<documentationProvider implementation="consulo.msbuild.dom.expression.editor.MSBuildExpressionDocumentationProvider"/>
 
-		<languageInjector implementation="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
+		<multiHostInjector forClass="com.intellij.psi.xml.XmlAttributeValue" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
+		<multiHostInjector forClass="com.intellij.psi.xml.XmlText" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
 
 		<postStartupActivity implementation="consulo.msbuild.MSBuildStartActivity"/>
 

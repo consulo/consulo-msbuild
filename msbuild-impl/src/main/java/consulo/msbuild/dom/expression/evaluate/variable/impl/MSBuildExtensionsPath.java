@@ -17,8 +17,13 @@
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
 import javax.annotation.Nonnull;
+
+import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.openapi.projectRoots.Sdk;
+import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
+import consulo.msbuild.module.extension.MSBuildRootExtension;
 
 /**
  * @author VISTALL
@@ -26,9 +31,22 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
  */
 public class MSBuildExtensionsPath extends MSBuildVariableProvider
 {
+	@RequiredReadAction
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context)
 	{
-		return "C:\\Program Files (x86)\\MSBuild";
+		MSBuildRootExtension extension = ModuleUtilCore.getExtension(context.getModule(), MSBuildRootExtension.class);
+		if(extension == null)
+		{
+			return null;
+		}
+
+		Object o = extension.getBundleInfo().resolveSdk(extension.getImportTarget(), extension);
+		if(o instanceof Sdk)
+		{
+			return ((Sdk) o).getHomePath();
+		}
+
+		return null;
 	}
 }

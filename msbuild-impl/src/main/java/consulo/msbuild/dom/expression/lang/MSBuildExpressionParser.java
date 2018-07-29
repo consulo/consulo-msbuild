@@ -37,48 +37,150 @@ public class MSBuildExpressionParser implements PsiParser
 	@Override
 	public ASTNode parse(@Nonnull IElementType root, @Nonnull PsiBuilder builder, @Nonnull LanguageVersion languageVersion)
 	{
-		PsiBuilder.Marker last = null;
-
 		PsiBuilder.Marker mark = builder.mark();
+
+		parseInner(builder);
+
 		while(!builder.eof())
 		{
-			if(builder.getTokenType() == MSBuildExpressionTokens.MACRO_START)
+			PsiBuilder.Marker errorMarker = builder.mark();
+			builder.advanceLexer();
+			errorMarker.error("Unexpected symbol");
+		}
+
+		mark.done(root);
+
+		return builder.getTreeBuilt();
+	}
+
+	private void parseInner(PsiBuilder builder)
+	{
+		IElementType tokenType = builder.getTokenType();
+		if(tokenType == null)
+		{
+			return;
+		}
+
+		skip(builder, MSBuildExpressionTokens.TEXT);
+
+		PsiBuilder.Marker inner = parseSimpleExpression(builder);
+		if(inner != null)
+		{
+			skip(builder, MSBuildExpressionTokens.TEXT);
+
+			tokenType = builder.getTokenType();
+
+			if(tokenType == MSBuildExpressionTokens.EQEQ)
 			{
-				PsiBuilder.Marker macroMarker = builder.mark();
+				inner = inner.precede();
 
 				builder.advanceLexer();
 
-				if(builder.getTokenType() == MSBuildExpressionTokens.MACRO_NAME)
+				parseInner(builder);
+
+				inner.done(MSBuildExpressionElements.BINARY_EXPRESSION);
+			}
+			else if(tokenType == MSBuildExpressionTokens.LPAR)
+			{
+				inner = inner.precede();
+
+				builder.advanceLexer();
+
+				parseInner(builder);
+
+				skip(builder, MSBuildExpressionTokens.TEXT);
+
+				if(builder.getTokenType() == MSBuildExpressionTokens.RPAR)
 				{
-					PsiBuilder.Marker refMarker = builder.mark();
 					builder.advanceLexer();
-					refMarker.done(MSBuildExpressionElements.MACRO_REFERENCE);
 				}
 				else
 				{
-					builder.error("Name expected");
+					builder.error("Expected ')'");
 				}
 
-				if(!PsiBuilderUtil.expect(builder, MSBuildExpressionTokens.MACRO_STOP))
-				{
-					builder.error("')' expected");
-				}
-				macroMarker.done(MSBuildExpressionElements.MACRO);
-				last = macroMarker;
+				inner.done(MSBuildExpressionElements.FUNCTION_CALL_EXPRESSION);
 			}
-			/*else if(builder.getTokenType() == MSBuildExpressionTokens.PATH_SEPARATOR)
+		}
+		else
+		{
+			builder.error("Unexpected symbol");
+		}
+	}
+
+	private void skip(PsiBuilder builder, IElementType elementType)
+	{
+		while(!builder.eof())
+		{
+			if(builder.getTokenType() == elementType)
 			{
-				PsiBuilder.Marker marker = last == null ? builder.mark() : last.precede();
+				builder.advanceLexer();
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
 
+	private PsiBuilder.Marker parseSimpleExpression(PsiBuilder builder)
+	{
+		IElementType tokenType = builder.getTokenType();
 
-			} */
+		if(tokenType == MSBuildExpressionTokens.MACRO_OPEN)
+		{
+			PsiBuilder.Marker macroMarker = builder.mark();
+
+			builder.advanceLexer();
+
+			if(builder.getTokenType() == MSBuildExpressionTokens.MACRO_NAME)
+			{
+				PsiBuilder.Marker refMarker = builder.mark();
+				builder.advanceLexer();
+				refMarker.done(MSBuildExpressionElements.MACRO_REFERENCE);
+			}
+			else
+			{
+				builder.error("Name expected");
+			}
+
+			if(!PsiBuilderUtil.expect(builder, MSBuildExpressionTokens.MACRO_STOP))
+			{
+				builder.error("')' expected");
+			}
+			macroMarker.done(MSBuildExpressionElements.MACRO);
+			return macroMarker;
+		}
+		else if(tokenType == MSBuildExpressionTokens.SINGLE_QUOTE)
+		{
+			PsiBuilder.Marker otherMarker = builder.mark();
+			builder.advanceLexer();
+
+			skip(builder, MSBuildExpressionTokens.TEXT);
+
+			while(!builder.eof())
+			{
+				if(builder.getTokenType() == MSBuildExpressionTokens.SINGLE_QUOTE)
+				{
+					break;
+				}
+
+				parseInner(builder);
+			}
+
+			if(builder.getTokenType() != MSBuildExpressionTokens.SINGLE_QUOTE)
+			{
+				builder.error("Not closed value");
+			}
 			else
 			{
 				builder.advanceLexer();
-				last = null;
 			}
+
+			otherMarker.done(MSBuildExpressionElements.MERGED_VALUE);
+			return otherMarker;
 		}
-		mark.done(root);
-		return builder.getTreeBuilt();
+
+		return null;
 	}
 }

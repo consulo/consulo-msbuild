@@ -23,6 +23,7 @@ import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
 import com.intellij.util.xml.TagValue;
+import consulo.msbuild.dom.annotation.ExpressionFragment;
 
 /**
  * @author VISTALL
@@ -33,6 +34,7 @@ import com.intellij.util.xml.TagValue;
 public interface Property extends DomElement
 {
 	@Nonnull
+	@ExpressionFragment
 	GenericAttributeValue<String> getCondition();
 
 	@Nullable

@@ -40,7 +40,7 @@ public class MSBuildExpressionSyntaxHighlighter extends SyntaxHighlighterBase
 
 	static
 	{
-		safeMap(ourKeys, MSBuildExpressionTokens.MACRO_START, DefaultLanguageHighlighterColors.KEYWORD);
+		safeMap(ourKeys, MSBuildExpressionTokens.MACRO_OPEN, DefaultLanguageHighlighterColors.KEYWORD);
 		safeMap(ourKeys, MSBuildExpressionTokens.MACRO_STOP, DefaultLanguageHighlighterColors.KEYWORD);
 		safeMap(ourKeys, MSBuildExpressionTokens.PATH_SEPARATOR, DefaultLanguageHighlighterColors.KEYWORD);
 	}

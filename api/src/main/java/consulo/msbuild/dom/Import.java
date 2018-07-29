@@ -9,6 +9,7 @@ import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
 import com.intellij.util.xml.Required;
+import consulo.msbuild.dom.annotation.ExpressionFragment;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ImportType interface.
@@ -49,7 +50,7 @@ public interface Import extends DomElement
 	 */
 	@Nonnull
 	@Required
-	@ExpressionFragment
+	@ExpressionFragment(path = true)
 	GenericAttributeValue<String> getProject();
 
 

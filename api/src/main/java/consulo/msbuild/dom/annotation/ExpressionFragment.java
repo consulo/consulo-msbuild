@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package consulo.msbuild.dom;
+package consulo.msbuild.dom.annotation;
 
 import java.lang.annotation.*;
 
@@ -23,7 +23,8 @@ import java.lang.annotation.*;
  * @since 16-Jun-17
  */
 @Retention(RetentionPolicy.RUNTIME)
-@java.lang.annotation.Target(ElementType.METHOD)
+@Target(ElementType.METHOD)
 public @interface ExpressionFragment
 {
+	boolean path() default false;
 }

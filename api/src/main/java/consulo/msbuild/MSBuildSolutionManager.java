@@ -47,6 +47,8 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 	public final static class ProjectOptions
 	{
 		public String target;
+
+		public String moduleName;
 	}
 
 	protected static class State
@@ -92,10 +94,30 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		myState.projects.put(projectName, projectOptions);
 	}
 
+	/**
+	 * Return options by project name (from solution files)
+	 */
 	@Nullable
-	public ProjectOptions getOptions(@Nonnull String name)
+	public ProjectOptions getOptionsByProjectName(@Nonnull String name)
 	{
 		return myState.projects.get(name);
+	}
+
+	/**
+	 * Return options by module name (consulo project structure)
+	 */
+	@Nullable
+	public Map.Entry<String, ProjectOptions> getOptionsByModuleName(@Nonnull String name)
+	{
+		for(Map.Entry<String, ProjectOptions> entry : myState.projects.entrySet())
+		{
+			if(name.equals(entry.getValue().moduleName))
+			{
+				return entry;
+			}
+		}
+
+		return null;
 	}
 
 	@Nonnull

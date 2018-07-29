@@ -31,7 +31,7 @@ import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionTokens;
 public class MSBuildExpressionPairBraceMatcher implements PairedBraceMatcher
 {
 	private static BracePair[] ourPairs = {
-			new BracePair(MSBuildExpressionTokens.MACRO_START, MSBuildExpressionTokens.MACRO_STOP, true)
+			new BracePair(MSBuildExpressionTokens.MACRO_OPEN, MSBuildExpressionTokens.MACRO_STOP, true)
 	};
 
 	@Override

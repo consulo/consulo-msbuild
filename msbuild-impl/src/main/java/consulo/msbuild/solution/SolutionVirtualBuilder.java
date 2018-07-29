@@ -19,12 +19,15 @@ package consulo.msbuild.solution;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.io.FileUtilRt;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.GenericAttributeValue;
+import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.SimpleItem;
@@ -35,9 +38,14 @@ import consulo.msbuild.dom.SimpleItem;
  */
 public class SolutionVirtualBuilder
 {
+	@RequiredReadAction
 	public static SolutionVirtualDirectory build(@Nonnull Project domProject, @Nonnull VirtualFile baseDir)
 	{
 		SolutionVirtualDirectory root = new SolutionVirtualDirectory("", null);
+
+		PsiFile projectFile = domProject.getXmlElement().getContainingFile();
+
+		root.myChildren.put(projectFile.getName(), new SolutionVirtualFile(projectFile.getName(), root, null, projectFile.getVirtualFile()));
 
 		for(ItemGroup group : domProject.getItemGroups())
 		{

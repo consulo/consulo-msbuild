@@ -18,9 +18,10 @@ package consulo.msbuild.dom.expression.lang;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.intellij.lang.injection.MultiHostInjector;
+import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.psi.ElementManipulators;
-import com.intellij.psi.InjectedLanguagePlaces;
-import com.intellij.psi.LanguageInjector;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiLanguageInjectionHost;
@@ -33,19 +34,18 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.GenericAttributeValue;
-import consulo.annotations.RequiredReadAction;
-import consulo.msbuild.dom.ExpressionFragment;
+import consulo.lang.LanguageVersion;
 import consulo.msbuild.dom.Project;
+import consulo.msbuild.dom.annotation.ExpressionFragment;
 
 /**
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildExpressionXmlInjector implements LanguageInjector
+public class MSBuildExpressionXmlInjector implements MultiHostInjector
 {
 	@Override
-	@RequiredReadAction
-	public void getLanguagesToInject(@Nonnull PsiLanguageInjectionHost host, @Nonnull InjectedLanguagePlaces injectionPlacesRegistrar)
+	public void injectLanguages(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement host)
 	{
 		if(host instanceof XmlAttributeValue || host instanceof XmlText)
 		{
@@ -65,9 +65,12 @@ public class MSBuildExpressionXmlInjector implements LanguageInjector
 					return;
 				}
 
-				if(domElement instanceof GenericAttributeValue && domElement.getAnnotation(ExpressionFragment.class) != null)
+				ExpressionFragment annotation;
+				if(domElement instanceof GenericAttributeValue && (annotation = domElement.getAnnotation(ExpressionFragment.class)) != null)
 				{
-					injectionPlacesRegistrar.addPlace(MSBuildExpressionLanguage.INSTANCE, ElementManipulators.getValueTextRange(host), null, null);
+					LanguageVersion ver = annotation.path() ? MSBuildExpressionLanguage.PathVersion.INSTANCE : MSBuildExpressionLanguage.ExpressionVersion.INSTANCE;
+
+					registrar.startInjecting(ver).addPlace(null, null, (PsiLanguageInjectionHost) host, ElementManipulators.getValueTextRange(host)).doneInjecting();
 				}
 			}
 		}

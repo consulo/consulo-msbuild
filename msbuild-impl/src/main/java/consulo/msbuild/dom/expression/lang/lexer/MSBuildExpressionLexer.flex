@@ -22,12 +22,18 @@ IDENTIFIER=[:jletter:] [:jletterdigit:]*
 
 <YYINITIAL>
 {
-   "$("         { yybegin(MACRO); return MSBuildExpressionTokens.MACRO_START; }
+   "$("         { yybegin(MACRO); return MSBuildExpressionTokens.MACRO_OPEN; }
 
    "'"          { return MSBuildExpressionTokens.SINGLE_QUOTE; }
 
+   "=="         { return MSBuildExpressionTokens.EQEQ; }
+
+   "("          { return MSBuildExpressionTokens.LPAR; }
+
+   ")"          { return MSBuildExpressionTokens.RPAR; }
+
    "\\"         { return MSBuildExpressionTokens.PATH_SEPARATOR; }
-   
+
    [^]          { return MSBuildExpressionTokens.TEXT; }
 }
 

@@ -22,8 +22,13 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.intellij.execution.ExecutionException;
+import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
+import consulo.dotnet.execution.DebugConnectionInfo;
+import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
 import consulo.msbuild.module.extension.resolve.AutomaticBundleInfo;
 import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
@@ -61,6 +66,9 @@ public abstract class MSBuildDotNetImportTarget implements MSBuildImportTarget
 	@Nonnull
 	public abstract SdkType getSdkType();
 
+	@Nonnull
+	public abstract GeneralCommandLine createDefaultCommandLine(MSBuildDotNetModuleExtension moduleExtension, @Nonnull Sdk sdk, @Nullable DebugConnectionInfo debugConnectionInfo) throws ExecutionException;
+
 	@Nullable
 	public Object resolveAutoSdk(@Nonnull MSBuildDotNetModuleExtension moduleExtension)
 	{
@@ -77,6 +85,8 @@ public abstract class MSBuildDotNetImportTarget implements MSBuildImportTarget
 
 		return null;
 	}
+
+	public abstract void build(MSBuildCompileContext context);
 
 	@Nonnull
 	public List<MSBuildBundleInfo> getBundleInfoList()

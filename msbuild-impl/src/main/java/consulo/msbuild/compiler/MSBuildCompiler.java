@@ -1,5 +1,7 @@
 package consulo.msbuild.compiler;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 
 import com.intellij.openapi.compiler.CompileContext;
@@ -8,9 +10,9 @@ import com.intellij.openapi.compiler.TranslatingCompiler;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.Chunk;
+import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
 
 /**
@@ -37,17 +39,16 @@ public class MSBuildCompiler implements TranslatingCompiler
 			return;
 		}
 
-		Object sdk = extension.getBundleInfo().resolveSdk(extension.getImportTarget(), extension);
+		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(module.getProject());
 
-		if(sdk == null)
+		Map.Entry<String, MSBuildSolutionManager.ProjectOptions> entry = solutionManager.getOptionsByModuleName(module.getName());
+
+		if(entry == null || !solutionManager.isEnabled())
 		{
 			return;
 		}
 
-		if(sdk instanceof Sdk)
-		{
-			System.out.println("test");
-		}
+		extension.build(new MSBuildCompileContext(extension, solutionManager.getSolutionFile(), entry.getKey()));
 	}
 
 	@Nonnull
