@@ -18,6 +18,7 @@ package consulo.msbuild.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -37,8 +38,12 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.io.URLUtil;
+import com.intellij.util.xml.GenericAttributeValue;
+import consulo.annotations.RequiredReadAction;
 import consulo.application.AccessRule;
+import consulo.dotnet.DotNetTarget;
 import consulo.dotnet.dll.DotNetModuleFileType;
+import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.MSBuildProjectType;
@@ -49,6 +54,10 @@ import consulo.msbuild.dom.ProjectReference;
 import consulo.msbuild.dom.Property;
 import consulo.msbuild.dom.PropertyGroup;
 import consulo.msbuild.dom.Reference;
+import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluator;
+import consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildConfiguration;
+import consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildPlatform;
 import consulo.msbuild.dom.walk.Walker;
 import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
@@ -94,7 +103,11 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 	}
 
 	@Override
-	public final void setupModule(@Nonnull VirtualFile projectFile, @Nonnull Project domProject, @Nullable MSBuildSolutionManager.ProjectOptions projectOptions, @Nonnull ModifiableModuleRootLayer rootLayer)
+	@SuppressWarnings("RequiredXAction")
+	public final void setupModule(@Nonnull VirtualFile projectFile,
+								  @Nonnull Project domProject,
+								  @Nullable MSBuildSolutionManager.ProjectOptions projectOptions,
+								  @Nonnull ModifiableModuleRootLayer rootLayer)
 	{
 		// setup .NET extension
 		MSBuildMutableDotNetModuleExtension moduleExtension = rootLayer.getExtensionWithoutCheck(MSBuildMutableDotNetModuleExtension.class);
@@ -112,33 +125,20 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 			walker.walk(PropertyGroup.class, propertyGroup ->
 			{
-				//TODO [VISTALL] STUB
-				String stringValue = propertyGroup.getCondition().getStringValue();
-				if(stringValue != null)
+				String condition = propertyGroup.getCondition().getStringValue();
+				if(condition == null)
 				{
-					return;
+					propertyGroup.getProperties().forEach(property -> handleDefaultProperty(property, projectFile, moduleExtension));
 				}
-
-				List<Property> properties = propertyGroup.getProperties();
-				for(Property property : properties)
+				else
 				{
-					String xmlElementName = property.getXmlElementName();
+					MSBuildEvaluateContext context = MSBuildEvaluateContext.from(propertyGroup.getXmlElement(), moduleExtension);
 
-					switch(xmlElementName)
+					MSBuildEvaluator evaluator = MSBuildEvaluator.create();
+
+					if(evaluator.evaluate(condition, context, Boolean.class) == Boolean.TRUE)
 					{
-						case "TargetFrameworkVersion":
-							String textValue = property.getText();
-							Pair<String, Sdk> sdkPair = findSdk((MSBuildDotNetImportTarget) moduleExtension.getImportTarget(), textValue);
-							MutableModuleInheritableNamedPointer<Sdk> pointer = moduleExtension.getInheritableSdk();
-							if(sdkPair.getSecond() != null)
-							{
-								pointer.set(null, sdkPair.getSecond());
-							}
-							else
-							{
-								pointer.set(null, sdkPair.getFirst());
-							}
-							break;
+						propertyGroup.getProperties().forEach(property -> handleProperty(property, projectFile, moduleExtension));
 					}
 				}
 			});
@@ -197,6 +197,114 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		});
 	}
 
+	@RequiredReadAction
+	private void handleDefaultProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension)
+	{
+		String xmlElementName = property.getXmlElementName();
+
+		switch(xmlElementName)
+		{
+			case "Configuration":
+			case "Platform":
+			{
+				MSBuildEvaluator evaluator = MSBuildEvaluator.create();
+
+				MSBuildEvaluateContext context = MSBuildEvaluateContext.from(property.getXmlElement());
+				java.util.function.Consumer<String> setter = null;
+				switch(xmlElementName)
+				{
+					case "Configuration":
+						context.predefineVariable(MSBuildConfiguration.class, "");
+						setter = moduleExtension::setConfiguration;
+						break;
+					case "Platform":
+						context.predefineVariable(MSBuildPlatform.class, "");
+						setter = moduleExtension::setPlatform;
+						break;
+				}
+
+				GenericAttributeValue<String> condition = property.getCondition();
+
+				String value = condition.getValue();
+				if(value != null)
+				{
+					Boolean evaluate = evaluator.evaluate(value, context, Boolean.class);
+					if(evaluate == Boolean.TRUE)
+					{
+						setter.accept(property.getText());
+					}
+				}
+
+				break;
+			}
+			default:
+				handleProperty(property, projectFile, moduleExtension);
+				break;
+		}
+	}
+
+	@RequiredReadAction
+	private void handleProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension)
+	{
+		String propertyName = property.getXmlElementName();
+
+		String propertyValue = property.getText();
+
+		switch(propertyName)
+		{
+			case "DebugSymbols":
+				moduleExtension.setAllowDebugInfo(Boolean.parseBoolean(propertyValue));
+				break;
+			case "DefineConstants":
+				List<String> variables = moduleExtension.getVariables();
+				variables.clear();
+				Collections.addAll(variables, propertyValue.split(";"));
+				break;
+			case "OutputType":
+				switch(propertyValue)
+				{
+					case "Exe":
+						moduleExtension.setTarget(DotNetTarget.EXECUTABLE);
+						break;
+					case "Library":
+						moduleExtension.setTarget(DotNetTarget.LIBRARY);
+						break;
+				}
+				break;
+			case "AssemblyName":
+				moduleExtension.setFileName(propertyValue + "." + DotNetModuleExtension.OUTPUT_FILE_EXT);
+				break;
+			case "OutputPath":
+			{
+				if(new File(propertyValue).isAbsolute())
+				{
+					moduleExtension.setOutputDir(propertyValue);
+				}
+				else
+				{
+					VirtualFile parent = projectFile.getParent();
+					assert parent != null;
+					moduleExtension.setOutputDir(parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue));
+				}
+				break;
+			}
+			case "TargetFrameworkVersion":
+			{
+				Pair<String, Sdk> sdkPair = findSdk((MSBuildDotNetImportTarget) moduleExtension.getImportTarget(), propertyValue);
+				MutableModuleInheritableNamedPointer<Sdk> pointer = moduleExtension.getInheritableSdk();
+				if(sdkPair.getSecond() != null)
+				{
+					pointer.set(null, sdkPair.getSecond());
+				}
+				else
+				{
+					pointer.set(null, sdkPair.getFirst());
+				}
+				break;
+			}
+		}
+	}
+
 	@Nonnull
 	private Pair<String, Sdk> findSdk(@Nonnull MSBuildDotNetImportTarget target, @Nullable String sdkVersion)
 	{
@@ -216,10 +324,6 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		}
 
 		SdkType sdkType = target.getSdkType();
-		if(sdkType == null)
-		{
-			return Pair.create(sdkVersion, null);
-		}
 
 		SdkTable sdkTable = SdkTable.getInstance();
 		List<Sdk> sdksOfType = sdkTable.getSdksOfType(sdkType);

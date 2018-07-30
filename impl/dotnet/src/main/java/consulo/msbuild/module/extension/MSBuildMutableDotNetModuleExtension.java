@@ -16,13 +16,15 @@
 
 package consulo.msbuild.module.extension;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.intellij.openapi.projectRoots.Sdk;
 import consulo.bundle.BundleHolder;
 import consulo.bundle.ui.BundleBox;
-import consulo.dotnet.module.extension.DotNetSimpleMutableModuleExtension;
+import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
@@ -37,7 +39,7 @@ import consulo.ui.VerticalLayout;
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExtension implements DotNetSimpleMutableModuleExtension<MSBuildDotNetModuleExtension>
+public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExtension implements DotNetMutableModuleExtension<MSBuildDotNetModuleExtension>
 {
 	public MSBuildMutableDotNetModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
@@ -50,11 +52,16 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	public Component createConfigurationComponent(@Nonnull Runnable updateOnCheck)
 	{
 		VerticalLayout vertical = VerticalLayout.create();
-		vertical.add(LabeledComponents.left("Target", Label.create(myTarget.getPresentableName())));
+		vertical.add(LabeledComponents.left("Target", Label.create(myImportTarget.getPresentableName())));
+		vertical.add(LabeledComponents.left("Configuration", Label.create(myConfiguration)));
+		vertical.add(LabeledComponents.left("Platform", Label.create(myPlatform)));
+		vertical.add(LabeledComponents.left("Output Dir", Label.create(getOutputDir())));
+		vertical.add(LabeledComponents.left("Debug Symbols", Label.create(String.valueOf(myAllowDebugInfo))));
+		vertical.add(LabeledComponents.left("Variables", Label.create(String.join(",", myVariables))));
 
 		BundleBox bundleBox = new BundleBox(BundleHolder.EMPTY, null, false);
 
-		for(MSBuildBundleInfo bundleInfo : myTarget.getBundleInfoList())
+		for(MSBuildBundleInfo bundleInfo : myImportTarget.getBundleInfoList())
 		{
 			bundleBox.addCustomBundleItem(bundleInfo.getId(), bundleInfo.getName(), bundleInfo.getIcon());
 		}
@@ -65,10 +72,9 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 		return vertical;
 	}
 
-	public MSBuildDotNetModuleExtension setImportTarget(MSBuildDotNetImportTarget target)
+	public void setImportTarget(MSBuildDotNetImportTarget target)
 	{
-		myTarget = target;
-		return this;
+		myImportTarget = target;
 	}
 
 	@Nonnull
@@ -87,6 +93,8 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	@Override
 	public boolean isModified(@Nonnull MSBuildDotNetModuleExtension msBuildModuleExtension)
 	{
-		return myIsEnabled != msBuildModuleExtension.isEnabled();
+		return super.isModifiedImpl(msBuildModuleExtension) ||
+				!Objects.equals(myConfiguration, msBuildModuleExtension.getConfiguration()) ||
+				!Objects.equals(myPlatform, msBuildModuleExtension.getPlatform());
 	}
 }

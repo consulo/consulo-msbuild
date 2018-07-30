@@ -8,13 +8,18 @@ import javax.annotation.Nullable;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.execution.configurations.RunProfile;
 import com.intellij.execution.process.CapturingProcessHandler;
 import com.intellij.execution.process.ProcessOutput;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.xdebugger.XDebugSession;
+import consulo.dotnet.compiler.DotNetMacroUtil;
+import consulo.dotnet.debugger.DotNetDebugProcessBase;
 import consulo.dotnet.execution.DebugConnectionInfo;
+import consulo.dotnet.microsoft.debugger.MicrosoftDebugProcess;
 import consulo.microsoft.dotnet.module.extension.MicrosoftDotNetModuleExtension;
 import consulo.microsoft.dotnet.sdk.MicrosoftDotNetSdkType;
 import consulo.msbuild.bundle.MSBuildBundleType;
@@ -61,7 +66,19 @@ public class MicrosoftDotNetImportTarget extends MSBuildDotNetImportTarget
 	@Override
 	public GeneralCommandLine createDefaultCommandLine(MSBuildDotNetModuleExtension moduleExtension, @Nonnull Sdk sdk, @Nullable DebugConnectionInfo debugConnectionInfo) throws ExecutionException
 	{
-		return MicrosoftDotNetModuleExtension.createRunCommandLineImpl(moduleExtension.getFileName(), debugConnectionInfo, sdk);
+		String fileName = DotNetMacroUtil.expandOutputFile(moduleExtension);
+
+		return MicrosoftDotNetModuleExtension.createRunCommandLineImpl(fileName, debugConnectionInfo, sdk);
+	}
+
+	@Nonnull
+	@Override
+	public DotNetDebugProcessBase createDebuggerProcess(@Nonnull MSBuildDotNetModuleExtension moduleExtension,
+														@Nonnull XDebugSession session,
+														@Nonnull RunProfile runProfile,
+														@Nonnull DebugConnectionInfo debugConnectionInfo)
+	{
+		return new MicrosoftDebugProcess(session, runProfile, debugConnectionInfo);
 	}
 
 	@Override

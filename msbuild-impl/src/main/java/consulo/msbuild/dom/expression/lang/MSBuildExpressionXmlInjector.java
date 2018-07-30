@@ -47,6 +47,12 @@ public class MSBuildExpressionXmlInjector implements MultiHostInjector
 	@Override
 	public void injectLanguages(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement host)
 	{
+		if(Boolean.TRUE)
+		{
+			// FIXME [VISTALL] disable for now
+			return;
+		}
+
 		if(host instanceof XmlAttributeValue || host instanceof XmlText)
 		{
 			PsiFile containingFile = host.getContainingFile();

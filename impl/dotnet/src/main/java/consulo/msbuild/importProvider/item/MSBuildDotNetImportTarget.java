@@ -24,9 +24,12 @@ import javax.annotation.Nullable;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.execution.configurations.RunProfile;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
+import com.intellij.xdebugger.XDebugSession;
+import consulo.dotnet.debugger.DotNetDebugProcessBase;
 import consulo.dotnet.execution.DebugConnectionInfo;
 import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
@@ -67,7 +70,15 @@ public abstract class MSBuildDotNetImportTarget implements MSBuildImportTarget
 	public abstract SdkType getSdkType();
 
 	@Nonnull
-	public abstract GeneralCommandLine createDefaultCommandLine(MSBuildDotNetModuleExtension moduleExtension, @Nonnull Sdk sdk, @Nullable DebugConnectionInfo debugConnectionInfo) throws ExecutionException;
+	public abstract GeneralCommandLine createDefaultCommandLine(@Nonnull MSBuildDotNetModuleExtension moduleExtension,
+																@Nonnull Sdk sdk,
+																@Nullable DebugConnectionInfo debugConnectionInfo) throws ExecutionException;
+
+	@Nonnull
+	public abstract DotNetDebugProcessBase createDebuggerProcess(@Nonnull MSBuildDotNetModuleExtension moduleExtension,
+																 @Nonnull XDebugSession session,
+																 @Nonnull RunProfile runProfile,
+																 @Nonnull DebugConnectionInfo debugConnectionInfo);
 
 	@Nullable
 	public Object resolveAutoSdk(@Nonnull MSBuildDotNetModuleExtension moduleExtension)

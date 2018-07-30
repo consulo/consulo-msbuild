@@ -47,6 +47,8 @@
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildExtensionsPath"/>
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsVersion"/>
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsPath"/>
+		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildConfiguration"/>
+		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildPlatform"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xml">

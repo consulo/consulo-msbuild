@@ -21,13 +21,16 @@ import javax.annotation.Nullable;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.execution.configurations.RunProfile;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
+import com.intellij.xdebugger.XDebugSession;
 import consulo.annotations.RequiredReadAction;
-import consulo.dotnet.DotNetTarget;
+import consulo.dotnet.debugger.DotNetDebugProcessBase;
+import consulo.dotnet.debugger.DotNetModuleExtensionWithDebug;
 import consulo.dotnet.execution.DebugConnectionInfo;
-import consulo.dotnet.module.extension.BaseDotNetSimpleModuleExtension;
-import consulo.dotnet.module.extension.DotNetRunModuleExtension;
+import consulo.dotnet.module.extension.BaseDotNetModuleExtension;
+import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.sdk.DotNetSdkType;
 import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
@@ -40,27 +43,59 @@ import consulo.roots.ModuleRootLayer;
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>,
-		DotNetRunModuleExtension<MSBuildDotNetModuleExtension>
+public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>,
+		DotNetModuleExtension<MSBuildDotNetModuleExtension>, DotNetModuleExtensionWithDebug
 {
-	protected MSBuildDotNetImportTarget myTarget = UnknownBuildDotNetImportTarget.INSTANCE;
+	protected MSBuildDotNetImportTarget myImportTarget = UnknownBuildDotNetImportTarget.INSTANCE;
+	protected String myPlatform;
+	protected String myConfiguration;
 
 	public MSBuildDotNetModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
 	}
 
+	@Override
+	public boolean isSupportCompilation()
+	{
+		return false;
+	}
+
 	@Nonnull
 	@Override
 	public MSBuildImportTarget getImportTarget()
 	{
-		return myTarget;
+		return myImportTarget;
 	}
 
 	@Override
 	public void build(MSBuildCompileContext context)
 	{
-		myTarget.build(context);
+		myImportTarget.build(context);
+	}
+
+	@Override
+	public String getConfiguration()
+	{
+		return myConfiguration;
+	}
+
+	@Override
+	public void setConfiguration(String configuration)
+	{
+		myConfiguration = configuration;
+	}
+
+	@Override
+	public String getPlatform()
+	{
+		return myPlatform;
+	}
+
+	@Override
+	public void setPlatform(String platform)
+	{
+		myPlatform = platform;
 	}
 
 	@Nonnull
@@ -75,48 +110,23 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 	public void commit(@Nonnull MSBuildDotNetModuleExtension mutableModuleExtension)
 	{
 		super.commit(mutableModuleExtension);
-		myTarget = mutableModuleExtension.myTarget;
+		myImportTarget = mutableModuleExtension.myImportTarget;
+		myPlatform = mutableModuleExtension.myPlatform;
+		myConfiguration = mutableModuleExtension.myConfiguration;
 	}
 
 	@Nonnull
 	@Override
 	public MSBuildBundleInfo getBundleInfo()
 	{
-		return myTarget.getBundleInfoList().get(0);
+		return myImportTarget.getBundleInfoList().get(0);
 	}
 
 	@Nullable
 	@Override
 	public Object resolveAutoSdk()
 	{
-		return myTarget.resolveAutoSdk(this);
-	}
-
-	@Nonnull
-	@Override
-	public String getFileName()
-	{
-		return getModule().getName() + ".exe";
-	}
-
-	@Nonnull
-	@Override
-	public String getOutputDir()
-	{
-		return getModule().getModuleDirPath() + "/Bin";
-	}
-
-	@Override
-	public boolean isAllowDebugInfo()
-	{
-		return true;
-	}
-
-	@Nonnull
-	@Override
-	public DotNetTarget getTarget()
-	{
-		return DotNetTarget.EXECUTABLE;
+		return myImportTarget.resolveAutoSdk(this);
 	}
 
 	@Nonnull
@@ -130,6 +140,13 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetSimpleModuleExtensio
 	@Override
 	public GeneralCommandLine createDefaultCommandLine(@Nonnull Sdk sdk, @Nullable DebugConnectionInfo debugConnectionInfo) throws ExecutionException
 	{
-		return myTarget.createDefaultCommandLine(this, sdk, debugConnectionInfo);
+		return myImportTarget.createDefaultCommandLine(this, sdk, debugConnectionInfo);
+	}
+
+	@Nonnull
+	@Override
+	public DotNetDebugProcessBase createDebuggerProcess(@Nonnull XDebugSession session, @Nonnull RunProfile runProfile, @Nonnull DebugConnectionInfo debugConnectionInfo)
+	{
+		return myImportTarget.createDebuggerProcess(this, session, runProfile, debugConnectionInfo);
 	}
 }

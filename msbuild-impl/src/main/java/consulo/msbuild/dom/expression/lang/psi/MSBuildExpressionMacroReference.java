@@ -76,7 +76,7 @@ public class MSBuildExpressionMacroReference extends ASTWrapperPsiElement implem
 			MSBuildVariableProvider provider = MSBuildVariableProvider.findProvider(text);
 			if(provider != null)
 			{
-				String value = provider.evaluate(new MSBuildEvaluateContext(this));
+				String value = provider.evaluate(MSBuildEvaluateContext.from(this));
 				if(value != null)
 				{
 					return new MSBuildLightMacroValue(getProject(), text, value);

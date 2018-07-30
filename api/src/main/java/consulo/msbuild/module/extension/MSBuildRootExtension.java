@@ -24,4 +24,12 @@ public interface MSBuildRootExtension<T extends MSBuildRootExtension<T>> extends
 	MSBuildImportTarget getImportTarget();
 
 	void build(MSBuildCompileContext context);
+
+	String getConfiguration();
+
+	void setConfiguration(String configuration);
+
+	String getPlatform();
+
+	void setPlatform(String platform);
 }

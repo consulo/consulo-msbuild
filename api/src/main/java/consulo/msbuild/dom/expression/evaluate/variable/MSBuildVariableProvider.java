@@ -22,10 +22,12 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 
 /**
  * @author VISTALL
@@ -58,6 +60,11 @@ public abstract class MSBuildVariableProvider
 		myName = getClass().getSimpleName();
 	}
 
+	public MSBuildVariableProvider(String name)
+	{
+		myName = name;
+	}
+
 	@Nonnull
 	public String getName()
 	{
@@ -79,5 +86,5 @@ public abstract class MSBuildVariableProvider
 
 	@Nullable
 	@RequiredReadAction
-	public abstract String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws Exception;
+	public abstract String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws MSBuildEvaluatioException;
 }
