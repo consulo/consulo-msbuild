@@ -132,6 +132,11 @@ public interface ItemGroup extends DomElement
 	Compile addCompile();
 
 	@Nonnull
+	List<Content> getContents();
+
+	Content addContent();
+
+	@Nonnull
 	List<None> getNones();
 
 	@Nonnull

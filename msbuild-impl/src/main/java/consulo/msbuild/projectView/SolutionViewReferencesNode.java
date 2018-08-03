@@ -23,10 +23,8 @@ import javax.annotation.Nonnull;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
-import com.intellij.ide.projectView.ProjectView;
 import com.intellij.ide.projectView.ProjectViewNode;
 import com.intellij.ide.projectView.ViewSettings;
-import com.intellij.ide.projectView.impl.ProjectViewImpl;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -35,9 +33,9 @@ import com.intellij.openapi.vfs.VirtualFile;
  * @author VISTALL
  * @since 29-Jan-17
  */
-public class SolutionViewRefencesNode extends ProjectViewNode<consulo.msbuild.dom.Project>
+public class SolutionViewReferencesNode extends ProjectViewNode<consulo.msbuild.dom.Project>
 {
-	public SolutionViewRefencesNode(Project project, consulo.msbuild.dom.Project msProject, ViewSettings viewSettings)
+	public SolutionViewReferencesNode(Project project, consulo.msbuild.dom.Project msProject, ViewSettings viewSettings)
 	{
 		super(project, msProject, viewSettings);
 	}
@@ -45,12 +43,7 @@ public class SolutionViewRefencesNode extends ProjectViewNode<consulo.msbuild.do
 	@Override
 	public int getWeight()
 	{
-		final ProjectView projectView = ProjectView.getInstance(myProject);
-		if(projectView instanceof ProjectViewImpl && !((ProjectViewImpl) projectView).isFoldersAlwaysOnTop())
-		{
-			return 20;
-		}
-		return 0;
+		return -200;
 	}
 
 	@Override
@@ -62,7 +55,7 @@ public class SolutionViewRefencesNode extends ProjectViewNode<consulo.msbuild.do
 	@Override
 	public boolean isAlwaysShowPlus()
 	{
-		return true;
+		return false;
 	}
 
 	@Override

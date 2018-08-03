@@ -5,8 +5,8 @@ package consulo.msbuild.dom;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.NameStrategy;
+import com.intellij.util.xml.NameStrategyForAttributes;
 import com.intellij.util.xml.Required;
 
 /**
@@ -14,7 +14,9 @@ import com.intellij.util.xml.Required;
  *
  * @author VISTALL
  */
-public interface Content extends DomElement
+@NameStrategy(MSBuildNameStrategy.class)
+@NameStrategyForAttributes(MSBuildNameStrategy.class)
+public interface Content extends SimpleItem
 {
 
 	/**
@@ -32,32 +34,4 @@ public interface Content extends DomElement
 	 * @param value the new value to set
 	 */
 	void setValue(@Nonnull String value);
-
-
-	/**
-	 * Returns the value of the Include child.
-	 * <pre>
-	 * <h3>Attribute null:Include documentation</h3>
-	 * <!-- _locID_text="Content_Include" _locComment="" -->Semi-colon separated list of content files (wildcards are allowed)
-	 * </pre>
-	 *
-	 * @return the value of the Include child.
-	 */
-	@Nonnull
-	GenericAttributeValue<String> getInclude();
-
-
-	/**
-	 * Returns the value of the Condition child.
-	 * <pre>
-	 * <h3>Attribute null:Condition documentation</h3>
-	 * <!-- _locID_text="SimpleItemType_Condition" _locComment="" -->Optional expression evaluated to determine whether the items should be evaluated
-	 * </pre>
-	 *
-	 * @return the value of the Condition child.
-	 */
-	@Nonnull
-	GenericAttributeValue<String> getCondition();
-
-
 }

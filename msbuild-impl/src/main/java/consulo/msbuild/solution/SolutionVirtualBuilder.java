@@ -49,6 +49,7 @@ public class SolutionVirtualBuilder
 
 		for(ItemGroup group : domProject.getItemGroups())
 		{
+			addAll(group.getContents(), baseDir, root);
 			addAll(group.getCompiles(), baseDir, root);
 			addAll(group.getNones(), baseDir, root);
 			addAll(group.getResourceCompiles(), baseDir, root);

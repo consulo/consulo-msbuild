@@ -23,10 +23,8 @@ import javax.swing.Icon;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
-import com.intellij.ide.projectView.ProjectView;
 import com.intellij.ide.projectView.ProjectViewNode;
 import com.intellij.ide.projectView.ViewSettings;
-import com.intellij.ide.projectView.impl.ProjectViewImpl;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
@@ -55,10 +53,9 @@ public class SolutionViewDirectoryNode extends ProjectViewNode<SolutionVirtualDi
 	@Override
 	public int getWeight()
 	{
-		final ProjectView projectView = ProjectView.getInstance(myProject);
-		if(projectView instanceof ProjectViewImpl && !((ProjectViewImpl) projectView).isFoldersAlwaysOnTop())
+		if(isPropertiesDirectory())
 		{
-			return 20;
+			return -100;
 		}
 		return 0;
 	}
@@ -77,9 +74,7 @@ public class SolutionViewDirectoryNode extends ProjectViewNode<SolutionVirtualDi
 		SolutionVirtualDirectory value = getValue();
 
 		Icon icon = AllIcons.Nodes.TreeOpen;
-
-		SolutionVirtualDirectory parent = value.getParent();
-		if(parent != null && StringUtil.isEmpty(parent.getName()) && Comparing.equal(value.getName(), "Properties"))
+		if(isPropertiesDirectory())
 		{
 			icon = AllIcons.General.Settings;
 		}
@@ -98,5 +93,12 @@ public class SolutionViewDirectoryNode extends ProjectViewNode<SolutionVirtualDi
 	{
 		SolutionVirtualDirectory value = getValue();
 		return !value.getChildren().isEmpty();
+	}
+
+	private boolean isPropertiesDirectory()
+	{
+		SolutionVirtualDirectory value = getValue();
+		SolutionVirtualDirectory parent = value.getParent();
+		return parent != null && StringUtil.isEmpty(parent.getName()) && Comparing.equal(value.getName(), "Properties");
 	}
 }
