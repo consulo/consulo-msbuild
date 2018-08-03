@@ -33,6 +33,7 @@ import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -67,6 +68,7 @@ import consulo.msbuild.importProvider.item.UnknownBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.MSBuildMutableDotNetModuleExtension;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.roots.ModifiableModuleRootLayer;
+import consulo.roots.impl.ExcludedContentFolderTypeProvider;
 import consulo.roots.impl.ModuleRootLayerImpl;
 import consulo.roots.types.BinariesOrderRootType;
 
@@ -119,6 +121,13 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 		rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, "mscorlib"));
 
+		VirtualFile parent = projectFile.getParent();
+		if(parent != null)
+		{
+			String objDirectory = parent.getUrl() + "/obj";
+			rootLayer.addContentEntry(objDirectory).addFolder(objDirectory, ExcludedContentFolderTypeProvider.getInstance());
+		}
+
 		AccessRule.read(() ->
 		{
 			Walker walker = new Walker(domProject);
@@ -128,7 +137,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 				String condition = propertyGroup.getCondition().getStringValue();
 				if(condition == null)
 				{
-					propertyGroup.getProperties().forEach(property -> handleDefaultProperty(property, projectFile, moduleExtension));
+					propertyGroup.getProperties().forEach(property -> handleDefaultProperty(property, projectFile, moduleExtension, rootLayer));
 				}
 				else
 				{
@@ -138,7 +147,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 					if(evaluator.evaluate(condition, context, Boolean.class) == Boolean.TRUE)
 					{
-						propertyGroup.getProperties().forEach(property -> handleProperty(property, projectFile, moduleExtension));
+						propertyGroup.getProperties().forEach(property -> handleProperty(property, projectFile, moduleExtension, rootLayer));
 					}
 				}
 			});
@@ -198,7 +207,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 	}
 
 	@RequiredReadAction
-	private void handleDefaultProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension)
+	private void handleDefaultProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension, ModifiableModuleRootLayer rootLayer)
 	{
 		String xmlElementName = property.getXmlElementName();
 
@@ -238,13 +247,13 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 				break;
 			}
 			default:
-				handleProperty(property, projectFile, moduleExtension);
+				handleProperty(property, projectFile, moduleExtension, rootLayer);
 				break;
 		}
 	}
 
 	@RequiredReadAction
-	private void handleProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension)
+	private void handleProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension, ModifiableModuleRootLayer rootLayer)
 	{
 		String propertyName = property.getXmlElementName();
 
@@ -276,15 +285,21 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 				break;
 			case "OutputPath":
 			{
+				String path = null;
 				if(new File(propertyValue).isAbsolute())
 				{
-					moduleExtension.setOutputDir(propertyValue);
+					moduleExtension.setOutputDir(path = propertyValue);
 				}
 				else
 				{
 					VirtualFile parent = projectFile.getParent();
 					assert parent != null;
-					moduleExtension.setOutputDir(parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue));
+					moduleExtension.setOutputDir(path = (parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue)));
+				}
+				VirtualFile file = LocalFileSystem.getInstance().findFileByPath(path);
+				if(file != null)
+				{
+					rootLayer.addContentEntry(file).addFolder(file, ExcludedContentFolderTypeProvider.getInstance());
 				}
 				break;
 			}
