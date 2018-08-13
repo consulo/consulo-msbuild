@@ -25,6 +25,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
@@ -78,6 +79,8 @@ import consulo.roots.types.BinariesOrderRootType;
  */
 public abstract class DotNetBasedProjectType implements MSBuildProjectType
 {
+	private static final Logger LOGGER = Logger.getInstance(DotNetBasedProjectType.class);
+
 	public abstract void setupModuleImpl(@Nonnull ModifiableModuleRootLayer modifiableRootModel);
 
 	@Nonnull
@@ -323,6 +326,8 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 	@Nonnull
 	private Pair<String, Sdk> findSdk(@Nonnull MSBuildDotNetImportTarget target, @Nullable String sdkVersion)
 	{
+		LOGGER.info("Resolving sdk for version: " + sdkVersion + ", type " + target);
+
 		if(sdkVersion == null)
 		{
 			return Pair.create("??", null);
@@ -343,6 +348,8 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		SdkTable sdkTable = SdkTable.getInstance();
 		List<Sdk> sdksOfType = sdkTable.getSdksOfType(sdkType);
 
+		LOGGER.info("Searching sdks of type " + sdkType + ", sdkListSize: " + sdksOfType.size());
+
 		// we need sort predefined first
 		ContainerUtil.sort(sdksOfType, new Comparator<Sdk>()
 		{
@@ -361,7 +368,9 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 		for(Sdk sdk : sdksOfType)
 		{
 			String versionString = sdk.getVersionString();
-			if(Comparing.equal(versionString, sdkVersion))
+			boolean equal = Comparing.equal(versionString, sdkVersion);
+			LOGGER.info("Validation sdk " + sdk.getName() + ":" + versionString + " to " + sdkVersion + ", result: " + equal + ", path: " + sdk.getHomePath());
+			if(equal)
 			{
 				return Pair.create(null, sdk);
 			}
