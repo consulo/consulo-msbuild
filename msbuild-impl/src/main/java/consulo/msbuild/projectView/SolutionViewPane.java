@@ -28,9 +28,9 @@ import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import com.intellij.ide.SelectInManager;
+import com.intellij.icons.AllIcons;
+import com.intellij.ide.SelectInContext;
 import com.intellij.ide.SelectInTarget;
-import com.intellij.ide.impl.ProjectViewSelectInTarget;
 import com.intellij.ide.projectView.ViewSettings;
 import com.intellij.ide.projectView.impl.AbstractProjectViewPSIPane;
 import com.intellij.ide.projectView.impl.AbstractProjectViewPane;
@@ -41,21 +41,38 @@ import com.intellij.ide.util.treeView.AbstractTreeBuilder;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.ide.util.treeView.AbstractTreeUpdater;
 import com.intellij.ide.util.treeView.NodeDescriptor;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataProvider;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.fileEditor.TextEditor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ex.ToolWindowEx;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.SmartPointerManager;
+import com.intellij.psi.SmartPsiElementPointer;
 import com.intellij.psi.util.PsiUtilCore;
+import com.intellij.ui.AutoScrollFromSourceHandler;
+import consulo.annotations.RequiredDispatchThread;
 import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.projectView.select.SolutionSelectInTarget;
 import consulo.ui.image.Image;
 
 /**
@@ -64,6 +81,122 @@ import consulo.ui.image.Image;
  */
 public class SolutionViewPane extends AbstractProjectViewPSIPane
 {
+	private class MyAutoScrollFromSourceHandler extends AutoScrollFromSourceHandler
+	{
+		public MyAutoScrollFromSourceHandler(@Nonnull Project project, @Nonnull JComponent view)
+		{
+			super(project, view);
+		}
+
+		@Override
+		protected boolean isAutoScrollEnabled()
+		{
+			return false;
+		}
+
+		@Override
+		protected void setAutoScrollEnabled(boolean b)
+		{
+
+		}
+
+		@Override
+		protected void selectElementFromEditor(@Nonnull FileEditor fileEditor)
+		{
+
+		}
+
+		public void scrollFromSource()
+		{
+			final FileEditorManager fileEditorManager = FileEditorManager.getInstance(myProject);
+			final Editor selectedTextEditor = fileEditorManager.getSelectedTextEditor();
+			if(selectedTextEditor != null)
+			{
+				selectElementAtCaret(selectedTextEditor);
+				return;
+			}
+			final FileEditor[] editors = fileEditorManager.getSelectedEditors();
+			for(FileEditor fileEditor : editors)
+			{
+				if(fileEditor instanceof TextEditor)
+				{
+					Editor editor = ((TextEditor) fileEditor).getEditor();
+					selectElementAtCaret(editor);
+					return;
+				}
+			}
+			final VirtualFile[] selectedFiles = fileEditorManager.getSelectedFiles();
+			if(selectedFiles.length > 0)
+			{
+				final PsiFile file = PsiManager.getInstance(myProject).findFile(selectedFiles[0]);
+				if(file != null)
+				{
+					scrollFromFile(file, null);
+				}
+			}
+		}
+
+
+		private void selectElementAtCaret(@Nonnull Editor editor)
+		{
+			final PsiFile file = PsiDocumentManager.getInstance(myProject).getPsiFile(editor.getDocument());
+			if(file == null)
+			{
+				return;
+			}
+
+			scrollFromFile(file, editor);
+		}
+
+		private void scrollFromFile(@Nonnull PsiFile file, @Nullable Editor editor)
+		{
+			SmartPsiElementPointer<PsiFile> pointer = SmartPointerManager.getInstance(myProject).createSmartPsiElementPointer(file);
+			PsiDocumentManager.getInstance(myProject).performLaterWhenAllCommitted(() ->
+			{
+				SelectInTarget target = SolutionViewPane.this.createSelectInTarget();
+				if(target == null)
+				{
+					return;
+				}
+
+				PsiFile restoredPsi = pointer.getElement();
+				if(restoredPsi == null)
+				{
+					return;
+				}
+
+				final SelectInContext selectInContext = new SelectInContext()
+				{
+					@Nonnull
+					@Override
+					public Project getProject()
+					{
+						return restoredPsi.getProject();
+					}
+
+					@Nonnull
+					@Override
+					public VirtualFile getVirtualFile()
+					{
+						return restoredPsi.getVirtualFile();
+					}
+
+					@Nullable
+					@Override
+					public Object getSelectorInFile()
+					{
+						return null;
+					}
+				};
+
+				if(target.canSelect(selectInContext))
+				{
+					target.selectIn(selectInContext, false);
+				}
+			});
+		}
+	}
+
 	private final class MyPanel extends JPanel implements DataProvider
 	{
 		MyPanel()
@@ -323,6 +456,23 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		} */
 	}
 
+	private class ScrollFromSourceAction extends AnAction implements DumbAware
+	{
+		private ScrollFromSourceAction()
+		{
+			super("Scroll from Source", "Select the file open in the active editor", AllIcons.General.Locate);
+		}
+
+		@RequiredDispatchThread
+		@Override
+		public void actionPerformed(@Nonnull AnActionEvent e)
+		{
+			myAutoScrollFromSourceHandler.scrollFromSource();
+		}
+	}
+
+	private final MyAutoScrollFromSourceHandler myAutoScrollFromSourceHandler;
+
 	@Nonnull
 	public static SolutionViewPane getInstance(@Nonnull Project project)
 	{
@@ -331,9 +481,14 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 
 	public static final String ID = "SolutionViewPane";
 
+	private JComponent myComponent;
+
 	public SolutionViewPane(Project project)
 	{
 		super(project);
+
+		myComponent = buildComponent();
+		myAutoScrollFromSourceHandler = new MyAutoScrollFromSourceHandler(myProject, myComponent);
 	}
 
 	@Override
@@ -368,16 +523,29 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	protected ProjectViewTree createTree(DefaultTreeModel treeModel)
 	{
-		return new ProjectViewTree(myProject, treeModel) {};
+		return new ProjectViewTree(myProject, treeModel)
+		{
+		};
 	}
 
-	public JComponent getComponent()
+	public void initToolWindow(ToolWindow toolWindow)
+	{
+		((ToolWindowEx)toolWindow).setTitleActions(new ScrollFromSourceAction());
+	}
+
+	private JComponent buildComponent()
 	{
 		MyPanel panel = new MyPanel();
 		JComponent component = createComponent();
 		component.setBorder(null);
 		panel.add(BorderLayout.CENTER, component);
 		return panel;
+	}
+
+	@Nonnull
+	public JComponent getComponent()
+	{
+		return myComponent;
 	}
 
 	@Override
@@ -423,26 +591,6 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	public SelectInTarget createSelectInTarget()
 	{
-		return new ProjectViewSelectInTarget(myProject)
-		{
-			@Override
-			public String toString()
-			{
-				return SelectInManager.PROJECT;
-			}
-
-			@Nullable
-			@Override
-			public String getMinorViewId()
-			{
-				return null;
-			}
-
-			@Override
-			public float getWeight()
-			{
-				return 0;
-			}
-		};
+		return new SolutionSelectInTarget(myProject);
 	}
 }

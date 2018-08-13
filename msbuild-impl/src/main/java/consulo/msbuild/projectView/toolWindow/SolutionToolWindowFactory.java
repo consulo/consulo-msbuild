@@ -22,6 +22,7 @@ import javax.swing.JComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.content.ContentManager;
 import consulo.msbuild.projectView.SolutionViewPane;
@@ -32,6 +33,8 @@ import consulo.msbuild.projectView.SolutionViewPane;
  */
 public class SolutionToolWindowFactory implements ToolWindowFactory
 {
+	public static final String ID = "Solution Exporer";
+
 	@Override
 	public void createToolWindowContent(@Nonnull Project project, @Nonnull ToolWindow toolWindow)
 	{
@@ -41,6 +44,8 @@ public class SolutionToolWindowFactory implements ToolWindowFactory
 
 		JComponent component = viewPane.getComponent();
 		component.setBorder(null);
+
+		viewPane.initToolWindow(ToolWindowManager.getInstance(project).getToolWindow(ID));
 
 		contentManager.addContent(ContentFactory.getInstance().createContent(component, null, true));
 	}

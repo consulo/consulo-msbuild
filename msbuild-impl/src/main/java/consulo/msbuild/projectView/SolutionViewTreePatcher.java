@@ -78,8 +78,6 @@ public class SolutionViewTreePatcher implements TreeStructureProvider
 			{
 				SolutionVirtualFile solutionVirtualFile = ((SolutionViewFileNode) next).getSolutionVirtualFile();
 
-				VirtualFile vFile = solutionVirtualFile.getVirtualFile();
-
 				String dependentUpon = solutionVirtualFile.getDependentUpon();
 				if(dependentUpon != null)
 				{

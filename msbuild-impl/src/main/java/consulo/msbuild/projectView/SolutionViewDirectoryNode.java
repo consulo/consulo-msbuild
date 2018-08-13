@@ -19,6 +19,7 @@ package consulo.msbuild.projectView;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
 import com.intellij.icons.AllIcons;
@@ -42,6 +43,13 @@ public class SolutionViewDirectoryNode extends ProjectViewNode<SolutionVirtualDi
 	public SolutionViewDirectoryNode(Project project, SolutionVirtualDirectory solutionVirtualDirectory, ViewSettings viewSettings)
 	{
 		super(project, solutionVirtualDirectory, viewSettings);
+	}
+
+	@Nullable
+	@Override
+	public VirtualFile getVirtualFile()
+	{
+		return super.getVirtualFile();
 	}
 
 	@Override
