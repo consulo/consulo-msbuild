@@ -21,6 +21,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
@@ -36,12 +38,14 @@ import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import consulo.msbuild.solution.model.WSolution;
+import consulo.msbuild.synchronize.MSBuildSynchronizeFileListener;
 
 /**
  * @author VISTALL
  * @since 28-Jan-17
  */
 @State(name = "MSBuildSolutionManager", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/msbuild.xml"))
+@Singleton
 public class MSBuildSolutionManager extends SimpleModificationTracker implements PersistentStateComponent<MSBuildSolutionManager.State>
 {
 	public final static class ProjectOptions
@@ -70,10 +74,13 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 
 	private CachedValue<WSolution> myCachedValue;
 
-	public MSBuildSolutionManager(Project project)
+	@Inject
+	public MSBuildSolutionManager(Project project, VirtualFileManager virtualFileManager)
 	{
 		myProject = project;
 		myCachedValue = CachedValuesManager.getManager(project).createCachedValue(() -> CachedValueProvider.Result.create(WSolution.build(myProject, getSolutionFile()), this), false);
+
+		virtualFileManager.addVirtualFileListener(new MSBuildSynchronizeFileListener(project, this), project);
 	}
 
 	@Nullable

@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.solution.reader.SlnFile;
@@ -87,5 +88,18 @@ public class WSolution
 	public Collection<WProject> getProjects()
 	{
 		return myProjects;
+	}
+
+	@Nullable
+	public WProject findProjectByName(String name)
+	{
+		for(WProject project : myProjects)
+		{
+			if(Comparing.equal(name, project.getName()))
+			{
+				return project;
+			}
+		}
+		return null;
 	}
 }
