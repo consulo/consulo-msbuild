@@ -9,7 +9,12 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.concurrency.AppExecutorUtil;
@@ -19,9 +24,15 @@ import com.intellij.util.containers.MultiMap;
  * @author VISTALL
  * @since 2018-08-15
  */
-public class MSBuildSynchronizeQueue implements Runnable
+public class MSBuildSynchronizeQueue implements Runnable, Disposable
 {
-	public static class Change
+	@Nonnull
+	public static MSBuildSynchronizeQueue getInstance(Project project)
+	{
+		return ServiceManager.getService(project, MSBuildSynchronizeQueue.class);
+	}
+
+	private static class Change
 	{
 		private VirtualFile myVirtualFile;
 		private Runnable myRunnable;
@@ -39,6 +50,7 @@ public class MSBuildSynchronizeQueue implements Runnable
 
 	private Deque<Change> myChanges = new ConcurrentLinkedDeque<>();
 
+	@Inject
 	public MSBuildSynchronizeQueue(Project project)
 	{
 		myProject = project;
@@ -50,7 +62,8 @@ public class MSBuildSynchronizeQueue implements Runnable
 		myChanges.add(new Change(virtualFile, runnable));
 	}
 
-	public void stop()
+	@Override
+	public void dispose()
 	{
 		myQueueTask.cancel(false);
 	}

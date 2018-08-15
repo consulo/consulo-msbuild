@@ -64,6 +64,10 @@
 
 		<compiler.moduleScopeFactory implementation="consulo.msbuild.compiler.MSBuildCompileModuleScopeFactory"/>
 
+		<editorNotificationProvider implementation="consulo.msbuild.editor.MSBuildOutOfProjectEditorNotificationProvider" />
+
+		<createFromTemplateActionModuleResolver implementation="consulo.msbuild.action.MSBuildModuleResolver" />
+
 		<sdkType implementation="consulo.msbuild.bundle.MSBuildBundleType"/>
 		<predefinedBundlesProvider implementation="consulo.msbuild.bundle.MSBuildBundleProvider"/>
 
@@ -72,6 +76,7 @@
 		<projectService serviceImplementation="consulo.msbuild.projectView.SolutionViewPane"/>
 
 		<projectService serviceImplementation="consulo.msbuild.MSBuildSolutionManager"/>
+		<projectService serviceImplementation="consulo.msbuild.synchronize.MSBuildSynchronizeQueue" />
 
 		<moduleImportProvider implementation="consulo.msbuild.importProvider.MSBuildModuleImportProvider"/>
 

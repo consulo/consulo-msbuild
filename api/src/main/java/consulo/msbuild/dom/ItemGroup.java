@@ -139,6 +139,8 @@ public interface ItemGroup extends DomElement
 	@Nonnull
 	List<None> getNones();
 
+	None addNone();
+
 	@Nonnull
 	List<ProjectReference> getProjectReferences();
 

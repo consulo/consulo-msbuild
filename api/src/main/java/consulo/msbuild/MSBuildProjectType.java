@@ -33,6 +33,7 @@ import consulo.msbuild.dom.Project;
 import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.msbuild.solution.reader.SlnProject;
+import consulo.msbuild.synchronize.MSBuildFileReferenceType;
 import consulo.roots.ModifiableModuleRootLayer;
 
 /**
@@ -56,7 +57,7 @@ public interface MSBuildProjectType
 		{
 			set.add(ep.getExt());
 		}
-		return set.isEmpty() ? Collections.<String>emptySet() : set;
+		return set.isEmpty() ? Collections.emptySet() : set;
 	});
 
 	NotNullLazyValue<Map<String, MSBuildProjectType>> ourTypeByGUIDMapValue = NotNullLazyValue.createValue(() ->
@@ -92,12 +93,18 @@ public interface MSBuildProjectType
 	}
 
 	void setupModule(@Nonnull VirtualFile projectFile,
-			@Nonnull Project domProject,
-			@Nullable MSBuildSolutionManager.ProjectOptions projectOptions,
-			@Nonnull ModifiableModuleRootLayer modifiableRootModel);
+					 @Nonnull Project domProject,
+					 @Nullable MSBuildSolutionManager.ProjectOptions projectOptions,
+					 @Nonnull ModifiableModuleRootLayer modifiableRootModel);
 
 	@Nonnull
 	MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context);
+
+	@Nonnull
+	default MSBuildFileReferenceType getFileReferenceType(@Nonnull VirtualFile virtualFile)
+	{
+		return MSBuildFileReferenceType.NONE;
+	}
 
 	default boolean isAvaliable()
 	{

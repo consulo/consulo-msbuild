@@ -17,8 +17,12 @@
 package consulo.msbuild.csharp;
 
 import javax.annotation.Nonnull;
+
+import com.intellij.openapi.vfs.VirtualFile;
+import consulo.csharp.lang.CSharpFileType;
 import consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension;
 import consulo.msbuild.impl.DotNetBasedProjectType;
+import consulo.msbuild.synchronize.MSBuildFileReferenceType;
 import consulo.roots.ModifiableModuleRootLayer;
 
 /**
@@ -35,5 +39,16 @@ public class CSharpProjectType extends DotNetBasedProjectType
 		assert extension != null;
 
 		extension.setEnabled(true);
+	}
+
+	@Nonnull
+	@Override
+	public MSBuildFileReferenceType getFileReferenceType(@Nonnull VirtualFile virtualFile)
+	{
+		if(virtualFile.getFileType() == CSharpFileType.INSTANCE)
+		{
+			return MSBuildFileReferenceType.COMPILE;
+		}
+		return MSBuildFileReferenceType.NONE;
 	}
 }

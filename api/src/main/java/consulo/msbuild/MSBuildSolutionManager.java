@@ -80,7 +80,7 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		myProject = project;
 		myCachedValue = CachedValuesManager.getManager(project).createCachedValue(() -> CachedValueProvider.Result.create(WSolution.build(myProject, getSolutionFile()), this), false);
 
-		virtualFileManager.addVirtualFileListener(new MSBuildSynchronizeFileListener(project, this), project);
+		virtualFileManager.addVirtualFileListener(new MSBuildSynchronizeFileListener(project), project);
 	}
 
 	@Nullable
