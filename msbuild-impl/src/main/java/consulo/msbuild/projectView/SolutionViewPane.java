@@ -136,7 +136,6 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 			}
 		}
 
-
 		private void selectElementAtCaret(@Nonnull Editor editor)
 		{
 			final PsiFile file = PsiDocumentManager.getInstance(myProject).getPsiFile(editor.getDocument());
