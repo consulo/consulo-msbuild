@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.RunProfile;
-import com.intellij.execution.process.CapturingProcessHandler;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
@@ -25,7 +24,6 @@ import consulo.microsoft.dotnet.module.extension.MicrosoftDotNetModuleExtension;
 import consulo.microsoft.dotnet.sdk.MicrosoftDotNetSdkType;
 import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.compiler.MSBuildCompileContext;
-import consulo.msbuild.compiler.MSBuildReporter;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
@@ -127,17 +125,6 @@ public class MicrosoftDotNetImportTarget extends MSBuildDotNetImportTarget
 
 		context.addDefaultArguments(commandLine::addParameter);
 
-		try
-		{
-			CapturingProcessHandler processHandler = new CapturingProcessHandler(commandLine);
-
-			processHandler.runProcess();
-
-			MSBuildReporter.report(context);
-		}
-		catch(ExecutionException e)
-		{
-			throw new IllegalArgumentException(e);
-		}
+		runWithLogging(context, commandLine);
 	}
 }

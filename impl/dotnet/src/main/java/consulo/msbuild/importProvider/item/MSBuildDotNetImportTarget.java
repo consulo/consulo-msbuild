@@ -25,6 +25,9 @@ import javax.annotation.Nullable;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.RunProfile;
+import com.intellij.execution.process.CapturingProcessHandler;
+import com.intellij.execution.process.ProcessOutput;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
@@ -32,6 +35,7 @@ import com.intellij.xdebugger.XDebugSession;
 import consulo.dotnet.debugger.DotNetDebugProcessBase;
 import consulo.dotnet.execution.DebugConnectionInfo;
 import consulo.msbuild.compiler.MSBuildCompileContext;
+import consulo.msbuild.compiler.MSBuildReporter;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
 import consulo.msbuild.module.extension.resolve.AutomaticBundleInfo;
 import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
@@ -43,6 +47,8 @@ import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 public abstract class MSBuildDotNetImportTarget implements MSBuildImportTarget
 {
 	public static final ExtensionPointName<MSBuildDotNetImportTarget> EP_NAME = ExtensionPointName.create("consulo.msbuild.dotnet.importTarget");
+
+	private static final Logger LOGGER = Logger.getInstance(MSBuildDotNetImportTarget.class);
 
 	private final String myPresentableName;
 	private final String myFrameworkExtensionId;
@@ -123,5 +129,25 @@ public abstract class MSBuildDotNetImportTarget implements MSBuildImportTarget
 	public String toString()
 	{
 		return myPresentableName;
+	}
+
+	protected void runWithLogging(MSBuildCompileContext context, GeneralCommandLine commandLine)
+	{
+		try
+		{
+			CapturingProcessHandler processHandler = new CapturingProcessHandler(commandLine);
+
+			ProcessOutput processOutput = processHandler.runProcess();
+			for(String line : processOutput.getStdoutLines())
+			{
+				LOGGER.info(line);
+			}
+
+			MSBuildReporter.report(context);
+		}
+		catch(ExecutionException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
 	}
 }
