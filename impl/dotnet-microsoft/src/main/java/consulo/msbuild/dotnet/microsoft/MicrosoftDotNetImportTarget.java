@@ -1,6 +1,7 @@
 package consulo.msbuild.dotnet.microsoft;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -14,6 +15,7 @@ import com.intellij.execution.process.ProcessOutput;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
+import com.intellij.openapi.util.Version;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.xdebugger.XDebugSession;
 import consulo.dotnet.compiler.DotNetMacroUtil;
@@ -54,6 +56,35 @@ public class MicrosoftDotNetImportTarget extends MSBuildDotNetImportTarget
 			list.add(new DefaultBundleInfo(sdk));
 		}
 		return list;
+	}
+
+	@Nullable
+	@Override
+	public Object resolveAutoSdk(@Nonnull MSBuildDotNetModuleExtension moduleExtension)
+	{
+		List<Sdk> sdksOfType = SdkTable.getInstance().getSdksOfType(MSBuildBundleType.getInstance());
+		if(sdksOfType.isEmpty())
+		{
+			return null;
+		}
+		Collections.sort(sdksOfType, (o1, o2) ->
+		{
+			Version v1 = parse(o1.getVersionString());
+			Version v2 = parse(o2.getVersionString());
+			return v2.compareTo(v1);
+		});
+		return sdksOfType.get(0);
+	}
+
+	@Nonnull
+	private static Version parse(@Nullable String version)
+	{
+		if(version == null)
+		{
+			return new Version(0, 0, 0);
+		}
+		Version parsedVersion = Version.parseVersion(version);
+		return parsedVersion == null ? new Version(0, 0, 0) : parsedVersion;
 	}
 
 	@Nonnull
