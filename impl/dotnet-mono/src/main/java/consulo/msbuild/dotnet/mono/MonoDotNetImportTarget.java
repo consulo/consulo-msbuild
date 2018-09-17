@@ -9,7 +9,6 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.RunProfile;
 import com.intellij.execution.process.CapturingProcessHandler;
-import com.intellij.execution.process.ProcessOutput;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.util.ArrayUtil;
@@ -22,7 +21,7 @@ import consulo.dotnet.sdk.DotNetVersion;
 import consulo.mono.dotnet.module.extension.MonoDotNetModuleExtension;
 import consulo.mono.dotnet.sdk.MonoSdkType;
 import consulo.msbuild.compiler.MSBuildCompileContext;
-import consulo.msbuild.compiler.MSBuildConsoleParser;
+import consulo.msbuild.compiler.MSBuildReporter;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
@@ -121,16 +120,9 @@ public class MonoDotNetImportTarget extends MSBuildDotNetImportTarget
 		{
 			CapturingProcessHandler processHandler = new CapturingProcessHandler(commandLine);
 
-			ProcessOutput processOutput = processHandler.runProcess();
+			processHandler.runProcess();
 
-			MSBuildConsoleParser parser = new MSBuildConsoleParser();
-
-			for(String line : processOutput.getStdoutLines())
-			{
-				parser.parse(line);
-			}
-
-			parser.report(context.getCompileContext());
+			MSBuildReporter.report(context);
 		}
 		catch(ExecutionException e)
 		{

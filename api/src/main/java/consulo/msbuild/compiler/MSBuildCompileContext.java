@@ -1,5 +1,7 @@
 package consulo.msbuild.compiler;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -20,12 +22,25 @@ public class MSBuildCompileContext
 	private final String myProjectName;
 	private final CompileContext myCompileContext;
 
+	private File myTempErrorFile;
+	private File myTempWarningFile;
+
 	public MSBuildCompileContext(@Nonnull MSBuildRootExtension extension, @Nonnull VirtualFile solutionFile, @Nonnull String projectName, @Nonnull CompileContext compileContext)
 	{
 		myExtension = extension;
 		mySolutionFile = solutionFile;
 		myProjectName = projectName;
 		myCompileContext = compileContext;
+
+		try
+		{
+			myTempErrorFile = FileUtil.createTempFile("msbuild_error", "txt", true);
+			myTempWarningFile = FileUtil.createTempFile("msbuild_warning", "txt", true);
+		}
+		catch(IOException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	@Nonnull
@@ -52,9 +67,22 @@ public class MSBuildCompileContext
 		return myProjectName;
 	}
 
+	@Nonnull
+	public File getTempErrorFile()
+	{
+		return myTempErrorFile;
+	}
+
+	@Nonnull
+	public File getTempWarningFile()
+	{
+		return myTempWarningFile;
+	}
+
 	public void addDefaultArguments(Consumer<String> args)
 	{
-		args.accept("/consoleloggerparameters:ErrorsOnly;WarningsOnly;DisableMPLogging;ForceNoAlign");
+		args.accept("/flp1:logfile=" + myTempErrorFile.getPath() + ";errorsonly");
+		args.accept("/flp2:logfile=" + myTempWarningFile.getPath() + ";warningsonly");
 		args.accept("/nologo");
 
 		args.accept(FileUtil.toSystemDependentName(mySolutionFile.getPath()));
