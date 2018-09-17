@@ -35,6 +35,7 @@ import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.synchronize.MSBuildFileReferenceType;
 import consulo.msbuild.synchronize.MSBuildSynchronizeQueue;
 import consulo.msbuild.synchronize.MSBuildSynchronizeUtil;
+import consulo.vfs.ArchiveFileSystem;
 
 /**
  * @author VISTALL
@@ -64,6 +65,11 @@ public class MSBuildOutOfProjectEditorNotificationProvider implements EditorNoti
 	@Override
 	public EditorNotificationPanel createNotificationPanel(@Nonnull VirtualFile sourceFile, @Nonnull FileEditor fileEditor)
 	{
+		if(sourceFile.getFileSystem() instanceof ArchiveFileSystem)
+		{
+			return null;
+		}
+
 		Pair<WProject, SimpleItem> pair = MSBuildSynchronizeUtil.searchMappingInSolution(sourceFile, myProject);
 		if(pair != null)
 		{
