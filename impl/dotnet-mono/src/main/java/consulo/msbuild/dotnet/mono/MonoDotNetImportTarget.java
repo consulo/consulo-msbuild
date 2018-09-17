@@ -22,6 +22,7 @@ import consulo.dotnet.sdk.DotNetVersion;
 import consulo.mono.dotnet.module.extension.MonoDotNetModuleExtension;
 import consulo.mono.dotnet.sdk.MonoSdkType;
 import consulo.msbuild.compiler.MSBuildCompileContext;
+import consulo.msbuild.compiler.MSBuildConsoleParser;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
@@ -122,10 +123,14 @@ public class MonoDotNetImportTarget extends MSBuildDotNetImportTarget
 
 			ProcessOutput processOutput = processHandler.runProcess();
 
-			for(String s : processOutput.getStdoutLines())
+			MSBuildConsoleParser parser = new MSBuildConsoleParser();
+
+			for(String line : processOutput.getStdoutLines())
 			{
-				System.out.println(s);
+				parser.parse(line);
 			}
+
+			parser.report(context.getCompileContext());
 		}
 		catch(ExecutionException e)
 		{

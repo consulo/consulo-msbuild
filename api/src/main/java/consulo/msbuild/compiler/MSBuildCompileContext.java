@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
+import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
@@ -14,15 +15,23 @@ import consulo.msbuild.module.extension.MSBuildRootExtension;
  */
 public class MSBuildCompileContext
 {
-	private MSBuildRootExtension myExtension;
-	private VirtualFile mySolutionFile;
-	private String myProjectName;
+	private final MSBuildRootExtension myExtension;
+	private final VirtualFile mySolutionFile;
+	private final String myProjectName;
+	private final CompileContext myCompileContext;
 
-	public MSBuildCompileContext(@Nonnull MSBuildRootExtension extension, @Nonnull VirtualFile solutionFile, @Nonnull String projectName)
+	public MSBuildCompileContext(@Nonnull MSBuildRootExtension extension, @Nonnull VirtualFile solutionFile, @Nonnull String projectName, @Nonnull CompileContext compileContext)
 	{
 		myExtension = extension;
 		mySolutionFile = solutionFile;
 		myProjectName = projectName;
+		myCompileContext = compileContext;
+	}
+
+	@Nonnull
+	public CompileContext getCompileContext()
+	{
+		return myCompileContext;
 	}
 
 	@Nonnull
@@ -45,7 +54,7 @@ public class MSBuildCompileContext
 
 	public void addDefaultArguments(Consumer<String> args)
 	{
-		args.accept("/consoleloggerparameters:ErrorsOnly;WarningsOnly;NoSummary;DisableMPLogging;ForceNoAlign");
+		args.accept("/consoleloggerparameters:ErrorsOnly;WarningsOnly;DisableMPLogging;ForceNoAlign");
 		args.accept("/nologo");
 
 		args.accept(FileUtil.toSystemDependentName(mySolutionFile.getPath()));

@@ -48,7 +48,7 @@ public class MSBuildCompiler implements TranslatingCompiler
 			return;
 		}
 
-		extension.build(new MSBuildCompileContext(extension, solutionManager.getSolutionFile(), entry.getKey()));
+		extension.build(new MSBuildCompileContext(extension, solutionManager.getSolutionFile(), entry.getKey(), compileContext));
 	}
 
 	@Nonnull
