@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectViewNode;
 import com.intellij.ide.projectView.ViewSettings;
@@ -32,7 +33,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotations.RequiredDispatchThread;
 import consulo.annotations.RequiredReadAction;
-import consulo.awt.TargetAWT;
 import consulo.msbuild.MSBuildGUID;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
@@ -125,7 +125,7 @@ public class SolutionViewRootNode extends ProjectViewNode<Project>
 	@Override
 	protected void update(PresentationData presentation)
 	{
-		presentation.setIcon(TargetAWT.to(MSBuildIcons.VisualStudio));
+		presentation.setIcon(MSBuildIcons.VisualStudio);
 		presentation.setPresentableText("Solution");
 
 		String solName = String.format("Solution '%s' (%s project(s))", mySolutionFile.getNameWithoutExtension(), myWSolution.getProjects().size());

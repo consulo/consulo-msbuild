@@ -20,7 +20,6 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
@@ -33,6 +32,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotations.RequiredReadAction;
 import consulo.msbuild.solution.SolutionVirtualDirectory;
+import consulo.ui.image.Image;
 
 /**
  * @author VISTALL
@@ -79,9 +79,7 @@ public class SolutionViewDirectoryNode extends ProjectViewNode<SolutionVirtualDi
 	@Override
 	protected void update(PresentationData presentation)
 	{
-		SolutionVirtualDirectory value = getValue();
-
-		Icon icon = AllIcons.Nodes.TreeOpen;
+		Image icon = AllIcons.Nodes.TreeOpen;
 		if(isPropertiesDirectory())
 		{
 			icon = AllIcons.General.Settings;
