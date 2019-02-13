@@ -87,7 +87,7 @@ public class SolutionVirtualBuilder
 			VirtualFile file = baseDir.findFileByRelativePath(FileUtilRt.toSystemIndependentName(value));
 
 			String name = ContainerUtil.getLastItem(split);
-			assert name != null;
+			assert name != null : "Path: " + presentationPath;
 
 			SolutionVirtualFile virtualFile = new SolutionVirtualFile(name, target, null, file);
 
