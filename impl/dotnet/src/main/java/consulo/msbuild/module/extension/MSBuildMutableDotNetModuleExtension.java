@@ -31,9 +31,9 @@ import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.Component;
 import consulo.ui.Label;
-import consulo.ui.LabeledComponents;
 import consulo.ui.RequiredUIAccess;
-import consulo.ui.VerticalLayout;
+import consulo.ui.layout.VerticalLayout;
+import consulo.ui.util.LabeledComponents;
 
 /**
  * @author VISTALL
