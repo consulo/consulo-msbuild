@@ -23,12 +23,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import javax.annotation.Nullable;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.ui.ComboBox;
@@ -41,10 +41,10 @@ import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.ListTableModel;
 import com.intellij.util.ui.table.ComboBoxTableCellEditor;
+import consulo.desktop.util.awt.component.VerticalLayoutPanel;
 import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
-import consulo.util.ui.components.VerticalLayoutPanel;
 
 /**
  * @author VISTALL
