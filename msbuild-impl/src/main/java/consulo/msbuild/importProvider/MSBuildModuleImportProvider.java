@@ -1,39 +1,34 @@
 package consulo.msbuild.importProvider;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.intellij.lang.annotations.Language;
-import com.intellij.ide.util.newProjectWizard.ProjectNameStep;
-import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.packaging.artifacts.ModifiableArtifactModel;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.annotations.RequiredReadAction;
+import consulo.ide.newProject.ui.ProjectOrModuleNameStep;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.VisualStudioSolutionFileType;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.ui.image.Image;
+import consulo.ui.wizard.WizardStep;
+import org.intellij.lang.annotations.Language;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author VISTALL
@@ -43,9 +38,9 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 {
 	@Nonnull
 	@Override
-	public MSBuildModuleImportContext createContext()
+	public MSBuildModuleImportContext createContext(@Nullable Project project)
 	{
-		return new MSBuildModuleImportContext();
+		return new MSBuildModuleImportContext(project);
 	}
 
 	@Nonnull
@@ -83,18 +78,11 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 	}
 
 	@Override
-	@Nonnull
-	public ModuleWizardStep[] createSteps(@Nonnull WizardContext wizardContext, @Nonnull MSBuildModuleImportContext context)
+	public void buildSteps(@Nonnull Consumer<WizardStep<MSBuildModuleImportContext>> consumer, @Nonnull MSBuildModuleImportContext context)
 	{
-		VirtualFile fileByPath = LocalFileSystem.getInstance().findFileByPath(wizardContext.getProjectFileDirectory());
-		assert fileByPath != null;
-		wizardContext.setProjectName(fileByPath.getNameWithoutExtension());
-		wizardContext.setProjectFileDirectory(fileByPath.getParent().getPath());
-
-		MSBuildSetupStepEP[] extensions = MSBuildSetupStepEP.EP.getExtensions();
+		List<MSBuildSetupStepEP> extensions = MSBuildSetupStepEP.EP.getExtensionList();
 
 		Set<Class> classes = new LinkedHashSet<>();
-		List<ModuleWizardStep> wizardSteps = new ArrayList<>();
 		for(MSBuildImportProject project : context.getMappedProjects())
 		{
 			classes.add(project.getClass());
@@ -105,22 +93,19 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 			MSBuildSetupStepEP stepEP = ContainerUtil.find(extensions, it -> it.getImportProjectClass() == aClass);
 			if(stepEP != null)
 			{
-				wizardSteps.add(stepEP.createStep(context, wizardContext));
+				consumer.accept(stepEP.createStep(context));
 			}
 		}
 
-		wizardSteps.add(new ProjectNameStep(wizardContext));
-		return wizardSteps.toArray(new ModuleWizardStep[wizardSteps.size()]);
+		consumer.accept(new ProjectOrModuleNameStep<>(context));
 	}
 
-	@Nonnull
-	@Override
 	@RequiredReadAction
-	public List<Module> commit(@Nonnull MSBuildModuleImportContext context,
-			@Nonnull Project project,
-			@Nullable ModifiableModuleModel old,
-			@Nonnull ModulesProvider modulesProvider,
-			@Nullable ModifiableArtifactModel artifactModel)
+	@Override
+	public void process(@Nonnull MSBuildModuleImportContext context,
+						@Nonnull Project project,
+						@Nonnull ModifiableModuleModel modifiableModuleModel,
+						@Nonnull Consumer<Module> consumer)
 	{
 		String fileToImport = context.getFileToImport();
 
@@ -136,19 +121,9 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 
 		VirtualFile parent = solutionFile.getParent();
 
-		List<Module> modules = new ArrayList<>();
-
-		final ModifiableModuleModel modifiableModuleModel = old == null ? ModuleManager.getInstance(project).getModifiableModel() : old;
-
 		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName() + " (Solution)", parent, modifiableModuleModel);
-		modules.add(mainModuleModel.getModule());
+		consumer.accept(mainModuleModel.getModule());
 		WriteAction.run(mainModuleModel::commit);
-
-		if(modifiableModuleModel != old)
-		{
-			WriteAction.run(modifiableModuleModel::commit);
-		}
-		return modules;
 	}
 
 	@RequiredReadAction

@@ -16,18 +16,16 @@
 
 package consulo.msbuild.importProvider;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.annotation.Nonnull;
-
-import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.extensions.AbstractExtensionPointBean;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.util.xmlb.annotations.Attribute;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
+import consulo.ui.wizard.WizardStep;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author VISTALL
@@ -35,7 +33,7 @@ import consulo.msbuild.importProvider.item.MSBuildImportProject;
  */
 public class MSBuildSetupStepEP extends AbstractExtensionPointBean
 {
-	public static final ExtensionPointName<MSBuildSetupStepEP> EP = new ExtensionPointName<>("consulo.msbuild.setupStep");
+	public static final ExtensionPointName<MSBuildSetupStepEP> EP = ExtensionPointName.create("consulo.msbuild.setupStep");
 
 	@Attribute("importProjectClass")
 	public String importProjectClass;
@@ -55,12 +53,12 @@ public class MSBuildSetupStepEP extends AbstractExtensionPointBean
 		}
 	});
 
-	private final NotNullLazyValue<Constructor<? extends ModuleWizardStep>> myStepConstructorValue = NotNullLazyValue.createValue(() ->
+	private final NotNullLazyValue<Constructor<? extends WizardStep<MSBuildModuleImportContext>>> myStepConstructorValue = NotNullLazyValue.createValue(() ->
 	{
 		try
 		{
-			Class<ModuleWizardStep> aClass = findClass(stepClass);
-			return aClass.getConstructor(MSBuildModuleImportContext.class, WizardContext.class);
+			Class<WizardStep<MSBuildModuleImportContext>> aClass = findClass(stepClass);
+			return aClass.getConstructor(MSBuildModuleImportContext.class);
 		}
 		catch(ClassNotFoundException | NoSuchMethodException e)
 		{
@@ -75,11 +73,11 @@ public class MSBuildSetupStepEP extends AbstractExtensionPointBean
 	}
 
 	@Nonnull
-	public ModuleWizardStep createStep(MSBuildModuleImportContext context, WizardContext wizardContext)
+	public WizardStep<MSBuildModuleImportContext> createStep(MSBuildModuleImportContext context)
 	{
 		try
 		{
-			return myStepConstructorValue.getValue().newInstance(context, wizardContext);
+			return myStepConstructorValue.getValue().newInstance(context);
 		}
 		catch(InstantiationException | IllegalAccessException | InvocationTargetException e)
 		{

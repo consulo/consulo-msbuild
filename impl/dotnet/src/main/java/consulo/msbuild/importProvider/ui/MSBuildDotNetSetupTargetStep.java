@@ -16,21 +16,6 @@
 
 package consulo.msbuild.importProvider.ui;
 
-import java.awt.event.ItemEvent;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
-
-import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.LabeledComponent;
 import com.intellij.ui.ColoredListCellRenderer;
@@ -45,16 +30,29 @@ import consulo.desktop.util.awt.component.VerticalLayoutPanel;
 import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
+import consulo.ui.RequiredUIAccess;
+import consulo.ui.wizard.WizardStep;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author VISTALL
  * @since 30-Jan-17
  */
-public class MSBuildDotNetSetupTargetStep extends ModuleWizardStep
+public class MSBuildDotNetSetupTargetStep implements WizardStep<MSBuildModuleImportContext>
 {
 	private VerticalLayoutPanel myPanel;
 
-	public MSBuildDotNetSetupTargetStep(MSBuildModuleImportContext context, WizardContext wizardContext)
+	public MSBuildDotNetSetupTargetStep(MSBuildModuleImportContext context)
 	{
 		ComboBox<MSBuildDotNetImportTarget> targetComboBox = new ComboBox<>(MSBuildDotNetImportTarget.EP_NAME.getExtensions());
 		targetComboBox.setRenderer(new ColoredListCellRenderer<MSBuildDotNetImportTarget>()
@@ -153,15 +151,19 @@ public class MSBuildDotNetSetupTargetStep extends ModuleWizardStep
 		myPanel.addComponent(ScrollPaneFactory.createScrollPane(tableItemTableView));
 	}
 
+	@RequiredUIAccess
+	@Nonnull
 	@Override
-	public JComponent getComponent()
+	public Component getSwingComponent()
 	{
 		return myPanel;
 	}
 
+	@RequiredUIAccess
+	@Nonnull
 	@Override
-	public void updateDataModel()
+	public consulo.ui.Component getComponent()
 	{
-
+		throw new UnsupportedOperationException("desktop only");
 	}
 }

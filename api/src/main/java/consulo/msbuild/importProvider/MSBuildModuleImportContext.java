@@ -1,5 +1,17 @@
 package consulo.msbuild.importProvider;
 
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+import consulo.moduleImport.ModuleImportContext;
+import consulo.msbuild.MSBuildProjectType;
+import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.importProvider.item.MSBuildImportProject;
+import consulo.msbuild.solution.reader.SlnFile;
+import consulo.msbuild.solution.reader.SlnProject;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,14 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Nonnull;
-import consulo.moduleImport.ModuleImportContext;
-import consulo.msbuild.MSBuildProjectType;
-import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.importProvider.item.MSBuildImportProject;
-import consulo.msbuild.solution.reader.SlnFile;
-import consulo.msbuild.solution.reader.SlnProject;
 
 /**
  * @author VISTALL
@@ -28,9 +32,22 @@ public class MSBuildModuleImportContext extends ModuleImportContext
 	private List<MSBuildImportProject> myItems = new ArrayList<>();
 	private Map<String, MSBuildSolutionManager.ProjectOptions> myProjectOptions = new HashMap<>();
 
-	@Override
-	public ModuleImportContext setFileToImport(String fileToImport)
+	public MSBuildModuleImportContext(@Nullable Project project)
 	{
+		super(project);
+	}
+
+	@Override
+	public void setFileToImport(String fileToImport)
+	{
+		super.setFileToImport(fileToImport);
+
+		VirtualFile fileByPath = LocalFileSystem.getInstance().findFileByPath(fileToImport);
+		assert fileByPath != null;
+
+		setName(fileByPath.getNameWithoutExtension());
+		setPath(fileByPath.getParent().getPath());
+
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(fileToImport), StandardCharsets.UTF_8)))
 		{
 			mySlnFile.Read(reader);
@@ -50,8 +67,6 @@ public class MSBuildModuleImportContext extends ModuleImportContext
 
 			myItems.add(projectType.createImportItem(project, this));
 		}
-
-		return super.setFileToImport(fileToImport);
 	}
 
 	@Nonnull
