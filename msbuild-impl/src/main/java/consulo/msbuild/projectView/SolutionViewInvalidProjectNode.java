@@ -16,11 +16,6 @@
 
 package consulo.msbuild.projectView;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectViewNode;
@@ -28,8 +23,12 @@ import com.intellij.ide.projectView.ViewSettings;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.SimpleTextAttributes;
-import consulo.annotations.RequiredDispatchThread;
 import consulo.msbuild.solution.model.WProject;
+import consulo.ui.annotation.RequiredUIAccess;
+
+import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author VISTALL
@@ -57,7 +56,7 @@ public class SolutionViewInvalidProjectNode extends ProjectViewNode<WProject> im
 
 	@Nonnull
 	@Override
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public Collection<? extends AbstractTreeNode> getChildren()
 	{
 		return Collections.emptyList();

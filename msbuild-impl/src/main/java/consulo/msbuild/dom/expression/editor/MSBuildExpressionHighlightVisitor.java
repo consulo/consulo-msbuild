@@ -16,7 +16,6 @@
 
 package consulo.msbuild.dom.expression.editor;
 
-import javax.annotation.Nonnull;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
 import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
 import com.intellij.codeInsight.daemon.impl.HighlightVisitor;
@@ -24,11 +23,13 @@ import com.intellij.codeInsight.daemon.impl.analysis.HighlightInfoHolder;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionElementVisitor;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionFile;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionMacroReference;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildLightMacroValue;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL

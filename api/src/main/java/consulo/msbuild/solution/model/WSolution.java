@@ -16,6 +16,17 @@
 
 package consulo.msbuild.solution.model;
 
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Comparing;
+import com.intellij.openapi.vfs.VirtualFile;
+import consulo.annotation.access.RequiredReadAction;
+import consulo.msbuild.solution.reader.SlnFile;
+import consulo.msbuild.solution.reader.SlnProject;
+import consulo.msbuild.solution.reader.SlnSection;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -23,18 +34,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.annotations.RequiredReadAction;
-import consulo.msbuild.solution.reader.SlnFile;
-import consulo.msbuild.solution.reader.SlnProject;
-import consulo.msbuild.solution.reader.SlnSection;
 
 /**
  * @author VISTALL

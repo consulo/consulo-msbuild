@@ -1,13 +1,13 @@
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL

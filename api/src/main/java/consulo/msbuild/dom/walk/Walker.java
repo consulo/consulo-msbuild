@@ -16,15 +16,15 @@
 
 package consulo.msbuild.dom.walk;
 
-import java.util.List;
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
 import com.intellij.util.xml.DomElement;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.PropertyGroup;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author VISTALL

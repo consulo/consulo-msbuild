@@ -30,7 +30,7 @@ import consulo.desktop.util.awt.component.VerticalLayoutPanel;
 import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
-import consulo.ui.RequiredUIAccess;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.wizard.WizardStep;
 
 import javax.annotation.Nonnull;

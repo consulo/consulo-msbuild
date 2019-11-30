@@ -1,13 +1,5 @@
 package consulo.msbuild.editor;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.swing.Icon;
-import javax.swing.SwingUtilities;
-
 import com.intellij.ide.util.ChooseElementsDialog;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.project.Project;
@@ -23,7 +15,7 @@ import com.intellij.ui.EditorNotificationPanel;
 import com.intellij.ui.EditorNotifications;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.awt.TargetAWT;
 import consulo.editor.notifications.EditorNotificationProvider;
 import consulo.msbuild.MSBuildIcons;
@@ -36,6 +28,12 @@ import consulo.msbuild.synchronize.MSBuildFileReferenceType;
 import consulo.msbuild.synchronize.MSBuildSynchronizeQueue;
 import consulo.msbuild.synchronize.MSBuildSynchronizeUtil;
 import consulo.vfs.ArchiveFileSystem;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.swing.*;
+import java.util.List;
 
 /**
  * @author VISTALL

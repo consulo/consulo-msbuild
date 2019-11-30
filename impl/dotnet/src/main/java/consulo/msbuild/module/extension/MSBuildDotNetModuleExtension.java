@@ -16,16 +16,13 @@
 
 package consulo.msbuild.module.extension;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.RunProfile;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.xdebugger.XDebugSession;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.dotnet.debugger.DotNetDebugProcessBase;
 import consulo.dotnet.debugger.DotNetModuleExtensionWithDebug;
 import consulo.dotnet.execution.DebugConnectionInfo;
@@ -38,6 +35,9 @@ import consulo.msbuild.importProvider.item.MSBuildImportTarget;
 import consulo.msbuild.importProvider.item.UnknownBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 import consulo.roots.ModuleRootLayer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL

@@ -10,7 +10,7 @@ import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.ContainerUtil;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.ide.newProject.ui.ProjectOrModuleNameStep;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;

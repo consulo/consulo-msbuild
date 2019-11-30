@@ -16,12 +16,6 @@
 
 package consulo.msbuild.projectView;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.function.Supplier;
-
-import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectViewNode;
@@ -31,13 +25,19 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.ui.SimpleTextAttributes;
-import consulo.annotations.RequiredDispatchThread;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.solution.SolutionVirtualBuilder;
 import consulo.msbuild.solution.SolutionVirtualDirectory;
 import consulo.msbuild.solution.SolutionVirtualFile;
 import consulo.msbuild.solution.SolutionVirtualItem;
 import consulo.msbuild.solution.model.WProject;
+import consulo.ui.annotation.RequiredUIAccess;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.function.Supplier;
 
 /**
  * @author VISTALL
@@ -65,7 +65,7 @@ public class SolutionViewProjectNode extends ProjectViewNode<WProject> implement
 
 	@Nonnull
 	@Override
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public Collection<? extends AbstractTreeNode> getChildren()
 	{
 		VirtualFile projectFile = getValue().getVirtualFile();

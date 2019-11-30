@@ -16,15 +16,15 @@
 
 package consulo.msbuild;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.icons.AllIcons;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.ide.IconDescriptor;
 import consulo.ide.IconDescriptorUpdater;
 import consulo.msbuild.roots.MSBuildGeneratedSourcesFilter;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL

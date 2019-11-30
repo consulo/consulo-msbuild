@@ -16,11 +16,6 @@
 
 package consulo.msbuild.projectView;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.Nonnull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectViewNode;
@@ -29,9 +24,14 @@ import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.vfs.VirtualFile;
-import consulo.annotations.RequiredDispatchThread;
 import consulo.msbuild.solution.SolutionVirtualFile;
 import consulo.msbuild.solution.SolutionVirtualItem;
+import consulo.ui.annotation.RequiredUIAccess;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author VISTALL
@@ -54,7 +54,7 @@ public class SolutionViewGroupNode extends ProjectViewNode<SolutionVirtualFile>
 
 	@Nonnull
 	@Override
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public Collection<? extends AbstractTreeNode> getChildren()
 	{
 		return SolutionViewProjectNode.buildNodes(myProject, () -> myItems, getSettings(), true);

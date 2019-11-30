@@ -16,15 +16,15 @@
 
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.util.Version;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL

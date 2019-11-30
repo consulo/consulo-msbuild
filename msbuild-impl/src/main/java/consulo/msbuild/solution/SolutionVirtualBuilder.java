@@ -16,10 +16,6 @@
 
 package consulo.msbuild.solution;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.io.FileUtilRt;
 import com.intellij.openapi.util.text.StringUtil;
@@ -27,10 +23,13 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.GenericAttributeValue;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.SimpleItem;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * @author VISTALL

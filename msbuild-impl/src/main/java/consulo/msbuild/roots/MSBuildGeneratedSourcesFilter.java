@@ -16,20 +16,20 @@
 
 package consulo.msbuild.roots;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.GeneratedSourcesFilter;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VirtualFile;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.solution.SolutionVirtualBuilder;
 import consulo.msbuild.solution.SolutionVirtualDirectory;
 import consulo.msbuild.solution.SolutionVirtualFile;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL

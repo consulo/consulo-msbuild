@@ -16,11 +16,6 @@
 
 package consulo.msbuild.module.extension;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.projectRoots.Sdk;
 import consulo.bundle.BundleHolder;
 import consulo.bundle.ui.BundleBox;
@@ -31,9 +26,13 @@ import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.Component;
 import consulo.ui.Label;
-import consulo.ui.RequiredUIAccess;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 import consulo.ui.util.LabeledComponents;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * @author VISTALL

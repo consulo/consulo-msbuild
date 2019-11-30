@@ -16,29 +16,27 @@
 
 package consulo.msbuild.projectView;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.projectView.ProjectViewNode;
 import com.intellij.ide.projectView.ViewSettings;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import consulo.annotations.RequiredDispatchThread;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildGUID;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
 import consulo.msbuild.solution.reader.SlnSection;
+import consulo.ui.annotation.RequiredUIAccess;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+
+import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author VISTALL
@@ -66,7 +64,7 @@ public class SolutionViewRootNode extends ProjectViewNode<Project>
 
 	@Nonnull
 	@Override
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public Collection<? extends AbstractTreeNode> getChildren()
 	{
 		Collection<WProject> projects = myWSolution.getProjects();

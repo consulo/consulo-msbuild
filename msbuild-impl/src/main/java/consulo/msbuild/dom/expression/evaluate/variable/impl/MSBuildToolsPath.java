@@ -16,12 +16,12 @@
 
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
-import javax.annotation.Nonnull;
-
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL

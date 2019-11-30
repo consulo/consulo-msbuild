@@ -16,15 +16,6 @@
 
 package consulo.msbuild.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
@@ -41,7 +32,7 @@ import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.io.URLUtil;
 import com.intellij.util.xml.GenericAttributeValue;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.AccessRule;
 import consulo.dotnet.DotNetTarget;
 import consulo.dotnet.dll.DotNetModuleFileType;
@@ -50,12 +41,7 @@ import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.MSBuildProjectType;
 import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.dom.ItemGroup;
-import consulo.msbuild.dom.Project;
-import consulo.msbuild.dom.ProjectReference;
-import consulo.msbuild.dom.Property;
-import consulo.msbuild.dom.PropertyGroup;
-import consulo.msbuild.dom.Reference;
+import consulo.msbuild.dom.*;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluator;
 import consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildConfiguration;
@@ -72,6 +58,14 @@ import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.ExcludedContentFolderTypeProvider;
 import consulo.roots.impl.ModuleRootLayerImpl;
 import consulo.roots.types.BinariesOrderRootType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author VISTALL
