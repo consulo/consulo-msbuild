@@ -3,7 +3,6 @@ package consulo.msbuild.editor;
 import com.intellij.ide.util.ChooseElementsDialog;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VfsUtil;
@@ -41,21 +40,12 @@ import java.util.List;
  */
 public class MSBuildOutOfProjectEditorNotificationProvider implements EditorNotificationProvider<EditorNotificationPanel>
 {
-	private static final Key<EditorNotificationPanel> ourKey = Key.create("MSBuildOutOfProjectEditorNotificationProvider");
-
 	private final Project myProject;
 
 	@Inject
 	public MSBuildOutOfProjectEditorNotificationProvider(Project project)
 	{
 		myProject = project;
-	}
-
-	@Nonnull
-	@Override
-	public Key<EditorNotificationPanel> getKey()
-	{
-		return ourKey;
 	}
 
 	@RequiredReadAction

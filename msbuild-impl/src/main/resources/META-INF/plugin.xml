@@ -14,7 +14,7 @@
   - limitations under the License.
   -->
 
-<idea-plugin>
+<consulo-plugin>
 	<id>consulo.msbuild</id>
 	<name>MSBuild/XBuild</name>
 	<version>SNAPSHOT</version>
@@ -36,7 +36,7 @@
 		</extensionPoint>
 		<extensionPoint name="setupStep" beanClass="consulo.msbuild.importProvider.MSBuildSetupStepEP">
 			<with attribute="importProjectClass" implements="consulo.msbuild.importProvider.item.MSBuildImportProject"/>
-			<with attribute="stepClass" implements="com.intellij.ide.util.projectWizard.ModuleWizardStep"/>
+			<with attribute="stepClass" implements="consulo.ui.wizard.WizardStep"/>
 		</extensionPoint>
 		<extensionPoint name="variableProvider" interface="consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider"/>
 
@@ -104,4 +104,4 @@
 		<toolWindow id="Solution Exporer" anchor="left" icon="AllIcons.Toolwindows.WebToolWindow" factoryClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowFactory"
 					conditionClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowCondition"/>
 	</extensions>
-</idea-plugin>
+</consulo-plugin>

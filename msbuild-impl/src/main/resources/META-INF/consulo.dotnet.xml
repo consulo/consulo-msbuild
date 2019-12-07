@@ -14,7 +14,7 @@
   - limitations under the License.
   -->
 
-<idea-plugin>
+<consulo-plugin>
 	<extensions defaultExtensionNs="com.intellij">
 		<moduleExtensionProvider key="msbuild-dotnet"
 								 systemOnly="true"
@@ -27,4 +27,4 @@
 	<extensions defaultExtensionNs="consulo.msbuild">
 		<setupStep importProjectClass="consulo.msbuild.importProvider.item.MSBuildDotNetImportProject" stepClass="consulo.msbuild.importProvider.ui.MSBuildDotNetSetupTargetStep" />
 	</extensions>
-</idea-plugin>
+</consulo-plugin>
