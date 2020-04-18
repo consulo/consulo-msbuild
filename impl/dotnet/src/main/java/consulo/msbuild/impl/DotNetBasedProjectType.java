@@ -47,7 +47,7 @@ import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluator;
 import consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildConfiguration;
 import consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildPlatform;
 import consulo.msbuild.dom.walk.Walker;
-import consulo.msbuild.importProvider.MSBuildModuleImportContext;
+import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
@@ -79,7 +79,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 	@Nonnull
 	@Override
-	public MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context)
+	public MSBuildImportProject createImportItem(SlnProject project, SolutionModuleImportContext context)
 	{
 		return new MSBuildDotNetImportProject(project, context, MSBuildDotNetImportTarget.EP_NAME.getExtensions()[0]);
 	}

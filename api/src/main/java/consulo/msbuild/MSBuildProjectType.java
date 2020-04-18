@@ -30,7 +30,7 @@ import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.msbuild.dom.Project;
-import consulo.msbuild.importProvider.MSBuildModuleImportContext;
+import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.msbuild.synchronize.MSBuildFileReferenceType;
@@ -98,7 +98,7 @@ public interface MSBuildProjectType
 					 @Nonnull ModifiableModuleRootLayer modifiableRootModel);
 
 	@Nonnull
-	MSBuildImportProject createImportItem(SlnProject project, MSBuildModuleImportContext context);
+	MSBuildImportProject createImportItem(SlnProject project, SolutionModuleImportContext context);
 
 	@Nonnull
 	default MSBuildFileReferenceType getFileReferenceType(@Nonnull VirtualFile virtualFile)

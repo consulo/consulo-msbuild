@@ -78,7 +78,7 @@
 		<projectService serviceImplementation="consulo.msbuild.MSBuildSolutionManager"/>
 		<projectService serviceImplementation="consulo.msbuild.synchronize.MSBuildSynchronizeQueue" />
 
-		<moduleImportProvider implementation="consulo.msbuild.importProvider.MSBuildModuleImportProvider"/>
+		<moduleImportProvider implementation="consulo.msbuild.importProvider.SolutionModuleImportProvider"/>
 
 		<generatedSourcesFilter implementation="consulo.msbuild.roots.MSBuildGeneratedSourcesFilter"/>
 

@@ -19,7 +19,7 @@ package consulo.msbuild.importProvider.item;
 import javax.annotation.Nonnull;
 
 import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.importProvider.MSBuildModuleImportContext;
+import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.solution.reader.SlnProject;
 
 /**
@@ -29,9 +29,9 @@ import consulo.msbuild.solution.reader.SlnProject;
 public class MSBuildDotNetImportProject extends MSBuildImportProject
 {
 	private MSBuildDotNetImportTarget myTarget;
-	private MSBuildModuleImportContext myContext;
+	private SolutionModuleImportContext myContext;
 
-	public MSBuildDotNetImportProject(SlnProject projectInfo, MSBuildModuleImportContext context, MSBuildDotNetImportTarget target)
+	public MSBuildDotNetImportProject(SlnProject projectInfo, SolutionModuleImportContext context, MSBuildDotNetImportTarget target)
 	{
 		super(projectInfo);
 		myContext = context;

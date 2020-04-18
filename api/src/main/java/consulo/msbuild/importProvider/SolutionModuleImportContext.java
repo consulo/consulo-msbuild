@@ -1,17 +1,5 @@
 package consulo.msbuild.importProvider;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.moduleImport.ModuleImportContext;
-import consulo.msbuild.MSBuildProjectType;
-import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.importProvider.item.MSBuildImportProject;
-import consulo.msbuild.solution.reader.SlnFile;
-import consulo.msbuild.solution.reader.SlnProject;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,17 +10,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+import consulo.moduleImport.ModuleImportContext;
+import consulo.msbuild.MSBuildProjectType;
+import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.importProvider.item.MSBuildImportProject;
+import consulo.msbuild.solution.reader.SlnFile;
+import consulo.msbuild.solution.reader.SlnProject;
+
 /**
  * @author VISTALL
  * @since 01-Feb-17
  */
-public class MSBuildModuleImportContext extends ModuleImportContext
+public class SolutionModuleImportContext extends ModuleImportContext
 {
 	private SlnFile mySlnFile = new SlnFile();
 	private List<MSBuildImportProject> myItems = new ArrayList<>();
 	private Map<String, MSBuildSolutionManager.ProjectOptions> myProjectOptions = new HashMap<>();
 
-	public MSBuildModuleImportContext(@Nullable Project project)
+	public SolutionModuleImportContext(@Nullable Project project)
 	{
 		super(project);
 	}

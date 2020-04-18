@@ -53,12 +53,12 @@ public class MSBuildSetupStepEP extends AbstractExtensionPointBean
 		}
 	});
 
-	private final NotNullLazyValue<Constructor<? extends WizardStep<MSBuildModuleImportContext>>> myStepConstructorValue = NotNullLazyValue.createValue(() ->
+	private final NotNullLazyValue<Constructor<? extends WizardStep<SolutionModuleImportContext>>> myStepConstructorValue = NotNullLazyValue.createValue(() ->
 	{
 		try
 		{
-			Class<WizardStep<MSBuildModuleImportContext>> aClass = findClass(stepClass);
-			return aClass.getConstructor(MSBuildModuleImportContext.class);
+			Class<WizardStep<SolutionModuleImportContext>> aClass = findClass(stepClass);
+			return aClass.getConstructor(SolutionModuleImportContext.class);
 		}
 		catch(ClassNotFoundException | NoSuchMethodException e)
 		{
@@ -73,7 +73,7 @@ public class MSBuildSetupStepEP extends AbstractExtensionPointBean
 	}
 
 	@Nonnull
-	public WizardStep<MSBuildModuleImportContext> createStep(MSBuildModuleImportContext context)
+	public WizardStep<SolutionModuleImportContext> createStep(SolutionModuleImportContext context)
 	{
 		try
 		{

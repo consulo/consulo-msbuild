@@ -27,7 +27,7 @@ import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.ListTableModel;
 import com.intellij.util.ui.table.ComboBoxTableCellEditor;
 import consulo.desktop.util.awt.component.VerticalLayoutPanel;
-import consulo.msbuild.importProvider.MSBuildModuleImportContext;
+import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.ui.annotation.RequiredUIAccess;
@@ -48,11 +48,11 @@ import java.util.stream.Collectors;
  * @author VISTALL
  * @since 30-Jan-17
  */
-public class MSBuildDotNetSetupTargetStep implements WizardStep<MSBuildModuleImportContext>
+public class MSBuildDotNetSetupTargetStep implements WizardStep<SolutionModuleImportContext>
 {
 	private VerticalLayoutPanel myPanel;
 
-	public MSBuildDotNetSetupTargetStep(MSBuildModuleImportContext context)
+	public MSBuildDotNetSetupTargetStep(SolutionModuleImportContext context)
 	{
 		ComboBox<MSBuildDotNetImportTarget> targetComboBox = new ComboBox<>(MSBuildDotNetImportTarget.EP_NAME.getExtensions());
 		targetComboBox.setRenderer(new ColoredListCellRenderer<MSBuildDotNetImportTarget>()
