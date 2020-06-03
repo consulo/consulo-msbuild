@@ -16,9 +16,15 @@
 
 package consulo.msbuild.module.extension;
 
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.projectRoots.Sdk;
 import consulo.bundle.BundleHolder;
 import consulo.bundle.ui.BundleBox;
+import consulo.disposer.Disposable;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
@@ -29,10 +35,6 @@ import consulo.ui.Label;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
 import consulo.ui.util.LabeledComponents;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
 
 /**
  * @author VISTALL
@@ -48,7 +50,7 @@ public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExte
 	@RequiredUIAccess
 	@Nullable
 	@Override
-	public Component createConfigurationComponent(@Nonnull Runnable updateOnCheck)
+	public Component createConfigurationComponent(@Nonnull Disposable disposable, @Nonnull Runnable runnable)
 	{
 		VerticalLayout vertical = VerticalLayout.create();
 		vertical.add(LabeledComponents.left("Target", Label.create(myImportTarget.getPresentableName())));

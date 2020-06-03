@@ -17,8 +17,13 @@
 package consulo.msbuild.csharp.module.extension;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import consulo.csharp.module.extension.CSharpSimpleMutableModuleExtension;
+import consulo.disposer.Disposable;
 import consulo.roots.ModuleRootLayer;
+import consulo.ui.Component;
+import consulo.ui.annotation.RequiredUIAccess;
 
 /**
  * @author VISTALL
@@ -29,6 +34,14 @@ public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExte
 	public MSBuildCSharpMutableModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer layer)
 	{
 		super(id, layer);
+	}
+
+	@RequiredUIAccess
+	@Nullable
+	@Override
+	public Component createConfigurationComponent(@Nonnull Disposable disposable, @Nonnull Runnable runnable)
+	{
+		return null;
 	}
 
 	@Override
