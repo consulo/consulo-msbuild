@@ -24,6 +24,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.GenericAttributeValue;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.logging.Logger;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.SimpleItem;
@@ -37,6 +38,8 @@ import java.util.List;
  */
 public class SolutionVirtualBuilder
 {
+	private static final Logger LOG = Logger.getInstance(SolutionVirtualBuilder.class);
+
 	@RequiredReadAction
 	public static SolutionVirtualDirectory build(@Nonnull Project domProject, @Nonnull VirtualFile baseDir)
 	{
@@ -86,7 +89,11 @@ public class SolutionVirtualBuilder
 			VirtualFile file = baseDir.findFileByRelativePath(FileUtilRt.toSystemIndependentName(value));
 
 			String name = ContainerUtil.getLastItem(split);
-			assert name != null : "Path: " + presentationPath;
+			if(consulo.util.lang.StringUtil.isEmpty(name))
+			{
+				LOG.error("Relative path is empty, unknown item: " + baseDir.getPath() + ", child: " + value);
+				continue;
+			}
 
 			SolutionVirtualFile virtualFile = new SolutionVirtualFile(name, target, null, file);
 
