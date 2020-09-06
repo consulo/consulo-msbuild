@@ -15,7 +15,6 @@ import com.intellij.ui.EditorNotifications;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.awt.TargetAWT;
 import consulo.editor.notifications.EditorNotificationProvider;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildProjectType;
@@ -26,6 +25,7 @@ import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.synchronize.MSBuildFileReferenceType;
 import consulo.msbuild.synchronize.MSBuildSynchronizeQueue;
 import consulo.msbuild.synchronize.MSBuildSynchronizeUtil;
+import consulo.ui.image.Image;
 import consulo.vfs.ArchiveFileSystem;
 
 import javax.annotation.Nonnull;
@@ -104,9 +104,9 @@ public class MSBuildOutOfProjectEditorNotificationProvider implements EditorNoti
 
 				@Nullable
 				@Override
-				protected Icon getItemIcon(WProject wProject)
+				protected Image getItemIcon(WProject wProject)
 				{
-					return TargetAWT.to(MSBuildIcons.Msbuild);
+					return MSBuildIcons.Msbuild;
 				}
 			};
 
