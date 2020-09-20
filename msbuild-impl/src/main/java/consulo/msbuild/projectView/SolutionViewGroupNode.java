@@ -76,7 +76,7 @@ public class SolutionViewGroupNode extends ProjectViewNode<SolutionVirtualFile>
 			case __generator:
 				if(Comparing.equal(value.getName(), "Settings.settings"))
 				{
-					presentation.setIcon(AllIcons.General.SecondaryGroup);
+					presentation.setIcon(AllIcons.General.GearPlain);
 				}
 				break;
 			case __unknown:
