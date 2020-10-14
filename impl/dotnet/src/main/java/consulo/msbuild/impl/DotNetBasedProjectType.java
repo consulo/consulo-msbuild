@@ -20,33 +20,23 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
-import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.io.URLUtil;
-import com.intellij.util.xml.GenericAttributeValue;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.application.AccessRule;
 import consulo.dotnet.DotNetTarget;
-import consulo.dotnet.dll.DotNetModuleFileType;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.MSBuildProjectType;
 import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.dom.*;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluator;
-import consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildConfiguration;
-import consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildPlatform;
-import consulo.msbuild.dom.walk.Walker;
+import consulo.msbuild.dom.Project;
+import consulo.msbuild.dom.Property;
 import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportProject;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
@@ -57,12 +47,10 @@ import consulo.msbuild.solution.reader.SlnProject;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.ExcludedContentFolderTypeProvider;
 import consulo.roots.impl.ModuleRootLayerImpl;
-import consulo.roots.types.BinariesOrderRootType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -127,127 +115,127 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 
 		AccessRule.read(() ->
 		{
-			Walker walker = new Walker(domProject);
-
-			walker.walk(PropertyGroup.class, propertyGroup ->
-			{
-				String condition = propertyGroup.getCondition().getStringValue();
-				if(condition == null)
-				{
-					propertyGroup.getProperties().forEach(property -> handleDefaultProperty(property, projectFile, moduleExtension, rootLayer));
-				}
-				else
-				{
-					MSBuildEvaluateContext context = MSBuildEvaluateContext.from(propertyGroup.getXmlElement(), moduleExtension);
-
-					MSBuildEvaluator evaluator = MSBuildEvaluator.create();
-
-					if(evaluator.evaluate(condition, context, Boolean.class) == Boolean.TRUE)
-					{
-						propertyGroup.getProperties().forEach(property -> handleProperty(property, projectFile, moduleExtension, rootLayer));
-					}
-				}
-			});
-
-			walker.walk(ItemGroup.class, itemGroup ->
-			{
-				List<Reference> references = itemGroup.getReferences();
-				for(Reference reference : references)
-				{
-					String hintPath = reference.getHintPath().getValue();
-					if(hintPath != null)
-					{
-						File file = new File(hintPath);
-						if(!file.isAbsolute())
-						{
-							file = new File(VfsUtil.virtualToIoFile(projectFile.getParent()), FileUtil.toSystemIndependentName(hintPath));
-						}
-
-						String fullPath = file.getPath();
-						try
-						{
-							fullPath = file.getCanonicalPath();
-						}
-						catch(IOException ignored)
-						{
-						}
-
-						String url = VirtualFileManager.constructUrl(DotNetModuleFileType.PROTOCOL, FileUtil.toSystemIndependentName(fullPath)) + URLUtil.ARCHIVE_SEPARATOR;
-
-						Library library = rootLayer.getModuleLibraryTable().createLibrary(file.getName());
-						Library.ModifiableModel modifiableModel = library.getModifiableModel();
-						modifiableModel.addRoot(url, BinariesOrderRootType.getInstance());
-						modifiableModel.commit();
-					}
-					else
-					{
-						String includeName = reference.getInclude().getStringValue();
-						if(includeName != null)
-						{
-							rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, includeName));
-						}
-					}
-				}
-
-				List<ProjectReference> projectReferences = itemGroup.getProjectReferences();
-				for(ProjectReference projectReference : projectReferences)
-				{
-					String name = projectReference.getName().getStringValue();
-					if(name == null)
-					{
-						continue;
-					}
-					rootLayer.addInvalidModuleEntry(name);
-				}
-			});
+//			MSBuildProjectEvaluator evaluator = new MSBuildProjectEvaluator(domProject);
+//
+//			evaluator.walk(PropertyGroup.class, propertyGroup ->
+//			{
+//				String condition = propertyGroup.getCondition().getStringValue();
+//				if(condition == null)
+//				{
+//					propertyGroup.getProperties().forEach(property -> handleDefaultProperty(property, projectFile, moduleExtension, rootLayer));
+//				}
+//				else
+//				{
+//					MSBuildEvaluateContext context = MSBuildEvaluateContext.from(propertyGroup.getXmlElement(), moduleExtension);
+//
+//					MSBuildExpressionEvaluator expressionEvaluator = MSBuildExpressionEvaluator.create();
+//
+//					if(expressionEvaluator.evaluate(condition, context, Boolean.class) == Boolean.TRUE)
+//					{
+//						propertyGroup.getProperties().forEach(property -> handleProperty(property, projectFile, moduleExtension, rootLayer));
+//					}
+//				}
+//			});
+//
+//			evaluator.walk(ItemGroup.class, itemGroup ->
+//			{
+//				List<Reference> references = itemGroup.getReferences();
+//				for(Reference reference : references)
+//				{
+//					String hintPath = reference.getHintPath().getValue();
+//					if(hintPath != null)
+//					{
+//						File file = new File(hintPath);
+//						if(!file.isAbsolute())
+//						{
+//							file = new File(VfsUtil.virtualToIoFile(projectFile.getParent()), FileUtil.toSystemIndependentName(hintPath));
+//						}
+//
+//						String fullPath = file.getPath();
+//						try
+//						{
+//							fullPath = file.getCanonicalPath();
+//						}
+//						catch(IOException ignored)
+//						{
+//						}
+//
+//						String url = VirtualFileManager.constructUrl(DotNetModuleFileType.PROTOCOL, FileUtil.toSystemIndependentName(fullPath)) + URLUtil.ARCHIVE_SEPARATOR;
+//
+//						Library library = rootLayer.getModuleLibraryTable().createLibrary(file.getName());
+//						Library.ModifiableModel modifiableModel = library.getModifiableModel();
+//						modifiableModel.addRoot(url, BinariesOrderRootType.getInstance());
+//						modifiableModel.commit();
+//					}
+//					else
+//					{
+//						String includeName = reference.getInclude().getStringValue();
+//						if(includeName != null)
+//						{
+//							rootLayer.addOrderEntry(new DotNetLibraryOrderEntryImpl((ModuleRootLayerImpl) rootLayer, includeName));
+//						}
+//					}
+//				}
+//
+//				List<ProjectReference> projectReferences = itemGroup.getProjectReferences();
+//				for(ProjectReference projectReference : projectReferences)
+//				{
+//					String name = projectReference.getName().getStringValue();
+//					if(name == null)
+//					{
+//						continue;
+//					}
+//					rootLayer.addInvalidModuleEntry(name);
+//				}
+//			});
 		});
 	}
 
-	@RequiredReadAction
-	private void handleDefaultProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension, ModifiableModuleRootLayer rootLayer)
-	{
-		String xmlElementName = property.getXmlElementName();
-
-		switch(xmlElementName)
-		{
-			case "Configuration":
-			case "Platform":
-			{
-				MSBuildEvaluator evaluator = MSBuildEvaluator.create();
-
-				MSBuildEvaluateContext context = MSBuildEvaluateContext.from(property.getXmlElement());
-				java.util.function.Consumer<String> setter = null;
-				switch(xmlElementName)
-				{
-					case "Configuration":
-						context.predefineVariable(MSBuildConfiguration.class, "");
-						setter = moduleExtension::setConfiguration;
-						break;
-					case "Platform":
-						context.predefineVariable(MSBuildPlatform.class, "");
-						setter = moduleExtension::setPlatform;
-						break;
-				}
-
-				GenericAttributeValue<String> condition = property.getCondition();
-
-				String value = condition.getValue();
-				if(value != null)
-				{
-					Boolean evaluate = evaluator.evaluate(value, context, Boolean.class);
-					if(evaluate == Boolean.TRUE)
-					{
-						setter.accept(property.getText());
-					}
-				}
-
-				break;
-			}
-			default:
-				handleProperty(property, projectFile, moduleExtension, rootLayer);
-				break;
-		}
-	}
+//	@RequiredReadAction
+//	private void handleDefaultProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension, ModifiableModuleRootLayer rootLayer)
+//	{
+//		String xmlElementName = property.getXmlElementName();
+//
+//		switch(xmlElementName)
+//		{
+//			case "Configuration":
+//			case "Platform":
+//			{
+//				MSBuildExpressionEvaluator evaluator = MSBuildExpressionEvaluator.create();
+//
+//				MSBuildEvaluateContext context = MSBuildEvaluateContext.from(property.getXmlElement());
+//				java.util.function.Consumer<String> setter = null;
+//				switch(xmlElementName)
+//				{
+//					case "Configuration":
+//						context.predefineVariable(MSBuildConfiguration.class, "");
+//						setter = moduleExtension::setConfiguration;
+//						break;
+//					case "Platform":
+//						context.predefineVariable(MSBuildPlatform.class, "");
+//						setter = moduleExtension::setPlatform;
+//						break;
+//				}
+//
+//				GenericAttributeValue<String> condition = property.getCondition();
+//
+//				String value = condition.getValue();
+//				if(value != null)
+//				{
+//					Boolean evaluate = evaluator.evaluate(value, context, Boolean.class);
+//					if(evaluate == Boolean.TRUE)
+//					{
+//						setter.accept(property.getText());
+//					}
+//				}
+//
+//				break;
+//			}
+//			default:
+//				handleProperty(property, projectFile, moduleExtension, rootLayer);
+//				break;
+//		}
+//	}
 
 	@RequiredReadAction
 	private void handleProperty(Property property, VirtualFile projectFile, MSBuildMutableDotNetModuleExtension moduleExtension, ModifiableModuleRootLayer rootLayer)

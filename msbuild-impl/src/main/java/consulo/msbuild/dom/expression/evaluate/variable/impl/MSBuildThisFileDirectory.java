@@ -1,31 +1,26 @@
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
+import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.msbuild.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
-import consulo.msbuild.module.extension.MSBuildRootExtension;
+import consulo.msbuild.evaluate.MSBuildEvaluateContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
- * @since 2018-07-30
+ * @since 2020-06-24
  */
-public class MSBuildConfiguration extends MSBuildVariableProvider
+public class MSBuildThisFileDirectory extends MSBuildVariableProvider
 {
-	public MSBuildConfiguration()
-	{
-		super("Configuration");
-	}
-
 	@RequiredReadAction
 	@Nullable
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws MSBuildEvaluatioException
 	{
-		MSBuildRootExtension<?> moduleExtension = context.getModuleExtension();
-		return moduleExtension == null ? null : moduleExtension.getConfiguration();
+		VirtualFile currentFile = context.getCurrentFile();
+		return currentFile.getParent().getPath() + "/";
 	}
 }

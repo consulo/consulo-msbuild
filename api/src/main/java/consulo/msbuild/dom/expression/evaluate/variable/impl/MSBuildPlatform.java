@@ -1,7 +1,7 @@
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
 import consulo.annotation.access.RequiredReadAction;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 import consulo.msbuild.module.extension.MSBuildRootExtension;
 

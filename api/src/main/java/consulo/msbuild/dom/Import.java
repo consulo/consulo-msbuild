@@ -3,13 +3,10 @@
 
 package consulo.msbuild.dom;
 
-import javax.annotation.Nonnull;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.NameStrategy;
-import com.intellij.util.xml.NameStrategyForAttributes;
-import com.intellij.util.xml.Required;
+import com.intellij.util.xml.*;
 import consulo.msbuild.dom.annotation.ExpressionFragment;
+
+import javax.annotation.Nonnull;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ImportType interface.
@@ -22,7 +19,7 @@ import consulo.msbuild.dom.annotation.ExpressionFragment;
  */
 @NameStrategy(MSBuildNameStrategy.class)
 @NameStrategyForAttributes(MSBuildNameStrategy.class)
-public interface Import extends DomElement
+public interface Import extends DomElement, ElementWithCondition
 {
 
 	/**

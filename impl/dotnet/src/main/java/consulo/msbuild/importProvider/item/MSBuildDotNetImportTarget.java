@@ -16,29 +16,28 @@
 
 package consulo.msbuild.importProvider.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.RunProfile;
 import com.intellij.execution.process.CapturingProcessHandler;
 import com.intellij.execution.process.ProcessOutput;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.xdebugger.XDebugSession;
 import consulo.dotnet.debugger.DotNetDebugProcessBase;
 import consulo.dotnet.execution.DebugConnectionInfo;
+import consulo.logging.Logger;
 import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.compiler.MSBuildReporter;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
 import consulo.msbuild.module.extension.resolve.AutomaticBundleInfo;
 import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author VISTALL
@@ -62,7 +61,7 @@ public abstract class MSBuildDotNetImportTarget implements MSBuildImportTarget
 	@Nonnull
 	public static MSBuildDotNetImportTarget findById(@Nonnull String id)
 	{
-		for(MSBuildDotNetImportTarget target : EP_NAME.getExtensions())
+		for(MSBuildDotNetImportTarget target : EP_NAME.getExtensionList())
 		{
 			if(id.equals(target.getFrameworkExtensionId()))
 			{

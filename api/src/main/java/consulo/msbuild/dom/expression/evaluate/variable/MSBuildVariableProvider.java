@@ -19,12 +19,12 @@ package consulo.msbuild.dom.expression.evaluate.variable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
-import gnu.trove.THashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -37,7 +37,7 @@ public abstract class MSBuildVariableProvider
 
 	private static NotNullLazyValue<Map<String, MSBuildVariableProvider>> ourValue = NotNullLazyValue.createValue(() ->
 	{
-		Map<String, MSBuildVariableProvider> map = new THashMap<>();
+		Map<String, MSBuildVariableProvider> map = new HashMap<>();
 		for(MSBuildVariableProvider provider : EP_NAME.getExtensionList())
 		{
 			map.put(provider.getName(), provider);

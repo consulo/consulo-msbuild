@@ -16,14 +16,14 @@
 
 package consulo.msbuild.dom;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.NameStrategy;
 import com.intellij.util.xml.NameStrategyForAttributes;
 import com.intellij.util.xml.TagValue;
 import consulo.msbuild.dom.annotation.ExpressionFragment;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
@@ -31,7 +31,7 @@ import consulo.msbuild.dom.annotation.ExpressionFragment;
  */
 @NameStrategy(MSBuildNameStrategy.class)
 @NameStrategyForAttributes(MSBuildNameStrategy.class)
-public interface Property extends DomElement
+public interface Property extends ElementWithCondition
 {
 	@Nonnull
 	@ExpressionFragment

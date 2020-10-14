@@ -19,7 +19,6 @@ package consulo.msbuild.roots;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.GeneratedSourcesFilter;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildSolutionManager;
@@ -28,6 +27,7 @@ import consulo.msbuild.solution.SolutionVirtualDirectory;
 import consulo.msbuild.solution.SolutionVirtualFile;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
+import consulo.util.lang.ref.SimpleReference;
 
 import javax.annotation.Nonnull;
 
@@ -71,7 +71,7 @@ public class MSBuildGeneratedSourcesFilter extends GeneratedSourcesFilter
 
 			SolutionVirtualDirectory directory = SolutionVirtualBuilder.build(domProject, projectFile.getParent());
 
-			Ref<Boolean> ref = Ref.create(Boolean.FALSE);
+			SimpleReference<Boolean> ref = SimpleReference.create(Boolean.FALSE);
 			directory.visitRecursive(solutionVirtualItem ->
 			{
 				if(solutionVirtualItem instanceof SolutionVirtualFile)

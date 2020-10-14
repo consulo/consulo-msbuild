@@ -44,6 +44,7 @@
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="consulo.msbuild">
+		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildThisFileDirectory"/>
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildExtensionsPath"/>
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsVersion"/>
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsPath"/>

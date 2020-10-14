@@ -26,7 +26,7 @@ import com.intellij.psi.impl.source.resolve.ResolveCache;
 import com.intellij.util.IncorrectOperationException;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
 import javax.annotation.Nonnull;

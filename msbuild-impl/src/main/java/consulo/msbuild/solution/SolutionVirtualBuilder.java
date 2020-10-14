@@ -28,6 +28,7 @@ import consulo.logging.Logger;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.SimpleItem;
+import consulo.msbuild.evaluate.MSBuildProjectEvaluator;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -49,15 +50,16 @@ public class SolutionVirtualBuilder
 
 		root.myChildren.put(projectFile.getName(), new SolutionVirtualFile(projectFile.getName(), root, null, projectFile.getVirtualFile()));
 
-		for(ItemGroup group : domProject.getItemGroups())
-		{
+		MSBuildProjectEvaluator evaluator = new MSBuildProjectEvaluator(domProject);
+
+		evaluator.walk(ItemGroup.class, group -> {
 			addAll(group.getContents(), baseDir, root);
 			addAll(group.getCompiles(), baseDir, root);
 			addAll(group.getNones(), baseDir, root);
 			addAll(group.getResourceCompiles(), baseDir, root);
 			addAll(group.getEmbeddedResources(), baseDir, root);
 			addAll(group.getItems(), baseDir, root);
-		}
+		});
 
 		return root;
 	}

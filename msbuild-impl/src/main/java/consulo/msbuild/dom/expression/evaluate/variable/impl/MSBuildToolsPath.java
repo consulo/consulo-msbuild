@@ -17,7 +17,7 @@
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
 import consulo.annotation.access.RequiredReadAction;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
@@ -33,6 +33,6 @@ public class MSBuildToolsPath extends MSBuildVariableProvider
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context) throws MSBuildEvaluatioException
 	{
-		return context.evaluateUnsafe(MSBuildExtensionsPath.class) + "\\" + context.evaluateUnsafe(MSBuildToolsVersion.class) + "\\bin";
+		return context.getValueVariable(MSBuildExtensionsPath.class) + "\\" + context.getValueVariable(MSBuildToolsVersion.class) + "\\bin";
 	}
 }

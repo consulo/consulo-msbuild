@@ -1,25 +1,18 @@
 package consulo.msbuild.dom.expression.evaluate.impl;
 
+import consulo.msbuild.evaluate.MSBuildEvaluateContext;
+import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
+import consulo.msbuild.dom.expression.evaluate.MSBuildExpressionEvaluator;
+import org.apache.commons.jexl3.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.jexl3.JexlBuilder;
-import org.apache.commons.jexl3.JexlContext;
-import org.apache.commons.jexl3.JexlEngine;
-import org.apache.commons.jexl3.JexlException;
-import org.apache.commons.jexl3.JexlExpression;
-import org.apache.commons.jexl3.MapContext;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
-import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluator;
-import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
 /**
  * @author VISTALL
@@ -28,7 +21,7 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
  * <p>
  * Initial impl from https://github.com/consulo/msbuild-utils4j  by Matthias Bromisch
  */
-public class MSBuildJexlEvaluator implements MSBuildEvaluator
+public class MSBuildJexlExpressionEvaluator implements MSBuildExpressionEvaluator
 {
 	/**
 	 * Class to implement methods for MSBuild Conditions.
@@ -120,7 +113,7 @@ public class MSBuildJexlEvaluator implements MSBuildEvaluator
 		 * @return
 		 * @throws MSBuildEvaluatioException
 		 */
-		private String parseProperty() throws MSBuildEvaluatioException
+		protected String parseProperty() throws MSBuildEvaluatioException
 		{
 			StringBuilder property = new StringBuilder("'$(");
 
@@ -202,12 +195,28 @@ public class MSBuildJexlEvaluator implements MSBuildEvaluator
 
 	private JexlEngine myEngine;
 
-	public MSBuildJexlEvaluator()
+	public MSBuildJexlExpressionEvaluator()
 	{
 		Map<String, Object> functions = new HashMap<>();
 		functions.put("msbuild", new MSBuildFunctions());
 
 		myEngine = new JexlBuilder().strict(true).namespaces(functions).create();
+	}
+
+	@Override
+	public String evaluatePath(@Nonnull String text, @Nonnull MSBuildEvaluateContext context) throws MSBuildEvaluatioException
+	{
+		ConditionFix fix = new ConditionFix(text)
+		{
+			@Override
+			protected String parseProperty() throws MSBuildEvaluatioException
+			{
+				String property = super.parseProperty();
+				String path = evaluate(property, context, String.class);
+				return path;
+			}
+		};
+		return fix.getFixedCondition();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -225,16 +234,7 @@ public class MSBuildJexlEvaluator implements MSBuildEvaluator
 		// normalize the condition for JEXL
 		fixedCondition = normalizeCondition(fixedCondition);
 
-		Map<String, MSBuildVariableProvider> variables = context.getVariables();
-		Map<String, String> properties = new HashMap<>();
-		for(Map.Entry<String, MSBuildVariableProvider> entry : variables.entrySet())
-		{
-			String evaluate = context.evaluateUnsafe(entry.getValue().getClass());
-			if(evaluate != null)
-			{
-				properties.put(entry.getKey(), evaluate);
-			}
-		}
+		Map<String, String> properties = context.getVariableValues();
 
 		// replace all properties
 		for(Map.Entry<String, String> entry : properties.entrySet())
@@ -243,7 +243,15 @@ public class MSBuildJexlEvaluator implements MSBuildEvaluator
 			fixedCondition = fixedCondition.replace(name, entry.getValue());
 		}
 
-		JexlExpression expression = myEngine.createExpression(fixedCondition);
+		JexlExpression expression = null;
+		try
+		{
+			expression = myEngine.createExpression(fixedCondition);
+		}
+		catch(JexlException.Parsing e)
+		{
+			throw new MSBuildEvaluatioException("Wrong parsing: " + fixedCondition, e);
+		}
 
 		// evaluate
 		JexlContext dummyContext = new MapContext();

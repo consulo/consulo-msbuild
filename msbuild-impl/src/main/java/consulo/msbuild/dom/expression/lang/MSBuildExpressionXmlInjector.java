@@ -16,20 +16,13 @@
 
 package consulo.msbuild.dom.expression.lang;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
+import com.intellij.psi.xml.*;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
@@ -37,6 +30,9 @@ import com.intellij.util.xml.GenericAttributeValue;
 import consulo.lang.LanguageVersion;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.annotation.ExpressionFragment;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
@@ -47,12 +43,6 @@ public class MSBuildExpressionXmlInjector implements MultiHostInjector
 	@Override
 	public void injectLanguages(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement host)
 	{
-		if(Boolean.TRUE)
-		{
-			// FIXME [VISTALL] disable for now
-			return;
-		}
-
 		if(host instanceof XmlAttributeValue || host instanceof XmlText)
 		{
 			PsiFile containingFile = host.getContainingFile();
