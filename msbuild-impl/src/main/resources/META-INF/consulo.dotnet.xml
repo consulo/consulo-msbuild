@@ -18,7 +18,7 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<moduleExtensionProvider key="msbuild-dotnet"
 								 systemOnly="true"
-								 icon="/icons/msbuild.png"
+								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
 								 name="MSBuild (.NET)"
 								 immutableClass="consulo.msbuild.module.extension.MSBuildDotNetModuleExtension"
 								 mutableClass="consulo.msbuild.module.extension.MSBuildMutableDotNetModuleExtension"/>

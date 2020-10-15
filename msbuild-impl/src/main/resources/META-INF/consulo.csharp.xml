@@ -28,7 +28,7 @@
 		<moduleExtensionProvider key="msbuild-csharp"
 								 systemOnly="true"
 								 parentKey="msbuild-dotnet"
-								 icon="/icons/msbuild.png"
+								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
 								 name="C#"
 								 immutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpModuleExtension"
 								 mutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension"/>
