@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -50,7 +50,7 @@ public class MSBuildSynchronizeQueue implements Runnable, Disposable
 
 	private Deque<Change> myChanges = new ConcurrentLinkedDeque<>();
 
-	@Inject
+	@jakarta.inject.Inject
 	public MSBuildSynchronizeQueue(Project project)
 	{
 		myProject = project;

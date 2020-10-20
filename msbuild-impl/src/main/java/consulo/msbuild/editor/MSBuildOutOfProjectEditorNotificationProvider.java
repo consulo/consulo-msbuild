@@ -30,7 +30,7 @@ import consulo.vfs.ArchiveFileSystem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.swing.*;
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class MSBuildOutOfProjectEditorNotificationProvider implements EditorNoti
 {
 	private final Project myProject;
 
-	@Inject
+	@jakarta.inject.Inject
 	public MSBuildOutOfProjectEditorNotificationProvider(Project project)
 	{
 		myProject = project;
