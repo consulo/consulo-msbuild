@@ -16,11 +16,11 @@
 
 package consulo.msbuild.solution.model;
 
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.logging.Logger;
 import consulo.msbuild.solution.reader.SlnFile;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.msbuild.solution.reader.SlnSection;
@@ -45,7 +45,7 @@ public class WSolution
 {
 	public static final String SECTION_NESTED_PROJECTS = "NestedProjects";
 
-	private static final Logger LOGGER = Logger.getInstance(WSolution.class);
+	private static final Logger LOG = Logger.getInstance(WSolution.class);
 
 	@Nonnull
 	@RequiredReadAction
@@ -58,7 +58,7 @@ public class WSolution
 		}
 		catch(IOException e)
 		{
-			LOGGER.error(e);
+			LOG.error(e);
 		}
 
 		return new WSolution(project, solutionVirtualFile, slnFile);

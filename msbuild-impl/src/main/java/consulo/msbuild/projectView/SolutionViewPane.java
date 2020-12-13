@@ -37,8 +37,6 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ex.ToolWindowEx;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.ui.AutoScrollFromSourceHandler;
@@ -481,6 +479,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return MSBuildSolutionManager.getInstance(myProject).isEnabled();
 	}
 
+	@Nonnull
 	@Override
 	public ProjectAbstractTreeStructureBase createStructure()
 	{
@@ -504,17 +503,13 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		};
 	}
 
+	@Nonnull
 	@Override
-	protected ProjectViewTree createTree(DefaultTreeModel treeModel)
+	protected ProjectViewTree createTree(@Nonnull DefaultTreeModel treeModel)
 	{
 		return new ProjectViewTree(myProject, treeModel)
 		{
 		};
-	}
-
-	public void initToolWindow(ToolWindow toolWindow)
-	{
-		((ToolWindowEx)toolWindow).setTitleActions(new ScrollFromSourceAction());
 	}
 
 	private JComponent buildComponent()
@@ -532,6 +527,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return myComponent;
 	}
 
+	@Nonnull
 	@Override
 	public JComponent createComponent()
 	{
@@ -540,12 +536,14 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return component;
 	}
 
+	@Nonnull
 	@Override
-	protected AbstractTreeUpdater createTreeUpdater(AbstractTreeBuilder treeBuilder)
+	protected AbstractTreeUpdater createTreeUpdater(@Nonnull AbstractTreeBuilder treeBuilder)
 	{
 		return new AbstractTreeUpdater(treeBuilder);
 	}
 
+	@Nonnull
 	@Override
 	public String getTitle()
 	{
@@ -572,6 +570,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return 2;
 	}
 
+	@Nonnull
 	@Override
 	public SelectInTarget createSelectInTarget()
 	{

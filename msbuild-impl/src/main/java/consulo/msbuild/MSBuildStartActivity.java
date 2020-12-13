@@ -16,10 +16,6 @@
 
 package consulo.msbuild;
 
-import java.util.Collection;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
@@ -32,6 +28,7 @@ import com.intellij.openapi.startup.StartupActivity;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.application.AccessRule;
+import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.solution.SolutionVirtualBuilder;
 import consulo.msbuild.solution.SolutionVirtualDirectory;
 import consulo.msbuild.solution.SolutionVirtualFile;
@@ -39,6 +36,9 @@ import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.ui.UIAccess;
+
+import javax.annotation.Nonnull;
+import java.util.Collection;
 
 /**
  * @author VISTALL
@@ -121,6 +121,13 @@ public class MSBuildStartActivity implements StartupActivity
 			}
 
 			WriteCommandAction.runWriteCommandAction(project, modifiableModel::commit);
+
+			startDaemonService(project);
 		});
+	}
+
+	private void startDaemonService(Project project)
+	{
+		MSBuildDaemonService.getInstance(project).startProcess();
 	}
 }

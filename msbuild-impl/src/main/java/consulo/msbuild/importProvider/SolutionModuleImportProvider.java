@@ -1,16 +1,5 @@
 package consulo.msbuild.importProvider;
 
-import java.io.File;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.intellij.lang.annotations.Language;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.ModifiableModuleModel;
@@ -30,6 +19,16 @@ import consulo.msbuild.VisualStudioSolutionFileType;
 import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.ui.image.Image;
 import consulo.ui.wizard.WizardStep;
+import org.intellij.lang.annotations.Language;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author VISTALL

@@ -64,19 +64,19 @@
 
 		<compiler.moduleScopeFactory implementation="consulo.msbuild.compiler.MSBuildCompileModuleScopeFactory"/>
 
-		<editorNotificationProvider implementation="consulo.msbuild.editor.MSBuildOutOfProjectEditorNotificationProvider" />
+		<editorNotificationProvider implementation="consulo.msbuild.editor.MSBuildOutOfProjectEditorNotificationProvider"/>
 
-		<createFromTemplateActionModuleResolver implementation="consulo.msbuild.action.MSBuildModuleResolver" />
+		<createFromTemplateActionModuleResolver implementation="consulo.msbuild.action.MSBuildModuleResolver"/>
 
 		<sdkType implementation="consulo.msbuild.bundle.MSBuildBundleType"/>
 		<predefinedBundlesProvider implementation="consulo.msbuild.bundle.MSBuildBundleProvider"/>
 
 		<fileTypeFactory implementation="consulo.msbuild.MSBuildFileTypeFactory"/>
 
-		<projectService serviceImplementation="consulo.msbuild.projectView.SolutionViewPane"/>
+		<projectViewPane implementation="consulo.msbuild.projectView.SolutionViewPane"/>
 
 		<projectService serviceImplementation="consulo.msbuild.MSBuildSolutionManager"/>
-		<projectService serviceImplementation="consulo.msbuild.synchronize.MSBuildSynchronizeQueue" />
+		<projectService serviceImplementation="consulo.msbuild.synchronize.MSBuildSynchronizeQueue"/>
 
 		<moduleImportProvider implementation="consulo.msbuild.importProvider.SolutionModuleImportProvider"/>
 
@@ -101,7 +101,6 @@
 
 		<postStartupActivity implementation="consulo.msbuild.MSBuildStartActivity"/>
 
-		<toolWindow id="Solution Exporer" anchor="left" icon="consulo.platform.base.PlatformIconGroup@toolwindows.webtoolwindow" factoryClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowFactory"
-					conditionClass="consulo.msbuild.projectView.toolWindow.SolutionToolWindowCondition"/>
+		<projectService serviceImplementation="consulo.msbuild.daemon.impl.MSBuildDaemonService"/>
 	</extensions>
 </consulo-plugin>

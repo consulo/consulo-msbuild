@@ -1,32 +1,28 @@
 package consulo.msbuild.projectView.select;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.ide.CompositeSelectInTarget;
 import com.intellij.ide.SelectInContext;
 import com.intellij.ide.SelectInTarget;
 import com.intellij.ide.impl.SelectInTargetPsiWrapper;
+import com.intellij.ide.projectView.ProjectView;
 import com.intellij.ide.projectView.SelectableTreeStructureProvider;
 import com.intellij.ide.projectView.TreeStructureProvider;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.ActionCallback;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowId;
-import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.util.PsiUtilCore;
 import consulo.msbuild.projectView.SolutionViewPane;
-import consulo.msbuild.projectView.toolWindow.SolutionToolWindowFactory;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author VISTALL
@@ -58,31 +54,15 @@ public class SolutionSelectInTarget extends SelectInTargetPsiWrapper implements 
 										final VirtualFile virtualFile,
 										final boolean requestFocus)
 	{
+		SolutionViewPane pane = (SolutionViewPane) ProjectView.getInstance(project).getProjectViewPaneById(SolutionViewPane.ID);
+		if(pane == null)
+		{
+			return ActionCallback.DONE;
+		}
+		
 		final ActionCallback result = new ActionCallback();
 
-		final SolutionViewPane projectView = SolutionViewPane.getInstance(project);
-		if(ApplicationManager.getApplication().isUnitTestMode())
-		{
-			projectView.select(toSelect, virtualFile, requestFocus);
-			return result;
-		}
-
-		ToolWindowManager windowManager = ToolWindowManager.getInstance(project);
-		final ToolWindow projectViewToolWindow = windowManager.getToolWindow(SolutionToolWindowFactory.ID);
-		final Runnable runnable = () ->
-		{
-			projectView.selectCB(toSelect, virtualFile, requestFocus).notify(result);
-		};
-
-		if(requestFocus)
-		{
-			projectViewToolWindow.activate(runnable, true);
-		}
-		else
-		{
-			projectViewToolWindow.show(runnable);
-		}
-
+		pane.selectCB(toSelect, virtualFile, requestFocus).notify(result);
 		return result;
 	}
 

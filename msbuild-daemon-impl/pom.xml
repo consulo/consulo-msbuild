@@ -37,7 +37,7 @@
 	</repositories>
 
 	<groupId>consulo.plugin</groupId>
-	<artifactId>consulo.msbuild-api</artifactId>
+	<artifactId>consulo.msbuild-daemon-impl</artifactId>
 	<version>2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -71,15 +71,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>com.intellij.xml</artifactId>
+			<artifactId>consulo.msbuild-api</artifactId>
 			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-jexl3</artifactId>
-			<version>3.1</version>
 		</dependency>
 
 		<dependency>
