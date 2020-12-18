@@ -36,7 +36,8 @@ public enum MSBuildVersion
 	Visual_Studio_2012("2012", "11.0"),
 	Visual_Studio_2013("2013", "12.0"),
 	Visual_Studio_2015("2015", "14.0"),
-	Visual_Studio_2017("2017", "15.0");
+	Visual_Studio_2017("2017", "15.0"),
+	Visual_Studio_2019("2019", "16.0");
 
 	public static final String[] ourVisualStudioEditions = new String[]{
 			"Community",
