@@ -49,6 +49,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author VISTALL
  * @since 12/12/2020
+ * <p>
+ * <p>
+ * Contains some code parts from MonoDeveloper (MIT)
  */
 @Singleton
 public class MSBuildDaemonService implements Disposable
@@ -61,7 +64,7 @@ public class MSBuildDaemonService implements Disposable
 		return project.getInstance(MSBuildDaemonService.class);
 	}
 
-	public static final int VERSION = 2;
+	public static final int VERSION = 4;
 
 	private final Project myProject;
 
@@ -70,6 +73,8 @@ public class MSBuildDaemonService implements Disposable
 	private EventLoopGroup workerGroup;
 
 	private final Map<String, Integer> myProjectIdsToIds = new ConcurrentHashMap<>();
+
+	private DaemonConnection myConnection;
 
 	@Inject
 	public MSBuildDaemonService(Project project)
@@ -93,23 +98,39 @@ public class MSBuildDaemonService implements Disposable
 
 				startServer(msBuildSdk);
 
-				myHandler.connectAsync().doWhenDone(con -> {
+				myConnection = myHandler.connectAsync().getResultSync();
 
-					InitializeRequest message = new InitializeRequest();
-					message.IdeProcessId = (int) ProcessHandle.current().pid();
-					message.CultureName = Locale.getDefault().toString();
-					message.BinDir = new File(msBuildSdk.getHomePath(), "bin").getAbsolutePath();
+				InitializeRequest message = new InitializeRequest();
+				message.IdeProcessId = (int) ProcessHandle.current().pid();
+				message.CultureName = Locale.getDefault().toString();
+				message.BinDir = new File(msBuildSdk.getHomePath(), "bin").getAbsolutePath();
 
-					fillGlobalProperties(message.GlobalProperties, message.BinDir);
+				fillGlobalProperties(message.GlobalProperties, message.BinDir);
 
-					con.sendWithResponse(message).doWhenDone(() -> {
-						tryInitializeProjects(con);
-					});
-				});
+				myConnection.sendWithResponse(message).doWhenDone(() -> loadProjectsInitial(myConnection)).getResultSync();
+
+				initializeDependencies();
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
+			}
+		});
+	}
+
+	private void initializeDependencies()
+	{
+		Task.Backgroundable.queue(myProject, "Resolving dependencies...", indicator ->
+		{
+			MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
+
+			Collection<WProject> projects = solutionManager.getSolution().getProjects();
+
+			for(WProject project : projects)
+			{
+				indicator.setText2(project.getName());
+
+				initializeDependencies(project, myProjectIdsToIds.get(project.getId()), myConnection);
 			}
 		});
 	}
@@ -177,6 +198,7 @@ public class MSBuildDaemonService implements Disposable
 				File extensionsPath = FileUtil.getParentFile(FileUtil.getParentFile(msBuildBinDir));
 				File vsInstallRoot = FileUtil.getParentFile(extensionsPath);
 				File devEnvDir = new File(vsInstallRoot, "Common7/IDE");
+
 				SetMSBuildConfigProperty(toolset, "MSBuildExtensionsPath", extensionsPath.getAbsolutePath());
 				SetMSBuildConfigProperty(toolset, "MSBuildExtensionsPath32", extensionsPath.getAbsolutePath());
 				SetMSBuildConfigProperty(toolset, "MSBuildToolsPath", msBuildBinDir.getAbsolutePath());
@@ -184,7 +206,7 @@ public class MSBuildDaemonService implements Disposable
 				SetMSBuildConfigProperty(toolset, "MSBuildToolsPath64", msBuildBinDir.getAbsolutePath());
 				SetMSBuildConfigProperty(toolset, "VsInstallRoot", vsInstallRoot.getAbsolutePath());
 				SetMSBuildConfigProperty(toolset, "DevEnvDir", devEnvDir + "\\");
-				SetMSBuildConfigProperty(toolset, "NuGetRestoreTargets", new File(devEnvDir,"CommonExtensions\\Microsoft\\NuGet\\NuGet.targets").getAbsolutePath());
+				SetMSBuildConfigProperty(toolset, "NuGetRestoreTargets", new File(devEnvDir, "CommonExtensions\\Microsoft\\NuGet\\NuGet.targets").getAbsolutePath());
 
 				File sdksPath = new File(extensionsPath, "Sdks");
 				SetMSBuildConfigProperty(toolset, "MSBuildSDKsPath", sdksPath.getAbsolutePath());
@@ -195,27 +217,27 @@ public class MSBuildDaemonService implements Disposable
 				File vcTargetsPath = new File(devEnvDir, "VC/VCTargets");
 				SetMSBuildConfigProperty(toolset, "VCTargetsPath", vcTargetsPath.getAbsolutePath());
 			}
-//			else
-//			{
-//				var path = MSBuildProjectService.GetProjectImportSearchPaths(runtime, false).FirstOrDefault(p = > p.Property == "MSBuildSDKsPath");
-//				if(path != null)
-//					SetMSBuildConfigProperty(toolset, path.Property, path.Path);
-//			}
-//
-//			var projectImportSearchPaths = toolset.Element("projectImportSearchPaths");
-//			if(projectImportSearchPaths != null)
-//			{
-//				var os = Platform.IsMac ? "osx" : Platform.IsWindows ? "windows" : "unix";
-//				XElement searchPaths = projectImportSearchPaths.Elements("searchPaths").FirstOrDefault(sp = > sp.Attribute("os") ?.Value == os);
-//				if(searchPaths == null)
-//				{
-//					searchPaths = new XElement("searchPaths");
-//					searchPaths.SetAttributeValue("os", os);
-//					projectImportSearchPaths.Add(searchPaths);
-//				}
-//				foreach(var path in MSBuildProjectService.GetProjectImportSearchPaths(runtime, false))
-//				SetMSBuildConfigProperty(searchPaths, path.Property, path.Path, append:true, insertBefore:false);
-//			}
+			//			else
+			//			{
+			//				var path = MSBuildProjectService.GetProjectImportSearchPaths(runtime, false).FirstOrDefault(p = > p.Property == "MSBuildSDKsPath");
+			//				if(path != null)
+			//					SetMSBuildConfigProperty(toolset, path.Property, path.Path);
+			//			}
+			//
+			//			var projectImportSearchPaths = toolset.Element("projectImportSearchPaths");
+			//			if(projectImportSearchPaths != null)
+			//			{
+			//				var os = Platform.IsMac ? "osx" : Platform.IsWindows ? "windows" : "unix";
+			//				XElement searchPaths = projectImportSearchPaths.Elements("searchPaths").FirstOrDefault(sp = > sp.Attribute("os") ?.Value == os);
+			//				if(searchPaths == null)
+			//				{
+			//					searchPaths = new XElement("searchPaths");
+			//					searchPaths.SetAttributeValue("os", os);
+			//					projectImportSearchPaths.Add(searchPaths);
+			//				}
+			//				foreach(var path in MSBuildProjectService.GetProjectImportSearchPaths(runtime, false))
+			//				SetMSBuildConfigProperty(searchPaths, path.Property, path.Path, append:true, insertBefore:false);
+			//			}
 
 			File targetConfigFile = new File(msBuildSdkDir, originalExeFile.getName() + ".config");
 
@@ -257,7 +279,7 @@ public class MSBuildDaemonService implements Disposable
 		}
 	}
 
-	private void tryInitializeProjects(DaemonConnection daemonConnection)
+	private void loadProjectsInitial(DaemonConnection daemonConnection)
 	{
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
 
@@ -266,29 +288,41 @@ public class MSBuildDaemonService implements Disposable
 		for(WProject project : projects)
 		{
 			LoadProjectRequest message = new LoadProjectRequest();
-			message.ProjectFile = project.getVirtualFile().getPath();
 
-			daemonConnection.sendWithResponse(message).doWhenDone(projectResponse -> {
-				myProjectIdsToIds.put(project.getId(), projectResponse.ProjectId);
+			message.ProjectFile = project.getVirtualFile().getPresentableUrl();
 
-				ProjectConfigurationInfo conf = new ProjectConfigurationInfo();
-				conf.Configuration = "Debug";
-				conf.Platform = "Any CPU";
-				conf.ProjectFile = project.getVirtualFile().getPresentableUrl();
-				conf.ProjectGuid = project.getId();
-
-				RunProjectRequest r = new RunProjectRequest();
-				r.ProjectId = projectResponse.ProjectId;
-				r.Verbosity = MSBuildVerbosity.Detailed;
-				r.RunTargets = new String[]{"ResolvePackageDependenciesDesignTime"};
-				r.Configurations = new ProjectConfigurationInfo[]{conf};
-
-
-				daemonConnection.sendWithResponse(r).doWhenDone(runProjectResponse -> {
-					System.out.println();
-				});
-			});
+			daemonConnection.sendWithResponse(message).doWhenDone(projectResponse -> myProjectIdsToIds.put(project.getId(), projectResponse.ProjectId)).getResultSync();
 		}
+	}
+
+	private void initializeDependencies(WProject project, int projectId, DaemonConnection daemonConnection)
+	{
+		ProjectConfigurationInfo conf = new ProjectConfigurationInfo();
+		conf.Configuration = "Debug";
+		conf.Platform = "Any CPU";
+		conf.ProjectFile = project.getVirtualFile().getPresentableUrl();
+		conf.ProjectGuid = project.getId();
+
+		RunProjectRequest r = new RunProjectRequest();
+		r.ProjectId = projectId;
+		r.Verbosity = MSBuildVerbosity.Quiet;
+		r.EvaluateItems = new String[]{"ReferencePath"};
+		r.RunTargets = new String[]{"ResolveAssemblyReferencesDesignTime"};
+		r.Configurations = new ProjectConfigurationInfo[]{conf};
+		// Even though some targets may fail it may still be possible for the main resolve target to return
+		// information so we set ContinueOnError. This matches VS on Windows behaviour.
+		r.GlobalProperties.put("ContinueOnError", "ErrorAndContinue");
+		r.GlobalProperties.put("Silent", "true");
+		r.GlobalProperties.put("DesignTimeBuild", "true");
+
+
+		//		GetTargetsRequest r = new GetTargetsRequest();
+		//		r.ProjectId = projectId;
+		//		r.Configurations = new ProjectConfigurationInfo[]{conf};
+
+		daemonConnection.sendWithResponse(r).doWhenDone(runProjectResponse -> {
+			System.out.println();
+		}).getResultSync();
 	}
 
 	private Sdk getMSBuildSdk()

@@ -16,7 +16,6 @@
 
 package consulo.msbuild.impl;
 
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
@@ -38,6 +37,7 @@ import consulo.dotnet.DotNetTarget;
 import consulo.dotnet.dll.DotNetModuleFileType;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.roots.orderEntry.DotNetLibraryOrderEntryImpl;
+import consulo.logging.Logger;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.msbuild.MSBuildProjectType;
 import consulo.msbuild.MSBuildSolutionManager;
@@ -87,7 +87,7 @@ public abstract class DotNetBasedProjectType implements MSBuildProjectType
 	@Override
 	public boolean isAvaliable()
 	{
-		return MSBuildDotNetImportTarget.EP_NAME.getExtensions().length > 0;
+		return MSBuildDotNetImportTarget.EP_NAME.hasAnyExtensions();
 	}
 
 	private static MSBuildDotNetImportTarget findTarget(@Nullable MSBuildSolutionManager.ProjectOptions projectOptions)

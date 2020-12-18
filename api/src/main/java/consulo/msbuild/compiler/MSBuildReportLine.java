@@ -1,9 +1,9 @@
 package consulo.msbuild.compiler;
 
+import consulo.logging.Logger;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.openapi.diagnostic.Logger;
 
 /**
  * @author VISTALL

@@ -23,8 +23,12 @@ public class RunProjectRequest implements DaemonMessage<RunProjectResponse>
 
 	public MSBuildVerbosity Verbosity;
 
+	// ResolveAssemblyReferencesDesignTime
+	// ResolveProjectReferencesDesignTime
+	// ResolvePackageDependenciesDesignTime
 	public String[] RunTargets;
 
+	// ReferencePath
 	public String[] EvaluateItems;
 
 	public String[] EvaluateProperties;

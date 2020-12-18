@@ -1,6 +1,7 @@
 package consulo.msbuild.daemon.impl;
 
 import com.intellij.openapi.util.AsyncResult;
+import com.intellij.util.concurrency.AppExecutorUtil;
 import consulo.logging.Logger;
 import consulo.msbuild.daemon.impl.message.BinaryMessage;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
@@ -59,12 +60,15 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 			default:
 				DaemonConnection result = myChannelAsync.getResult();
 
-				Pair<DaemonMessage, consulo.util.concurrent.AsyncResult> handler = result.getHandler(binaryMessage.Id);
-				if(handler != null)
+				AppExecutorUtil.getAppExecutorService().execute(() ->
 				{
-					Object object = binaryMessage.toModel(handler.getFirst());
-					handler.getSecond().setDone(object);
-				}
+					Pair<DaemonMessage, consulo.util.concurrent.AsyncResult> handler = result.getHandler(binaryMessage.Id);
+					if(handler != null)
+					{
+						Object object = binaryMessage.toModel(handler.getFirst());
+						handler.getSecond().setDone(object);
+					}
+				});
 				break;
 		}
 	}
