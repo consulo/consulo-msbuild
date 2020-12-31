@@ -16,8 +16,6 @@
 
 package consulo.csharp.compiler.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.csharp.compiler.CSharpCompilerProvider;
@@ -28,6 +26,9 @@ import consulo.dotnet.compiler.DotNetCompileFailedException;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.module.extension.DotNetSimpleModuleExtension;
 import consulo.msbuild.bundle.MSBuildBundleType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
@@ -58,6 +59,12 @@ public class MSBundleCompilerProvider extends CSharpCompilerProvider
 			throw new DotNetCompileFailedException("Compiler path is not resolved");
 		}
 
-		setExecutable(csharpExtension, builder, compilerSdkHome.findFileByRelativePath("bin/" + CSharpCompilerUtil.COMPILER_NAME));
+		VirtualFile compilerPath = compilerSdkHome.findFileByRelativePath("bin/Roslyn/" + CSharpCompilerUtil.COMPILER_NAME);
+		if(compilerPath == null)
+		{
+			compilerPath = compilerSdkHome.findFileByRelativePath("bin/" + CSharpCompilerUtil.COMPILER_NAME);
+		}
+
+		setExecutable(csharpExtension, builder, compilerPath);
 	}
 }

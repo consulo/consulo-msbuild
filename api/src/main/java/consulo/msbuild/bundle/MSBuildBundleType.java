@@ -16,16 +16,6 @@
 
 package consulo.msbuild.bundle;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.ProcessOutput;
@@ -36,6 +26,15 @@ import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildVersion;
 import consulo.platform.Platform;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author VISTALL
@@ -92,7 +91,7 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 	@Nonnull
 	public static MSBuildBundleType getInstance()
 	{
-		return EP_NAME.findExtension(MSBuildBundleType.class);
+		return EP_NAME.findExtensionOrFail(MSBuildBundleType.class);
 	}
 
 	public MSBuildBundleType()
@@ -125,7 +124,7 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 
 	private void collectVisualStudioCompilerPaths(List<MSBuildInfo> list, String env, String bitness)
 	{
-		String programFiles = Platform.current().getEnvironmentVariable(env);
+		String programFiles = Platform.current().os().getEnvironmentVariable(env);
 		if(programFiles != null)
 		{
 			File msbuildDir = new File(programFiles, "MSBuild");
@@ -153,6 +152,12 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 						if(vsTargetDirectory.exists())
 						{
 							File msBuildDirectory = new File(vsTargetDirectory, "MSBuild/" + version.getInternalVersion());
+							if(msBuildDirectory.exists())
+							{
+								list.add(new MSBuildInfo(msBuildDirectory, bitness, version, visualStudioEdition));
+							}
+
+							msBuildDirectory = new File(vsTargetDirectory, "MSBuild/Current");
 							if(msBuildDirectory.exists())
 							{
 								list.add(new MSBuildInfo(msBuildDirectory, bitness, version, visualStudioEdition));
