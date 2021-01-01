@@ -2,6 +2,7 @@ package consulo.msbuild.daemon.impl.message;
 
 import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.EnumInt;
+import consulo.util.lang.Couple;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -122,11 +123,48 @@ public class BinaryMessage implements DataObject
 					{
 						fieldValue = toModel((Map<String, Object>) fieldValue, field.getType());
 					}
+					else if(field.getType() == TypedMap.class)
+					{
+						Couple<Class> types = TypedMap.getKeyValueTypes(clazz, field);
+
+						if(types.getFirst() != String.class)
+						{
+							throw new UnsupportedOperationException(types.toString());
+						}
+
+						TypedMap map = new TypedMap(types.getFirst(), types.getSecond());
+
+						Map<?, ?> mappedFieldValue = (Map) fieldValue;
+
+						for(Map.Entry e : mappedFieldValue.entrySet())
+						{
+							String key = (String) e.getKey();
+							Object value = e.getValue();
+
+							Object convertedValue;
+							if(map.getValueClass().isArray())
+							{
+								convertedValue = mapArray(map.getValueClass(), value);
+							}
+							else if(DataObject.class.isAssignableFrom(map.getValueClass()))
+							{
+								convertedValue = toModel((Map<String, Object>) value, map.getValueClass());
+							}
+							else
+							{
+								convertedValue = value;
+							}
+
+							map.put(key, convertedValue);
+						}
+
+						fieldValue = map;
+					}
 					else if(field.getType().isArray() && DataObject.class.isAssignableFrom(field.getType().getComponentType()))
 					{
 						fieldValue = mapArray(field.getType(), fieldValue);
 					}
-					
+
 					field.set(model, fieldValue);
 				}
 			}
@@ -245,7 +283,7 @@ public class BinaryMessage implements DataObject
 				throw new IllegalArgumentException(value.getClass().getName());
 			}
 
-			Map<String, Object> arguments = new TypedMap<>(String.class, Object.class);
+			TypedMap<String, Object> arguments = new TypedMap<>(String.class, Object.class);
 			fillArguments(value, arguments);
 			writeValue(byteBuffer, arguments);
 		}

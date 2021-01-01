@@ -16,19 +16,10 @@
 
 package consulo.msbuild;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
-
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.SimpleModificationTracker;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -39,12 +30,20 @@ import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import consulo.msbuild.solution.model.WSolution;
 import consulo.msbuild.synchronize.MSBuildSynchronizeFileListener;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNullableByDefault;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author VISTALL
  * @since 28-Jan-17
  */
-@State(name = "MSBuildSolutionManager", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/msbuild.xml"))
+@State(name = "MSBuildSolutionManager", storages = @Storage("msbuild.xml"))
 @Singleton
 public class MSBuildSolutionManager extends SimpleModificationTracker implements PersistentStateComponent<MSBuildSolutionManager.State>
 {
@@ -58,7 +57,10 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 	protected static class State
 	{
 		public boolean enabled;
+
 		public String url;
+
+		public String msBuildBundleName;
 
 		public Map<String, ProjectOptions> projects = new HashMap<>();
 	}
@@ -152,5 +154,15 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 	public VirtualFile getSolutionFile()
 	{
 		return myState.enabled ? VirtualFileManager.getInstance().findFileByUrl(myState.url) : null;
+	}
+
+	public String getMSBuildBundleName()
+	{
+		return myState.msBuildBundleName;
+	}
+
+	public void setMSBuildBundleName(@ParametersAreNullableByDefault String name)
+	{
+		myState.msBuildBundleName = name;
 	}
 }

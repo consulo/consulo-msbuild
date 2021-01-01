@@ -1,12 +1,5 @@
 package consulo.msbuild.dotnet.microsoft;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.RunProfile;
@@ -31,6 +24,12 @@ import consulo.msbuild.module.extension.resolve.AutomaticBundleInfo;
 import consulo.msbuild.module.extension.resolve.DefaultBundleInfo;
 import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author VISTALL
  * @since 2018-06-22
@@ -39,7 +38,7 @@ public class MicrosoftDotNetImportTarget extends MSBuildDotNetImportTarget
 {
 	public MicrosoftDotNetImportTarget()
 	{
-		super(".NET", "microsoft-dotnet");
+		super(".NET Framework", "microsoft-dotnet");
 	}
 
 	@Nonnull

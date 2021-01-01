@@ -16,29 +16,12 @@
 
 package consulo.msbuild;
 
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.module.ModifiableModuleModel;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.startup.StartupActivity;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.application.AccessRule;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
-import consulo.msbuild.solution.SolutionVirtualBuilder;
-import consulo.msbuild.solution.SolutionVirtualDirectory;
-import consulo.msbuild.solution.SolutionVirtualFile;
-import consulo.msbuild.solution.model.WProject;
-import consulo.msbuild.solution.model.WSolution;
-import consulo.roots.ModifiableModuleRootLayer;
 import consulo.ui.UIAccess;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
 
 /**
  * @author VISTALL
@@ -49,85 +32,85 @@ public class MSBuildStartActivity implements StartupActivity
 	@Override
 	public void runActivity(@Nonnull UIAccess uiAccess, @Nonnull Project project)
 	{
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
-		if(!solutionManager.isEnabled())
-		{
-			return;
-		}
-
-		Task.Backgroundable.queue(project, "Synchronize solution", indicator ->
-		{
-			ModifiableModuleModel modifiableModel = AccessRule.read(() -> ModuleManager.getInstance(project).getModifiableModel());
-
-			WSolution solution = AccessRule.read(solutionManager::getSolution);
-
-			for(Module module : modifiableModel.getModules())
-			{
-				if(!Comparing.equal(project.getBaseDir(), module.getModuleDir()))
-				{
-					modifiableModel.disposeModule(module);
-				}
-			}
-
-			Collection<WProject> projects = solution.getProjects();
-
-			for(WProject wProject : projects)
-			{
-				VirtualFile projectFile = wProject.getVirtualFile();
-				if(projectFile == null)
-				{
-					continue;
-				}
-
-				consulo.msbuild.dom.Project domProject = wProject.getDomProject();
-				if(domProject == null)
-				{
-					continue;
-				}
-
-				MSBuildSolutionManager.ProjectOptions projectOptions = solutionManager.getOptionsByProjectName(wProject.getName());
-				if(projectOptions != null)
-				{
-					projectOptions.moduleName = wProject.getName();
-				}
-
-				Module module = modifiableModel.newModule(wProject.getName(), null);
-
-				ModifiableRootModel modifiableRootModel = AccessRule.read(() -> ModuleRootManager.getInstance(module).getModifiableModel());
-
-				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
-				if(projectType != null)
-				{
-					projectType.setupModule(projectFile, domProject, projectOptions, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
-				}
-
-				SolutionVirtualDirectory directory = AccessRule.read(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));
-
-				directory.visitRecursive(solutionVirtualItem ->
-				{
-					if(solutionVirtualItem instanceof SolutionVirtualFile)
-					{
-						VirtualFile virtualFile = ((SolutionVirtualFile) solutionVirtualItem).getVirtualFile();
-						if(virtualFile != null)
-						{
-							modifiableRootModel.addContentEntry(virtualFile);
-						}
-					}
-
-					return true;
-				});
-
-				WriteCommandAction.runWriteCommandAction(project, modifiableRootModel::commit);
-			}
-
-			WriteCommandAction.runWriteCommandAction(project, modifiableModel::commit);
-
-			startDaemonService(project);
-		});
+//		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
+//		if(!solutionManager.isEnabled())
+//		{
+//			return;
+//		}
+//
+//		Task.Backgroundable.queue(project, "Synchronize solution", indicator ->
+//		{
+//			ModifiableModuleModel modifiableModel = AccessRule.read(() -> ModuleManager.getInstance(project).getModifiableModel());
+//
+//			WSolution solution = AccessRule.read(solutionManager::getSolution);
+//
+//			for(Module module : modifiableModel.getModules())
+//			{
+//				if(!Comparing.equal(project.getBaseDir(), module.getModuleDir()))
+//				{
+//					modifiableModel.disposeModule(module);
+//				}
+//			}
+//
+//			Collection<WProject> projects = solution.getProjects();
+//
+//			for(WProject wProject : projects)
+//			{
+//				VirtualFile projectFile = wProject.getVirtualFile();
+//				if(projectFile == null)
+//				{
+//					continue;
+//				}
+//
+//				consulo.msbuild.dom.Project domProject = wProject.getDomProject();
+//				if(domProject == null)
+//				{
+//					continue;
+//				}
+//
+//				MSBuildSolutionManager.ProjectOptions projectOptions = solutionManager.getOptionsByProjectName(wProject.getName());
+//				if(projectOptions != null)
+//				{
+//					projectOptions.moduleName = wProject.getName();
+//				}
+//
+//				Module module = modifiableModel.newModule(wProject.getName(), null);
+//
+//				ModifiableRootModel modifiableRootModel = AccessRule.read(() -> ModuleRootManager.getInstance(module).getModifiableModel());
+//
+//				MSBuildProjectType projectType = MSBuildProjectType.getProjectType(wProject.getTypeGUID());
+//				if(projectType != null)
+//				{
+//					projectType.setupModule(projectFile, domProject, projectOptions, (ModifiableModuleRootLayer) modifiableRootModel.getCurrentLayer());
+//				}
+//
+//				SolutionVirtualDirectory directory = AccessRule.read(() -> SolutionVirtualBuilder.build(domProject, projectFile.getParent()));
+//
+//				directory.visitRecursive(solutionVirtualItem ->
+//				{
+//					if(solutionVirtualItem instanceof SolutionVirtualFile)
+//					{
+//						VirtualFile virtualFile = ((SolutionVirtualFile) solutionVirtualItem).getVirtualFile();
+//						if(virtualFile != null)
+//						{
+//							modifiableRootModel.addContentEntry(virtualFile);
+//						}
+//					}
+//
+//					return true;
+//				});
+//
+//				WriteCommandAction.runWriteCommandAction(project, modifiableRootModel::commit);
+//			}
+//
+//			WriteCommandAction.runWriteCommandAction(project, modifiableModel::commit);
+//
+//			startDaemonService(project);
+//		});
 	}
 
 	private void startDaemonService(Project project)
 	{
-		MSBuildDaemonService.getInstance(project).startProcess();
+		MSBuildDaemonService.getInstance(project).forceUpdate();
 	}
 }

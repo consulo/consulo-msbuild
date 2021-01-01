@@ -68,7 +68,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	{
 		public MyAutoScrollFromSourceHandler(@Nonnull Project project, @Nonnull JComponent view)
 		{
-			super(project, view);
+			super(project, view, project);
 		}
 
 		@Override

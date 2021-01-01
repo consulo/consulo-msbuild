@@ -8,15 +8,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.ContainerUtil;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.ide.newProject.ui.ProjectOrModuleNameStep;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.VisualStudioSolutionFileType;
-import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.ui.image.Image;
 import consulo.ui.wizard.WizardStep;
 import org.intellij.lang.annotations.Language;
@@ -24,10 +22,6 @@ import org.intellij.lang.annotations.Language;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -68,36 +62,60 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 	@Override
 	public boolean canImport(@Nonnull File fileOrDirectory)
 	{
-		return !fileOrDirectory.isDirectory() && FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
+		if(fileOrDirectory.isDirectory())
+		{
+			return findSingleSolutionFile(fileOrDirectory) != null;
+		}
+		else
+		{
+			return FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
+		}
 	}
 
 	@Override
 	public String getPathToBeImported(@Nonnull VirtualFile file)
 	{
+		if(file.isDirectory())
+		{
+			File solutionFile = findSingleSolutionFile(VfsUtil.virtualToIoFile(file));
+			if(solutionFile != null)
+			{
+				return solutionFile.getPath();
+			}
+		}
 		return file.getPath();
+	}
+
+	private File findSingleSolutionFile(File directory)
+	{
+		File firstSolution = null;
+		if(directory.isDirectory())
+		{
+			for(File file : directory.listFiles())
+			{
+				if(file.isFile())
+				{
+					if(FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE)
+					{
+						// already found - return null
+						if(firstSolution != null)
+						{
+							return null;
+						}
+
+						firstSolution = file;
+					}
+				}
+			}
+
+		}
+		return firstSolution;
 	}
 
 	@Override
 	public void buildSteps(@Nonnull Consumer<WizardStep<SolutionModuleImportContext>> consumer, @Nonnull SolutionModuleImportContext context)
 	{
-		List<MSBuildSetupStepEP> extensions = MSBuildSetupStepEP.EP.getExtensionList();
-
-		Set<Class> classes = new LinkedHashSet<>();
-		for(MSBuildImportProject project : context.getMappedProjects())
-		{
-			classes.add(project.getClass());
-		}
-
-		for(Class aClass : classes)
-		{
-			MSBuildSetupStepEP stepEP = ContainerUtil.find(extensions, it -> it.getImportProjectClass() == aClass);
-			if(stepEP != null)
-			{
-				consumer.accept(stepEP.createStep(context));
-			}
-		}
-
-		consumer.accept(new ProjectOrModuleNameStep<>(context));
+		consumer.accept(new MSBuildProjectOrModuleNameStep(context));
 	}
 
 	@RequiredReadAction
@@ -114,10 +132,7 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
 		solutionManager.setEnabled(true);
 		solutionManager.setUrl(solutionFile);
-		for(Map.Entry<String, MSBuildSolutionManager.ProjectOptions> entry : context.getProjectOptions().entrySet())
-		{
-			solutionManager.putOptions(entry.getKey(), entry.getValue());
-		}
+		solutionManager.setMSBuildBundleName(context.getMSBuildBundleName());
 
 		VirtualFile parent = solutionFile.getParent();
 

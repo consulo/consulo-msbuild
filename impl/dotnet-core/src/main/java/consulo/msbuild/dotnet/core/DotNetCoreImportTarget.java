@@ -1,8 +1,5 @@
 package consulo.msbuild.dotnet.core;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.configurations.RunProfile;
@@ -16,6 +13,9 @@ import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
 import consulo.msbuild.module.extension.MSBuildDotNetModuleExtension;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * @author VISTALL
  * @since 2018-06-22
@@ -24,7 +24,7 @@ public class DotNetCoreImportTarget extends MSBuildDotNetImportTarget
 {
 	public DotNetCoreImportTarget()
 	{
-		super(".NET Core", "dotnet-core");
+		super(".NET (.NET Core)", "dotnet-core");
 	}
 
 	@Nonnull

@@ -16,7 +16,7 @@
 
 <consulo-plugin>
 	<id>consulo.msbuild</id>
-	<name>MSBuild/XBuild</name>
+	<name>MSBuild</name>
 	<version>SNAPSHOT</version>
 	<vendor>consulo.io</vendor>
 	<category>Build</category>
@@ -102,5 +102,8 @@
 		<postStartupActivity implementation="consulo.msbuild.MSBuildStartActivity"/>
 
 		<projectService serviceImplementation="consulo.msbuild.daemon.impl.MSBuildDaemonService"/>
+
+		<toolWindow id="MSBuild" anchor="right" canCloseContents="false" icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild" factoryClass="consulo.msbuild.toolWindow.MSBuildToolWindowFactory"
+					conditionClass="consulo.msbuild.toolWindow.MSBuildToolWindowCondition"/>
 	</extensions>
 </consulo-plugin>

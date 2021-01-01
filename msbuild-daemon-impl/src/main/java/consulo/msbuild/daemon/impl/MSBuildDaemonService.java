@@ -4,30 +4,29 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.io.BaseOutputReader;
-import consulo.application.AccessRule;
 import consulo.container.boot.ContainerPathManager;
 import consulo.container.plugin.PluginManager;
 import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
+import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.WithLenghtReaderDecoder;
 import consulo.msbuild.daemon.impl.message.model.*;
-import consulo.msbuild.module.extension.MSBuildRootExtension;
+import consulo.msbuild.daemon.impl.step.*;
 import consulo.msbuild.solution.model.WProject;
 import consulo.net.util.NetUtil;
 import consulo.platform.Platform;
 import consulo.util.dataholder.Key;
 import consulo.util.jdom.JDOMUtil;
+import consulo.util.lang.StringUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -64,7 +63,7 @@ public class MSBuildDaemonService implements Disposable
 		return project.getInstance(MSBuildDaemonService.class);
 	}
 
-	public static final int VERSION = 4;
+	public static final int VERSION = 6;
 
 	private final Project myProject;
 
@@ -82,34 +81,87 @@ public class MSBuildDaemonService implements Disposable
 		myProject = project;
 	}
 
-	public void startProcess()
+	public void forceUpdate()
+	{
+		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
+		if(!solutionManager.isEnabled())
+		{
+			return;
+		}
+
+		List<DaemonStep> steps = new ArrayList<>();
+		Collection<WProject> projects = solutionManager.getSolution().getProjects();
+		for(WProject wProject : projects)
+		{
+			steps.add(new InitializeProjectStep(wProject));
+		}
+
+		for(WProject project : projects)
+		{
+			steps.add(new AnalyzeProjectItemsStep(project));
+		}
+
+		for(WProject project : projects)
+		{
+			steps.add(new RestoreDependenciesStep(project));
+		}
+
+		for(WProject project : projects)
+		{
+			steps.add(new AnalyzeDependenciesStep(project));
+		}
+
+		for(WProject project : projects)
+		{
+			steps.add(new ListTargetsStep(project));
+		}
+
+		runSteps(steps);
+	}
+
+	private void runSteps(List<DaemonStep> steps)
 	{
 		Task.Backgroundable.queue(myProject, "Starting Daemon Service...", indicator ->
 		{
 			try
 			{
-				indicator.setText2("Starting server...");
+				// not connected to server
+				if(myConnection == null)
+				{
+					indicator.setText2("Preparing daemon process...");
 
-				initalizeServer();
+					initializeServer();
 
-				indicator.setText2("Starting daemon process...");
+					indicator.setText2("Starting daemon process...");
 
-				Sdk msBuildSdk = getMSBuildSdk();
+					Sdk msBuildSdk = getMSBuildSdk();
 
-				startServer(msBuildSdk);
+					startServer(msBuildSdk);
 
-				myConnection = myHandler.connectAsync().getResultSync();
+					myConnection = myHandler.connectAsync().getResultSync();
 
-				InitializeRequest message = new InitializeRequest();
-				message.IdeProcessId = (int) ProcessHandle.current().pid();
-				message.CultureName = Locale.getDefault().toString();
-				message.BinDir = new File(msBuildSdk.getHomePath(), "bin").getAbsolutePath();
+					InitializeRequest message = new InitializeRequest();
+					message.IdeProcessId = (int) ProcessHandle.current().pid();
+					message.CultureName = Locale.getDefault().toString();
+					message.BinDir = new File(msBuildSdk.getHomePath(), "bin").getAbsolutePath();
 
-				fillGlobalProperties(message.GlobalProperties, message.BinDir);
+					fillGlobalProperties(message.GlobalProperties, message.BinDir);
 
-				myConnection.sendWithResponse(message).doWhenDone(() -> loadProjectsInitial(myConnection)).getResultSync();
+					myConnection.sendWithResponse(message).getResultSync();
+				}
 
-				initializeDependencies();
+				MSBuildDaemonContext context = new MSBuildDaemonContext();
+
+				for(DaemonStep step : steps)
+				{
+					indicator.setText(step.getStepText());
+
+					DaemonMessage request = step.prepareRequest(context);
+
+					DataObject object = (DataObject) myConnection.sendWithResponse(request).getResultSync();
+
+					step.handleResponse(context, object);
+				}
 			}
 			catch(Exception e)
 			{
@@ -118,22 +170,6 @@ public class MSBuildDaemonService implements Disposable
 		});
 	}
 
-	private void initializeDependencies()
-	{
-		Task.Backgroundable.queue(myProject, "Resolving dependencies...", indicator ->
-		{
-			MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
-
-			Collection<WProject> projects = solutionManager.getSolution().getProjects();
-
-			for(WProject project : projects)
-			{
-				indicator.setText2(project.getName());
-
-				initializeDependencies(project, myProjectIdsToIds.get(project.getId()), myConnection);
-			}
-		});
-	}
 
 	private static File prepareMSBuildBuider(@Nonnull Sdk sdk) throws Exception
 	{
@@ -279,72 +315,24 @@ public class MSBuildDaemonService implements Disposable
 		}
 	}
 
-	private void loadProjectsInitial(DaemonConnection daemonConnection)
+	private Sdk getMSBuildSdk()
 	{
 		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
 
-		Collection<WProject> projects = solutionManager.getSolution().getProjects();
-
-		for(WProject project : projects)
+		// TODO [VISTALL] improve logic
+		String msBuildBundleName = solutionManager.getMSBuildBundleName();
+		if(StringUtil.isEmptyOrSpaces(msBuildBundleName))
 		{
-			LoadProjectRequest message = new LoadProjectRequest();
-
-			message.ProjectFile = project.getVirtualFile().getPresentableUrl();
-
-			daemonConnection.sendWithResponse(message).doWhenDone(projectResponse -> myProjectIdsToIds.put(project.getId(), projectResponse.ProjectId)).getResultSync();
-		}
-	}
-
-	private void initializeDependencies(WProject project, int projectId, DaemonConnection daemonConnection)
-	{
-		ProjectConfigurationInfo conf = new ProjectConfigurationInfo();
-		conf.Configuration = "Debug";
-		conf.Platform = "Any CPU";
-		conf.ProjectFile = project.getVirtualFile().getPresentableUrl();
-		conf.ProjectGuid = project.getId();
-
-		RunProjectRequest r = new RunProjectRequest();
-		r.ProjectId = projectId;
-		r.Verbosity = MSBuildVerbosity.Quiet;
-		r.EvaluateItems = new String[]{"ReferencePath"};
-		r.RunTargets = new String[]{"ResolveAssemblyReferencesDesignTime"};
-		r.Configurations = new ProjectConfigurationInfo[]{conf};
-		// Even though some targets may fail it may still be possible for the main resolve target to return
-		// information so we set ContinueOnError. This matches VS on Windows behaviour.
-		r.GlobalProperties.put("ContinueOnError", "ErrorAndContinue");
-		r.GlobalProperties.put("Silent", "true");
-		r.GlobalProperties.put("DesignTimeBuild", "true");
-
-
-		//		GetTargetsRequest r = new GetTargetsRequest();
-		//		r.ProjectId = projectId;
-		//		r.Configurations = new ProjectConfigurationInfo[]{conf};
-
-		daemonConnection.sendWithResponse(r).doWhenDone(runProjectResponse -> {
-			System.out.println();
-		}).getResultSync();
-	}
-
-	private Sdk getMSBuildSdk()
-	{
-		Module[] modules = AccessRule.read(() -> ModuleManager.getInstance(myProject).getModules());
-
-		Set<Sdk> sdkSet = new HashSet<>();
-
-		for(Module module : modules)
-		{
-			MSBuildRootExtension extension = ModuleUtilCore.getExtension(module, MSBuildRootExtension.class);
-			if(extension != null)
+			for(Sdk sdk : SdkTable.getInstance().getSdksOfType(MSBuildBundleType.getInstance()))
 			{
-				Object o = extension.resolveAutoSdk();
-				if(o instanceof Sdk)
-				{
-					sdkSet.add((Sdk) o);
-				}
+				return sdk;
 			}
 		}
-
-		return sdkSet.isEmpty() ? null : ContainerUtil.getFirstItem(sdkSet);
+		else
+		{
+			return SdkTable.getInstance().findSdk(msBuildBundleName);
+		}
+		return null;
 	}
 
 	private void fillGlobalProperties(Map<String, String> dictionary, String binDir)
@@ -378,7 +366,7 @@ public class MSBuildDaemonService implements Disposable
 		}
 	}
 
-	private void startServer(Sdk msBuildSdk) throws Exception
+	private void startServer(@Nonnull Sdk msBuildSdk) throws Exception
 	{
 		File exeFile = prepareMSBuildBuider(msBuildSdk);
 
@@ -413,7 +401,7 @@ public class MSBuildDaemonService implements Disposable
 		handler.startNotify();
 	}
 
-	private void initalizeServer() throws Exception
+	private void initializeServer() throws Exception
 	{
 		myPort = NetUtil.findAvailableSocketPort();
 

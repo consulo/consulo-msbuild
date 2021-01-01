@@ -16,16 +16,6 @@
 
 package consulo.msbuild;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -35,6 +25,14 @@ import consulo.msbuild.importProvider.item.MSBuildImportProject;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.msbuild.synchronize.MSBuildFileReferenceType;
 import consulo.roots.ModifiableModuleRootLayer;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author VISTALL
@@ -53,7 +51,7 @@ public interface MSBuildProjectType
 		set.add(PROPS_EXT);
 		set.add(TARGETS_EXT);
 
-		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
+		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensionList())
 		{
 			set.add(ep.getExt());
 		}
@@ -63,7 +61,7 @@ public interface MSBuildProjectType
 	NotNullLazyValue<Map<String, MSBuildProjectType>> ourTypeByGUIDMapValue = NotNullLazyValue.createValue(() ->
 	{
 		Map<String, MSBuildProjectType> map = new THashMap<>();
-		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensions())
+		for(MSBuildProjectTypeEP<MSBuildProjectType> ep : EP_NAME.getExtensionList())
 		{
 			MSBuildProjectType instance = ep.getInstance();
 			if(instance == null)
