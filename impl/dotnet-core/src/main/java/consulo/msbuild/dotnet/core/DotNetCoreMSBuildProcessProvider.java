@@ -86,9 +86,9 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 	public void fillGlobalProperties(@Nonnull Sdk msBuildSdk, @Nonnull Map<String, String> properties)
 	{
 		properties.put("MSBuildExtensionsPath", msBuildSdk.getHomePath());
-		//properties.put("MSBuildToolsPath32", msBuildSdk.getHomePath());
-		//properties.put("MSBuildToolsPath64", msBuildSdk.getHomePath());
-		//properties.put("NuGetRestoreTargets", msBuildSdk.getHomePath() + "/NuGet.targets");
+		properties.put("MSBuildToolsPath32", msBuildSdk.getHomePath());
+		properties.put("MSBuildToolsPath64", msBuildSdk.getHomePath());
+		properties.put("NuGetRestoreTargets", msBuildSdk.getHomePath() + "/NuGet.targets");
 	}
 
 	@Override
@@ -138,6 +138,6 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public int getVersion()
 	{
-		return 3;
+		return 4;
 	}
 }

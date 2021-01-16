@@ -11,6 +11,10 @@ import javax.annotation.Nonnull;
 /**
  * @author VISTALL
  * @since 01/01/2021
+ *
+ * Project capacities
+ *
+ * https://github.com/microsoft/VSProjectSystem/blob/master/doc/overview/project_capabilities.md
  */
 public class AnalyzeProjectItemsStep extends PerProjectDaemonStep<GetProjectItemsRequest, GetProjectItemsResponse>
 {
