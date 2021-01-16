@@ -137,7 +137,7 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 
 		VirtualFile parent = solutionFile.getParent();
 
-		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName(), parent, modifiableModuleModel);
+		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName() + " (Solution)", parent, modifiableModuleModel);
 		consumer.accept(mainModuleModel.getModule());
 		WriteAction.run(mainModuleModel::commit);
 	}

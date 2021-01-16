@@ -99,6 +99,11 @@ public class MSBuildDaemonService implements Disposable
 
 		for(WProject project : projects)
 		{
+			steps.add(new AnalyzePropertiesStep(project));
+		}
+
+		for(WProject project : projects)
+		{
 			steps.add(new RestoreDependenciesStep(project));
 		}
 
