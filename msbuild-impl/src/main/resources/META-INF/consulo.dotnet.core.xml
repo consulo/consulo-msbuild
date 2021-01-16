@@ -1,5 +1,9 @@
 <consulo-plugin>
 	<extensions defaultExtensionNs="consulo.msbuild.dotnet">
-		<importTarget implementation="consulo.msbuild.dotnet.core.DotNetCoreImportTarget" />
+		<importTarget implementation="consulo.msbuild.dotnet.core.DotNetCoreImportTarget"/>
+	</extensions>
+
+	<extensions defaultExtensionNs="consulo.msbuild">
+		<processProvider implementation="consulo.msbuild.dotnet.core.DotNetCoreMSBuildProcessProvider"/>
 	</extensions>
 </consulo-plugin>

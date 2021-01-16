@@ -4,6 +4,7 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
+import com.intellij.openapi.application.Application;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.Sdk;
@@ -12,20 +13,20 @@ import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.io.BaseOutputReader;
 import consulo.container.boot.ContainerPathManager;
-import consulo.container.plugin.PluginManager;
 import consulo.disposer.Disposable;
+import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.WithLenghtReaderDecoder;
-import consulo.msbuild.daemon.impl.message.model.*;
+import consulo.msbuild.daemon.impl.message.model.DataObject;
+import consulo.msbuild.daemon.impl.message.model.InitializeRequest;
 import consulo.msbuild.daemon.impl.step.*;
 import consulo.msbuild.solution.model.WProject;
 import consulo.net.util.NetUtil;
-import consulo.platform.Platform;
+import consulo.util.concurrent.AsyncResult;
 import consulo.util.dataholder.Key;
-import consulo.util.jdom.JDOMUtil;
 import consulo.util.lang.StringUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -36,14 +37,11 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.jdom.Document;
-import org.jdom.Element;
 
 import javax.annotation.Nonnull;
 import java.io.File;
-import java.nio.file.Paths;
+import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author VISTALL
@@ -63,15 +61,13 @@ public class MSBuildDaemonService implements Disposable
 		return project.getInstance(MSBuildDaemonService.class);
 	}
 
-	public static final int VERSION = 6;
+	public static final int VERSION = 9;
 
 	private final Project myProject;
 
 	private int myPort = -1;
 	private EventLoopGroup bossGroup;
 	private EventLoopGroup workerGroup;
-
-	private final Map<String, Integer> myProjectIdsToIds = new ConcurrentHashMap<>();
 
 	private DaemonConnection myConnection;
 
@@ -134,18 +130,22 @@ public class MSBuildDaemonService implements Disposable
 
 					indicator.setText2("Starting daemon process...");
 
-					Sdk msBuildSdk = getMSBuildSdk();
+					MSBuildProcessProvider buildProcessProvider = findBuildProcessProvider();
 
-					startServer(msBuildSdk);
+					MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
+
+					Sdk msBuildSdk = buildProcessProvider.findBundle(solutionManager.getMSBuildBundleName());
+
+					startServer(msBuildSdk, buildProcessProvider);
 
 					myConnection = myHandler.connectAsync().getResultSync();
 
 					InitializeRequest message = new InitializeRequest();
 					message.IdeProcessId = (int) ProcessHandle.current().pid();
 					message.CultureName = Locale.getDefault().toString();
-					message.BinDir = new File(msBuildSdk.getHomePath(), "bin").getAbsolutePath();
+					message.BinDir = buildProcessProvider.getBinDir(msBuildSdk).getAbsolutePath();
 
-					fillGlobalProperties(message.GlobalProperties, message.BinDir);
+					fillGlobalProperties(message.GlobalProperties, message.BinDir, msBuildSdk, buildProcessProvider);
 
 					myConnection.sendWithResponse(message).getResultSync();
 				}
@@ -158,9 +158,18 @@ public class MSBuildDaemonService implements Disposable
 
 					DaemonMessage request = step.prepareRequest(context);
 
-					DataObject object = (DataObject) myConnection.sendWithResponse(request).getResultSync();
+					AsyncResult<DataObject> result = myConnection.sendWithResponse(request);
+					DataObject object = (DataObject) result.getResultSync();
 
-					step.handleResponse(context, object);
+					if(object != null)
+					{
+						step.handleResponse(context, object);
+					}
+					else
+					{
+						// todo error
+						throw new IOException("failed");
+					}
 				}
 			}
 			catch(Exception e)
@@ -170,149 +179,76 @@ public class MSBuildDaemonService implements Disposable
 		});
 	}
 
+	@Nonnull
+	private MSBuildProcessProvider findBuildProcessProvider()
+	{
+		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
 
-	private static File prepareMSBuildBuider(@Nonnull Sdk sdk) throws Exception
+		for(MSBuildProcessProvider msBuildProcessProvider : MSBuildProcessProvider.EP_NAME.getExtensionList(Application.get()))
+		{
+			if(Objects.equals(solutionManager.getProviderId(), msBuildProcessProvider.getId()))
+			{
+				return msBuildProcessProvider;
+			}
+		}
+
+		throw new IllegalArgumentException("MSBuild provider not found");
+	}
+
+	private static File prepareMSBuildBuider(@Nonnull Sdk sdk, @Nonnull MSBuildProcessProvider buildProcessProvider) throws IOException
 	{
 		VirtualFile homeDirectory = sdk.getHomeDirectory();
 
 		int urlHashCode = Math.abs(homeDirectory.getPresentableUrl().hashCode());
 
-		File msBuildSdkDir = new File(ContainerPathManager.get().getSystemPath(), "MSBuild/msbuild-" + urlHashCode);
+		File msBuildRunnerDir = new File(ContainerPathManager.get().getSystemPath(), "MSBuild/msbuild-" + urlHashCode);
 
 		int ver = -1;
-		File versionFile = new File(msBuildSdkDir, "version.txt");
+		File versionFile = new File(msBuildRunnerDir, "version.txt");
 		if(versionFile.exists())
 		{
 			ver = Integer.parseInt(FileUtil.loadFile(versionFile));
 		}
 
-		if(ver != VERSION)
+		int requiredVersion = VERSION + buildProcessProvider.getVersion();
+
+		if(ver != requiredVersion)
 		{
-			FileUtil.delete(msBuildSdkDir);
+			FileUtil.delete(msBuildRunnerDir);
 		}
 
-		File msBuildFile = new File(msBuildSdkDir, "Consulo.MSBuildBuilder.exe");
+		File originalExeFile = buildProcessProvider.getTargetFile();
+
+		String fileName = originalExeFile.getName();
+
+		File msBuildFile = new File(msBuildRunnerDir, fileName);
 		if(msBuildFile.exists())
 		{
 			return msBuildFile;
 		}
 
-		FileUtil.createParentDirs(msBuildSdkDir);
-
-		File net4Dir = new File(PluginManager.getPluginPath(MSBuildDaemonService.class), "net4");
-
-		File originalExeFile = new File(net4Dir, "Consulo.MSBuildBuilder.exe");
+		FileUtil.createParentDirs(msBuildRunnerDir);
 
 		FileUtil.copy(originalExeFile, msBuildFile);
 
-		File pdbFile = new File(net4Dir, "Consulo.MSBuildBuilder.pdb");
-		if(pdbFile.exists())
+		File parentDir = originalExeFile.getParentFile();
+
+		String[] additionalPaths = {".pdb"};
+		for(String additionalPath : additionalPaths)
 		{
-			File targetPdb = new File(msBuildSdkDir, pdbFile.getName());
-			FileUtil.copy(pdbFile, targetPdb);
-		}
-
-		File msBuildBinDir = new File(sdk.getHomePath(), "Bin");
-
-		File configFile = new File(msBuildBinDir, "MSBuild.exe.config");
-		if(configFile.exists())
-		{
-			Element rootElement = JDOMUtil.load(configFile);
-
-			Element msbuildToolsets = rootElement.getChild("msbuildToolsets");
-
-			Element toolset = msbuildToolsets.getChild("toolset");
-
-			// This is required for MSBuild to properly load the searchPaths element (@radical knows why)
-			SetMSBuildConfigProperty(toolset, "MSBuildBinPath", msBuildBinDir.getAbsolutePath(), false, true);
-
-			// this must match MSBuildBinPath w/MSBuild15
-			SetMSBuildConfigProperty(toolset, "MSBuildToolsPath", msBuildBinDir.getAbsolutePath(), false, true);
-
-			if(Platform.current().os().isWindows())
+			File attachFile = new File(parentDir, FileUtil.getNameWithoutExtension(originalExeFile) + additionalPath);
+			if(attachFile.exists())
 			{
-				File extensionsPath = FileUtil.getParentFile(FileUtil.getParentFile(msBuildBinDir));
-				File vsInstallRoot = FileUtil.getParentFile(extensionsPath);
-				File devEnvDir = new File(vsInstallRoot, "Common7/IDE");
-
-				SetMSBuildConfigProperty(toolset, "MSBuildExtensionsPath", extensionsPath.getAbsolutePath());
-				SetMSBuildConfigProperty(toolset, "MSBuildExtensionsPath32", extensionsPath.getAbsolutePath());
-				SetMSBuildConfigProperty(toolset, "MSBuildToolsPath", msBuildBinDir.getAbsolutePath());
-				SetMSBuildConfigProperty(toolset, "MSBuildToolsPath32", msBuildBinDir.getAbsolutePath());
-				SetMSBuildConfigProperty(toolset, "MSBuildToolsPath64", msBuildBinDir.getAbsolutePath());
-				SetMSBuildConfigProperty(toolset, "VsInstallRoot", vsInstallRoot.getAbsolutePath());
-				SetMSBuildConfigProperty(toolset, "DevEnvDir", devEnvDir + "\\");
-				SetMSBuildConfigProperty(toolset, "NuGetRestoreTargets", new File(devEnvDir, "CommonExtensions\\Microsoft\\NuGet\\NuGet.targets").getAbsolutePath());
-
-				File sdksPath = new File(extensionsPath, "Sdks");
-				SetMSBuildConfigProperty(toolset, "MSBuildSDKsPath", sdksPath.getAbsolutePath());
-
-				File roslynTargetsPath = new File(msBuildBinDir, "Roslyn");
-				SetMSBuildConfigProperty(toolset, "RoslynTargetsPath", roslynTargetsPath.getAbsolutePath());
-
-				File vcTargetsPath = new File(devEnvDir, "VC/VCTargets");
-				SetMSBuildConfigProperty(toolset, "VCTargetsPath", vcTargetsPath.getAbsolutePath());
+				File targetPdb = new File(msBuildRunnerDir, attachFile.getName());
+				FileUtil.copy(attachFile, targetPdb);
 			}
-			//			else
-			//			{
-			//				var path = MSBuildProjectService.GetProjectImportSearchPaths(runtime, false).FirstOrDefault(p = > p.Property == "MSBuildSDKsPath");
-			//				if(path != null)
-			//					SetMSBuildConfigProperty(toolset, path.Property, path.Path);
-			//			}
-			//
-			//			var projectImportSearchPaths = toolset.Element("projectImportSearchPaths");
-			//			if(projectImportSearchPaths != null)
-			//			{
-			//				var os = Platform.IsMac ? "osx" : Platform.IsWindows ? "windows" : "unix";
-			//				XElement searchPaths = projectImportSearchPaths.Elements("searchPaths").FirstOrDefault(sp = > sp.Attribute("os") ?.Value == os);
-			//				if(searchPaths == null)
-			//				{
-			//					searchPaths = new XElement("searchPaths");
-			//					searchPaths.SetAttributeValue("os", os);
-			//					projectImportSearchPaths.Add(searchPaths);
-			//				}
-			//				foreach(var path in MSBuildProjectService.GetProjectImportSearchPaths(runtime, false))
-			//				SetMSBuildConfigProperty(searchPaths, path.Property, path.Path, append:true, insertBefore:false);
-			//			}
-
-			File targetConfigFile = new File(msBuildSdkDir, originalExeFile.getName() + ".config");
-
-			JDOMUtil.writeDocument(new Document(rootElement), targetConfigFile, "\n");
 		}
 
-		FileUtil.writeToFile(versionFile, String.valueOf(VERSION));
+		buildProcessProvider.doAdditionalCopy(originalExeFile, msBuildRunnerDir, sdk);
+
+		FileUtil.writeToFile(versionFile, String.valueOf(requiredVersion));
+
 		return msBuildFile;
-	}
-
-	private static void SetMSBuildConfigProperty(Element toolset, String name, String value)
-	{
-		SetMSBuildConfigProperty(toolset, name, value, true, false);
-	}
-
-	private static void SetMSBuildConfigProperty(Element toolset, String name, String value, boolean append, boolean insertBefore)
-	{
-		List<Element> properties = toolset.getChildren("property");
-
-		for(Element property : properties)
-		{
-			String propName = property.getAttributeValue("name");
-
-			if(name.equals(propName))
-			{
-				property.setAttribute("value", value);
-				return;
-			}
-		}
-
-		Element element = new Element("property").setAttribute("name", name).setAttribute("value", value);
-		if(insertBefore)
-		{
-			toolset.addContent(0, element);
-		}
-		else
-		{
-			toolset.addContent(element);
-		}
 	}
 
 	private Sdk getMSBuildSdk()
@@ -335,7 +271,7 @@ public class MSBuildDaemonService implements Disposable
 		return null;
 	}
 
-	private void fillGlobalProperties(Map<String, String> dictionary, String binDir)
+	private void fillGlobalProperties(Map<String, String> dictionary, String binDir, Sdk msBuildSdk, MSBuildProcessProvider buildProcessProvider)
 	{
 		// This causes build targets to behave how they should inside an IDE, instead of in a command-line process
 		dictionary.put("BuildingInsideVisualStudio", "true");
@@ -358,24 +294,16 @@ public class MSBuildDaemonService implements Disposable
 		dictionary.put("SolutionFilename", solutionFile.getName());
 		dictionary.put("SolutionDir", solutionFile.getParent().getPresentableUrl() + "/");
 
-		// When running the dev15 MSBuild from commandline or inside MSBuild, it sets "VSToolsPath" correctly. when running from MD, it falls back to a bad default. override it.
-		if(Platform.current().os().isWindows())
-		{
-			String toolsVersion = "16.0";
-			dictionary.put("VSToolsPath", Paths.get(binDir, "..", "..", "Microsoft", "VisualStudio", "v" + toolsVersion).toFile().getAbsolutePath());
-		}
+		buildProcessProvider.fillGlobalProperties(msBuildSdk, dictionary);
 	}
 
-	private void startServer(@Nonnull Sdk msBuildSdk) throws Exception
+	private void startServer(@Nonnull Sdk msBuildSdk, @Nonnull MSBuildProcessProvider provider) throws Exception
 	{
-		File exeFile = prepareMSBuildBuider(msBuildSdk);
+		File exeFile = prepareMSBuildBuider(msBuildSdk, provider);
 
-		GeneralCommandLine c = new GeneralCommandLine();
-		c.setExePath(exeFile.getPath());
-		c.addParameter(String.valueOf(myPort));
-		c.addParameter("true"); // debug
+		GeneralCommandLine commandLine = provider.buildCommandLine(msBuildSdk, exeFile, myPort);
 
-		OSProcessHandler handler = new OSProcessHandler(c)
+		OSProcessHandler handler = new OSProcessHandler(commandLine)
 		{
 			@Nonnull
 			@Override

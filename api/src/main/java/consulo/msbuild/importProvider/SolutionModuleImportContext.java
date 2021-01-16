@@ -31,6 +31,8 @@ public class SolutionModuleImportContext extends ModuleImportContext
 	private SlnFile mySlnFile = new SlnFile();
 	private List<MSBuildImportProject> myItems = new ArrayList<>();
 	private Map<String, MSBuildSolutionManager.ProjectOptions> myProjectOptions = new HashMap<>();
+
+	private String myProviderId;
 	private String myMSBuildBundleName;
 
 	public SolutionModuleImportContext(@Nullable Project project)
@@ -102,5 +104,15 @@ public class SolutionModuleImportContext extends ModuleImportContext
 	public String getMSBuildBundleName()
 	{
 		return myMSBuildBundleName;
+	}
+
+	public String getProviderId()
+	{
+		return myProviderId;
+	}
+
+	public void setProviderId(String providerId)
+	{
+		myProviderId = providerId;
 	}
 }

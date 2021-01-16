@@ -19,8 +19,9 @@
 	<name>MSBuild</name>
 	<version>SNAPSHOT</version>
 	<vendor>consulo.io</vendor>
-	<category>Build</category>
+	<category>Build Framework</category>
 	<depends>com.intellij.xml</depends>
+	<experimental>true</experimental>
 
 	<!--.NET Support-->
 	<depends optional="true" config-file="consulo.dotnet.xml">consulo.dotnet</depends>
@@ -41,6 +42,8 @@
 		<extensionPoint name="variableProvider" interface="consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider"/>
 
 		<extensionPoint name="dotnet.importTarget" interface="consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget"/>
+
+		<extensionPoint name="processProvider" interface="consulo.msbuild.MSBuildProcessProvider"/>
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="consulo.msbuild">
@@ -49,6 +52,8 @@
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsPath"/>
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildConfiguration"/>
 		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildPlatform"/>
+
+		<processProvider implementation="consulo.msbuild.DefaultMSBuildProcessProvider"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xml">

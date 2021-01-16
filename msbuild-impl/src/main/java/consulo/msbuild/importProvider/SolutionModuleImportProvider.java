@@ -133,10 +133,11 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 		solutionManager.setEnabled(true);
 		solutionManager.setUrl(solutionFile);
 		solutionManager.setMSBuildBundleName(context.getMSBuildBundleName());
+		solutionManager.setProviderId(context.getProviderId());
 
 		VirtualFile parent = solutionFile.getParent();
 
-		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName() + " (Solution)", parent, modifiableModuleModel);
+		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName(), parent, modifiableModuleModel);
 		consumer.accept(mainModuleModel.getModule());
 		WriteAction.run(mainModuleModel::commit);
 	}

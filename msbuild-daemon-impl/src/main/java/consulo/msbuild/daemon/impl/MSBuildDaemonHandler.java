@@ -12,6 +12,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -57,7 +58,23 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 			case "Connect":
 				myChannelAsync.setDone(new DaemonConnection(ctx.channel()));
 				break;
+			case "Error":
+			{
+				Object message = binaryMessage.Arguments.get("Message");
+				DaemonConnection result = myChannelAsync.getResult();
+
+				AppExecutorUtil.getAppExecutorService().execute(() ->
+				{
+					Pair<DaemonMessage, consulo.util.concurrent.AsyncResult> handler = result.getHandler(binaryMessage.Id);
+					if(handler != null)
+					{
+						handler.getSecond().rejectWithThrowable(new IOException((String) message));
+					}
+				});
+				break;
+			}
 			default:
+			{
 				DaemonConnection result = myChannelAsync.getResult();
 
 				AppExecutorUtil.getAppExecutorService().execute(() ->
@@ -70,6 +87,7 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 					}
 				});
 				break;
+			}
 		}
 	}
 

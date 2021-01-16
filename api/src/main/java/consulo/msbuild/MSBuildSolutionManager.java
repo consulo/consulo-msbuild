@@ -35,7 +35,6 @@ import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNullableByDefault;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +60,8 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		public String url;
 
 		public String msBuildBundleName;
+
+		public String providerId;
 
 		public Map<String, ProjectOptions> projects = new HashMap<>();
 	}
@@ -161,8 +162,18 @@ public class MSBuildSolutionManager extends SimpleModificationTracker implements
 		return myState.msBuildBundleName;
 	}
 
-	public void setMSBuildBundleName(@ParametersAreNullableByDefault String name)
+	public void setMSBuildBundleName(@Nullable String name)
 	{
 		myState.msBuildBundleName = name;
+	}
+
+	public String getProviderId()
+	{
+		return myState.providerId;
+	}
+
+	public void setProviderId(String providerId)
+	{
+		myState.providerId = providerId;
 	}
 }

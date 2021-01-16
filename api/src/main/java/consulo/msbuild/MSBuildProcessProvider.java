@@ -6,6 +6,10 @@ import com.intellij.openapi.projectRoots.Sdk;
 import consulo.extensions.StrictExtensionPointName;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -18,8 +22,29 @@ public interface MSBuildProcessProvider
 
 	String getId();
 
-	void fillBundles(Consumer<Sdk> consumer);
+	void fillBundles(@Nonnull Consumer<Sdk> consumer);
+
+	@Nullable
+	Sdk findBundle(@Nullable String bundleName);
 
 	@Nonnull
-	GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, int port);
+	GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull File exeFile, int port);
+
+	@Nonnull
+	File getTargetFile();
+
+	default void doAdditionalCopy(@Nonnull File targetFile, @Nonnull File msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException
+	{
+	}
+
+	default void fillGlobalProperties(@Nonnull Sdk msBuildSdk, @Nonnull Map<String, String> properties)
+	{
+	}
+
+	default File getBinDir(@Nonnull Sdk sdk)
+	{
+		return new File(sdk.getHomePath(), "Bin");
+	}
+
+	int getVersion();
 }
