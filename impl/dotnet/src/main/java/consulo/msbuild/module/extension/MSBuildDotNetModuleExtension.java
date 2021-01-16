@@ -30,10 +30,6 @@ import consulo.dotnet.module.extension.BaseDotNetModuleExtension;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.sdk.DotNetSdkType;
 import consulo.msbuild.compiler.MSBuildCompileContext;
-import consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget;
-import consulo.msbuild.importProvider.item.MSBuildImportTarget;
-import consulo.msbuild.importProvider.item.UnknownBuildDotNetImportTarget;
-import consulo.msbuild.module.extension.resolve.MSBuildBundleInfo;
 import consulo.roots.ModuleRootLayer;
 
 import javax.annotation.Nonnull;
@@ -46,7 +42,6 @@ import javax.annotation.Nullable;
 public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>,
 		DotNetModuleExtension<MSBuildDotNetModuleExtension>, DotNetModuleExtensionWithDebug
 {
-	protected MSBuildDotNetImportTarget myImportTarget = UnknownBuildDotNetImportTarget.INSTANCE;
 	protected String myPlatform;
 	protected String myConfiguration;
 
@@ -61,17 +56,9 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBu
 		return false;
 	}
 
-	@Nonnull
-	@Override
-	public MSBuildImportTarget getImportTarget()
-	{
-		return myImportTarget;
-	}
-
 	@Override
 	public void build(MSBuildCompileContext context)
 	{
-		myImportTarget.build(context);
 	}
 
 	@Override
@@ -110,23 +97,8 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBu
 	public void commit(@Nonnull MSBuildDotNetModuleExtension mutableModuleExtension)
 	{
 		super.commit(mutableModuleExtension);
-		myImportTarget = mutableModuleExtension.myImportTarget;
 		myPlatform = mutableModuleExtension.myPlatform;
 		myConfiguration = mutableModuleExtension.myConfiguration;
-	}
-
-	@Nonnull
-	@Override
-	public MSBuildBundleInfo getBundleInfo()
-	{
-		return myImportTarget.getBundleInfoList().get(0);
-	}
-
-	@Nullable
-	@Override
-	public Object resolveAutoSdk()
-	{
-		return myImportTarget.resolveAutoSdk(this);
 	}
 
 	@Nonnull
@@ -140,13 +112,13 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBu
 	@Override
 	public GeneralCommandLine createDefaultCommandLine(@Nonnull Sdk sdk, @Nullable DebugConnectionInfo debugConnectionInfo) throws ExecutionException
 	{
-		return myImportTarget.createDefaultCommandLine(this, sdk, debugConnectionInfo);
+		throw new ExecutionException("Unsupported");
 	}
 
 	@Nonnull
 	@Override
 	public DotNetDebugProcessBase createDebuggerProcess(@Nonnull XDebugSession session, @Nonnull RunProfile runProfile, @Nonnull DebugConnectionInfo debugConnectionInfo)
 	{
-		return myImportTarget.createDebuggerProcess(this, session, runProfile, debugConnectionInfo);
+		throw new IllegalArgumentException("Unsupported");
 	}
 }

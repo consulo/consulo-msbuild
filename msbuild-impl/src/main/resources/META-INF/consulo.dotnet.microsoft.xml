@@ -1,5 +1,4 @@
 <consulo-plugin>
 	<extensions defaultExtensionNs="consulo.msbuild.dotnet">
-		<importTarget implementation="consulo.msbuild.dotnet.microsoft.MicrosoftDotNetImportTarget" order="first"/>
 	</extensions>
 </consulo-plugin>

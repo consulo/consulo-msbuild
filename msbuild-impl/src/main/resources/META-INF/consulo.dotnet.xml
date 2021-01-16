@@ -19,12 +19,8 @@
 		<moduleExtensionProvider key="msbuild-dotnet"
 								 systemOnly="true"
 								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
-								 name="MSBuild (.NET)"
+								 name="MSBuild (.NET Framework)"
 								 immutableClass="consulo.msbuild.module.extension.MSBuildDotNetModuleExtension"
 								 mutableClass="consulo.msbuild.module.extension.MSBuildMutableDotNetModuleExtension"/>
-	</extensions>
-
-	<extensions defaultExtensionNs="consulo.msbuild">
-		<setupStep importProjectClass="consulo.msbuild.importProvider.item.MSBuildDotNetImportProject" stepClass="consulo.msbuild.importProvider.ui.MSBuildDotNetSetupTargetStep" />
 	</extensions>
 </consulo-plugin>

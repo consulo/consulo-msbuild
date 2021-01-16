@@ -16,15 +16,17 @@
 
 package consulo.msbuild;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.intellij.openapi.application.Application;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomFileDescription;
 import consulo.msbuild.dom.Project;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * @author VISTALL
@@ -43,7 +45,19 @@ public class MSBuildDomDescriptor extends DomFileDescription<Project>
 	public boolean isMyFile(@Nonnull XmlFile file)
 	{
 		VirtualFile virtualFile = file.getVirtualFile();
-		return virtualFile != null && MSBuildProjectType.getExtensions().contains(virtualFile.getExtension());
+		if(virtualFile == null)
+		{
+			return false;
+		}
+
+		for(MSBuildProjectFileEP projectFileEP : MSBuildProjectFileEP.EP_NAME.getExtensionList(Application.get()))
+		{
+			if(Objects.equals(virtualFile.getExtension(), projectFileEP.extension))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Nullable

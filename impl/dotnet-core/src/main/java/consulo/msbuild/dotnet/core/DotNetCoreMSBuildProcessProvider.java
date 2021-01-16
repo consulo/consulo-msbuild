@@ -7,6 +7,7 @@ import com.intellij.openapi.util.io.FileUtil;
 import consulo.container.plugin.PluginManager;
 import consulo.dotnet.core.bundle.DotNetCoreBundleType;
 import consulo.msbuild.MSBuildProcessProvider;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,6 +26,14 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 	private static final String ourRuntimeJsonSuffix = ".runtimeconfig.json";
 	private static final String ourDepsJsonSuffix = ".deps.json";
 
+	private final SdkTable mySdkTable;
+
+	@Inject
+	public DotNetCoreMSBuildProcessProvider(SdkTable sdkTable)
+	{
+		mySdkTable = sdkTable;
+	}
+
 	@Override
 	public File getBinDir(@Nonnull Sdk sdk)
 	{
@@ -40,7 +49,7 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public void fillBundles(@Nonnull Consumer<Sdk> consumer)
 	{
-		List<Sdk> sdksOfType = SdkTable.getInstance().getSdksOfType(DotNetCoreBundleType.getInstance());
+		List<Sdk> sdksOfType = mySdkTable.getSdksOfType(DotNetCoreBundleType.getInstance());
 		for(Sdk sdk : sdksOfType)
 		{
 			consumer.accept(sdk);
@@ -51,7 +60,7 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public Sdk findBundle(@Nullable String bundleName)
 	{
-		return SdkTable.getInstance().findSdk(bundleName);
+		return mySdkTable.findSdk(bundleName);
 	}
 
 	@Nonnull

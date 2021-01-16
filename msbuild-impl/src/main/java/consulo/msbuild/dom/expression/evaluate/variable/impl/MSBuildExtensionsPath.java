@@ -16,12 +16,12 @@
 
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkTable;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
-import consulo.msbuild.module.extension.MSBuildRootExtension;
 
 import javax.annotation.Nonnull;
 
@@ -31,20 +31,34 @@ import javax.annotation.Nonnull;
  */
 public class MSBuildExtensionsPath extends MSBuildVariableProvider
 {
+	private final SdkTable mySdkTable;
+
+	public MSBuildExtensionsPath(SdkTable sdkTable)
+	{
+		mySdkTable = sdkTable;
+	}
+
 	@RequiredReadAction
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context)
 	{
-		MSBuildRootExtension extension = ModuleUtilCore.getExtension(context.getModule(), MSBuildRootExtension.class);
-		if(extension == null)
+		MSBuildSolutionManager msBuildSolutionManager = MSBuildSolutionManager.getInstance(context.getProject());
+		if(!msBuildSolutionManager.isEnabled())
 		{
 			return null;
 		}
 
-		Object o = extension.getBundleInfo().resolveSdk(extension.getImportTarget(), extension);
-		if(o instanceof Sdk)
+		String msBuildBundleName = msBuildSolutionManager.getMSBuildBundleName();
+		if(msBuildBundleName == null)
 		{
-			return ((Sdk) o).getHomePath();
+			return null;
+		}
+
+		Sdk sdk = mySdkTable.findSdk(msBuildBundleName);
+	
+		if(sdk != null)
+		{
+			return sdk.getHomePath();
 		}
 
 		return null;

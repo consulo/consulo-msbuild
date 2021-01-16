@@ -32,18 +32,13 @@
 	<depends optional="true" config-file="consulo.csharp.xml">consulo.csharp</depends>
 
 	<extensionPoints>
-		<extensionPoint name="projectType" beanClass="consulo.msbuild.MSBuildProjectTypeEP">
-			<with attribute="implementationClass" implements="consulo.msbuild.MSBuildProjectType"/>
-		</extensionPoint>
-		<extensionPoint name="setupStep" beanClass="consulo.msbuild.importProvider.MSBuildSetupStepEP">
-			<with attribute="importProjectClass" implements="consulo.msbuild.importProvider.item.MSBuildImportProject"/>
-			<with attribute="stepClass" implements="consulo.ui.wizard.WizardStep"/>
-		</extensionPoint>
 		<extensionPoint name="variableProvider" interface="consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider"/>
 
-		<extensionPoint name="dotnet.importTarget" interface="consulo.msbuild.importProvider.item.MSBuildDotNetImportTarget"/>
-
 		<extensionPoint name="processProvider" interface="consulo.msbuild.MSBuildProcessProvider"/>
+
+		<extensionPoint name="projectFile" beanClass="consulo.msbuild.MSBuildProjectFileEP"/>
+
+		<extensionPoint name="projectCapability" interface="consulo.msbuild.MSBuildProjectCapability"/>
 	</extensionPoints>
 
 	<extensions defaultExtensionNs="consulo.msbuild">
