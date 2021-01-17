@@ -3,7 +3,6 @@ package consulo.msbuild.daemon.impl.step;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
 import consulo.msbuild.daemon.impl.message.model.GetProjectItemsRequest;
 import consulo.msbuild.daemon.impl.message.model.GetProjectItemsResponse;
-import consulo.msbuild.daemon.impl.message.model.ProjectItem;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
@@ -50,9 +49,9 @@ public class AnalyzeProjectItemsStep extends PerProjectDaemonStep<GetProjectItem
 
 		context.updateProjectItems(myWProject, getProjectItemsResponse.Items);
 
-		for(ProjectItem item : getProjectItemsResponse.Items)
-		{
-			System.out.println(item.ItemType + " " + item.EvaluatedInclude);
-		}
+//		for(ProjectItem item : getProjectItemsResponse.Items)
+//		{
+//			System.out.println(item.ItemType + " " + item.EvaluatedInclude);
+//		}
 	}
 }

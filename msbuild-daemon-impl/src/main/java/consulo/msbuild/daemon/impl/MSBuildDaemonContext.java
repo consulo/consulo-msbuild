@@ -5,6 +5,7 @@ import consulo.msbuild.daemon.impl.message.model.ProjectItem;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,9 +16,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MSBuildDaemonContext
 {
-	private static class PerProjectInfo
+	public static class PerProjectInfo
 	{
 		public int id;
+
+		public WProject wProject;
 
 		public MultiMap<String, String> items = new MultiMap<>();
 
@@ -30,7 +33,14 @@ public class MSBuildDaemonContext
 	{
 		PerProjectInfo info = new PerProjectInfo();
 		info.id = serverId;
+		info.wProject = wProject;
 		myProjectData.put(wProject.getId(), info);
+	}
+
+	@Nonnull
+	public Collection<PerProjectInfo> getInfos()
+	{
+		return myProjectData.values();
 	}
 
 	public int getRegisteredProjectId(@Nonnull WProject project)

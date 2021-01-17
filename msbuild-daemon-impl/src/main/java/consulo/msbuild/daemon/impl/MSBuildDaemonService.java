@@ -5,13 +5,20 @@ import com.intellij.execution.process.OSProcessHandler;
 import com.intellij.execution.process.ProcessAdapter;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.WriteAction;
+import com.intellij.openapi.module.ModifiableModuleModel;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
+import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.io.BaseOutputReader;
+import consulo.application.AccessRule;
 import consulo.container.boot.ContainerPathManager;
 import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildProcessProvider;
@@ -176,12 +183,74 @@ public class MSBuildDaemonService implements Disposable
 						throw new IOException("failed");
 					}
 				}
+
+				createModules(context);
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
 		});
+	}
+
+	private void createModules(MSBuildDaemonContext context)
+	{
+		Task.Backgroundable.queue(myProject, "Creating Project Structure...", indicator -> {
+			Collection<MSBuildDaemonContext.PerProjectInfo> infos = context.getInfos();
+
+			ModuleManager moduleManager = ModuleManager.getInstance(myProject);
+
+			ModifiableModuleModel moduleModel = AccessRule.read(moduleManager::getModifiableModel);
+
+			assert moduleModel != null;
+
+			for(MSBuildDaemonContext.PerProjectInfo info : infos)
+			{
+				WProject wProject = info.wProject;
+
+				Module moduleByName = moduleModel.findModuleByName(wProject.getName());
+				if(moduleByName == null)
+				{
+					moduleByName = moduleModel.newModule(wProject.getName(), null);
+				}
+
+				final Module finalModuleByName = moduleByName;
+				ModifiableRootModel rootModel = AccessRule.read(() -> ModuleRootManager.getInstance(finalModuleByName).getModifiableModel());
+				assert rootModel != null;
+
+				rootModel.removeAllLayers(true);
+				
+				importModule(finalModuleByName, rootModel, info);
+
+				WriteAction.runAndWait(rootModel::commit);
+			}
+
+			WriteAction.runAndWait(moduleModel::commit);
+		});
+	}
+
+	private void importModule(Module module, ModifiableRootModel rootModel, MSBuildDaemonContext.PerProjectInfo info)
+	{
+		VirtualFile projectFile = info.wProject.getVirtualFile();
+		// project file found
+		if(projectFile == null)
+		{
+			return;
+		}
+
+		VirtualFile parent = projectFile.getParent();
+		assert parent != null;
+
+		Collection<String> compileItems = info.items.get("Compile");
+		for(String compileItem : compileItems)
+		{
+			VirtualFile file = parent.findFileByRelativePath(compileItem);
+			if(file != null)
+			{
+				rootModel.addSingleContentEntry(file);
+			}
+		}
+		// todo
 	}
 
 	@Nonnull

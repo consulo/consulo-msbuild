@@ -50,7 +50,7 @@ public class AnalyzeDependenciesStep extends BaseRunProjectStep
 			String extension = item.Metadata.get("Extension");
 			String fullPath = item.Metadata.get("FullPath");
 
-			System.out.println();
+			//System.out.println();
 		}
 	}
 }

@@ -38,9 +38,9 @@ public class ListTargetsStep extends PerProjectDaemonStep<GetTargetsRequest, Get
 	@Override
 	public void handleResponse(@Nonnull MSBuildDaemonContext context, @Nonnull GetTargetsResponse getTargetsResponse)
 	{
-		for(String target : getTargetsResponse.Targets)
-		{
-			System.out.println(target);
-		}
+//		for(String target : getTargetsResponse.Targets)
+//		{
+//			System.out.println(target);
+//		}
 	}
 }
