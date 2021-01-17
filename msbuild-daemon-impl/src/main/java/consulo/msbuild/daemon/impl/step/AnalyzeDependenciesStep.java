@@ -44,13 +44,15 @@ public class AnalyzeDependenciesStep extends BaseRunProjectStep
 			return;
 		}
 
-		for(MSBuildEvaluatedItem item : paths)
-		{
-			String filename = item.Metadata.get("Filename");
-			String extension = item.Metadata.get("Extension");
-			String fullPath = item.Metadata.get("FullPath");
+		context.updateProjectDependencies(myWProject, paths);
 
-			//System.out.println();
-		}
+//		for(MSBuildEvaluatedItem item : paths)
+//		{
+//			String filename = item.Metadata.get("Filename");
+//			String extension = item.Metadata.get("Extension");
+//			String fullPath = item.Metadata.get("FullPath");
+//
+//			//System.out.println();
+//		}
 	}
 }

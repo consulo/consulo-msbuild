@@ -1,13 +1,12 @@
 package consulo.msbuild.daemon.impl;
 
 import com.intellij.util.containers.MultiMap;
+import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
 import consulo.msbuild.daemon.impl.message.model.ProjectItem;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,6 +22,8 @@ public class MSBuildDaemonContext
 		public WProject wProject;
 
 		public MultiMap<String, String> items = new MultiMap<>();
+
+		public List<MSBuildEvaluatedItem> dependencies = new ArrayList<>();
 
 		public Map<String, String> properties = new HashMap<>();
 	}
@@ -57,6 +58,14 @@ public class MSBuildDaemonContext
 		{
 			info.items.putValue(projectItem.ItemType, projectItem.EvaluatedInclude);
 		}
+	}
+
+	public void updateProjectDependencies(@Nonnull WProject project, @Nonnull MSBuildEvaluatedItem[] items)
+	{
+		PerProjectInfo info = getInfo(project);
+		info.dependencies.clear();
+
+		Collections.addAll(info.dependencies, items);
 	}
 
 	public Map<String, String> getProperties(@Nonnull WProject project)

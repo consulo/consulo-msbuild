@@ -22,6 +22,7 @@ import consulo.application.AccessRule;
 import consulo.container.boot.ContainerPathManager;
 import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildProcessProvider;
+import consulo.msbuild.MSBuildProjectCapability;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
@@ -219,7 +220,7 @@ public class MSBuildDaemonService implements Disposable
 				assert rootModel != null;
 
 				rootModel.removeAllLayers(true);
-				
+
 				importModule(finalModuleByName, rootModel, info);
 
 				WriteAction.runAndWait(rootModel::commit);
@@ -250,6 +251,25 @@ public class MSBuildDaemonService implements Disposable
 				rootModel.addSingleContentEntry(file);
 			}
 		}
+
+		Collection<String> projectCapacility = info.items.get("ProjectCapability");
+
+		List<MSBuildProjectCapability> capabilities = new ArrayList<>();
+		for(MSBuildProjectCapability capability : MSBuildProjectCapability.EP_NAME.getExtensionList(myProject.getApplication()))
+		{
+			if(projectCapacility.contains(capability.getId()))
+			{
+				capabilities.add(capability);
+			}
+		}
+
+		capabilities.sort((o1, o2) -> Integer.compareUnsigned(o1.getWeight(), o2.getWeight()));
+
+		for(MSBuildProjectCapability capability : capabilities)
+		{
+			capability.importModule(module, rootModel, projectFile, info.properties, info.dependencies);
+		}
+		System.out.println();
 		// todo
 	}
 

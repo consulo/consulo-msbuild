@@ -22,6 +22,8 @@
 
 	<extensions defaultExtensionNs="consulo.msbuild">
 		<projectFile extension="csproj"/>
+
+		<projectCapability implementation="consulo.msbuild.csharp.MSBuildCSharpProjectCapability"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">

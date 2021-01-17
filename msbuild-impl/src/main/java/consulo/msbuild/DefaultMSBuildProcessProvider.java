@@ -191,7 +191,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public int getVersion()
 	{
-		return 1;
+		return 2;
 	}
 
 	private static void SetMSBuildConfigProperty(Element toolset, String name, String value)
