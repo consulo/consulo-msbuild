@@ -16,12 +16,12 @@
 
 package consulo.msbuild.solution.reader;
 
+import consulo.util.lang.ref.SimpleReference;
+
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.intellij.openapi.util.Ref;
 
 /**
  * @author VISTALL
@@ -53,7 +53,7 @@ public class SlnSection
 		return this;
 	}
 
-	public void Read(LineNumberReader reader, String line, Ref<Integer> curLineNum) throws IOException
+	public void Read(LineNumberReader reader, String line, SimpleReference<Integer> curLineNum) throws IOException
 	{
 		Line = curLineNum.get();
 		int k = line.indexOf('(');

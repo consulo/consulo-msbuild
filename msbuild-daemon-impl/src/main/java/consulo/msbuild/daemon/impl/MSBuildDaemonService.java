@@ -12,7 +12,6 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.util.io.FileUtil;
@@ -23,19 +22,17 @@ import consulo.container.boot.ContainerPathManager;
 import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
-import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.WithLenghtReaderDecoder;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.InitializeRequest;
 import consulo.msbuild.daemon.impl.step.*;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 import consulo.net.util.NetUtil;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.dataholder.Key;
-import consulo.util.lang.StringUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -47,6 +44,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -87,14 +85,13 @@ public class MSBuildDaemonService implements Disposable
 
 	public void forceUpdate()
 	{
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
-		if(!solutionManager.isEnabled())
+		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
+		if(solutionExtension == null)
 		{
 			return;
 		}
-
 		List<DaemonStep> steps = new ArrayList<>();
-		Collection<WProject> projects = solutionManager.getSolution().getProjects();
+		Collection<WProject> projects = solutionExtension.getProjects();
 		for(WProject wProject : projects)
 		{
 			steps.add(new InitializeProjectStep(wProject));
@@ -130,10 +127,20 @@ public class MSBuildDaemonService implements Disposable
 
 	private void runSteps(List<DaemonStep> steps)
 	{
+		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
+		if(solutionExtension == null)
+		{
+			throw new UnsupportedOperationException();
+		}
+
 		Task.Backgroundable.queue(myProject, "Starting Daemon Service...", indicator ->
 		{
 			try
 			{
+				MSBuildProcessProvider buildProcessProvider = findBuildProcessProvider(solutionExtension);
+
+				Sdk msBuildSdk = buildProcessProvider.findBundle(solutionExtension.getSdkName());
+
 				// not connected to server
 				if(myConnection == null)
 				{
@@ -142,12 +149,6 @@ public class MSBuildDaemonService implements Disposable
 					initializeServer();
 
 					indicator.setText2("Starting daemon process...");
-
-					MSBuildProcessProvider buildProcessProvider = findBuildProcessProvider();
-
-					MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
-
-					Sdk msBuildSdk = buildProcessProvider.findBundle(solutionManager.getMSBuildBundleName());
 
 					startServer(msBuildSdk, buildProcessProvider);
 
@@ -185,7 +186,7 @@ public class MSBuildDaemonService implements Disposable
 					}
 				}
 
-				createModules(context);
+				createModules(context, buildProcessProvider, msBuildSdk);
 			}
 			catch(Exception e)
 			{
@@ -194,7 +195,7 @@ public class MSBuildDaemonService implements Disposable
 		});
 	}
 
-	private void createModules(MSBuildDaemonContext context)
+	private void createModules(MSBuildDaemonContext context, MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk)
 	{
 		Task.Backgroundable.queue(myProject, "Creating Project Structure...", indicator -> {
 			Collection<MSBuildDaemonContext.PerProjectInfo> infos = context.getInfos();
@@ -221,7 +222,7 @@ public class MSBuildDaemonService implements Disposable
 
 				rootModel.removeAllLayers(true);
 
-				importModule(finalModuleByName, rootModel, info);
+				importModule(finalModuleByName, rootModel, info, buildProcessProvider, msBuildSdk);
 
 				WriteAction.runAndWait(rootModel::commit);
 			}
@@ -230,7 +231,7 @@ public class MSBuildDaemonService implements Disposable
 		});
 	}
 
-	private void importModule(Module module, ModifiableRootModel rootModel, MSBuildDaemonContext.PerProjectInfo info)
+	private void importModule(Module module, ModifiableRootModel rootModel, MSBuildDaemonContext.PerProjectInfo info, MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk)
 	{
 		VirtualFile projectFile = info.wProject.getVirtualFile();
 		// project file found
@@ -267,20 +268,18 @@ public class MSBuildDaemonService implements Disposable
 
 		for(MSBuildProjectCapability capability : capabilities)
 		{
-			capability.importModule(module, rootModel, projectFile, info.properties, info.dependencies);
+			capability.importModule(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, info.properties, info.dependencies);
 		}
 		System.out.println();
 		// todo
 	}
 
 	@Nonnull
-	private MSBuildProcessProvider findBuildProcessProvider()
+	private MSBuildProcessProvider findBuildProcessProvider(@Nonnull MSBuildSolutionModuleExtension<?> solutionModuleExtension)
 	{
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
-
 		for(MSBuildProcessProvider msBuildProcessProvider : MSBuildProcessProvider.EP_NAME.getExtensionList(Application.get()))
 		{
-			if(Objects.equals(solutionManager.getProviderId(), msBuildProcessProvider.getId()))
+			if(Objects.equals(solutionModuleExtension.getProcessProviderId(), msBuildProcessProvider.getId()))
 			{
 				return msBuildProcessProvider;
 			}
@@ -345,26 +344,6 @@ public class MSBuildDaemonService implements Disposable
 		return msBuildFile;
 	}
 
-	private Sdk getMSBuildSdk()
-	{
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
-
-		// TODO [VISTALL] improve logic
-		String msBuildBundleName = solutionManager.getMSBuildBundleName();
-		if(StringUtil.isEmptyOrSpaces(msBuildBundleName))
-		{
-			for(Sdk sdk : SdkTable.getInstance().getSdksOfType(MSBuildBundleType.getInstance()))
-			{
-				return sdk;
-			}
-		}
-		else
-		{
-			return SdkTable.getInstance().findSdk(msBuildBundleName);
-		}
-		return null;
-	}
-
 	private void fillGlobalProperties(Map<String, String> dictionary, String binDir, Sdk msBuildSdk, MSBuildProcessProvider buildProcessProvider)
 	{
 		// This causes build targets to behave how they should inside an IDE, instead of in a command-line process
@@ -375,9 +354,14 @@ public class MSBuildDaemonService implements Disposable
 		// true, because the VS in-process compiler would take care of the deps tracking
 		dictionary.put("UseHostCompilerIfAvailable", "false");
 
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
+		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
+		if(solutionExtension == null)
+		{
+			return;
+		}
 
-		VirtualFile solutionFile = solutionManager.getSolutionFile();
+		VirtualFile solutionFile = solutionExtension.getSolutionFile();
+
 		if(solutionFile == null)
 		{
 			return;
@@ -446,6 +430,12 @@ public class MSBuildDaemonService implements Disposable
 				.option(ChannelOption.SO_BACKLOG, 128)
 				.childOption(ChannelOption.SO_KEEPALIVE, true);
 		b.bind(myPort).sync();
+	}
+
+	@Nullable
+	private MSBuildSolutionModuleExtension<?> getSolutionExtension()
+	{
+		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
 	}
 
 	@Override

@@ -1,5 +1,23 @@
 <consulo-plugin>
 	<extensions defaultExtensionNs="consulo.msbuild">
 		<processProvider implementation="consulo.msbuild.dotnet.core.DotNetCoreMSBuildProcessProvider"/>
+
+		<projectCapability implementation="consulo.msbuild.dotnet.core.DotNetCoreDotNetProjectCapability"/>
+	</extensions>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<moduleExtensionProvider key="msbuild-dotnet-core"
+								 name="MSBuild Solution (.NET Core)"
+								 systemOnly="true"
+								 icon="consulo.dotnet.DotNetIconGroup@netfoundation"
+								 immutableClass="consulo.msbuild.module.extension.MSBuildSolutionModuleExtensionImpl"
+								 mutableClass="consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtensionImpl"/>
+
+		<moduleExtensionProvider key="dotnet-core-by-msbuild"
+								 name=".NET/.NET Core (MSBuild)"
+								 systemOnly="true"
+								 icon="consulo.dotnet.DotNetIconGroup@netfoundation"
+								 immutableClass="consulo.msbuild.dotnet.core.module.extension.MSBuildDotNetCoreModuleExtension"
+								 mutableClass="consulo.msbuild.dotnet.core.module.extension.MSBuildDotNetCoreMutableModuleExtension"/>
 	</extensions>
 </consulo-plugin>

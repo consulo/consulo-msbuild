@@ -17,8 +17,6 @@
 package consulo.msbuild.module.extension;
 
 import com.intellij.openapi.projectRoots.Sdk;
-import consulo.bundle.BundleHolder;
-import consulo.bundle.ui.BundleBox;
 import consulo.disposer.Disposable;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
@@ -37,11 +35,24 @@ import java.util.Objects;
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExtension implements DotNetMutableModuleExtension<MSBuildDotNetModuleExtension>
+public class MSBuildMutableDotNetModuleExtension extends MSBuildDotNetModuleExtension implements DotNetMutableModuleExtension<MSBuildDotNetModuleExtension>,
+		MSBuildProjectMutableModuleExtension<MSBuildDotNetModuleExtension>
 {
 	public MSBuildMutableDotNetModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
+	}
+
+	@Override
+	public void setConfiguration(String configuration)
+	{
+		myConfiguration = configuration;
+	}
+
+	@Override
+	public void setPlatform(String platform)
+	{
+		myPlatform = platform;
 	}
 
 	@RequiredUIAccess

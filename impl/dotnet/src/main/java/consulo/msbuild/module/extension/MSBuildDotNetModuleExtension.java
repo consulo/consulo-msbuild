@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
  * @author VISTALL
  * @since 02-Feb-17
  */
-public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildRootExtension<MSBuildDotNetModuleExtension>,
+public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBuildDotNetModuleExtension> implements MSBuildProjectModuleExtension<MSBuildDotNetModuleExtension>,
 		DotNetModuleExtension<MSBuildDotNetModuleExtension>, DotNetModuleExtensionWithDebug
 {
 	protected String myPlatform;
@@ -68,21 +68,9 @@ public class MSBuildDotNetModuleExtension extends BaseDotNetModuleExtension<MSBu
 	}
 
 	@Override
-	public void setConfiguration(String configuration)
-	{
-		myConfiguration = configuration;
-	}
-
-	@Override
 	public String getPlatform()
 	{
 		return myPlatform;
-	}
-
-	@Override
-	public void setPlatform(String platform)
-	{
-		myPlatform = platform;
 	}
 
 	@Nonnull

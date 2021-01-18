@@ -20,9 +20,9 @@ import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.util.Version;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
@@ -45,13 +45,13 @@ public class MSBuildToolsVersion extends MSBuildVariableProvider
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context)
 	{
-		MSBuildSolutionManager msBuildSolutionManager = MSBuildSolutionManager.getInstance(context.getProject());
-		if(!msBuildSolutionManager.isEnabled())
+		MSBuildSolutionModuleExtension<?> solutionModuleExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(context.getProject());
+		if(solutionModuleExtension == null)
 		{
 			return null;
 		}
 
-		String msBuildBundleName = msBuildSolutionManager.getMSBuildBundleName();
+		String msBuildBundleName = solutionModuleExtension.getSdkName();
 		if(msBuildBundleName == null)
 		{
 			return null;

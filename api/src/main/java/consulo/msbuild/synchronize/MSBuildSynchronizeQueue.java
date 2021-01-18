@@ -1,5 +1,16 @@
 package consulo.msbuild.synchronize;
 
+import com.intellij.openapi.Disposable;
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.util.concurrency.AppExecutorUtil;
+import com.intellij.util.containers.MultiMap;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
@@ -9,21 +20,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Nonnull;
-import jakarta.inject.Inject;
-
-import com.intellij.openapi.Disposable;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.concurrency.AppExecutorUtil;
-import com.intellij.util.containers.MultiMap;
-
 /**
  * @author VISTALL
  * @since 2018-08-15
  */
+@Singleton
 public class MSBuildSynchronizeQueue implements Runnable, Disposable
 {
 	@Nonnull
@@ -50,7 +51,7 @@ public class MSBuildSynchronizeQueue implements Runnable, Disposable
 
 	private Deque<Change> myChanges = new ConcurrentLinkedDeque<>();
 
-	@jakarta.inject.Inject
+	@Inject
 	public MSBuildSynchronizeQueue(Project project)
 	{
 		myProject = project;

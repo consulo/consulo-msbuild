@@ -16,11 +16,11 @@
 
 package consulo.msbuild.solution.reader;
 
+import com.intellij.openapi.util.text.StringUtil;
+import consulo.util.lang.ref.SimpleReference;
+
 import java.io.IOException;
 import java.io.LineNumberReader;
-
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.text.StringUtil;
 
 /**
  * @author VISTALL
@@ -53,44 +53,44 @@ public class SlnProject
 		return this;
 	}
 
-	public void Read(LineNumberReader reader, String line, Ref<Integer> curLineNum) throws IOException
+	public void Read(LineNumberReader reader, String line, SimpleReference<Integer> curLineNum) throws IOException
 	{
 		Line = curLineNum.get();
 
-		Ref<Integer> n = Ref.create(0);
+		SimpleReference<Integer> n = SimpleReference.create(0);
 		FindNext(curLineNum, line, n, '(');
-		n = Ref.create(n.get() + 1);
+		n = SimpleReference.create(n.get() + 1);
 		FindNext(curLineNum, line, n, '"');
-		Ref<Integer> n2 = Ref.create(n.get() + 1);
+		SimpleReference<Integer> n2 = SimpleReference.create(n.get() + 1);
 		FindNext(curLineNum, line, n2, '"');
 		TypeGuid = DotNetString.substring(line, n.get() + 1, n2.get() - n.get() - 1);
 
-		n = Ref.create(n2.get() + 1);
+		n = SimpleReference.create(n2.get() + 1);
 		FindNext(curLineNum, line, n, ')');
 		FindNext(curLineNum, line, n, '=');
 
 		FindNext(curLineNum, line, n, '"');
-		n2 = Ref.create(n.get() + 1);
+		n2 = SimpleReference.create(n.get() + 1);
 		FindNext(curLineNum, line, n2, '"');
 		Name = DotNetString.substring(line, n.get() + 1, n2.get() - n.get() - 1);
 
-		n = Ref.create(n2.get() + 1);
+		n = SimpleReference.create(n2.get() + 1);
 		FindNext(curLineNum, line, n, ',');
 		FindNext(curLineNum, line, n, '"');
-		n2 = Ref.create(n.get() + 1);
+		n2 = SimpleReference.create(n.get() + 1);
 		FindNext(curLineNum, line, n2, '"');
 		FilePath = DotNetString.substring(line, n.get() + 1, n2.get() - n.get() - 1);
 
-		n = Ref.create(n2.get() + 1);
+		n = SimpleReference.create(n2.get() + 1);
 		FindNext(curLineNum, line, n, ',');
 		FindNext(curLineNum, line, n, '"');
-		n2 = Ref.create(n.get() + 1);
+		n2 = SimpleReference.create(n.get() + 1);
 		FindNext(curLineNum, line, n2, '"');
 		Id = DotNetString.substring(line, n.get() + 1, n2.get() - n.get() - 1);
 
 		while((line = reader.readLine()) != null)
 		{
-			curLineNum = Ref.create(curLineNum.get() + 1);
+			curLineNum = SimpleReference.create(curLineNum.get() + 1);
 			line = line.trim();
 			if(line.equals("EndProject"))
 			{
@@ -111,7 +111,7 @@ public class SlnProject
 		throw new InvalidSolutionFormatException(curLineNum.get(), "Project section not closed");
 	}
 
-	void FindNext(Ref<Integer> ln, String line, Ref<Integer> i, char c)
+	void FindNext(SimpleReference<Integer> ln, String line, SimpleReference<Integer> i, char c)
 	{
 		i.set(StringUtil.indexOf(line, c, i.get()));
 		if(i.get() == -1)

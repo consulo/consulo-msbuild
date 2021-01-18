@@ -7,6 +7,7 @@ import com.intellij.openapi.util.io.FileUtil;
 import consulo.container.plugin.PluginManager;
 import consulo.dotnet.core.bundle.DotNetCoreBundleType;
 import consulo.msbuild.MSBuildProcessProvider;
+import consulo.msbuild.MSBuildProjectCapability;
 import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
@@ -148,5 +149,12 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 	public int getVersion()
 	{
 		return 6;
+	}
+
+	@Nonnull
+	@Override
+	public String getSolutionModuleExtensionId()
+	{
+		return "msbuild-dotnet-core";
 	}
 }

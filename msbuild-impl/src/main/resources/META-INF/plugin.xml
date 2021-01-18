@@ -62,6 +62,13 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<compiler implementation="consulo.msbuild.compiler.MSBuildCompiler"/>
 
+		<moduleExtensionProvider key="msbuild-default"
+								 name="MSBuild Solution"
+								 systemOnly="true"
+								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
+								 immutableClass="consulo.msbuild.module.extension.MSBuildSolutionModuleExtensionImpl"
+								 mutableClass="consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtensionImpl"/>
+
 		<compiler.moduleScopeFactory implementation="consulo.msbuild.compiler.MSBuildCompileModuleScopeFactory"/>
 
 		<editorNotificationProvider implementation="consulo.msbuild.editor.MSBuildOutOfProjectEditorNotificationProvider"/>
@@ -98,8 +105,6 @@
 
 		<multiHostInjector forClass="com.intellij.psi.xml.XmlAttributeValue" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
 		<multiHostInjector forClass="com.intellij.psi.xml.XmlText" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
-
-		<postStartupActivity implementation="consulo.msbuild.MSBuildStartActivity"/>
 
 		<projectService serviceImplementation="consulo.msbuild.daemon.impl.MSBuildDaemonService"/>
 

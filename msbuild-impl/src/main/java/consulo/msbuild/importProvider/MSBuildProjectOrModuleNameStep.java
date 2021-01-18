@@ -80,7 +80,7 @@ public class MSBuildProjectOrModuleNameStep extends UnifiedProjectOrModuleNameSt
 
 			solutionModuleImportContext.setMSBuildBundleName(bundleName);
 
-			solutionModuleImportContext.setProviderId(msBuildProcessProvider.getId());
+			solutionModuleImportContext.setProvider(msBuildProcessProvider);
 		}
 		else
 		{

@@ -194,6 +194,13 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 		return 2;
 	}
 
+	@Nonnull
+	@Override
+	public String getSolutionModuleExtensionId()
+	{
+		return "msbuild-default";
+	}
+
 	private static void SetMSBuildConfigProperty(Element toolset, String name, String value)
 	{
 		SetMSBuildConfigProperty(toolset, name, value, true, false);

@@ -28,6 +28,7 @@ import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import consulo.annotation.DeprecationInfo;
 import consulo.msbuild.solution.model.WSolution;
 import consulo.msbuild.synchronize.MSBuildSynchronizeFileListener;
 import jakarta.inject.Inject;
@@ -44,6 +45,8 @@ import java.util.Map;
  */
 @State(name = "MSBuildSolutionManager", storages = @Storage("msbuild.xml"))
 @Singleton
+@Deprecated
+@DeprecationInfo("Use MSBuildSolutionModuleExtension")
 public class MSBuildSolutionManager extends SimpleModificationTracker implements PersistentStateComponent<MSBuildSolutionManager.State>
 {
 	public final static class ProjectOptions

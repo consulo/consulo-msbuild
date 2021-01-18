@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import com.intellij.openapi.util.Ref;
+import consulo.util.lang.ref.SimpleReference;
 
 /**
  * @author VISTALL
@@ -93,7 +94,7 @@ public class SlnFile
 			else if(line.startsWith("Project"))
 			{
 				SlnProject p = new SlnProject();
-				Ref<Integer> ref = Ref.create(curLineNum);
+				SimpleReference<Integer> ref = SimpleReference.create(curLineNum);
 				p.Read(reader, line, ref);
 				curLineNum = ref.get();
 				projects.add(p);

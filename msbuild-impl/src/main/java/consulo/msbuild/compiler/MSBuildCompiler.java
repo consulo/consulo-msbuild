@@ -13,7 +13,7 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.Chunk;
 import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.module.extension.MSBuildRootExtension;
+import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 
 /**
  * @author VISTALL
@@ -32,7 +32,7 @@ public class MSBuildCompiler implements TranslatingCompiler
 	{
 		Module module = chunk.getNodes().iterator().next();
 
-		MSBuildRootExtension extension = ModuleUtilCore.getExtension(module, MSBuildRootExtension.class);
+		MSBuildProjectModuleExtension extension = ModuleUtilCore.getExtension(module, MSBuildProjectModuleExtension.class);
 
 		if(extension == null)
 		{

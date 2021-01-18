@@ -6,16 +6,16 @@ import consulo.msbuild.compiler.MSBuildCompileContext;
 /**
  * @author VISTALL
  * @since 2018-02-06
+ *
+ * Module Extension for each MSBuild Project inside solution
  */
-public interface MSBuildRootExtension<T extends MSBuildRootExtension<T>> extends ModuleExtension<T>
+public interface MSBuildProjectModuleExtension<T extends MSBuildProjectModuleExtension<T>> extends ModuleExtension<T>
 {
 	void build(MSBuildCompileContext context);
 
+	@Deprecated
 	String getConfiguration();
 
-	void setConfiguration(String configuration);
-
+	@Deprecated
 	String getPlatform();
-
-	void setPlatform(String platform);
 }

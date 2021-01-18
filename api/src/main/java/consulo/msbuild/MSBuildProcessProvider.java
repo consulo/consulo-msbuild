@@ -47,4 +47,7 @@ public interface MSBuildProcessProvider
 	}
 
 	int getVersion();
+
+	@Nonnull
+	String getSolutionModuleExtensionId();
 }

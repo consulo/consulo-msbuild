@@ -15,6 +15,7 @@ import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.VisualStudioSolutionFileType;
+import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.ui.image.Image;
 import consulo.ui.wizard.WizardStep;
 import org.intellij.lang.annotations.Language;
@@ -133,11 +134,19 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 		solutionManager.setEnabled(true);
 		solutionManager.setUrl(solutionFile);
 		solutionManager.setMSBuildBundleName(context.getMSBuildBundleName());
-		solutionManager.setProviderId(context.getProviderId());
+		solutionManager.setProviderId(context.getProvider().getId());
 
 		VirtualFile parent = solutionFile.getParent();
 
-		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName() + " (Solution)", parent, modifiableModuleModel);
+		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName() + " (Root)", parent, modifiableModuleModel);
+
+		MSBuildSolutionMutableModuleExtension<?> solExtension = mainModuleModel.getExtensionWithoutCheck(context.getProvider().getSolutionModuleExtensionId());
+		assert solExtension != null;
+		solExtension.setEnabled(true);
+		solExtension.setSolutionFileUrl(solutionFile.getUrl());
+		solExtension.setSdkName(context.getMSBuildBundleName());
+		solExtension.setProcessProviderId(context.getProvider().getId());
+
 		consumer.accept(mainModuleModel.getModule());
 		WriteAction.run(mainModuleModel::commit);
 	}
