@@ -36,7 +36,7 @@ public abstract class PerProjectDaemonStep<Request extends DaemonMessage<Respons
 	{
 		ProjectConfigurationInfo conf = new ProjectConfigurationInfo();
 		conf.Configuration = "Debug";
-		conf.Platform = "Any CPU";
+		conf.Platform = "AnyCPU";
 		conf.ProjectFile = myWProject.getVirtualFile().getPresentableUrl();
 		conf.ProjectGuid = myWProject.getId();
 

@@ -122,10 +122,32 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new ListTargetsStep(project));
 		}
 
-		runSteps(steps);
+		runSteps(steps, true);
 	}
 
-	private void runSteps(List<DaemonStep> steps)
+	public void build()
+	{
+		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
+		if(solutionExtension == null)
+		{
+			return;
+		}
+		List<DaemonStep> steps = new ArrayList<>();
+		Collection<WProject> projects = solutionExtension.getProjects();
+		for(WProject wProject : projects)
+		{
+			steps.add(new InitializeProjectStep(wProject));
+		}
+
+		for(WProject project : projects)
+		{
+			steps.add(new BuildProjectStep(project));
+		}
+
+		runSteps(steps, false);
+	}
+
+	private void runSteps(List<DaemonStep> steps, boolean runImport)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -186,7 +208,10 @@ public class MSBuildDaemonService implements Disposable
 					}
 				}
 
-				createModules(context, buildProcessProvider, msBuildSdk);
+				if(runImport)
+				{
+					createModules(context, buildProcessProvider, msBuildSdk);
+				}
 			}
 			catch(Exception e)
 			{
