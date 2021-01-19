@@ -77,10 +77,6 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 		DotNetMutableModuleExtension<?> extension = rootModel.getExtensionWithoutCheck(getMutableExtensionClass());
 		assert extension != null;
 		extension.setEnabled(true);
-		if(extension instanceof MSBuildProjectMutableModuleExtension)
-		{
-			((MSBuildProjectMutableModuleExtension) extension).setTargets(targets);
-		}
 
 		for(Map.Entry<String, String> entry : properties.entrySet())
 		{

@@ -2,6 +2,10 @@ package consulo.msbuild.daemon.impl.message;
 
 import com.intellij.util.concurrency.AppExecutorUtil;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
+import consulo.msbuild.daemon.impl.message.model.LogMessage;
+import consulo.msbuild.daemon.impl.message.model.RunProjectRequest;
+import consulo.msbuild.daemon.impl.step.BaseRunProjectStep;
+import consulo.msbuild.daemon.impl.step.DaemonStep;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.lang.Pair;
 import io.netty.buffer.ByteBuf;
@@ -31,6 +35,10 @@ public class DaemonConnection
 
 	private Map<Integer, Pair<DaemonMessage, AsyncResult>> myHandlers = new ConcurrentHashMap<>();
 
+	private Map<Integer, BaseRunProjectStep> myLoggingSetup = new ConcurrentHashMap<>();
+
+	private AtomicInteger myLoggerIds = new AtomicInteger();
+
 	private Future<?> myPingFutures = CompletableFuture.completedFuture(null);
 
 	public DaemonConnection(Channel channel)
@@ -48,6 +56,20 @@ public class DaemonConnection
 	public void dispose()
 	{
 		myPingFutures.cancel(false);
+	}
+
+	public void prepareLogging(DaemonMessage request, DaemonStep step)
+	{
+		if(step instanceof BaseRunProjectStep)
+		{
+			RunProjectRequest runProjectRequest = (RunProjectRequest) request;
+
+			int loggerId = myLoggerIds.incrementAndGet();
+
+			runProjectRequest.LogWriterId = loggerId;
+
+			myLoggingSetup.put(loggerId, (BaseRunProjectStep) step);
+		}
 	}
 
 	@Nonnull
@@ -69,7 +91,7 @@ public class DaemonConnection
 
 		ChannelFuture channelFuture = myChannel.writeAndFlush(buffer).syncUninterruptibly();
 
-		System.out.println("send " + binaryMessage + ", is success " + channelFuture.isSuccess());
+		//System.out.println("send " + binaryMessage + ", is success " + channelFuture.isSuccess());
 
 		myHandlers.put(binaryMessage.Id, Pair.createNonNull(message, result));
 
@@ -80,5 +102,14 @@ public class DaemonConnection
 	public Pair<DaemonMessage, AsyncResult> getHandler(int id)
 	{
 		return myHandlers.remove(id);
+	}
+
+	public void runLogging(LogMessage logMessage)
+	{
+		BaseRunProjectStep baseRunProjectStep = myLoggingSetup.get(logMessage.LoggerId);
+		if(baseRunProjectStep != null)
+		{
+			baseRunProjectStep.acceptLogMessage(logMessage);
+		}
 	}
 }

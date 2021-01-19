@@ -1,6 +1,7 @@
 package consulo.msbuild.daemon.impl.step;
 
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
+import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.msbuild.daemon.impl.message.model.MSBuildVerbosity;
 import consulo.msbuild.daemon.impl.message.model.RunProjectRequest;
 import consulo.msbuild.daemon.impl.message.model.RunProjectResponse;
@@ -30,7 +31,7 @@ public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProject
 	{
 		RunProjectRequest r = new RunProjectRequest();
 		r.ProjectId = context.getRegisteredProjectId(myWProject);
-		r.Verbosity = MSBuildVerbosity.Quiet;
+		r.Verbosity = wantLogging() ? MSBuildVerbosity.Normal : MSBuildVerbosity.Quiet;
 		r.EvaluateItems = myItems;
 		r.RunTargets = myTargets;
 		r.Configurations = buildProjectConfigurationInfo(context);
@@ -41,5 +42,14 @@ public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProject
 		r.GlobalProperties.put("DesignTimeBuild", "true");
 
 		return r;
+	}
+
+	public boolean wantLogging()
+	{
+		return false;
+	}
+
+	public void acceptLogMessage(LogMessage logMessage)
+	{
 	}
 }

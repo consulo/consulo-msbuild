@@ -3,9 +3,11 @@ package consulo.msbuild.toolWindow.nodes;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
+import com.intellij.ui.SimpleTextAttributes;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
+import consulo.platform.base.icon.PlatformIconGroup;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -42,6 +44,7 @@ public class RootNodeDescriptor extends AbstractTreeNode<Object>
 	@Override
 	protected void update(PresentationData presentationData)
 	{
-
+		presentationData.addText("<solution>", SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
+		presentationData.setIcon(PlatformIconGroup.nodesFolder());
 	}
 }

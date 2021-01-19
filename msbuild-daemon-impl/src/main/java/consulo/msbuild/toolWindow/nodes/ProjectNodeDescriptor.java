@@ -4,12 +4,11 @@ import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.SimpleTextAttributes;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.api.icon.MSBuildApiIconGroup;
-import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
@@ -35,16 +34,13 @@ public class ProjectNodeDescriptor extends AbstractTreeNode<WProject>
 	public Collection<? extends AbstractTreeNode> getChildren()
 	{
 		ModuleManager manager = ModuleManager.getInstance(myProject);
+		MSBuildWorkspaceData workspaceData = MSBuildWorkspaceData.getInstance(myProject);
 
 		Module moduleByName = manager.findModuleByName(getValue().getName());
 		if(moduleByName != null)
 		{
-			MSBuildProjectModuleExtension<?> extension = ModuleUtilCore.getExtension(moduleByName, MSBuildProjectModuleExtension.class);
-			if(extension != null)
-			{
-				Set<String> targets = extension.getTargets();
-				return targets.stream().sorted().filter(s -> s.charAt(0) != '_').map(o -> new TargetNodeDescriptor(myProject, o)).collect(Collectors.toList());
-			}
+			Set<String> targets = workspaceData.getTargets(getValue().getId());
+			return targets.stream().sorted().filter(s -> s.charAt(0) != '_').map(o -> new TargetNodeDescriptor(myProject, o)).collect(Collectors.toList());
 		}
 
 		return List.of();

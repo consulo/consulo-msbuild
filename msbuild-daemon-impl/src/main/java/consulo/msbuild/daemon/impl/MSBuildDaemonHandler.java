@@ -6,6 +6,8 @@ import consulo.logging.Logger;
 import consulo.msbuild.daemon.impl.message.BinaryMessage;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
+import consulo.msbuild.daemon.impl.message.model.LogMessage;
+import consulo.util.lang.ObjectUtil;
 import consulo.util.lang.Pair;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -28,6 +30,8 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 
 	private AsyncResult<DaemonConnection> myChannelAsync = AsyncResult.undefined();
 
+	private final Object lock = ObjectUtil.sentinel("lock");
+
 	public MSBuildDaemonHandler(MSBuildDaemonService daemonService)
 	{
 		myDaemonService = daemonService;
@@ -37,21 +41,28 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 	@SuppressWarnings("unchecked")
 	public void channelRead(ChannelHandlerContext ctx, Object msg)
 	{
-		ByteBuf byteBuf = (ByteBuf) msg;
+		int leftBytes;
+		byte[] data;
+		synchronized(lock)
+		{
+			ByteBuf byteBuf = (ByteBuf) msg;
 
-		byte type = byteBuf.readByte();
+			byte type = byteBuf.readByte();
 
-		int arraySize = byteBuf.readIntLE();
+			int arraySize = byteBuf.readIntLE();
 
-		byte[] data = new byte[arraySize];
+			data = new byte[arraySize];
 
-		byteBuf.readBytes(data);
+			byteBuf.readBytes(data);
+
+			leftBytes = byteBuf.readableBytes();
+		}
 
 		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
 
 		BinaryMessage binaryMessage = new BinaryMessage(buffer);
 
-		System.out.println("receive " + binaryMessage.toString() + " left " + byteBuf.readableBytes());
+		//System.out.println("receive " + binaryMessage.toString() + " left " + leftBytes);
 
 		switch(binaryMessage.Name)
 		{
@@ -71,6 +82,15 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 						handler.getSecond().rejectWithThrowable(new IOException((String) message));
 					}
 				});
+				break;
+			}
+			case "MonoDevelop.Projects.MSBuild.LogMessage":
+			{
+				LogMessage logMessage = binaryMessage.toModel(LogMessage.class);
+
+				DaemonConnection result = myChannelAsync.getResult();
+
+				result.runLogging(logMessage);
 				break;
 			}
 			default:

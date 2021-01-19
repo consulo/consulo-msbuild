@@ -22,6 +22,7 @@ import consulo.container.boot.ContainerPathManager;
 import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
+import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.WithLenghtReaderDecoder;
@@ -125,7 +126,7 @@ public class MSBuildDaemonService implements Disposable
 		runSteps(steps, true);
 	}
 
-	public void build()
+	public void runTarget(String target)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -141,7 +142,7 @@ public class MSBuildDaemonService implements Disposable
 
 		for(WProject project : projects)
 		{
-			steps.add(new BuildProjectStep(project));
+			steps.add(new RunTargetProjectStep(project, target));
 		}
 
 		runSteps(steps, false);
@@ -194,6 +195,8 @@ public class MSBuildDaemonService implements Disposable
 
 					DaemonMessage request = step.prepareRequest(context);
 
+					myConnection.prepareLogging(request, step);
+
 					AsyncResult<DataObject> result = myConnection.sendWithResponse(request);
 					DataObject object = (DataObject) result.getResultSync();
 
@@ -207,6 +210,21 @@ public class MSBuildDaemonService implements Disposable
 						throw new IOException("failed");
 					}
 				}
+
+				for(DaemonStep step : steps)
+				{
+					if(step instanceof ListTargetsStep)
+					{
+						MSBuildWorkspaceData msBuildWorkspaceData = MSBuildWorkspaceData.getInstance(myProject);
+						for(MSBuildDaemonContext.PerProjectInfo projectInfo : context.getInfos())
+						{
+							msBuildWorkspaceData.setTargets(projectInfo.wProject.getId(), projectInfo.targets);
+						}
+
+						break;
+					}
+				}
+
 
 				if(runImport)
 				{
@@ -424,7 +442,7 @@ public class MSBuildDaemonService implements Disposable
 			@Override
 			public void onTextAvailable(ProcessEvent processEvent, Key key)
 			{
-				System.out.println("> " + processEvent.getText().trim());
+				//System.out.println("> " + processEvent.getText().trim());
 			}
 		});
 		handler.startNotify();
