@@ -40,7 +40,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public String getId()
 	{
-		return "standalone";
+		return DEFAULT_ID;
 	}
 
 	@Override

@@ -20,6 +20,8 @@ public interface MSBuildProcessProvider
 {
 	StrictExtensionPointName<Application, MSBuildProcessProvider> EP_NAME = StrictExtensionPointName.forApplication("consulo.msbuild.processProvider");
 
+	String DEFAULT_ID = "standalone";
+
 	String getId();
 
 	void fillBundles(@Nonnull Consumer<Sdk> consumer);

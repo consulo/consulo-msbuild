@@ -1,4 +1,14 @@
 <consulo-plugin>
-	<extensions defaultExtensionNs="consulo.msbuild.dotnet">
+	<extensions defaultExtensionNs="consulo.msbuild">
+		<projectCapability implementation="consulo.msbuild.dotnet.microsoft.MicrosoftDotNetProjectCapability"/>
+	</extensions>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<moduleExtensionProvider key="dotnet-by-msbuild"
+								 name=".NET Framework (MSBuild)"
+								 systemOnly="true"
+								 icon="consulo.dotnet.microsoft.MicrosoftDotNetIconGroup@dotnet"
+								 immutableClass="consulo.msbuild.dotnet.microsoft.module.extension.MSBuildMicrosoftDotNetModuleExtension"
+								 mutableClass="consulo.msbuild.dotnet.microsoft.module.extension.MSBuildMicrosoftDotNetMutableModuleExtension"/>
 	</extensions>
 </consulo-plugin>
