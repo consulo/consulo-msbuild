@@ -9,12 +9,8 @@ import com.intellij.xdebugger.XDebugSession;
 import consulo.dotnet.compiler.DotNetMacroUtil;
 import consulo.dotnet.core.bundle.DotNetCoreBundleType;
 import consulo.dotnet.debugger.DotNetDebugProcessBase;
-import consulo.dotnet.debugger.DotNetModuleExtensionWithDebug;
 import consulo.dotnet.execution.DebugConnectionInfo;
-import consulo.dotnet.module.extension.BaseDotNetModuleExtension;
-import consulo.dotnet.module.extension.DotNetModuleExtension;
-import consulo.msbuild.compiler.MSBuildCompileContext;
-import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
+import consulo.msbuild.module.extension.MSBuildBaseDotNetModuleExtension;
 import consulo.roots.ModuleRootLayer;
 
 import javax.annotation.Nonnull;
@@ -24,18 +20,11 @@ import javax.annotation.Nullable;
  * @author VISTALL
  * @since 18/01/2021
  */
-public class MSBuildDotNetCoreModuleExtension extends BaseDotNetModuleExtension<MSBuildDotNetCoreModuleExtension> implements DotNetModuleExtension<MSBuildDotNetCoreModuleExtension>,
-		DotNetModuleExtensionWithDebug, MSBuildProjectModuleExtension<MSBuildDotNetCoreModuleExtension>
+public class MSBuildDotNetCoreModuleExtension extends MSBuildBaseDotNetModuleExtension<MSBuildDotNetCoreModuleExtension>
 {
 	public MSBuildDotNetCoreModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
-	}
-
-	@Override
-	public boolean isSupportCompilation()
-	{
-		return false;
 	}
 
 	@Nonnull
@@ -43,24 +32,6 @@ public class MSBuildDotNetCoreModuleExtension extends BaseDotNetModuleExtension<
 	public Class<? extends SdkType> getSdkTypeClass()
 	{
 		return DotNetCoreBundleType.class;
-	}
-
-	@Override
-	public void build(MSBuildCompileContext context)
-	{
-
-	}
-
-	@Override
-	public String getConfiguration()
-	{
-		return null;
-	}
-
-	@Override
-	public String getPlatform()
-	{
-		return null;
 	}
 
 	@Nonnull

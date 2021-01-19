@@ -15,6 +15,7 @@ import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
 import consulo.msbuild.MSBuildReferencePath;
+import consulo.msbuild.module.extension.MSBuildProjectMutableModuleExtension;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.ExcludedContentFolderTypeProvider;
 import consulo.roots.types.BinariesOrderRootType;
@@ -25,6 +26,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author VISTALL
@@ -69,15 +71,20 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 							 MSBuildProcessProvider buildProcessProvider,
 							 Sdk msBuildSdk,
 							 Map<String, String> properties,
-							 List<? extends MSBuildReferencePath> referencePaths)
+							 List<? extends MSBuildReferencePath> referencePaths,
+							 Set<String> targets)
 	{
-		DotNetMutableModuleExtension<?> dotNetExtension = rootModel.getExtensionWithoutCheck(getMutableExtensionClass());
-		assert dotNetExtension != null;
-		dotNetExtension.setEnabled(true);
+		DotNetMutableModuleExtension<?> extension = rootModel.getExtensionWithoutCheck(getMutableExtensionClass());
+		assert extension != null;
+		extension.setEnabled(true);
+		if(extension instanceof MSBuildProjectMutableModuleExtension)
+		{
+			((MSBuildProjectMutableModuleExtension) extension).setTargets(targets);
+		}
 
 		for(Map.Entry<String, String> entry : properties.entrySet())
 		{
-			handleProperty(entry, projectFile, dotNetExtension, rootModel);
+			handleProperty(entry, projectFile, extension, rootModel);
 		}
 
 		LibraryTable moduleLibraryTable = rootModel.getModuleLibraryTable();
@@ -106,7 +113,7 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 			modifiableModel.commit();
 		}
 
-		postInitialize(dotNetExtension, properties, buildProcessProvider, msBuildSdk);
+		postInitialize(extension, properties, buildProcessProvider, msBuildSdk);
 
 		WriteAction.runAndWait(modifiableLibraryModel::commit);
 	}

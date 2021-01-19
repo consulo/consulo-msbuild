@@ -10,6 +10,7 @@ import consulo.extensions.StrictExtensionPointName;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author VISTALL
@@ -33,7 +34,8 @@ public interface MSBuildProjectCapability
 					  MSBuildProcessProvider buildProcessProvider,
 					  Sdk msBuildSdk,
 					  Map<String, String> properties,
-					  List<? extends MSBuildReferencePath> referencePaths);
+					  List<? extends MSBuildReferencePath> referencePaths,
+					  Set<String> targets);
 
 	default boolean isApplicable(@Nonnull MSBuildProcessProvider provider)
 	{

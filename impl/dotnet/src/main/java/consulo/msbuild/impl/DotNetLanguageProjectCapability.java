@@ -11,6 +11,7 @@ import consulo.msbuild.MSBuildReferencePath;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author VISTALL
@@ -23,13 +24,14 @@ public abstract class DotNetLanguageProjectCapability implements MSBuildProjectC
 											  VirtualFile projectFile,
 											  MSBuildProcessProvider buildProcessProvider,
 											  Sdk msBuildSdk, Map<String, String> properties,
-											  List<? extends MSBuildReferencePath> referencePaths)
+											  List<? extends MSBuildReferencePath> referencePaths,
+											  Set<String> targets)
 	{
 		for(MSBuildProjectCapability capability : MSBuildProjectCapability.EP_NAME.getExtensionList(Application.get()))
 		{
 			if(DOTNET_CAPABILITY.equals(capability.getId()) && capability.isApplicable(buildProcessProvider))
 			{
-				capability.importModule(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, properties, referencePaths);
+				capability.importModule(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, properties, referencePaths, targets);
 			}
 		}
 	}

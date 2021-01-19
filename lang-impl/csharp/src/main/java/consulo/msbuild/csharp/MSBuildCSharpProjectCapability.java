@@ -12,6 +12,7 @@ import consulo.msbuild.impl.DotNetLanguageProjectCapability;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author VISTALL
@@ -35,9 +36,10 @@ public class MSBuildCSharpProjectCapability extends DotNetLanguageProjectCapabil
 							 MSBuildProcessProvider buildProcessProvider,
 							 Sdk msBuildSdk,
 							 Map<String, String> properties,
-							 List<? extends MSBuildReferencePath> referencePaths)
+							 List<? extends MSBuildReferencePath> referencePaths,
+							 Set<String> targets)
 	{
-		initializeDotNetCapability(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, properties, referencePaths);
+		initializeDotNetCapability(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, properties, referencePaths, targets);
 
 		MSBuildCSharpMutableModuleExtension csharpExtension = rootModel.getExtensionWithoutCheck("msbuild-csharp");
 		assert csharpExtension != null;

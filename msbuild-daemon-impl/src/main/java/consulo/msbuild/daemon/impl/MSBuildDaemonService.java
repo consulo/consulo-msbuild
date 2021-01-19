@@ -283,7 +283,7 @@ public class MSBuildDaemonService implements Disposable
 		List<MSBuildProjectCapability> capabilities = new ArrayList<>();
 		for(MSBuildProjectCapability capability : MSBuildProjectCapability.EP_NAME.getExtensionList(myProject.getApplication()))
 		{
-			if(projectCapacility.contains(capability.getId()))
+			if(projectCapacility.contains(capability.getId()) && capability.isApplicable(buildProcessProvider))
 			{
 				capabilities.add(capability);
 			}
@@ -293,10 +293,8 @@ public class MSBuildDaemonService implements Disposable
 
 		for(MSBuildProjectCapability capability : capabilities)
 		{
-			capability.importModule(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, info.properties, info.dependencies);
+			capability.importModule(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, info.properties, info.dependencies, info.targets);
 		}
-		System.out.println();
-		// todo
 	}
 
 	@Nonnull

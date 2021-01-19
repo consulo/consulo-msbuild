@@ -8,15 +8,11 @@ import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.xdebugger.XDebugSession;
 import consulo.dotnet.compiler.DotNetMacroUtil;
 import consulo.dotnet.debugger.DotNetDebugProcessBase;
-import consulo.dotnet.debugger.DotNetModuleExtensionWithDebug;
 import consulo.dotnet.execution.DebugConnectionInfo;
 import consulo.dotnet.microsoft.debugger.MicrosoftDebugProcess;
-import consulo.dotnet.module.extension.BaseDotNetModuleExtension;
-import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.microsoft.dotnet.module.extension.MicrosoftDotNetModuleExtension;
 import consulo.microsoft.dotnet.sdk.MicrosoftDotNetSdkType;
-import consulo.msbuild.compiler.MSBuildCompileContext;
-import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
+import consulo.msbuild.module.extension.MSBuildBaseDotNetModuleExtension;
 import consulo.roots.ModuleRootLayer;
 
 import javax.annotation.Nonnull;
@@ -26,18 +22,11 @@ import javax.annotation.Nullable;
  * @author VISTALL
  * @since 19/01/2021
  */
-public class MSBuildMicrosoftDotNetModuleExtension extends BaseDotNetModuleExtension<MSBuildMicrosoftDotNetModuleExtension> implements DotNetModuleExtension<MSBuildMicrosoftDotNetModuleExtension>,
-		DotNetModuleExtensionWithDebug, MSBuildProjectModuleExtension<MSBuildMicrosoftDotNetModuleExtension>
+public class MSBuildMicrosoftDotNetModuleExtension extends MSBuildBaseDotNetModuleExtension<MSBuildMicrosoftDotNetModuleExtension>
 {
 	public MSBuildMicrosoftDotNetModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
-	}
-
-	@Override
-	public boolean isSupportCompilation()
-	{
-		return false;
 	}
 
 	@Nonnull
@@ -45,24 +34,6 @@ public class MSBuildMicrosoftDotNetModuleExtension extends BaseDotNetModuleExten
 	public Class<? extends SdkType> getSdkTypeClass()
 	{
 		return MicrosoftDotNetSdkType.class;
-	}
-
-	@Override
-	public void build(MSBuildCompileContext context)
-	{
-
-	}
-
-	@Override
-	public String getConfiguration()
-	{
-		return null;
-	}
-
-	@Override
-	public String getPlatform()
-	{
-		return null;
 	}
 
 	@Nonnull

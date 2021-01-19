@@ -29,7 +29,6 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<moduleExtensionProvider key="msbuild-csharp"
 								 systemOnly="true"
-								 parentKey="msbuild-dotnet"
 								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
 								 name="C#"
 								 immutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpModuleExtension"

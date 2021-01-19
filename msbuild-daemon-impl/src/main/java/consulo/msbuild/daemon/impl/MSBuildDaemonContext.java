@@ -26,6 +26,8 @@ public class MSBuildDaemonContext
 		public List<MSBuildEvaluatedItem> dependencies = new ArrayList<>();
 
 		public Map<String, String> properties = new HashMap<>();
+
+		public Set<String> targets = new LinkedHashSet<>();
 	}
 
 	private final Map<String, PerProjectInfo> myProjectData = new ConcurrentHashMap<>();
@@ -58,6 +60,14 @@ public class MSBuildDaemonContext
 		{
 			info.items.putValue(projectItem.ItemType, projectItem.EvaluatedInclude);
 		}
+	}
+
+	public void updateProjectTargets(@Nonnull WProject project, @Nonnull String[] targets)
+	{
+		PerProjectInfo info = getInfo(project);
+		info.targets.clear();
+
+		Collections.addAll(info.targets, targets);
 	}
 
 	public void updateProjectDependencies(@Nonnull WProject project, @Nonnull MSBuildEvaluatedItem[] items)

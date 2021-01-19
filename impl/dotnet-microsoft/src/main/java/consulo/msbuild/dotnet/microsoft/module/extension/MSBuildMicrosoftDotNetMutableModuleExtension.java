@@ -50,16 +50,4 @@ public class MSBuildMicrosoftDotNetMutableModuleExtension extends MSBuildMicroso
 	{
 		return isModifiedImpl(originalExtension);
 	}
-
-	@Override
-	public void setPlatform(String platform)
-	{
-
-	}
-
-	@Override
-	public void setConfiguration(String configuration)
-	{
-
-	}
 }

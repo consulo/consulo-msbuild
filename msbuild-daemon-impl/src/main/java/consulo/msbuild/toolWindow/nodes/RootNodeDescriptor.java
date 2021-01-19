@@ -4,7 +4,7 @@ import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
@@ -28,13 +28,13 @@ public class RootNodeDescriptor extends AbstractTreeNode<Object>
 	@Override
 	public Collection<? extends AbstractTreeNode> getChildren()
 	{
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
-		if(!solutionManager.isEnabled())
+		MSBuildSolutionModuleExtension<?> extension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
+		if(extension == null)
 		{
 			return List.of();
 		}
 
-		Collection<WProject> projects = solutionManager.getSolution().getProjects();
+		Collection<WProject> projects = extension.getProjects();
 
 		return projects.stream().map(wProject -> new ProjectNodeDescriptor(myProject, wProject)).collect(Collectors.toList());
 	}
