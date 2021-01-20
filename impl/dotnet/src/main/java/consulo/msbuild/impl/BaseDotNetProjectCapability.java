@@ -8,7 +8,10 @@ import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.roots.libraries.LibraryTable;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.StandardFileSystems;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
+import consulo.compiler.ModuleCompilerPathsManager;
 import consulo.dotnet.DotNetTarget;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
@@ -16,7 +19,7 @@ import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
 import consulo.msbuild.MSBuildEvaluatedItem;
 import consulo.roots.ModifiableModuleRootLayer;
-import consulo.roots.impl.ExcludedContentFolderTypeProvider;
+import consulo.roots.impl.*;
 import consulo.roots.types.BinariesOrderRootType;
 import consulo.vfs.util.ArchiveVfsUtil;
 
@@ -161,11 +164,18 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 					moduleExtension.setOutputDir(path = (parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue)));
 				}
 
-				VirtualFile file = LocalFileSystem.getInstance().findFileByPath(path);
-				if(file != null)
-				{
-					rootLayer.addContentEntry(file).addFolder(file, ExcludedContentFolderTypeProvider.getInstance());
-				}
+				String url = VirtualFileManager.constructUrl(StandardFileSystems.FILE_PROTOCOL, FileUtil.toSystemIndependentName(path));
+
+				rootLayer.addContentEntry(url).addFolder(url, ExcludedContentFolderTypeProvider.getInstance());
+
+				ModuleCompilerPathsManager compilerPathsManager = ModuleCompilerPathsManager.getInstance(moduleExtension.getModule());
+				compilerPathsManager.setInheritedCompilerOutput(false);
+				compilerPathsManager.setExcludeOutput(true);
+				
+				compilerPathsManager.setCompilerOutputUrl(ProductionContentFolderTypeProvider.getInstance(), url);
+				compilerPathsManager.setCompilerOutputUrl(ProductionResourceContentFolderTypeProvider.getInstance(), url);
+				compilerPathsManager.setCompilerOutputUrl(TestContentFolderTypeProvider.getInstance(), url);
+				compilerPathsManager.setCompilerOutputUrl(TestResourceContentFolderTypeProvider.getInstance(), url);
 				break;
 			}
 			case "TargetFrameworkVersion":
