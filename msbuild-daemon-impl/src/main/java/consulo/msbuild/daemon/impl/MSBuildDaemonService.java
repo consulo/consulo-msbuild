@@ -250,6 +250,8 @@ public class MSBuildDaemonService implements Disposable
 				if(loggingSession != null)
 				{
 					myLoggingSessions.remove(loggingSession.getId());
+					final MSBuildLoggingSession finalLoggingSession = loggingSession;
+					Application.get().getLastUIAccess().give(() -> finalLoggingSession.flush());
 					loggingSession.disposeWithTree();
 				}
 				
@@ -467,13 +469,13 @@ public class MSBuildDaemonService implements Disposable
 			@Override
 			public void processTerminated(ProcessEvent processEvent)
 			{
-
+				myConnection = null;
 			}
 
 			@Override
 			public void onTextAvailable(ProcessEvent processEvent, Key key)
 			{
-				//System.out.println("> " + processEvent.getText().trim());
+				System.out.println("> " + processEvent.getText().trim());
 			}
 		});
 		handler.startNotify();

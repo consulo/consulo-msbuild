@@ -53,7 +53,7 @@ public class MSBuildLoggingSession implements Disposable
 		myZipperUpdater.queue(this::flush);
 	}
 
-	private void flush()
+	public void flush()
 	{
 		MessageView messageView = MessageView.SERVICE.getInstance(myProject);
 		messageView.runWhenInitialized(() -> printToConsole(messageView));

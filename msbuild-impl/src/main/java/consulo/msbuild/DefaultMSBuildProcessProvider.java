@@ -83,6 +83,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 		c.addParameter("true"); // debug
 
 		c.withEnvironment("MSBUILD_EXE_PATH", targetFile.getAbsolutePath());
+		c.withEnvironment("DISABLEOUTOFPROCTASKHOST ", "1");
 		return c;
 	}
 
