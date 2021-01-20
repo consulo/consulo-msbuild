@@ -19,9 +19,9 @@ package consulo.msbuild.dom.expression.evaluate.variable.impl;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 
 import javax.annotation.Nonnull;
 
@@ -42,13 +42,13 @@ public class MSBuildExtensionsPath extends MSBuildVariableProvider
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context)
 	{
-		MSBuildSolutionManager msBuildSolutionManager = MSBuildSolutionManager.getInstance(context.getProject());
-		if(!msBuildSolutionManager.isEnabled())
+		MSBuildSolutionModuleExtension<?> moduleExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(context.getProject());
+		if(moduleExtension == null)
 		{
 			return null;
 		}
 
-		String msBuildBundleName = msBuildSolutionManager.getMSBuildBundleName();
+		String msBuildBundleName = moduleExtension.getSdkName();
 		if(msBuildBundleName == null)
 		{
 			return null;

@@ -80,11 +80,9 @@
 
 		<fileTypeFactory implementation="consulo.msbuild.MSBuildFileTypeFactory"/>
 
-		<projectViewPane implementation="consulo.msbuild.projectView.SolutionViewPane"/>
+		<!--todo <projectViewPane implementation="consulo.msbuild.projectView.SolutionViewPane"/>-->
 
-		<projectService serviceImplementation="consulo.msbuild.MSBuildSolutionManager"/>
 		<projectService serviceImplementation="consulo.msbuild.MSBuildWorkspaceData"/>
-		<projectService serviceImplementation="consulo.msbuild.synchronize.MSBuildSynchronizeQueue"/>
 
 		<moduleImportProvider implementation="consulo.msbuild.importProvider.SolutionModuleImportProvider"/>
 

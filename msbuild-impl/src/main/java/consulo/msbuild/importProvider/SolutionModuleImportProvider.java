@@ -13,7 +13,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.VisualStudioSolutionFileType;
 import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.ui.image.Image;
@@ -130,11 +129,6 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 
 		VirtualFile solutionFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
 		assert solutionFile != null;
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
-		solutionManager.setEnabled(true);
-		solutionManager.setUrl(solutionFile);
-		solutionManager.setMSBuildBundleName(context.getMSBuildBundleName());
-		solutionManager.setProviderId(context.getProvider().getId());
 
 		VirtualFile parent = solutionFile.getParent();
 

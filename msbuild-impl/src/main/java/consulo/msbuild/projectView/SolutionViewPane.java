@@ -42,7 +42,7 @@ import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.ui.AutoScrollFromSourceHandler;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.projectView.select.SolutionSelectInTarget;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.image.Image;
@@ -476,7 +476,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	public boolean isInitiallyVisible()
 	{
-		return MSBuildSolutionManager.getInstance(myProject).isEnabled();
+		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject) != null;
 	}
 
 	@Nonnull
@@ -489,9 +489,9 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 			@RequiredReadAction
 			protected AbstractTreeNode createRoot(Project project, ViewSettings settings)
 			{
-				MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
+				MSBuildSolutionModuleExtension extension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
 
-				VirtualFile solutionFile = solutionManager.getSolutionFile();
+				VirtualFile solutionFile = extension == null ? null : extension.getSolutionFile();
 
 				if(solutionFile == null)
 				{

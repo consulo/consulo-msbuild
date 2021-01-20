@@ -25,7 +25,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildGUID;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
 import consulo.msbuild.solution.reader.SlnSection;
@@ -53,7 +52,7 @@ public class SolutionViewRootNode extends ProjectViewNode<Project>
 		super(project, project, viewSettings);
 		mySolutionFile = solutionFile;
 
-		myWSolution = MSBuildSolutionManager.getInstance(project).getSolution();
+		myWSolution = null; // TODO
 	}
 
 	@Override
