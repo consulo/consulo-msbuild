@@ -15,10 +15,13 @@ import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.tree.TreeUtil;
 import consulo.disposer.Disposable;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.msbuild.toolWindow.actions.FilterTargetsAction;
 import consulo.msbuild.toolWindow.actions.RefreshProjectsAction;
 import consulo.msbuild.toolWindow.nodes.TargetNodeDescriptor;
+import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import java.awt.event.MouseEvent;
@@ -29,17 +32,21 @@ import java.awt.event.MouseEvent;
  */
 public class MSBuildToolWindowPanel extends SimpleToolWindowPanel implements Disposable
 {
+	private final Tree myTree;
+	private final StructureTreeModel<MSBuildTreeStructure> myModel;
+
 	public MSBuildToolWindowPanel(@Nonnull Project project)
 	{
 		super(true, true);
 
-		Tree tree = new Tree(new AsyncTreeModel(new StructureTreeModel<>(new MSBuildTreeStructure(project), this), this));
+		myModel = new StructureTreeModel<>(new MSBuildTreeStructure(project), this);
+		myTree = new Tree(new AsyncTreeModel(myModel, this));
 		new DoubleClickListener()
 		{
 			@Override
 			protected boolean onDoubleClick(MouseEvent mouseEvent)
 			{
-				TreePath selectionPath = tree.getSelectionPath();
+				TreePath selectionPath = myTree.getSelectionPath();
 				if(selectionPath == null)
 				{
 					return false;
@@ -52,19 +59,32 @@ public class MSBuildToolWindowPanel extends SimpleToolWindowPanel implements Dis
 				}
 				return false;
 			}
-		}.installOn(tree);
+		}.installOn(myTree);
 		//tree.setRootVisible(false);
 
-		setContent(ScrollPaneFactory.createScrollPane(tree, true));
+		setContent(ScrollPaneFactory.createScrollPane(myTree, true));
 
 		ActionGroup.Builder builder = ActionGroup.newImmutableBuilder();
 		builder.add(new RefreshProjectsAction());
+		builder.add(new FilterTargetsAction());
 
 		ActionToolbar toolbar = ActionManager.getInstance().createActionToolbar("MSBuildToolWindow", builder.build(), true);
+		toolbar.setTargetComponent(this);
 
 		JComponent component = toolbar.getComponent();
 		component.setBorder(JBUI.Borders.customLine(JBColor.border(), 0, 0, 1, 0));
 		setToolbar(component);
+	}
+
+	@Nullable
+	@Override
+	public Object getData(@Nonnull Key<?> dataId)
+	{
+		if(dataId == MSBuildToolWindowKeys.TREE_STRUCTURE)
+		{
+			return myModel;
+		}
+		return super.getData(dataId);
 	}
 
 	@Override

@@ -10,6 +10,8 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.api.icon.MSBuildApiIconGroup;
 import consulo.msbuild.solution.model.WProject;
+import consulo.msbuild.toolWindow.actions.FilterTargetsAction;
+import consulo.util.collection.ArrayUtil;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -23,6 +25,12 @@ import java.util.stream.Collectors;
  */
 public class ProjectNodeDescriptor extends AbstractTreeNode<WProject>
 {
+	private static final String[] ourCommonTargets = {
+			"Clean",
+			"Compile",
+			"Build"
+	};
+
 	public ProjectNodeDescriptor(Project project, @Nonnull WProject value)
 	{
 		super(project, value);
@@ -40,7 +48,14 @@ public class ProjectNodeDescriptor extends AbstractTreeNode<WProject>
 		if(moduleByName != null)
 		{
 			Set<String> targets = workspaceData.getTargets(getValue().getId());
-			return targets.stream().sorted().filter(s -> s.charAt(0) != '_').map(o -> new TargetNodeDescriptor(myProject, o)).collect(Collectors.toList());
+			if(FilterTargetsAction.isFiltered(myProject))
+			{
+				return targets.stream().sorted().filter(s -> ArrayUtil.contains(s, ourCommonTargets)).map(o -> new TargetNodeDescriptor(myProject, o)).collect(Collectors.toList());
+			}
+			else
+			{
+				return targets.stream().sorted().filter(s -> s.charAt(0) != '_').map(o -> new TargetNodeDescriptor(myProject, o)).collect(Collectors.toList());
+			}
 		}
 
 		return List.of();
