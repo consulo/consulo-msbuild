@@ -14,8 +14,7 @@ import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
-import consulo.msbuild.MSBuildReferencePath;
-import consulo.msbuild.module.extension.MSBuildProjectMutableModuleExtension;
+import consulo.msbuild.MSBuildEvaluatedItem;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.ExcludedContentFolderTypeProvider;
 import consulo.roots.types.BinariesOrderRootType;
@@ -71,7 +70,7 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 							 MSBuildProcessProvider buildProcessProvider,
 							 Sdk msBuildSdk,
 							 Map<String, String> properties,
-							 List<? extends MSBuildReferencePath> referencePaths,
+							 List<? extends MSBuildEvaluatedItem> referencePaths,
 							 Set<String> targets)
 	{
 		DotNetMutableModuleExtension<?> extension = rootModel.getExtensionWithoutCheck(getMutableExtensionClass());
@@ -86,7 +85,7 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 		LibraryTable moduleLibraryTable = rootModel.getModuleLibraryTable();
 		LibraryTable.ModifiableModel modifiableLibraryModel = moduleLibraryTable.getModifiableModel();
 
-		for(MSBuildReferencePath referencePath : referencePaths)
+		for(MSBuildEvaluatedItem referencePath : referencePaths)
 		{
 			String fullPath = referencePath.getMetadata().get("FullPath");
 

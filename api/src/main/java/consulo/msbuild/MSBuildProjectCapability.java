@@ -34,7 +34,7 @@ public interface MSBuildProjectCapability
 					  MSBuildProcessProvider buildProcessProvider,
 					  Sdk msBuildSdk,
 					  Map<String, String> properties,
-					  List<? extends MSBuildReferencePath> referencePaths,
+					  List<? extends MSBuildEvaluatedItem> referencePaths,
 					  Set<String> targets);
 
 	default boolean isApplicable(@Nonnull MSBuildProcessProvider provider)

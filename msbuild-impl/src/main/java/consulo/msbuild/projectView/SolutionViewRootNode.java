@@ -24,15 +24,16 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildGUID;
-import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.solution.model.WSolution;
 import consulo.msbuild.solution.reader.SlnSection;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.annotation.RequiredUIAccess;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -44,15 +45,15 @@ import java.util.Set;
 public class SolutionViewRootNode extends ProjectViewNode<Project>
 {
 	private WSolution myWSolution;
+	@Nullable
 	private VirtualFile mySolutionFile;
 
 	@RequiredReadAction
-	public SolutionViewRootNode(Project project, VirtualFile solutionFile, ViewSettings viewSettings)
+	public SolutionViewRootNode(Project project, @Nullable VirtualFile solutionFile, ViewSettings viewSettings)
 	{
 		super(project, project, viewSettings);
 		mySolutionFile = solutionFile;
-
-		myWSolution = null; // TODO
+		myWSolution = solutionFile == null ? null : WSolution.build(project, solutionFile);
 	}
 
 	@Override
@@ -122,11 +123,17 @@ public class SolutionViewRootNode extends ProjectViewNode<Project>
 	@Override
 	protected void update(PresentationData presentation)
 	{
-		presentation.setIcon(MSBuildIcons.VisualStudio);
-		presentation.setPresentableText("Solution");
+		presentation.setIcon(PlatformIconGroup.nodesFolder());
 
-		String solName = String.format("Solution '%s' (%s project(s))", mySolutionFile.getNameWithoutExtension(), myWSolution.getProjects().size());
+		if(mySolutionFile != null)
+		{
+			String solName = String.format("Solution '%s' (%s project(s))", mySolutionFile.getNameWithoutExtension(), myWSolution.getProjects().size());
 
-		presentation.setPresentableText(solName);
+			presentation.setPresentableText(solName);
+		}
+		else
+		{
+			presentation.setPresentableText("Solution");
+		}
 	}
 }

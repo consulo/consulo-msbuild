@@ -21,9 +21,12 @@ public class MSBuildDaemonContext
 
 		public WProject wProject;
 
-		public MultiMap<String, String> items = new MultiMap<>();
+		@Deprecated
+		public MultiMap<String, String> oldItems = new MultiMap<>();
 
 		public List<MSBuildEvaluatedItem> dependencies = new ArrayList<>();
+
+		public MultiMap<String, MSBuildEvaluatedItem> items = new MultiMap<>();
 
 		public Map<String, String> properties = new HashMap<>();
 
@@ -51,14 +54,24 @@ public class MSBuildDaemonContext
 		return getInfo(project).id;
 	}
 
-	public void updateProjectItems(@Nonnull WProject project, @Nonnull ProjectItem[] projectItems)
+	public void addProjectItems(@Nonnull WProject project, @Nonnull MSBuildEvaluatedItem[] evaluatedItems)
 	{
 		PerProjectInfo info = getInfo(project);
-		info.items.clear();
+
+		for(MSBuildEvaluatedItem item : evaluatedItems)
+		{
+			info.items.putValue(item.getName(), item);
+		}
+	}
+
+	public void updateOldProjectItems(@Nonnull WProject project, @Nonnull ProjectItem[] projectItems)
+	{
+		PerProjectInfo info = getInfo(project);
+		info.oldItems.clear();
 
 		for(ProjectItem projectItem : projectItems)
 		{
-			info.items.putValue(projectItem.ItemType, projectItem.EvaluatedInclude);
+			info.oldItems.putValue(projectItem.ItemType, projectItem.EvaluatedInclude);
 		}
 	}
 

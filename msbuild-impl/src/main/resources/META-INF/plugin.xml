@@ -80,7 +80,7 @@
 
 		<fileTypeFactory implementation="consulo.msbuild.MSBuildFileTypeFactory"/>
 
-		<!--todo <projectViewPane implementation="consulo.msbuild.projectView.SolutionViewPane"/>-->
+		<projectViewPane implementation="consulo.msbuild.projectView.SolutionViewPane"/>
 
 		<projectService serviceImplementation="consulo.msbuild.MSBuildWorkspaceData"/>
 

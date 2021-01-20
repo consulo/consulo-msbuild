@@ -7,7 +7,7 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
-import consulo.msbuild.MSBuildReferencePath;
+import consulo.msbuild.MSBuildEvaluatedItem;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,7 @@ public abstract class DotNetLanguageProjectCapability implements MSBuildProjectC
 											  VirtualFile projectFile,
 											  MSBuildProcessProvider buildProcessProvider,
 											  Sdk msBuildSdk, Map<String, String> properties,
-											  List<? extends MSBuildReferencePath> referencePaths,
+											  List<? extends MSBuildEvaluatedItem> referencePaths,
 											  Set<String> targets)
 	{
 		for(MSBuildProjectCapability capability : MSBuildProjectCapability.EP_NAME.getExtensionList(Application.get()))

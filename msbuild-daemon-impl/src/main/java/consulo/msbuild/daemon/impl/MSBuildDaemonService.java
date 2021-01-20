@@ -22,6 +22,7 @@ import consulo.container.boot.ContainerPathManager;
 import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
+import consulo.msbuild.MSBuildProjectListener;
 import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
@@ -30,6 +31,7 @@ import consulo.msbuild.daemon.impl.message.WithLenghtReaderDecoder;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.InitializeRequest;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
+import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
 import consulo.msbuild.daemon.impl.step.*;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
@@ -109,6 +111,11 @@ public class MSBuildDaemonService implements Disposable
 		for(WProject project : projects)
 		{
 			steps.add(new AnalyzeProjectItemsStep(project));
+		}
+
+		for(WProject project : projects)
+		{
+			steps.add(new AnalyzeOldProjectItemsStep(project));
 		}
 
 		for(WProject project : projects)
@@ -304,6 +311,8 @@ public class MSBuildDaemonService implements Disposable
 			}
 
 			WriteAction.runAndWait(moduleModel::commit);
+
+			myProject.getMessageBus().syncPublisher(MSBuildProjectListener.TOPIC).projectsReloaded();
 		});
 	}
 
@@ -316,20 +325,34 @@ public class MSBuildDaemonService implements Disposable
 			return;
 		}
 
+		MSBuildWorkspaceData workspaceData = MSBuildWorkspaceData.getInstance(myProject);
+
 		VirtualFile parent = projectFile.getParent();
 		assert parent != null;
 
-		Collection<String> compileItems = info.items.get("Compile");
-		for(String compileItem : compileItems)
+		List<MSBuildEvaluatedItem> all = new ArrayList<>();
+
+		for(String item : AnalyzeProjectItemsStep.ITEMS)
 		{
-			VirtualFile file = parent.findFileByRelativePath(compileItem);
-			if(file != null)
+			Collection<MSBuildEvaluatedItem> items = info.items.get(item);
+			all.addAll(items);
+
+			for(MSBuildEvaluatedItem evaluatedItem : items)
 			{
-				rootModel.addSingleContentEntry(file);
+				VirtualFile file = parent.findFileByRelativePath(evaluatedItem.getItemSpec());
+				if(file != null)
+				{
+					rootModel.addSingleContentEntry(file);
+				}
 			}
 		}
 
-		Collection<String> projectCapacility = info.items.get("ProjectCapability");
+		rootModel.addSingleContentEntry(projectFile);
+
+		workspaceData.setItems(info.wProject.getId(), all);
+
+		// FIXME [VISTALL] rewrite it! old items are deprecated
+		Collection<String> projectCapacility = info.oldItems.get("ProjectCapability");
 
 		List<MSBuildProjectCapability> capabilities = new ArrayList<>();
 		for(MSBuildProjectCapability capability : MSBuildProjectCapability.EP_NAME.getExtensionList(myProject.getApplication()))

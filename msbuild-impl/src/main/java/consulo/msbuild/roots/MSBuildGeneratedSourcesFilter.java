@@ -16,10 +16,17 @@
 
 package consulo.msbuild.roots;
 
+import com.google.common.base.Objects;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.GeneratedSourcesFilter;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
+import consulo.msbuild.solution.SolutionVirtualBuilder;
+import consulo.msbuild.solution.SolutionVirtualDirectory;
+import consulo.msbuild.solution.SolutionVirtualFile;
+import consulo.msbuild.solution.model.WProject;
+import consulo.util.lang.ref.SimpleReference;
 
 import javax.annotation.Nonnull;
 
@@ -39,52 +46,43 @@ public class MSBuildGeneratedSourcesFilter extends GeneratedSourcesFilter
 	@RequiredReadAction
 	public static boolean isGeneratedFile(@Nonnull VirtualFile virtualFile, @Nonnull Project project)
 	{
-		// todo unsupported
-//		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
-//		if(!solutionManager.isEnabled())
-//		{
-//			return false;
-//		}
-//
-//		WSolution slnFile = solutionManager.getSolution();
-//
-//		for(WProject wProject : slnFile.getProjects())
-//		{
-//			VirtualFile projectFile = wProject.getVirtualFile();
-//			if(projectFile == null)
-//			{
-//				continue;
-//			}
-//
-//			consulo.msbuild.dom.Project domProject = wProject.getDomProject();
-//			if(domProject == null)
-//			{
-//				continue;
-//			}
-//
-//			SolutionVirtualDirectory directory = SolutionVirtualBuilder.build(domProject, projectFile.getParent());
-//
-//			Ref<Boolean> ref = Ref.create(Boolean.FALSE);
-//			directory.visitRecursive(solutionVirtualItem ->
-//			{
-//				if(solutionVirtualItem instanceof SolutionVirtualFile)
-//				{
-//					SolutionVirtualFile file = (SolutionVirtualFile) solutionVirtualItem;
-//					if(Comparing.equal(virtualFile, file.getVirtualFile()))
-//					{
-//						ref.set(file.isGenerated());
-//						return false;
-//					}
-//				}
-//
-//				return true;
-//			});
-//
-//			if(ref.get())
-//			{
-//				return true;
-//			}
-//		}
+		MSBuildSolutionModuleExtension<?> solutionModuleExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(project);
+		if(solutionModuleExtension == null)
+		{
+			return false;
+		}
+
+		for(WProject wProject : solutionModuleExtension.getProjects())
+		{
+			VirtualFile projectFile = wProject.getVirtualFile();
+			if(projectFile == null)
+			{
+				continue;
+			}
+
+			SolutionVirtualDirectory directory = SolutionVirtualBuilder.build(wProject, project, projectFile.getParent());
+
+			SimpleReference<Boolean> ref = SimpleReference.create(Boolean.FALSE);
+			directory.visitRecursive(solutionVirtualItem ->
+			{
+				if(solutionVirtualItem instanceof SolutionVirtualFile)
+				{
+					SolutionVirtualFile file = (SolutionVirtualFile) solutionVirtualItem;
+					if(Objects.equal(virtualFile, file.getVirtualFile()))
+					{
+						ref.set(file.isGenerated());
+						return false;
+					}
+				}
+
+				return true;
+			});
+
+			if(ref.get())
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 }

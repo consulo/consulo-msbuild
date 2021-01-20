@@ -16,11 +16,9 @@
 
 package consulo.msbuild.solution;
 
-import java.util.function.Predicate;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.intellij.util.xml.DomElement;
+import java.util.function.Predicate;
 
 /**
  * @author VISTALL
@@ -31,13 +29,11 @@ public abstract class SolutionVirtualItem
 	private String myName;
 	@Nullable
 	private SolutionVirtualDirectory myParent;
-	private DomElement myElement;
 
-	public SolutionVirtualItem(@Nonnull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element)
+	public SolutionVirtualItem(@Nonnull String name, @Nullable SolutionVirtualDirectory parent)
 	{
 		myName = name;
 		myParent = parent;
-		myElement = element;
 	}
 
 	@Nullable

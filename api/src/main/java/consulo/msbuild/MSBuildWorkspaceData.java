@@ -10,10 +10,7 @@ import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author VISTALL
@@ -36,6 +33,38 @@ public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWor
 	public static class ProjectInfo
 	{
 		public Set<String> targets = new LinkedHashSet<>();
+
+		public List<ProjectItemInfo> items = new LinkedList<>();
+	}
+
+	public static class ProjectItemInfo implements MSBuildEvaluatedItem
+	{
+		public String name;
+
+		public String itemSpec;
+
+		public Map<String, String> metadata = new LinkedHashMap<>();
+
+		@Nonnull
+		@Override
+		public String getName()
+		{
+			return name;
+		}
+
+		@Nonnull
+		@Override
+		public String getItemSpec()
+		{
+			return itemSpec;
+		}
+
+		@Nonnull
+		@Override
+		public Map<String, String> getMetadata()
+		{
+			return metadata;
+		}
 	}
 
 	private State myState = new State();
@@ -57,6 +86,29 @@ public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWor
 
 		projectInfo.targets.clear();
 		projectInfo.targets.addAll(targets);
+	}
+
+	public void setItems(@Nonnull String projectId, @Nonnull Collection<? extends MSBuildEvaluatedItem> items)
+	{
+		ProjectInfo projectInfo = myState.projectInfos.computeIfAbsent(projectId, (it) -> new ProjectInfo());
+		projectInfo.items.clear();
+		
+		for(MSBuildEvaluatedItem item : items)
+		{
+			ProjectItemInfo projectItemInfo = new ProjectItemInfo();
+			projectItemInfo.metadata.putAll(item.getMetadata());
+			projectItemInfo.itemSpec = item.getItemSpec();
+			projectItemInfo.name = item.getName();
+
+			projectInfo.items.add(projectItemInfo);
+		}
+	}
+
+	@Nonnull
+	public Collection<? extends MSBuildEvaluatedItem> getItems(@Nonnull String projectId)
+	{
+		ProjectInfo info = myState.projectInfos.get(projectId);
+		return info == null ? List.of() : info.items;
 	}
 
 	@Nullable

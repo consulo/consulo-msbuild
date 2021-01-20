@@ -1,6 +1,5 @@
 package consulo.msbuild.daemon.impl.message.model;
 
-import consulo.msbuild.MSBuildReferencePath;
 import consulo.msbuild.daemon.impl.message.TypedMap;
 
 import javax.annotation.Nonnull;
@@ -10,7 +9,7 @@ import java.util.Map;
  * @author VISTALL
  * @since 13/12/2020
  */
-public class MSBuildEvaluatedItem implements DataObject, MSBuildReferencePath
+public class MSBuildEvaluatedItem implements DataObject, consulo.msbuild.MSBuildEvaluatedItem
 {
 	public TypedMap<String, String> Metadata = new TypedMap<>(String.class, String.class);
 
@@ -23,6 +22,13 @@ public class MSBuildEvaluatedItem implements DataObject, MSBuildReferencePath
 	public String getName()
 	{
 		return Name;
+	}
+
+	@Nonnull
+	@Override
+	public String getItemSpec()
+	{
+		return ItemSpec;
 	}
 
 	@Nonnull

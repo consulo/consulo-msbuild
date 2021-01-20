@@ -5,7 +5,7 @@ import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.msbuild.MSBuildProcessProvider;
-import consulo.msbuild.MSBuildReferencePath;
+import consulo.msbuild.MSBuildEvaluatedItem;
 import consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension;
 import consulo.msbuild.impl.DotNetLanguageProjectCapability;
 
@@ -36,7 +36,7 @@ public class MSBuildCSharpProjectCapability extends DotNetLanguageProjectCapabil
 							 MSBuildProcessProvider buildProcessProvider,
 							 Sdk msBuildSdk,
 							 Map<String, String> properties,
-							 List<? extends MSBuildReferencePath> referencePaths,
+							 List<? extends MSBuildEvaluatedItem> referencePaths,
 							 Set<String> targets)
 	{
 		initializeDotNetCapability(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, properties, referencePaths, targets);

@@ -25,6 +25,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
+import consulo.annotation.DeprecationInfo;
 import consulo.msbuild.MSBuildGUID;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.solution.reader.SlnProject;
@@ -81,6 +82,8 @@ public class WProject
 		}
 	}
 
+	@Deprecated
+	@DeprecationInfo("For now there no sense of using this method, we don't support xml validation")
 	public Project getDomProject()
 	{
 		return myDomProject;

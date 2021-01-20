@@ -3,7 +3,7 @@ package consulo.msbuild.toolWindow.nodes;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.SimpleTextAttributes;
+import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
@@ -44,7 +44,25 @@ public class RootNodeDescriptor extends AbstractTreeNode<Object>
 	@Override
 	protected void update(PresentationData presentationData)
 	{
-		presentationData.addText("<solution>", SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
 		presentationData.setIcon(PlatformIconGroup.nodesFolder());
+
+		MSBuildSolutionModuleExtension<?> extension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
+		if(extension == null)
+		{
+			return;
+		}
+
+		VirtualFile solutionFile = extension.getSolutionFile();
+
+		if(solutionFile != null)
+		{
+			String solName = String.format("Solution '%s' (%s project(s))", solutionFile.getNameWithoutExtension(), extension.getProjects().size());
+
+			presentationData.setPresentableText(solName);
+		}
+		else
+		{
+			presentationData.setPresentableText("Solution");
+		}
 	}
 }

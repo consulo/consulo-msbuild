@@ -1,25 +1,25 @@
 package consulo.msbuild.daemon.impl.step;
 
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
-import consulo.msbuild.daemon.impl.message.model.GetProjectItemsRequest;
-import consulo.msbuild.daemon.impl.message.model.GetProjectItemsResponse;
+import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
+import consulo.msbuild.daemon.impl.message.model.RunProjectResponse;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
- * @since 01/01/2021
+ * @since 20/01/2021
  *
- * Project capacities
- *
- * https://github.com/microsoft/VSProjectSystem/blob/master/doc/overview/project_capabilities.md
+ * Replacement of AnalyzeOldProjectItemsStep - it's load also metadata, which required for bulding solution view
  */
-public class AnalyzeProjectItemsStep extends PerProjectDaemonStep<GetProjectItemsRequest, GetProjectItemsResponse>
+public class AnalyzeProjectItemsStep extends BaseRunProjectStep
 {
+	public static final String[] ITEMS = {"None", "Compile", "EmbeddedResource", "Resource", "Item"};
+
 	public AnalyzeProjectItemsStep(WProject wProject)
 	{
-		super(wProject);
+		super(wProject, ITEMS, new String[]{"_GenerateRestoreProjectSpec"});
 	}
 
 	@Nonnull
@@ -29,29 +29,14 @@ public class AnalyzeProjectItemsStep extends PerProjectDaemonStep<GetProjectItem
 		return "Analyzing ''{0}'' Project Items";
 	}
 
-	@Nonnull
 	@Override
-	public GetProjectItemsRequest prepareRequest(@Nonnull MSBuildDaemonContext context)
+	public void handleResponse(@Nonnull MSBuildDaemonContext context, @Nonnull RunProjectResponse runProjectResponse)
 	{
-		GetProjectItemsRequest request = new GetProjectItemsRequest();
-		request.Configurations = buildProjectConfigurationInfo(context);
-		request.ProjectId = context.getRegisteredProjectId(myWProject);
-		return request;
-	}
-
-	@Override
-	public void handleResponse(@Nonnull MSBuildDaemonContext context, @Nonnull GetProjectItemsResponse getProjectItemsResponse)
-	{
-		if(getProjectItemsResponse.Items == null)
+		for(String item : ITEMS)
 		{
-			return;
+			MSBuildEvaluatedItem[] items = runProjectResponse.Result.items.get(item);
+
+			context.addProjectItems(myWProject, items);
 		}
-
-		context.updateProjectItems(myWProject, getProjectItemsResponse.Items);
-
-//		for(ProjectItem item : getProjectItemsResponse.Items)
-//		{
-//			System.out.println(item.ItemType + " " + item.EvaluatedInclude);
-//		}
 	}
 }
