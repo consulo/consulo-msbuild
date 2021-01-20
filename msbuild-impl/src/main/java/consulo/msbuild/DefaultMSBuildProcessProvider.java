@@ -82,8 +82,12 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 		c.addParameter(String.valueOf(port));
 		c.addParameter("true"); // debug
 
+		//c.withEnvironment("MSBUILD_EXE_NAME", "MSBuildTaskHost.exe");
+		//c.withEnvironment("MSBUILDTASKHOST_EXE_NAME", "MSBuildTaskHost.exe");
 		c.withEnvironment("MSBUILD_EXE_PATH", targetFile.getAbsolutePath());
-		c.withEnvironment("DISABLEOUTOFPROCTASKHOST ", "1");
+
+		c.withEnvironment("MSBUILDTASKHOSTLOCATION", sdk.getHomePath());
+		c.withEnvironment("MSBUILDTASKHOSTLOCATION64", sdk.getHomePath());
 		return c;
 	}
 
@@ -147,6 +151,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 
 				File vcTargetsPath = new File(devEnvDir, "VC/VCTargets");
 				SetMSBuildConfigProperty(toolset, "VCTargetsPath", vcTargetsPath.getAbsolutePath());
+
 			}
 			//			else
 			//			{

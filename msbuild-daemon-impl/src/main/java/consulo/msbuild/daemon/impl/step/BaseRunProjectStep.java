@@ -1,7 +1,6 @@
 package consulo.msbuild.daemon.impl.step;
 
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
-import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.msbuild.daemon.impl.message.model.MSBuildVerbosity;
 import consulo.msbuild.daemon.impl.message.model.RunProjectRequest;
 import consulo.msbuild.daemon.impl.message.model.RunProjectResponse;
@@ -40,6 +39,9 @@ public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProject
 		r.GlobalProperties.put("ContinueOnError", "ErrorAndContinue");
 		r.GlobalProperties.put("Silent", "true");
 		r.GlobalProperties.put("DesignTimeBuild", "true");
+
+		r.GlobalProperties.put("GenerateResourceMSBuildArchitecture", "CurrentArchitecture");
+		r.GlobalProperties.put("GenerateResourceMSBuildRuntime", "CurrentRuntime");
 
 		return r;
 	}
