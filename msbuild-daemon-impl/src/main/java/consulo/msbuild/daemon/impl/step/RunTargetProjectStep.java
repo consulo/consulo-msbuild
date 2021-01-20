@@ -1,7 +1,6 @@
 package consulo.msbuild.daemon.impl.step;
 
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
-import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.msbuild.daemon.impl.message.model.RunProjectResponse;
 import consulo.msbuild.solution.model.WProject;
 
@@ -38,11 +37,5 @@ public class RunTargetProjectStep extends BaseRunProjectStep
 	public boolean wantLogging()
 	{
 		return true;
-	}
-
-	@Override
-	public void acceptLogMessage(LogMessage logMessage)
-	{
-		System.out.println(logMessage.LogText.trim());
 	}
 }

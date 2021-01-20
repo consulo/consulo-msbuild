@@ -1,8 +1,8 @@
 package consulo.msbuild.daemon.impl.message;
 
 import com.intellij.util.concurrency.AppExecutorUtil;
+import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
-import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.msbuild.daemon.impl.message.model.RunProjectRequest;
 import consulo.msbuild.daemon.impl.step.BaseRunProjectStep;
 import consulo.msbuild.daemon.impl.step.DaemonStep;
@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.nio.ByteOrder;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -34,10 +35,6 @@ public class DaemonConnection
 	private final Channel myChannel;
 
 	private Map<Integer, Pair<DaemonMessage, AsyncResult>> myHandlers = new ConcurrentHashMap<>();
-
-	private Map<Integer, BaseRunProjectStep> myLoggingSetup = new ConcurrentHashMap<>();
-
-	private AtomicInteger myLoggerIds = new AtomicInteger();
 
 	private Future<?> myPingFutures = CompletableFuture.completedFuture(null);
 
@@ -58,17 +55,15 @@ public class DaemonConnection
 		myPingFutures.cancel(false);
 	}
 
-	public void prepareLogging(DaemonMessage request, DaemonStep step)
+	public void prepareLogging(DaemonMessage request, DaemonStep step, MSBuildLoggingSession loggingSession)
 	{
-		if(step instanceof BaseRunProjectStep)
+		if(step instanceof BaseRunProjectStep && ((BaseRunProjectStep) step).wantLogging())
 		{
 			RunProjectRequest runProjectRequest = (RunProjectRequest) request;
 
-			int loggerId = myLoggerIds.incrementAndGet();
+			Objects.requireNonNull(loggingSession, "logging session must initialized first");
 
-			runProjectRequest.LogWriterId = loggerId;
-
-			myLoggingSetup.put(loggerId, (BaseRunProjectStep) step);
+			runProjectRequest.LogWriterId = loggingSession.getId();
 		}
 	}
 
@@ -102,14 +97,5 @@ public class DaemonConnection
 	public Pair<DaemonMessage, AsyncResult> getHandler(int id)
 	{
 		return myHandlers.remove(id);
-	}
-
-	public void runLogging(LogMessage logMessage)
-	{
-		BaseRunProjectStep baseRunProjectStep = myLoggingSetup.get(logMessage.LoggerId);
-		if(baseRunProjectStep != null)
-		{
-			baseRunProjectStep.acceptLogMessage(logMessage);
-		}
 	}
 }

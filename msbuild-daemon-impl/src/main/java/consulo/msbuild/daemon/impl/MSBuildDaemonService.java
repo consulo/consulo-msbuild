@@ -23,11 +23,13 @@ import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
 import consulo.msbuild.MSBuildWorkspaceData;
+import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.WithLenghtReaderDecoder;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.InitializeRequest;
+import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.msbuild.daemon.impl.step.*;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
@@ -49,6 +51,8 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author VISTALL
@@ -77,6 +81,10 @@ public class MSBuildDaemonService implements Disposable
 	private EventLoopGroup workerGroup;
 
 	private DaemonConnection myConnection;
+
+	private AtomicInteger myLoggers = new AtomicInteger();
+
+	private Map<Integer, MSBuildLoggingSession> myLoggingSessions = new ConcurrentHashMap<>();
 
 	@Inject
 	public MSBuildDaemonService(Project project)
@@ -148,13 +156,15 @@ public class MSBuildDaemonService implements Disposable
 		runSteps(steps, false);
 	}
 
-	private void runSteps(List<DaemonStep> steps, boolean runImport)
+	public AsyncResult<Void> runSteps(List<DaemonStep> steps, boolean runImport)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
 		{
 			throw new UnsupportedOperationException();
 		}
+
+		AsyncResult<Void> runStepResult = AsyncResult.undefined();
 
 		Task.Backgroundable.queue(myProject, "Starting Daemon Service...", indicator ->
 		{
@@ -189,13 +199,26 @@ public class MSBuildDaemonService implements Disposable
 
 				MSBuildDaemonContext context = new MSBuildDaemonContext();
 
+				MSBuildLoggingSession loggingSession = null;
+				for(DaemonStep step : steps)
+				{
+					if(step instanceof BaseRunProjectStep)
+					{
+						if(((BaseRunProjectStep) step).wantLogging())
+						{
+							loggingSession = newLoggingSession();
+							break;
+						}
+					}
+				}
+
 				for(DaemonStep step : steps)
 				{
 					indicator.setText(step.getStepText());
 
 					DaemonMessage request = step.prepareRequest(context);
 
-					myConnection.prepareLogging(request, step);
+					myConnection.prepareLogging(request, step, loggingSession);
 
 					AsyncResult<DataObject> result = myConnection.sendWithResponse(request);
 					DataObject object = (DataObject) result.getResultSync();
@@ -219,23 +242,31 @@ public class MSBuildDaemonService implements Disposable
 						for(MSBuildDaemonContext.PerProjectInfo projectInfo : context.getInfos())
 						{
 							msBuildWorkspaceData.setTargets(projectInfo.wProject.getId(), projectInfo.targets);
+							break;
 						}
-
-						break;
 					}
 				}
 
-
+				if(loggingSession != null)
+				{
+					myLoggingSessions.remove(loggingSession.getId());
+					loggingSession.disposeWithTree();
+				}
+				
 				if(runImport)
 				{
 					createModules(context, buildProcessProvider, msBuildSdk);
 				}
+
+				runStepResult.setDone();
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
+				runStepResult.rejectWithThrowable(e);
 			}
 		});
+
+		return runStepResult;
 	}
 
 	private void createModules(MSBuildDaemonContext context, MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk)
@@ -477,6 +508,23 @@ public class MSBuildDaemonService implements Disposable
 	private MSBuildSolutionModuleExtension<?> getSolutionExtension()
 	{
 		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
+	}
+
+	public MSBuildLoggingSession newLoggingSession()
+	{
+		int id = myLoggers.incrementAndGet();
+		MSBuildLoggingSession session = new MSBuildLoggingSession(id, myProject);
+		myLoggingSessions.put(id, session);
+		return session;
+	}
+
+	public void acceptLogMessage(LogMessage logMessage)
+	{
+		MSBuildLoggingSession session = myLoggingSessions.get(logMessage.LoggerId);
+		if(session != null)
+		{
+			session.acceptMessage(logMessage);
+		}
 	}
 
 	@Override

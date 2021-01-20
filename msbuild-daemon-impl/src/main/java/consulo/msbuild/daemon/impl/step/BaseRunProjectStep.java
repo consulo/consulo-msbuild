@@ -48,8 +48,4 @@ public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProject
 	{
 		return false;
 	}
-
-	public void acceptLogMessage(LogMessage logMessage)
-	{
-	}
 }

@@ -51,6 +51,12 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 
 			int arraySize = byteBuf.readIntLE();
 
+			if(arraySize > byteBuf.readableBytes())
+			{
+				byteBuf.resetReaderIndex();
+				return;
+			}
+
 			data = new byte[arraySize];
 
 			byteBuf.readBytes(data);
@@ -88,9 +94,7 @@ public class MSBuildDaemonHandler extends ChannelInboundHandlerAdapter
 			{
 				LogMessage logMessage = binaryMessage.toModel(LogMessage.class);
 
-				DaemonConnection result = myChannelAsync.getResult();
-
-				result.runLogging(logMessage);
+				myDaemonService.acceptLogMessage(logMessage);
 				break;
 			}
 			default:

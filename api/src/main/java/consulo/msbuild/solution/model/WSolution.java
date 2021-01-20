@@ -48,7 +48,6 @@ public class WSolution
 	private static final Logger LOG = Logger.getInstance(WSolution.class);
 
 	@Nonnull
-	@RequiredReadAction
 	public static WSolution build(@Nonnull Project project, @Nonnull VirtualFile solutionVirtualFile)
 	{
 		SlnFile slnFile = new SlnFile();
@@ -68,7 +67,6 @@ public class WSolution
 
 	private List<WProject> myProjects = new ArrayList<>();
 
-	@RequiredReadAction
 	public WSolution(@Nonnull Project project, @Nonnull VirtualFile solutionVirtualFile, @Nonnull SlnFile file)
 	{
 		myFile = file;

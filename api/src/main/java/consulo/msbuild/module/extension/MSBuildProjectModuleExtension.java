@@ -11,6 +11,7 @@ import consulo.msbuild.compiler.MSBuildCompileContext;
  */
 public interface MSBuildProjectModuleExtension<T extends MSBuildProjectModuleExtension<T>> extends ModuleExtension<T>
 {
+	@Deprecated
 	void build(MSBuildCompileContext context);
 
 	@Deprecated

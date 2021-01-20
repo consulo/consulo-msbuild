@@ -1,19 +1,21 @@
 package consulo.msbuild.compiler;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.compiler.CompileScope;
 import com.intellij.openapi.compiler.TranslatingCompiler;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.Chunk;
-import consulo.msbuild.MSBuildSolutionManager;
-import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
+import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.msbuild.daemon.impl.step.DaemonStep;
+import consulo.msbuild.daemon.impl.step.InitializeProjectStep;
+import consulo.msbuild.daemon.impl.step.RunTargetProjectStep;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
+import consulo.msbuild.solution.model.WProject;
+
+import javax.annotation.Nonnull;
+import java.util.*;
 
 /**
  * @author VISTALL
@@ -30,25 +32,42 @@ public class MSBuildCompiler implements TranslatingCompiler
 	@Override
 	public void compile(CompileContext compileContext, Chunk<Module> chunk, VirtualFile[] virtualFiles, OutputSink outputSink)
 	{
-		Module module = chunk.getNodes().iterator().next();
+		Set<Module> nodes = chunk.getNodes();
 
-		MSBuildProjectModuleExtension extension = ModuleUtilCore.getExtension(module, MSBuildProjectModuleExtension.class);
+		MSBuildSolutionModuleExtension<?> solutionExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(compileContext.getProject());
 
-		if(extension == null)
+		if(solutionExtension == null)
 		{
 			return;
 		}
 
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(module.getProject());
-
-		Map.Entry<String, MSBuildSolutionManager.ProjectOptions> entry = solutionManager.getOptionsByModuleName(module.getName());
-
-		if(entry == null || !solutionManager.isEnabled())
+		Map<WProject, Module> map = new LinkedHashMap<>();
+		for(Module module : nodes)
 		{
-			return;
+			for(WProject wProject : solutionExtension.getProjects())
+			{
+				if(module.getName().equals(wProject.getName()))
+				{
+					map.put(wProject, module);
+				}
+			}
 		}
 
-		extension.build(new MSBuildCompileContext(extension, solutionManager.getSolutionFile(), entry.getKey(), compileContext));
+		List<DaemonStep> steps = new ArrayList<>();
+
+		for(WProject wProject : map.keySet())
+		{
+			steps.add(new InitializeProjectStep(wProject));
+		}
+
+		for(WProject project : map.keySet())
+		{
+			steps.add(new RunTargetProjectStep(project, "Build"));
+		}
+
+		MSBuildDaemonService daemonService = MSBuildDaemonService.getInstance(compileContext.getProject());
+
+		daemonService.runSteps(steps, false).getResultSync();
 	}
 
 	@Nonnull
