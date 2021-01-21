@@ -16,20 +16,25 @@
 
 package consulo.msbuild.csharp.module.extension;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import consulo.csharp.module.extension.CSharpSimpleMutableModuleExtension;
+import consulo.csharp.module.extension.CSharpConfigurationPanel;
+import consulo.csharp.module.extension.CSharpMutableModuleExtension;
 import consulo.disposer.Disposable;
+import consulo.localize.LocalizeValue;
+import consulo.module.extension.swing.SwingMutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.Component;
+import consulo.ui.Label;
 import consulo.ui.annotation.RequiredUIAccess;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
 
 /**
  * @author VISTALL
  * @since 03-Feb-17
  */
-public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExtension implements CSharpSimpleMutableModuleExtension<MSBuildCSharpModuleExtension>
+public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExtension implements CSharpMutableModuleExtension<MSBuildCSharpModuleExtension>, SwingMutableModuleExtension
 {
 	public MSBuildCSharpMutableModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer layer)
 	{
@@ -41,7 +46,15 @@ public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExte
 	@Override
 	public Component createConfigurationComponent(@Nonnull Disposable disposable, @Nonnull Runnable runnable)
 	{
-		return null;
+		return Label.create(LocalizeValue.localizeTODO("Unsupported UI"));
+	}
+
+	@RequiredUIAccess
+	@Nullable
+	@Override
+	public JComponent createConfigurablePanel(@Nonnull Disposable disposable, @Nonnull Runnable runnable)
+	{
+		return new CSharpConfigurationPanel(this);
 	}
 
 	@Override
@@ -53,6 +66,6 @@ public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExte
 	@Override
 	public boolean isModified(@Nonnull MSBuildCSharpModuleExtension extension)
 	{
-		return myIsEnabled != extension.isEnabled();
+		return isModifiedImpl(extension);
 	}
 }

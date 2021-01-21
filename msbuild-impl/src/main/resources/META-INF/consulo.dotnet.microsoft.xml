@@ -1,6 +1,8 @@
 <consulo-plugin>
 	<extensions defaultExtensionNs="consulo.msbuild">
 		<projectCapability implementation="consulo.msbuild.dotnet.microsoft.MicrosoftDotNetProjectCapability"/>
+
+		<projectCapability implementation="consulo.msbuild.dotnet.microsoft.MicrosoftDotNetCSharpProjectCapability"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
@@ -10,5 +12,13 @@
 								 icon="consulo.dotnet.microsoft.MicrosoftDotNetIconGroup@dotnet"
 								 immutableClass="consulo.msbuild.dotnet.microsoft.module.extension.MSBuildMicrosoftDotNetModuleExtension"
 								 mutableClass="consulo.msbuild.dotnet.microsoft.module.extension.MSBuildMicrosoftDotNetMutableModuleExtension"/>
+
+		<moduleExtensionProvider key="dotnet-csharp-by-msbuild"
+								 parentKey="dotnet-by-msbuild"
+								 systemOnly="true"
+								 icon="consulo.dotnet.microsoft.MicrosoftDotNetIconGroup@dotnet"
+								 name="C#"
+								 immutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpModuleExtension"
+								 mutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension"/>
 	</extensions>
 </consulo-plugin>

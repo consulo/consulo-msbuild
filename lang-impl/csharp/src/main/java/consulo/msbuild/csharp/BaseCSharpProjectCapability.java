@@ -20,7 +20,7 @@ import java.util.Set;
  * <p>
  * "LangVersion" -> "8.0"
  */
-public class MSBuildCSharpProjectCapability extends DotNetLanguageProjectCapability
+public abstract class BaseCSharpProjectCapability extends DotNetLanguageProjectCapability
 {
 	@Nonnull
 	@Override
@@ -41,11 +41,18 @@ public class MSBuildCSharpProjectCapability extends DotNetLanguageProjectCapabil
 	{
 		initializeDotNetCapability(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, properties, referencePaths, targets);
 
-		MSBuildCSharpMutableModuleExtension csharpExtension = rootModel.getExtensionWithoutCheck("msbuild-csharp");
+		MSBuildCSharpMutableModuleExtension csharpExtension = rootModel.getExtensionWithoutCheck(getExtensionId());
+
 		assert csharpExtension != null;
 
 		csharpExtension.setEnabled(true);
 	}
+
+	@Override
+	public abstract boolean isApplicable(@Nonnull MSBuildProcessProvider provider);
+
+	@Nonnull
+	public abstract String getExtensionId();
 
 	@Override
 	public int getWeight()

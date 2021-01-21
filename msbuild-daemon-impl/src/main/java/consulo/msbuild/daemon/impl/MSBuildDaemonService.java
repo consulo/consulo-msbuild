@@ -492,12 +492,17 @@ public class MSBuildDaemonService implements Disposable
 			public void processTerminated(ProcessEvent processEvent)
 			{
 				myConnection = null;
+
+				if(!mySocketResult.isProcessed())
+				{
+					mySocketResult.reject("Process terminated");
+				}
 			}
 
 			@Override
 			public void onTextAvailable(ProcessEvent processEvent, Key key)
 			{
-				System.out.println("> " + processEvent.getText().trim());
+				//System.out.println("> " + processEvent.getText().trim());
 			}
 		});
 		handler.startNotify();

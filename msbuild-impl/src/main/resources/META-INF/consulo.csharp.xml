@@ -22,16 +22,9 @@
 
 	<extensions defaultExtensionNs="consulo.msbuild">
 		<projectFile extension="csproj"/>
-
-		<projectCapability implementation="consulo.msbuild.csharp.MSBuildCSharpProjectCapability"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<moduleExtensionProvider key="msbuild-csharp"
-								 systemOnly="true"
-								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
-								 name="C#"
-								 immutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpModuleExtension"
-								 mutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension"/>
+
 	</extensions>
 </consulo-plugin>
