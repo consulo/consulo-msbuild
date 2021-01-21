@@ -67,16 +67,10 @@ public class MSBuildSocketThread extends Thread
 
 				int length = readInt(myInputStream);
 
-				byte[] array = new byte[length];
+				byte[] data = myInputStream.readNBytes(length);
 
-				int readCount = myInputStream.read(array);
+				ByteBuffer buffer = ByteBuffer.wrap(data);
 
-				if(readCount != length)
-				{
-					throw new IOException("Not read all data: " + length + " " + readCount);
-				}
-
-				ByteBuffer buffer = ByteBuffer.wrap(array);
 				buffer.order(ByteOrder.LITTLE_ENDIAN);
 
 				process(buffer);
