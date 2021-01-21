@@ -9,6 +9,7 @@ import com.intellij.ui.tree.StructureTreeModel;
 import com.intellij.ui.treeStructure.Tree;
 import com.intellij.util.ui.tree.TreeUtil;
 import consulo.disposer.Disposable;
+import consulo.msbuild.MSBuildProjectListener;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.toolWindow.nodes.TargetNodeDescriptor;
 import consulo.util.dataholder.Key;
@@ -54,6 +55,8 @@ public class MSBuildToolWindowPanel extends SimpleToolWindowPanel implements Dis
 		}.installOn(myTree);
 
 		setContent(ScrollPaneFactory.createScrollPane(myTree, true));
+
+		project.getMessageBus().connect().subscribe(MSBuildProjectListener.TOPIC, () -> myModel.invalidate());
 	}
 
 	@Nullable

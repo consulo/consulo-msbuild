@@ -28,6 +28,7 @@ import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class SolutionVirtualBuilder
 
 		MSBuildWorkspaceData workspaceData = MSBuildWorkspaceData.getInstance(project);
 
-		Collection<? extends MSBuildEvaluatedItem> items = workspaceData.getItems(wProject.getId());
+		Collection<? extends MSBuildEvaluatedItem> items = new ArrayList<>(workspaceData.getItems(wProject.getId()));
 
 		addAll(items, baseDir, root);
 

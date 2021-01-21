@@ -264,8 +264,9 @@ public class MSBuildDaemonService implements Disposable
 						for(MSBuildDaemonContext.PerProjectInfo projectInfo : context.getInfos())
 						{
 							msBuildWorkspaceData.setTargets(projectInfo.wProject.getId(), projectInfo.targets);
-							break;
 						}
+
+						break;
 					}
 				}
 
