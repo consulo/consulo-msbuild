@@ -208,7 +208,7 @@ public class MSBuildDaemonService implements Disposable
 					socketThread.setDaemonConnection(myConnection);
 
 					socketThread.waitForConnect();
-					
+
 					InitializeRequest message = new InitializeRequest();
 					message.IdeProcessId = (int) ProcessHandle.current().pid();
 					message.CultureName = Locale.getDefault().toString();
@@ -559,6 +559,9 @@ public class MSBuildDaemonService implements Disposable
 	@Override
 	public void dispose()
 	{
-		myServerThread.shutdown();
+		if(myServerThread != null)
+		{
+			myServerThread.shutdown();
+		}
 	}
 }
