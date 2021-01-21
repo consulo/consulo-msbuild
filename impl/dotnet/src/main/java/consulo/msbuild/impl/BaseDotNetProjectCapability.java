@@ -14,17 +14,18 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import consulo.compiler.ModuleCompilerPathsManager;
 import consulo.dotnet.DotNetTarget;
+import consulo.dotnet.dll.DotNetModuleFileType;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
+import consulo.msbuild.MSBuildEvaluatedItem;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
-import consulo.msbuild.MSBuildEvaluatedItem;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.*;
 import consulo.roots.types.BinariesOrderRootType;
-import consulo.vfs.util.ArchiveVfsUtil;
+import consulo.vfs.ArchiveFileSystem;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -115,22 +116,12 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 			}
 			else
 			{
-				VirtualFile dllFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(new File(fullPath));
-				if(dllFile == null)
-				{
-					continue;
-				}
-
-				VirtualFile dllArchive = ArchiveVfsUtil.getArchiveRootForLocalFile(dllFile);
-				if(dllArchive == null)
-				{
-					continue;
-				}
+				String archiveUrl = VirtualFileManager.constructUrl(DotNetModuleFileType.PROTOCOL, FileUtil.toSystemIndependentName(fullPath) + ArchiveFileSystem.ARCHIVE_SEPARATOR);
 
 				Library library = modifiableLibraryModel.createLibrary(null);
 
 				Library.ModifiableModel modifiableModel = library.getModifiableModel();
-				modifiableModel.addRoot(dllArchive, BinariesOrderRootType.getInstance());
+				modifiableModel.addRoot(archiveUrl, BinariesOrderRootType.getInstance());
 				modifiableModel.commit();
 			}
 		}

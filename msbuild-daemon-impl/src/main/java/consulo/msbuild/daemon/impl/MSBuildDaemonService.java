@@ -344,8 +344,8 @@ public class MSBuildDaemonService implements Disposable
 
 		MSBuildWorkspaceData workspaceData = MSBuildWorkspaceData.getInstance(myProject);
 
-		VirtualFile parent = projectFile.getParent();
-		assert parent != null;
+		VirtualFile parentDir = projectFile.getParent();
+		assert parentDir != null;
 
 		List<MSBuildEvaluatedItem> all = new ArrayList<>();
 
@@ -356,11 +356,8 @@ public class MSBuildDaemonService implements Disposable
 
 			for(MSBuildEvaluatedItem evaluatedItem : items)
 			{
-				VirtualFile file = parent.findFileByRelativePath(evaluatedItem.getItemSpec());
-				if(file != null)
-				{
-					rootModel.addSingleContentEntry(file);
-				}
+				String url = parentDir.getUrl() + "/" + FileUtil.toSystemIndependentName(evaluatedItem.getItemSpec());
+				rootModel.addSingleContentEntry(url);
 			}
 		}
 
