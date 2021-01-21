@@ -15,6 +15,7 @@ import consulo.roots.ModuleRootLayer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.IOException;
 
 /**
  * @author VISTALL
@@ -51,11 +52,16 @@ public class MSBuildDotNetCoreModuleExtension extends MSBuildBaseDotNetModuleExt
 		}
 
 		GeneralCommandLine commandLine = new GeneralCommandLine();
-		commandLine.setExePath(DotNetCoreBundleType.getExecutablePath(sdk.getHomePath()).getAbsolutePath());
-
-		String file = DotNetMacroUtil.expandOutputFile(this);
-
-		commandLine.addParameter(file);
+		try
+		{
+			commandLine.setExePath(DotNetCoreBundleType.getExecutablePath(sdk.getHomePath()).getCanonicalPath());
+			String file = DotNetMacroUtil.expandOutputFile(this);
+			commandLine.addParameter(file);
+		}
+		catch(IOException e)
+		{
+			throw new ExecutionException(e);
+		}
 		return commandLine;
 	}
 
