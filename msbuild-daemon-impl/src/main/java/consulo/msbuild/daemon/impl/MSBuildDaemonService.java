@@ -48,6 +48,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -82,19 +83,28 @@ public class MSBuildDaemonService implements Disposable
 
 	private Map<Integer, MSBuildLoggingSession> myLoggingSessions = new ConcurrentHashMap<>();
 
+	private AtomicBoolean myBusy = new AtomicBoolean(false);
+
 	@Inject
 	public MSBuildDaemonService(Project project)
 	{
 		myProject = project;
 	}
 
-	public void forceUpdate()
+	public boolean isBusy()
+	{
+		return myBusy.get();
+	}
+
+	@Nonnull
+	public AsyncResult<MSBuildDaemonContext> forceUpdate()
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
 		{
-			return;
+			return AsyncResult.rejected();
 		}
+
 		List<DaemonStep> steps = new ArrayList<>();
 		Collection<WProject> projects = solutionExtension.getProjects();
 		for(WProject wProject : projects)
@@ -132,7 +142,7 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new ListTargetsStep(project));
 		}
 
-		runSteps(steps, true);
+		return runSteps(steps).doWhenDone(context -> createModules(context));
 	}
 
 	public void runTarget(String target)
@@ -154,10 +164,11 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new RunTargetProjectStep(project, target));
 		}
 
-		runSteps(steps, false);
+		runSteps(steps);
 	}
 
-	public AsyncResult<Void> runSteps(List<DaemonStep> steps, boolean runImport)
+	@Nonnull
+	public AsyncResult<MSBuildDaemonContext> runSteps(List<DaemonStep> steps)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -165,7 +176,12 @@ public class MSBuildDaemonService implements Disposable
 			throw new UnsupportedOperationException();
 		}
 
-		AsyncResult<Void> runStepResult = AsyncResult.undefined();
+		if(!myBusy.compareAndSet(false, true))
+		{
+			return AsyncResult.rejected();
+		}
+
+		AsyncResult<MSBuildDaemonContext> runStepResult = AsyncResult.undefined();
 
 		Task.Backgroundable.queue(myProject, "Starting Daemon Service...", indicator ->
 		{
@@ -203,7 +219,7 @@ public class MSBuildDaemonService implements Disposable
 					myConnection.sendWithResponse(message).getResultSync();
 				}
 
-				MSBuildDaemonContext context = new MSBuildDaemonContext();
+				MSBuildDaemonContext context = new MSBuildDaemonContext(buildProcessProvider, msBuildSdk);
 
 				MSBuildLoggingSession loggingSession = null;
 				for(DaemonStep step : steps)
@@ -261,24 +277,26 @@ public class MSBuildDaemonService implements Disposable
 					loggingSession.disposeWithTree();
 				}
 
-				if(runImport)
-				{
-					createModules(context, buildProcessProvider, msBuildSdk);
-				}
-
-				runStepResult.setDone();
+				runStepResult.setDone(context);
 			}
 			catch(Exception e)
 			{
 				runStepResult.rejectWithThrowable(e);
+			}
+			finally
+			{
+				myBusy.compareAndSet(true, false);
 			}
 		});
 
 		return runStepResult;
 	}
 
-	private void createModules(MSBuildDaemonContext context, MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk)
+	private void createModules(MSBuildDaemonContext context)
 	{
+		MSBuildProcessProvider buildProcessProvider = context.getBuildProcessProvider();
+		Sdk msBuildSdk = context.getMSBuildSdk();
+
 		Task.Backgroundable.queue(myProject, "Creating Project Structure...", indicator -> {
 			Collection<MSBuildDaemonContext.PerProjectInfo> infos = context.getInfos();
 

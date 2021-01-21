@@ -4,9 +4,11 @@ import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.project.DumbAwareRunnable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.startup.StartupManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -14,6 +16,7 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.VisualStudioSolutionFileType;
+import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.ui.image.Image;
 import consulo.ui.wizard.WizardStep;
@@ -141,8 +144,15 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 		solExtension.setSdkName(context.getMSBuildBundleName());
 		solExtension.setProcessProviderId(context.getProvider().getId());
 
-		consumer.accept(mainModuleModel.getModule());
 		WriteAction.run(mainModuleModel::commit);
+
+		consumer.accept(mainModuleModel.getModule());
+
+		StartupManager.getInstance(project).registerPostStartupActivity((DumbAwareRunnable) () -> {
+			MSBuildDaemonService.getInstance(project).forceUpdate();
+
+			// TODO [VISTALL] create run configurations after reimport
+		});
 	}
 
 	@RequiredReadAction

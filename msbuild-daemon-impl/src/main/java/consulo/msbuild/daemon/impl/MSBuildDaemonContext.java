@@ -1,6 +1,8 @@
 package consulo.msbuild.daemon.impl;
 
+import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.util.containers.MultiMap;
+import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
 import consulo.msbuild.daemon.impl.message.model.ProjectItem;
 import consulo.msbuild.solution.model.WProject;
@@ -34,6 +36,28 @@ public class MSBuildDaemonContext
 	}
 
 	private final Map<String, PerProjectInfo> myProjectData = new ConcurrentHashMap<>();
+
+	private final MSBuildProcessProvider myBuildProcessProvider;
+
+	private final Sdk myMSBuildSdk;
+
+	public MSBuildDaemonContext(MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk)
+	{
+		myBuildProcessProvider = buildProcessProvider;
+		myMSBuildSdk = msBuildSdk;
+	}
+
+	@Nonnull
+	public MSBuildProcessProvider getBuildProcessProvider()
+	{
+		return myBuildProcessProvider;
+	}
+
+	@Nonnull
+	public Sdk getMSBuildSdk()
+	{
+		return myMSBuildSdk;
+	}
 
 	public void registerProject(@Nonnull WProject wProject, int serverId)
 	{

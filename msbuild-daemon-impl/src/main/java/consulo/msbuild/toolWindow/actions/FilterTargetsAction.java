@@ -33,7 +33,8 @@ public class FilterTargetsAction extends ToggleAction implements DumbAware
 	@Override
 	public boolean isSelected(@Nonnull AnActionEvent e)
 	{
-		return isFiltered(e.getProject());
+		Project project = e.getProject();
+		return project != null && isFiltered(project);
 	}
 
 	@Override
