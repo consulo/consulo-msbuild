@@ -1,5 +1,6 @@
 package consulo.msbuild.impl;
 
+import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.Sdk;
@@ -18,6 +19,8 @@ import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
 import consulo.msbuild.MSBuildEvaluatedItem;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
+import consulo.msbuild.solution.model.WProject;
 import consulo.roots.ModifiableModuleRootLayer;
 import consulo.roots.impl.*;
 import consulo.roots.types.BinariesOrderRootType;
@@ -25,10 +28,7 @@ import consulo.vfs.util.ArchiveVfsUtil;
 
 import javax.annotation.Nonnull;
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author VISTALL
@@ -92,23 +92,47 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 		{
 			String fullPath = referencePath.getMetadata().get("FullPath");
 
-			VirtualFile dllFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(new File(fullPath));
-			if(dllFile == null)
+			String referenceSourceTarget = referencePath.getMetadata().get("ReferenceSourceTarget");
+			if("ProjectReference".equals(referenceSourceTarget))
 			{
-				continue;
-			}
+				String msBuildSourceProjectFile = referencePath.getMetadata().get("MSBuildSourceProjectFile");
 
-			VirtualFile dllArchive = ArchiveVfsUtil.getArchiveRootForLocalFile(dllFile);
-			if(dllArchive == null)
+				VirtualFile refProjectFile = LocalFileSystem.getInstance().findFileByPath(msBuildSourceProjectFile);
+				if(refProjectFile != null)
+				{
+					MSBuildSolutionModuleExtension<?> solutionModuleExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(module.getProject());
+					if(solutionModuleExtension != null)
+					{
+						for(WProject wProject : solutionModuleExtension.getProjects())
+						{
+							if(Objects.equals(wProject.getVirtualFile(), refProjectFile))
+							{
+								ReadAction.run(() -> rootModel.addInvalidModuleEntry(wProject.getName()));
+							}
+						}
+					}
+				}
+			}
+			else
 			{
-				continue;
+				VirtualFile dllFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(new File(fullPath));
+				if(dllFile == null)
+				{
+					continue;
+				}
+
+				VirtualFile dllArchive = ArchiveVfsUtil.getArchiveRootForLocalFile(dllFile);
+				if(dllArchive == null)
+				{
+					continue;
+				}
+
+				Library library = modifiableLibraryModel.createLibrary(null);
+
+				Library.ModifiableModel modifiableModel = library.getModifiableModel();
+				modifiableModel.addRoot(dllArchive, BinariesOrderRootType.getInstance());
+				modifiableModel.commit();
 			}
-
-			Library library = modifiableLibraryModel.createLibrary(null);
-
-			Library.ModifiableModel modifiableModel = library.getModifiableModel();
-			modifiableModel.addRoot(dllArchive, BinariesOrderRootType.getInstance());
-			modifiableModel.commit();
 		}
 
 		postInitialize(extension, properties, buildProcessProvider, msBuildSdk);
