@@ -11,6 +11,7 @@ import com.intellij.ui.content.ContentManager;
 import com.intellij.ui.content.MessageView;
 import com.intellij.util.Alarm;
 import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.ui.UIAccess;
 import consulo.util.dataholder.Key;
@@ -100,6 +101,8 @@ public class MSBuildLoggingSession implements Disposable
 		ConsoleView console = builder.getConsole();
 
 		Content content = contentManager.getFactory().createContent(new MSBuildLoggingPanel(console), "MSBuild", false);
+		Disposer.register(content, console);
+
 		content.putUserData(KEY, this);
 		contentManager.addContent(content);
 		contentManager.setSelectedContent(content);

@@ -27,24 +27,18 @@ import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
-import consulo.msbuild.daemon.impl.message.WithLenghtReaderDecoder;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.InitializeRequest;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
+import consulo.msbuild.daemon.impl.network.MSBuildServerThread;
+import consulo.msbuild.daemon.impl.network.MSBuildSocketThread;
 import consulo.msbuild.daemon.impl.step.*;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 import consulo.net.util.NetUtil;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.dataholder.Key;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -66,8 +60,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Singleton
 public class MSBuildDaemonService implements Disposable
 {
-	private MSBuildDaemonHandler myHandler;
-
 	@Nonnull
 	public static MSBuildDaemonService getInstance(@Nonnull Project project)
 	{
@@ -79,8 +71,10 @@ public class MSBuildDaemonService implements Disposable
 	private final Project myProject;
 
 	private int myPort = -1;
-	private EventLoopGroup bossGroup;
-	private EventLoopGroup workerGroup;
+
+	private MSBuildServerThread myServerThread;
+
+	private AsyncResult<MSBuildSocketThread> mySocketResult = AsyncResult.undefined();
 
 	private DaemonConnection myConnection;
 
@@ -192,8 +186,13 @@ public class MSBuildDaemonService implements Disposable
 
 					startServer(msBuildSdk, buildProcessProvider);
 
-					myConnection = myHandler.connectAsync().getResultSync();
+					MSBuildSocketThread socketThread = mySocketResult.getResultSync();
 
+					myConnection = new DaemonConnection(socketThread);
+					socketThread.setDaemonConnection(myConnection);
+
+					socketThread.waitForConnect();
+					
 					InitializeRequest message = new InitializeRequest();
 					message.IdeProcessId = (int) ProcessHandle.current().pid();
 					message.CultureName = Locale.getDefault().toString();
@@ -261,7 +260,7 @@ public class MSBuildDaemonService implements Disposable
 					Application.get().getLastUIAccess().give(() -> finalLoggingSession.flush());
 					loggingSession.disposeWithTree();
 				}
-				
+
 				if(runImport)
 				{
 					createModules(context, buildProcessProvider, msBuildSdk);
@@ -508,25 +507,7 @@ public class MSBuildDaemonService implements Disposable
 	{
 		myPort = NetUtil.findAvailableSocketPort();
 
-		bossGroup = new NioEventLoopGroup();
-		workerGroup = new NioEventLoopGroup();
-
-		myHandler = new MSBuildDaemonHandler(MSBuildDaemonService.this);
-
-		ServerBootstrap b = new ServerBootstrap();
-		b.group(bossGroup, workerGroup)
-				.channel(NioServerSocketChannel.class)
-				.childHandler(new ChannelInitializer<SocketChannel>()
-				{
-					@Override
-					public void initChannel(SocketChannel ch) throws Exception
-					{
-						ch.pipeline().addFirst(new WithLenghtReaderDecoder()).addLast(myHandler);
-					}
-				})
-				.option(ChannelOption.SO_BACKLOG, 128)
-				.childOption(ChannelOption.SO_KEEPALIVE, true);
-		b.bind(myPort).sync();
+		myServerThread = new MSBuildServerThread(this, myPort, it -> mySocketResult.setDone(it));
 	}
 
 	@Nullable
@@ -555,7 +536,6 @@ public class MSBuildDaemonService implements Disposable
 	@Override
 	public void dispose()
 	{
-		workerGroup.shutdownGracefully();
-		bossGroup.shutdownGracefully();
+		myServerThread.shutdown();
 	}
 }

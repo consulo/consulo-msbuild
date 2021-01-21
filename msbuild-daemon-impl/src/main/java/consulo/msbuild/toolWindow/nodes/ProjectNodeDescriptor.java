@@ -28,6 +28,7 @@ public class ProjectNodeDescriptor extends AbstractTreeNode<WProject>
 	private static final String[] ourCommonTargets = {
 			"Clean",
 			"Compile",
+			"Restore",
 			"Build"
 	};
 

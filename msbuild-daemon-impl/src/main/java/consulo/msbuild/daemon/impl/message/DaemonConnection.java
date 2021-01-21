@@ -1,27 +1,22 @@
 package consulo.msbuild.daemon.impl.message;
 
-import com.intellij.util.concurrency.AppExecutorUtil;
 import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.RunProjectRequest;
+import consulo.msbuild.daemon.impl.network.MSBuildSocketThread;
 import consulo.msbuild.daemon.impl.step.BaseRunProjectStep;
 import consulo.msbuild.daemon.impl.step.DaemonStep;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.lang.Pair;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -30,29 +25,29 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class DaemonConnection
 {
-	private AtomicInteger myNextId = new AtomicInteger();
+	private final MSBuildSocketThread mySocketThread;
 
-	private final Channel myChannel;
+	private AtomicInteger myNextId = new AtomicInteger();
 
 	private Map<Integer, Pair<DaemonMessage, AsyncResult>> myHandlers = new ConcurrentHashMap<>();
 
-	private Future<?> myPingFutures = CompletableFuture.completedFuture(null);
+	//private Future<?> myPingFutures = CompletableFuture.completedFuture(null);
 
-	public DaemonConnection(Channel channel)
+	public DaemonConnection(MSBuildSocketThread socketThread)
 	{
-		myChannel = channel;
+		mySocketThread = socketThread;
 
 		// TODO timeout handler drop
-		myPingFutures = AppExecutorUtil.getAppScheduledExecutorService().scheduleWithFixedDelay(() -> {
-
-			///	sendWithResponse(Ping.INSTANCE);
-
-		}, 5, 5, TimeUnit.SECONDS);
+//		myPingFutures = AppExecutorUtil.getAppScheduledExecutorService().scheduleWithFixedDelay(() -> {
+//
+//			///	sendWithResponse(Ping.INSTANCE);
+//
+//		}, 5, 5, TimeUnit.SECONDS);
 	}
 
 	public void dispose()
 	{
-		myPingFutures.cancel(false);
+		//myPingFutures.cancel(false);
 	}
 
 	public void prepareLogging(DaemonMessage request, DaemonStep step, MSBuildLoggingSession loggingSession)
@@ -68,7 +63,7 @@ public class DaemonConnection
 	}
 
 	@Nonnull
-	public synchronized <R extends DataObject> AsyncResult<R> sendWithResponse(DaemonMessage<R> message)
+	public <R extends DataObject> AsyncResult<R> sendWithResponse(DaemonMessage<R> message) throws IOException
 	{
 		AsyncResult<R> result = AsyncResult.undefined();
 
@@ -76,15 +71,17 @@ public class DaemonConnection
 
 		byte[] array = binaryMessage.toByteArray();
 
-		ByteBuf buffer = Unpooled.buffer(array.length + 4 + 1).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(array.length + 4 + 1);
 
-		buffer.writeByte((byte) 1);
+		byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-		buffer.writeIntLE(array.length);
+		byteBuffer.put((byte) 1);
 
-		buffer.writeBytes(array);
+		byteBuffer.putInt(array.length);
 
-		ChannelFuture channelFuture = myChannel.writeAndFlush(buffer).syncUninterruptibly();
+		byteBuffer.put(array);
+
+		mySocketThread.write(byteBuffer);
 
 		//System.out.println("send " + binaryMessage + ", is success " + channelFuture.isSuccess());
 
