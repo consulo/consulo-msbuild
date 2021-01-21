@@ -143,7 +143,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 				SetMSBuildConfigProperty(toolset, "DevEnvDir", devEnvDir + "\\");
 				SetMSBuildConfigProperty(toolset, "NuGetRestoreTargets", new File(devEnvDir, "CommonExtensions\\Microsoft\\NuGet\\NuGet.targets").getAbsolutePath());
 
-				File sdksPath = new File(extensionsPath, "Sdks");
+				File sdksPath = new File(msBuildBinDir, "Sdks");
 				SetMSBuildConfigProperty(toolset, "MSBuildSDKsPath", sdksPath.getAbsolutePath());
 
 				File roslynTargetsPath = new File(msBuildBinDir, "Roslyn");

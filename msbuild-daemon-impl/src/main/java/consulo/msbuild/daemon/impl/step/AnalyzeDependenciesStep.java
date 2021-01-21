@@ -1,5 +1,6 @@
 package consulo.msbuild.daemon.impl.step;
 
+import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
 import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
 import consulo.msbuild.daemon.impl.message.model.MSBuildResult;
@@ -14,16 +15,12 @@ import javax.annotation.Nonnull;
  */
 public class AnalyzeDependenciesStep extends BaseRunProjectStep
 {
-	public AnalyzeDependenciesStep(WProject wProject)
+	public AnalyzeDependenciesStep(WProject wProject, MSBuildProcessProvider provider)
 	{
 		super(wProject, new String[]{
 				"ReferencePath",
 				"_DependenciesDesignTime"
-		}, new String[]{
-				"ResolveAssemblyReferencesDesignTime",
-				"ResolveProjectReferencesDesignTime",
-				"ResolvePackageDependenciesDesignTime"
-		});
+		}, provider.getDependencyTargets());
 	}
 
 	@Nonnull

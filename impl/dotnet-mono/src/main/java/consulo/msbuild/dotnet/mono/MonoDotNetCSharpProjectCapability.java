@@ -1,4 +1,4 @@
-package consulo.msbuild.dotnet.microsoft;
+package consulo.msbuild.dotnet.mono;
 
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.csharp.BaseCSharpProjectCapability;
@@ -9,18 +9,18 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 21/01/2021
  */
-public class MicrosoftDotNetCSharpProjectCapability extends BaseCSharpProjectCapability
+public class MonoDotNetCSharpProjectCapability extends BaseCSharpProjectCapability
 {
 	@Override
 	public boolean isApplicable(@Nonnull MSBuildProcessProvider provider)
 	{
-		return MSBuildProcessProvider.DEFAULT_ID.equals(provider.getId());
+		return provider instanceof MonoMSBuildProcessProvider;
 	}
 
 	@Nonnull
 	@Override
 	public String getExtensionId()
 	{
-		return "dotnet-csharp-by-msbuild";
+		return "csharp-mono-by-msbuild";
 	}
 }

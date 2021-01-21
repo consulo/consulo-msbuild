@@ -132,9 +132,11 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new RestoreDependenciesStep(project));
 		}
 
+		MSBuildProcessProvider provider = findBuildProcessProvider(solutionExtension);
+
 		for(WProject project : projects)
 		{
-			steps.add(new AnalyzeDependenciesStep(project));
+			steps.add(new AnalyzeDependenciesStep(project, provider));
 		}
 
 		for(WProject project : projects)
@@ -211,7 +213,7 @@ public class MSBuildDaemonService implements Disposable
 
 					InitializeRequest message = new InitializeRequest();
 					message.IdeProcessId = (int) ProcessHandle.current().pid();
-					message.CultureName = Locale.getDefault().toString();
+					message.CultureName = buildProcessProvider.getLocaleForProcess();
 					message.BinDir = buildProcessProvider.getBinDir(msBuildSdk).getAbsolutePath();
 
 					fillGlobalProperties(message.GlobalProperties, message.BinDir, msBuildSdk, buildProcessProvider);
@@ -438,7 +440,7 @@ public class MSBuildDaemonService implements Disposable
 
 		File parentDir = originalExeFile.getParentFile();
 
-		String[] additionalPaths = {".pdb"};
+		String[] additionalPaths = buildProcessProvider.getAdditionalCopyExtensions();
 		for(String additionalPath : additionalPaths)
 		{
 			File attachFile = new File(parentDir, FileUtil.getNameWithoutExtension(originalExeFile) + additionalPath);
