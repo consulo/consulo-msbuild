@@ -67,7 +67,7 @@ public class MSBuildCompiler implements TranslatingCompiler
 
 		MSBuildDaemonService daemonService = MSBuildDaemonService.getInstance(compileContext.getProject());
 
-		daemonService.runSteps(steps).getResultSync();
+		daemonService.runSteps(steps, "Build").getResultSync();
 	}
 
 	@Nonnull

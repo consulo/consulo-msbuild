@@ -15,6 +15,7 @@ import consulo.disposer.Disposer;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.ui.UIAccess;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +32,17 @@ public class MSBuildLoggingSession implements Disposable
 
 	private final int myId;
 	private final Project myProject;
+	private final String myLoggingGroup;
 
 	private ZipperUpdater myZipperUpdater = new ZipperUpdater(1000, Alarm.ThreadToUse.SWING_THREAD, this);
 
 	private Queue<LogMessage> myLogMessages = new ConcurrentLinkedQueue<>();
 
-	public MSBuildLoggingSession(int id, Project project)
+	public MSBuildLoggingSession(int id, Project project, String loggingGroup)
 	{
 		myId = id;
 		myProject = project;
+		myLoggingGroup = loggingGroup;
 	}
 
 	public int getId()
@@ -100,7 +103,9 @@ public class MSBuildLoggingSession implements Disposable
 
 		ConsoleView console = builder.getConsole();
 
-		Content content = contentManager.getFactory().createContent(new MSBuildLoggingPanel(console), "MSBuild", false);
+		String tabName = StringUtil.isEmpty(myLoggingGroup) ? "MSBuild" : "MSBuild - " + myLoggingGroup;
+
+		Content content = contentManager.getFactory().createContent(new MSBuildLoggingPanel(console), tabName, false);
 		Disposer.register(content, console);
 
 		content.putUserData(KEY, this);

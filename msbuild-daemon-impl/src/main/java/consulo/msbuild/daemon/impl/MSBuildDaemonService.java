@@ -142,7 +142,7 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new ListTargetsStep(project));
 		}
 
-		return runSteps(steps).doWhenDone(context -> createModules(context));
+		return runSteps(steps, null).doWhenDone(context -> createModules(context));
 	}
 
 	public void runTarget(String target)
@@ -164,11 +164,11 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new RunTargetProjectStep(project, target));
 		}
 
-		runSteps(steps);
+		runSteps(steps, target);
 	}
 
 	@Nonnull
-	public AsyncResult<MSBuildDaemonContext> runSteps(List<DaemonStep> steps)
+	public AsyncResult<MSBuildDaemonContext> runSteps(List<DaemonStep> steps, String loggingGroup)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -228,7 +228,7 @@ public class MSBuildDaemonService implements Disposable
 					{
 						if(((BaseRunProjectStep) step).wantLogging())
 						{
-							loggingSession = newLoggingSession();
+							loggingSession = newLoggingSession(loggingGroup);
 							break;
 						}
 					}
@@ -536,10 +536,10 @@ public class MSBuildDaemonService implements Disposable
 		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
 	}
 
-	public MSBuildLoggingSession newLoggingSession()
+	public MSBuildLoggingSession newLoggingSession(String loggingGroup)
 	{
 		int id = myLoggers.incrementAndGet();
-		MSBuildLoggingSession session = new MSBuildLoggingSession(id, myProject);
+		MSBuildLoggingSession session = new MSBuildLoggingSession(id, myProject, loggingGroup);
 		myLoggingSessions.put(id, session);
 		return session;
 	}
