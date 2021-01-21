@@ -18,9 +18,6 @@ public class AnalyzeDependenciesStep extends BaseRunProjectStep
 	{
 		super(wProject, new String[]{
 				"ReferencePath",
-				"Compile",
-				"None",
-				"EmbeddedResource",
 				"_DependenciesDesignTime"
 		}, new String[]{
 				"ResolveAssemblyReferencesDesignTime",
