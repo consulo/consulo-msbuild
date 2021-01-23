@@ -41,6 +41,7 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 		return new File(sdk.getHomePath());
 	}
 
+	@Nonnull
 	@Override
 	public String getId()
 	{

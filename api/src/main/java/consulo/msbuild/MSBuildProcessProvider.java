@@ -23,6 +23,7 @@ public interface MSBuildProcessProvider
 
 	String DEFAULT_ID = "standalone";
 
+	@Nonnull
 	String getId();
 
 	void fillBundles(@Nonnull Consumer<Sdk> consumer);

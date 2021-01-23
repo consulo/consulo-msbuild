@@ -36,6 +36,7 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 		mySdkTable = sdkTable;
 	}
 
+	@Nonnull
 	@Override
 	public String getId()
 	{
