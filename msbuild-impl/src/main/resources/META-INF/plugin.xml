@@ -86,6 +86,8 @@
 
 		<moduleImportProvider implementation="consulo.msbuild.importProvider.SolutionModuleImportProvider"/>
 
+		<moduleImportProvider implementation="consulo.msbuild.importProvider.MSBuildModuleImportProvider"/>
+
 		<generatedSourcesFilter implementation="consulo.msbuild.roots.MSBuildGeneratedSourcesFilter"/>
 
 		<treeStructureProvider implementation="consulo.msbuild.projectView.SolutionViewTreePatcher"/>

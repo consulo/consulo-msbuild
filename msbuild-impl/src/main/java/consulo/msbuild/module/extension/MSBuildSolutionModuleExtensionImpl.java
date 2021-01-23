@@ -21,8 +21,11 @@ import java.util.List;
 public class MSBuildSolutionModuleExtensionImpl extends ModuleExtensionImpl<MSBuildSolutionModuleExtensionImpl> implements MSBuildSolutionModuleExtension<MSBuildSolutionModuleExtensionImpl>
 {
 	protected String mySdkName;
-	protected String mySolutionUrl;
 	protected String myProviderId;
+
+	protected String mySolutionUrl;
+	protected String myProjectUrl;
+	protected String myProjectUUID;
 
 	public MSBuildSolutionModuleExtensionImpl(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
@@ -45,6 +48,20 @@ public class MSBuildSolutionModuleExtensionImpl extends ModuleExtensionImpl<MSBu
 
 	@Nullable
 	@Override
+	public String getProjectUrl()
+	{
+		return myProjectUrl;
+	}
+
+	@Nullable
+	@Override
+	public String getProjectUUID()
+	{
+		return myProjectUUID;
+	}
+
+	@Nullable
+	@Override
 	public VirtualFile getSolutionFile()
 	{
 		if(mySolutionUrl == null)
@@ -54,14 +71,36 @@ public class MSBuildSolutionModuleExtensionImpl extends ModuleExtensionImpl<MSBu
 		return VirtualFileManager.getInstance().findFileByUrl(mySolutionUrl);
 	}
 
+	@Nullable
+	@Override
+	public VirtualFile getProjectFile()
+	{
+		if(myProjectUrl == null)
+		{
+			return null;
+		}
+		return VirtualFileManager.getInstance().findFileByUrl(myProjectUrl);
+	}
+
 	@Nonnull
 	@Override
 	public Collection<WProject> getProjects()
 	{
-		VirtualFile solutionFile = getSolutionFile();
-		if(solutionFile != null)
+		if(myProjectUrl != null)
 		{
-			return WSolution.build(getProject(), solutionFile).getProjects();
+			VirtualFile projectFile = getProjectFile();
+			if(projectFile != null)
+			{
+				return List.of(new WProject(getModule().getProject(), projectFile, myProjectUUID));
+			}
+		}
+		else
+		{
+			VirtualFile solutionFile = getSolutionFile();
+			if(solutionFile != null)
+			{
+				return WSolution.build(getProject(), solutionFile).getProjects();
+			}
 		}
 		return List.of();
 	}
@@ -81,6 +120,8 @@ public class MSBuildSolutionModuleExtensionImpl extends ModuleExtensionImpl<MSBu
 
 		mySdkName = element.getAttributeValue("sdk");
 		mySolutionUrl = element.getAttributeValue("solution-url");
+		myProjectUrl = element.getAttributeValue("project-url");
+		myProjectUUID = element.getAttributeValue("project-uuid");
 		myProviderId = element.getAttributeValue("provider-id");
 	}
 
@@ -94,6 +135,14 @@ public class MSBuildSolutionModuleExtensionImpl extends ModuleExtensionImpl<MSBu
 		{
 			element.setAttribute("solution-url", mySolutionUrl);
 		}
+		if(myProjectUrl != null)
+		{
+			element.setAttribute("project-url", myProjectUrl);
+		}
+		if(myProjectUUID != null)
+		{
+			element.setAttribute("project-uuid", myProjectUUID);
+		}
 		element.setAttribute("provider-id", myProviderId);
 	}
 
@@ -104,6 +153,8 @@ public class MSBuildSolutionModuleExtensionImpl extends ModuleExtensionImpl<MSBu
 		super.commit(mutableModuleExtension);
 		mySdkName = mutableModuleExtension.mySdkName;
 		mySolutionUrl = mutableModuleExtension.mySolutionUrl;
+		myProjectUrl = mutableModuleExtension.myProjectUrl;
 		myProviderId = mutableModuleExtension.myProviderId;
+		myProjectUUID = mutableModuleExtension.myProjectUUID;
 	}
 }

@@ -3,8 +3,6 @@ package consulo.msbuild.importProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import consulo.moduleImport.ModuleImportContext;
-import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.solution.reader.SlnFile;
 
 import javax.annotation.Nonnull;
@@ -19,12 +17,9 @@ import java.nio.charset.StandardCharsets;
  * @author VISTALL
  * @since 01-Feb-17
  */
-public class SolutionModuleImportContext extends ModuleImportContext
+public class SolutionModuleImportContext extends MSBuildBaseImportContext
 {
 	private SlnFile mySlnFile = new SlnFile();
-
-	private MSBuildProcessProvider myProvider;
-	private String myMSBuildBundleName;
 
 	public SolutionModuleImportContext(@Nullable Project project)
 	{
@@ -56,25 +51,5 @@ public class SolutionModuleImportContext extends ModuleImportContext
 	public SlnFile getSlnFile()
 	{
 		return mySlnFile;
-	}
-
-	public void setMSBuildBundleName(String MSBuildBundleName)
-	{
-		myMSBuildBundleName = MSBuildBundleName;
-	}
-
-	public String getMSBuildBundleName()
-	{
-		return myMSBuildBundleName;
-	}
-
-	public MSBuildProcessProvider getProvider()
-	{
-		return myProvider;
-	}
-
-	public void setProvider(MSBuildProcessProvider provider)
-	{
-		myProvider = provider;
 	}
 }

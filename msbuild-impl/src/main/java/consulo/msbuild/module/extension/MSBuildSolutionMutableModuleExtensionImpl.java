@@ -27,6 +27,18 @@ public class MSBuildSolutionMutableModuleExtensionImpl extends MSBuildSolutionMo
 	}
 
 	@Override
+	public void setProjectFileUrl(@Nullable String url)
+	{
+		myProjectUrl = url;
+	}
+
+	@Override
+	public void setProjectUUID(@Nullable String uuid)
+	{
+		myProjectUUID = uuid;
+	}
+
+	@Override
 	public void setProcessProviderId(@Nonnull String id)
 	{
 		myProviderId = id;
@@ -58,6 +70,8 @@ public class MSBuildSolutionMutableModuleExtensionImpl extends MSBuildSolutionMo
 		return myIsEnabled != originalExtension.isEnabled() ||
 				!Objects.equals(mySdkName, originalExtension.mySdkName) ||
 				!Objects.equals(mySolutionUrl, originalExtension.mySolutionUrl) ||
+				!Objects.equals(myProjectUrl, originalExtension.myProjectUrl) ||
+				!Objects.equals(myProjectUUID, originalExtension.myProjectUUID) ||
 				!Objects.equals(myProviderId, originalExtension.myProviderId);
 	}
 }

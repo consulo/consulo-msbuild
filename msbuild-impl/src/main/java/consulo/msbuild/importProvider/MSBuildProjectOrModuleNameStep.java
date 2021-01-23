@@ -19,14 +19,14 @@ import java.util.Map;
  * @author VISTALL
  * @since 01/01/2021
  */
-public class MSBuildProjectOrModuleNameStep extends UnifiedProjectOrModuleNameStep<SolutionModuleImportContext>
+public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> extends UnifiedProjectOrModuleNameStep<C>
 {
 	private Disposable myUiDisposable;
 	private BundleBox myBundleBox;
 
 	private Map<String, MSBuildProcessProvider> mySdksFromProviders = new HashMap<>();
 
-	public MSBuildProjectOrModuleNameStep(SolutionModuleImportContext context)
+	public MSBuildProjectOrModuleNameStep(C context)
 	{
 		super(context);
 	}
@@ -71,7 +71,7 @@ public class MSBuildProjectOrModuleNameStep extends UnifiedProjectOrModuleNameSt
 
 
 	@Override
-	public void onStepLeave(@Nonnull SolutionModuleImportContext solutionModuleImportContext)
+	public void onStepLeave(@Nonnull C solutionModuleImportContext)
 	{
 		String bundleName = myBundleBox.getSelectedBundleName();
 		if(bundleName != null)

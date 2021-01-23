@@ -44,6 +44,7 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.projectView.select.SolutionSelectInTarget;
+import consulo.msbuild.solution.model.WProject;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.image.Image;
 import consulo.util.dataholder.Key;
@@ -54,6 +55,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -489,16 +491,17 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 			@RequiredReadAction
 			protected AbstractTreeNode createRoot(Project project, ViewSettings settings)
 			{
-				MSBuildSolutionModuleExtension extension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
-
-				VirtualFile solutionFile = extension == null ? null : extension.getSolutionFile();
-
-				if(solutionFile == null)
+				MSBuildSolutionModuleExtension<?> extension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
+				if(extension == null)
 				{
 					return new SolutionViewErrorRootNode(project, settings);
 				}
 
-				return new SolutionViewRootNode(project, solutionFile, settings);
+				VirtualFile solutionFile = extension.getSolutionFile();
+
+				Collection<WProject> projects = extension.getProjects();
+
+				return new SolutionViewRootNode(project, solutionFile, projects, settings);
 			}
 		};
 	}
@@ -554,7 +557,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	public Image getIcon()
 	{
-		return MSBuildIcons.Msbuild;
+		return MSBuildIcons.VisualStudio;
 	}
 
 	@Nonnull

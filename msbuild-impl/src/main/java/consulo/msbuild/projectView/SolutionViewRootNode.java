@@ -29,14 +29,10 @@ import consulo.msbuild.solution.model.WSolution;
 import consulo.msbuild.solution.reader.SlnSection;
 import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.annotation.RequiredUIAccess;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author VISTALL
@@ -44,15 +40,20 @@ import java.util.Set;
  */
 public class SolutionViewRootNode extends ProjectViewNode<Project>
 {
-	private WSolution myWSolution;
 	@Nullable
-	private VirtualFile mySolutionFile;
+	private final WSolution myWSolution;
+
+	@Nullable
+	private final VirtualFile mySolutionFile;
+
+	private final Collection<WProject> myProjects;
 
 	@RequiredReadAction
-	public SolutionViewRootNode(Project project, @Nullable VirtualFile solutionFile, ViewSettings viewSettings)
+	public SolutionViewRootNode(Project project, @Nullable VirtualFile solutionFile, Collection<WProject> projects, ViewSettings viewSettings)
 	{
 		super(project, project, viewSettings);
 		mySolutionFile = solutionFile;
+		myProjects = projects;
 		myWSolution = solutionFile == null ? null : WSolution.build(project, solutionFile);
 	}
 
@@ -67,10 +68,8 @@ public class SolutionViewRootNode extends ProjectViewNode<Project>
 	@RequiredUIAccess
 	public Collection<? extends AbstractTreeNode> getChildren()
 	{
-		Collection<WProject> projects = myWSolution.getProjects();
-
-		Map<String, AbstractTreeNode> nodes = new THashMap<>(projects.size());
-		for(WProject wProject : myWSolution.getProjects())
+		Map<String, AbstractTreeNode> nodes = new HashMap<>(myProjects.size());
+		for(WProject wProject : myProjects)
 		{
 			AbstractTreeNode node;
 			if(MSBuildGUID.SolutionFolder.equals(wProject.getTypeGUID()))
@@ -93,28 +92,31 @@ public class SolutionViewRootNode extends ProjectViewNode<Project>
 			nodes.put(wProject.getId(), node);
 		}
 
-		SlnSection section = myWSolution.getSection(WSolution.SECTION_NESTED_PROJECTS);
-		if(section != null)
+		if(myWSolution != null)
 		{
-			Set<String> toRemove = new THashSet<>();
-			for(Map.Entry<String, String> entry : section.getProperties().getValues().entrySet())
+			SlnSection section = myWSolution.getSection(WSolution.SECTION_NESTED_PROJECTS);
+			if(section != null)
 			{
-				AbstractTreeNode left = nodes.get(entry.getKey());
-				AbstractTreeNode right = nodes.get(entry.getValue());
-
-				if(right == null)
+				Set<String> toRemove = new HashSet<>();
+				for(Map.Entry<String, String> entry : section.getProperties().getValues().entrySet())
 				{
-					continue;
+					AbstractTreeNode left = nodes.get(entry.getKey());
+					AbstractTreeNode right = nodes.get(entry.getValue());
+
+					if(right == null)
+					{
+						continue;
+					}
+
+					((SolutionViewProjectFolderNode) right).addChildren(left);
+
+					toRemove.add(((SolutionViewProjectNodeBase) left).getProjectId());
 				}
 
-				((SolutionViewProjectFolderNode) right).addChildren(left);
-
-				toRemove.add(((SolutionViewProjectNodeBase) left).getProjectId());
-			}
-
-			for(String id : toRemove)
-			{
-				nodes.remove(id);
+				for(String id : toRemove)
+				{
+					nodes.remove(id);
+				}
 			}
 		}
 		return nodes.values();

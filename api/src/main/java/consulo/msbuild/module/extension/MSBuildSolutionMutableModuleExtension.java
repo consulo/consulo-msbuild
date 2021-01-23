@@ -13,6 +13,10 @@ public interface MSBuildSolutionMutableModuleExtension<T extends MSBuildSolution
 {
 	void setSolutionFileUrl(@Nullable String url);
 
+	void setProjectFileUrl(@Nullable String url);
+
+	void setProjectUUID(@Nullable String uuid);
+
 	void setProcessProviderId(@Nonnull String id);
 
 	void setSdkName(@Nonnull String name);

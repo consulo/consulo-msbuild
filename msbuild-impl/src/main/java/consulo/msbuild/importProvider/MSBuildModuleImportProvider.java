@@ -1,21 +1,21 @@
 package consulo.msbuild.importProvider;
 
 import com.intellij.openapi.application.WriteAction;
-import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.DumbAwareRunnable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.startup.StartupManager;
+import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.openapi.util.text.HtmlBuilder;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.VisualStudioSolutionFileType;
+import consulo.msbuild.MSBuildProjectFileEP;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.ui.image.Image;
@@ -25,19 +25,20 @@ import org.intellij.lang.annotations.Language;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
  * @author VISTALL
- * @since 01-Feb-17
+ * @since 23/01/2021
  */
-public class SolutionModuleImportProvider implements ModuleImportProvider<SolutionModuleImportContext>
+public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuildModuleImportContext>
 {
 	@Nonnull
 	@Override
-	public SolutionModuleImportContext createContext(@Nullable Project project)
+	public MSBuildModuleImportContext createContext(@Nullable Project project)
 	{
-		return new SolutionModuleImportContext(project);
+		return new MSBuildModuleImportContext(project);
 	}
 
 	@Nonnull
@@ -45,33 +46,51 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 	@Language("HTML")
 	public String getFileSample()
 	{
-		return "<b>Visual Studio</b> solution file (*.sln)";
+		HtmlBuilder builder = new HtmlBuilder();
+		builder.wrapWith("b").addText("MSBuild");
+		builder.append("project files (");
+		for(String ext : MSBuildProjectFileEP.listAll())
+		{
+			builder.append("*." + ext);
+		}
+		builder.append(")");
+		return builder.toString();
 	}
 
 	@Nonnull
 	@Override
 	public String getName()
 	{
-		return "Visual Studio";
+		return "MSBuild";
 	}
 
 	@Nullable
 	@Override
 	public Image getIcon()
 	{
-		return MSBuildIcons.VisualStudio;
+		return MSBuildIcons.Msbuild;
 	}
 
 	@Override
 	public boolean canImport(@Nonnull File fileOrDirectory)
 	{
+		// if target directory contains Solution - do not allow import as MSBuild
+		if(fileOrDirectory.isDirectory())
+		{
+			if(SolutionModuleImportProvider.findSingleSolutionFile(fileOrDirectory) != null)
+			{
+				return false;
+			}
+		}
+
 		if(fileOrDirectory.isDirectory())
 		{
 			return findSingleSolutionFile(fileOrDirectory) != null;
 		}
 		else
 		{
-			return FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
+			String ext = FileUtil.getExtension(fileOrDirectory.getName());
+			return MSBuildProjectFileEP.listAll().contains(ext);
 		}
 	}
 
@@ -89,8 +108,10 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 		return file.getPath();
 	}
 
-	public static File findSingleSolutionFile(File directory)
+	private File findSingleSolutionFile(File directory)
 	{
+		Set<String> exts = MSBuildProjectFileEP.listAll();
+
 		File firstSolution = null;
 		if(directory.isDirectory())
 		{
@@ -98,7 +119,8 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 			{
 				if(file.isFile())
 				{
-					if(FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE)
+					String ext = FileUtil.getExtension(file.getName());
+					if(exts.contains(ext))
 					{
 						// already found - return null
 						if(firstSolution != null)
@@ -116,31 +138,31 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 	}
 
 	@Override
-	public void buildSteps(@Nonnull Consumer<WizardStep<SolutionModuleImportContext>> consumer, @Nonnull SolutionModuleImportContext context)
+	public void buildSteps(@Nonnull Consumer<WizardStep<MSBuildModuleImportContext>> consumer, @Nonnull MSBuildModuleImportContext context)
 	{
 		consumer.accept(new MSBuildProjectOrModuleNameStep<>(context));
 	}
 
 	@RequiredReadAction
 	@Override
-	public void process(@Nonnull SolutionModuleImportContext context,
+	public void process(@Nonnull MSBuildModuleImportContext context,
 						@Nonnull Project project,
 						@Nonnull ModifiableModuleModel modifiableModuleModel,
 						@Nonnull Consumer<Module> consumer)
 	{
 		String fileToImport = context.getFileToImport();
 
-		VirtualFile solutionFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
-		assert solutionFile != null;
+		VirtualFile projectFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
+		assert projectFile != null;
 
-		VirtualFile parent = solutionFile.getParent();
+		VirtualFile parent = projectFile.getParent();
 
-		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName(), parent, modifiableModuleModel);
+		final ModifiableRootModel mainModuleModel = SolutionModuleImportProvider.createModuleWithSingleContent(parent.getName(), parent, modifiableModuleModel);
 
 		MSBuildSolutionMutableModuleExtension<?> solExtension = mainModuleModel.getExtensionWithoutCheck(context.getProvider().getSolutionModuleExtensionId());
 		assert solExtension != null;
 		solExtension.setEnabled(true);
-		solExtension.setSolutionFileUrl(solutionFile.getUrl());
+		solExtension.setProjectFileUrl(projectFile.getUrl());
 		solExtension.setSdkName(context.getMSBuildBundleName());
 		solExtension.setProcessProviderId(context.getProvider().getId());
 
@@ -153,17 +175,5 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 
 			// TODO [VISTALL] create run configurations after reimport
 		});
-	}
-
-	@RequiredReadAction
-	public static ModifiableRootModel createModuleWithSingleContent(String dirName, VirtualFile dir, ModifiableModuleModel modifiableModuleModel)
-	{
-		Module module = modifiableModuleModel.newModule(dirName + " (Root)", dir.getPath());
-
-		ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
-		ModifiableRootModel modifiableModel = moduleRootManager.getModifiableModel();
-		modifiableModel.addContentEntry(dir);
-
-		return modifiableModel;
 	}
 }

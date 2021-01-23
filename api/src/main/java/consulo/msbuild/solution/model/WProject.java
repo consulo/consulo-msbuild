@@ -41,7 +41,8 @@ public class WProject
 {
 	public static enum FailReason
 	{
-		not_supported, project_not_found
+		not_supported,
+		project_not_found
 	}
 
 	private SlnProject myProject;
@@ -80,6 +81,29 @@ public class WProject
 			}
 			myFailReason = FailReason.not_supported;
 		}
+	}
+
+	public WProject(com.intellij.openapi.project.Project project, VirtualFile projectFile, String projectUUID)
+	{
+		myProject = new SlnProject();
+		myProject.Id = "{" + projectUUID + "}";
+		myProject.TypeGuid = "{" + "fake id" + "}";
+		myProject.Name = projectFile.getName();
+
+		myFile = projectFile;
+
+		PsiFile psiFile = ReadAction.compute(() -> PsiManager.getInstance(project).findFile(projectFile));
+
+		if(psiFile instanceof XmlFile)
+		{
+			DomFileElement<Project> fileElement = ReadAction.compute(() -> DomManager.getDomManager(project).getFileElement((XmlFile) psiFile, consulo.msbuild.dom.Project.class));
+			if(fileElement != null)
+			{
+				myDomProject = fileElement.getRootElement();
+				return;
+			}
+		}
+		myFailReason = FailReason.not_supported;
 	}
 
 	@Deprecated

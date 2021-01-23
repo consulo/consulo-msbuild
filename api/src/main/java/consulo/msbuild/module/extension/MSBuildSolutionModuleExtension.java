@@ -45,11 +45,23 @@ public interface MSBuildSolutionModuleExtension<T extends ModuleExtension<T>> ex
 	@Nullable
 	String getSdkName();
 
+	/**
+	 * File URL to solution file. If it's not null - {@link #getProjectUrl()} will always return null
+	 */
 	@Nullable
 	String getSolutionFileUrl();
 
 	@Nullable
+	String getProjectUrl();
+
+	@Nullable
 	VirtualFile getSolutionFile();
+
+	@Nullable
+	VirtualFile getProjectFile();
+
+	@Nullable
+	String getProjectUUID();
 
 	@Nonnull
 	Collection<WProject> getProjects();
