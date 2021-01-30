@@ -18,11 +18,12 @@ package consulo.msbuild.dom.expression.evaluate;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NullableLazyValue;
 import com.intellij.psi.PsiElement;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
-import consulo.msbuild.module.extension.MSBuildRootExtension;
+import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,7 +43,7 @@ public class MSBuildEvaluateContext
 	}
 
 	@Nonnull
-	public static MSBuildEvaluateContext from(@Nonnull PsiElement element, @Nonnull MSBuildRootExtension buildRootExtension)
+	public static MSBuildEvaluateContext from(@Nonnull PsiElement element, @Nonnull MSBuildProjectModuleExtension buildRootExtension)
 	{
 		return new MSBuildEvaluateContext(element, buildRootExtension);
 	}
@@ -51,17 +52,17 @@ public class MSBuildEvaluateContext
 
 	private NullableLazyValue<Module> myModuleValue = NullableLazyValue.of(() -> ModuleUtilCore.findModuleForPsiElement(myElement));
 
-	private NullableLazyValue<MSBuildRootExtension<?>> myModuleExtensionValue;
+	private NullableLazyValue<MSBuildProjectModuleExtension<?>> myModuleExtensionValue;
 
 	private final Map<String, MSBuildVariableProvider> myVariables = new HashMap<>();
 
 	private final Map<Class<? extends MSBuildVariableProvider>, String> myVariableValues = new HashMap<>();
 
-	private MSBuildEvaluateContext(@Nonnull PsiElement element, @Nullable MSBuildRootExtension buildRootExtension)
+	private MSBuildEvaluateContext(@Nonnull PsiElement element, @Nullable MSBuildProjectModuleExtension buildRootExtension)
 	{
 		myElement = element;
 
-		for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensions())
+		for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensionList())
 		{
 			myVariables.put(provider.getName(), provider);
 		}
@@ -79,7 +80,7 @@ public class MSBuildEvaluateContext
 				{
 					return null;
 				}
-				return ModuleUtilCore.getExtension(module, MSBuildRootExtension.class);
+				return ModuleUtilCore.getExtension(module, MSBuildProjectModuleExtension.class);
 			});
 		}
 	}
@@ -104,7 +105,7 @@ public class MSBuildEvaluateContext
 			return value;
 		}
 
-		for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensions())
+		for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensionList())
 		{
 			if(provider.getClass() == variableClazz)
 			{
@@ -112,6 +113,12 @@ public class MSBuildEvaluateContext
 			}
 		}
 		return null;
+	}
+
+	@Nonnull
+	public Project getProject()
+	{
+		return myElement.getProject();
 	}
 
 	@RequiredReadAction
@@ -123,7 +130,7 @@ public class MSBuildEvaluateContext
 
 	@Nullable
 	@RequiredReadAction
-	public MSBuildRootExtension<?> getModuleExtension()
+	public MSBuildProjectModuleExtension<?> getModuleExtension()
 	{
 		return myModuleExtensionValue.getValue();
 	}

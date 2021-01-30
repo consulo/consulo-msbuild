@@ -16,10 +16,11 @@
 
 package consulo.msbuild.solution;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.xml.DomElement;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
@@ -40,7 +41,7 @@ public class SolutionVirtualFile extends SolutionVirtualItem
 
 	public SolutionVirtualFile(@Nonnull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element, @Nullable VirtualFile virtualFile)
 	{
-		super(name, parent, element);
+		super(name, parent);
 		myVirtualFile = virtualFile;
 	}
 

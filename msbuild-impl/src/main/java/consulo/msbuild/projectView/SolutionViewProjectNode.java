@@ -75,7 +75,7 @@ public class SolutionViewProjectNode extends ProjectViewNode<WProject> implement
 			return Collections.emptyList();
 		}
 
-		SolutionVirtualDirectory directory = SolutionVirtualBuilder.build(getValue().getDomProject(), parent);
+		SolutionVirtualDirectory directory = SolutionVirtualBuilder.build(getValue(), myProject, parent);
 
 		Collection<AbstractTreeNode> nodes = buildNodes(myProject, directory::getChildren, getSettings(), false);
 		nodes.add(new SolutionViewReferencesNode(myProject, getValue().getDomProject(), getSettings()));

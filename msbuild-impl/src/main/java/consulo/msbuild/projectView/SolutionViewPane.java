@@ -37,15 +37,14 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ex.ToolWindowEx;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.ui.AutoScrollFromSourceHandler;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.MSBuildSolutionManager;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.projectView.select.SolutionSelectInTarget;
+import consulo.msbuild.solution.model.WProject;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.image.Image;
 import consulo.util.dataholder.Key;
@@ -56,6 +55,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -70,7 +70,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	{
 		public MyAutoScrollFromSourceHandler(@Nonnull Project project, @Nonnull JComponent view)
 		{
-			super(project, view);
+			super(project, view, project);
 		}
 
 		@Override
@@ -478,9 +478,10 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	public boolean isInitiallyVisible()
 	{
-		return MSBuildSolutionManager.getInstance(myProject).isEnabled();
+		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject) != null;
 	}
 
+	@Nonnull
 	@Override
 	public ProjectAbstractTreeStructureBase createStructure()
 	{
@@ -490,31 +491,28 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 			@RequiredReadAction
 			protected AbstractTreeNode createRoot(Project project, ViewSettings settings)
 			{
-				MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(myProject);
-
-				VirtualFile solutionFile = solutionManager.getSolutionFile();
-
-				if(solutionFile == null)
+				MSBuildSolutionModuleExtension<?> extension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
+				if(extension == null)
 				{
 					return new SolutionViewErrorRootNode(project, settings);
 				}
 
-				return new SolutionViewRootNode(project, solutionFile, settings);
+				VirtualFile solutionFile = extension.getSolutionFile();
+
+				Collection<WProject> projects = extension.getProjects();
+
+				return new SolutionViewRootNode(project, solutionFile, projects, settings);
 			}
 		};
 	}
 
+	@Nonnull
 	@Override
-	protected ProjectViewTree createTree(DefaultTreeModel treeModel)
+	protected ProjectViewTree createTree(@Nonnull DefaultTreeModel treeModel)
 	{
 		return new ProjectViewTree(myProject, treeModel)
 		{
 		};
-	}
-
-	public void initToolWindow(ToolWindow toolWindow)
-	{
-		((ToolWindowEx)toolWindow).setTitleActions(new ScrollFromSourceAction());
 	}
 
 	private JComponent buildComponent()
@@ -532,6 +530,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return myComponent;
 	}
 
+	@Nonnull
 	@Override
 	public JComponent createComponent()
 	{
@@ -540,12 +539,14 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return component;
 	}
 
+	@Nonnull
 	@Override
-	protected AbstractTreeUpdater createTreeUpdater(AbstractTreeBuilder treeBuilder)
+	protected AbstractTreeUpdater createTreeUpdater(@Nonnull AbstractTreeBuilder treeBuilder)
 	{
 		return new AbstractTreeUpdater(treeBuilder);
 	}
 
+	@Nonnull
 	@Override
 	public String getTitle()
 	{
@@ -556,7 +557,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Override
 	public Image getIcon()
 	{
-		return MSBuildIcons.Msbuild;
+		return MSBuildIcons.VisualStudio;
 	}
 
 	@Nonnull
@@ -572,6 +573,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 		return 2;
 	}
 
+	@Nonnull
 	@Override
 	public SelectInTarget createSelectInTarget()
 	{

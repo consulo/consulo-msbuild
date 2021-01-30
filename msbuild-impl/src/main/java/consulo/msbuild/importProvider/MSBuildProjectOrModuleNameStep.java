@@ -1,0 +1,108 @@
+package consulo.msbuild.importProvider;
+
+import com.intellij.openapi.application.Application;
+import com.intellij.openapi.projectRoots.Sdk;
+import consulo.bundle.ui.BundleBox;
+import consulo.bundle.ui.BundleBoxBuilder;
+import consulo.disposer.Disposable;
+import consulo.ide.newProject.ui.UnifiedProjectOrModuleNameStep;
+import consulo.localize.LocalizeValue;
+import consulo.msbuild.MSBuildProcessProvider;
+import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.util.FormBuilder;
+
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author VISTALL
+ * @since 01/01/2021
+ */
+public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> extends UnifiedProjectOrModuleNameStep<C>
+{
+	private final C myContext;
+	private Disposable myUiDisposable;
+	private BundleBox myBundleBox;
+
+	private Map<String, MSBuildProcessProvider> mySdksFromProviders = new HashMap<>();
+
+	public MSBuildProjectOrModuleNameStep(C context)
+	{
+		super(context);
+		myContext = context;
+	}
+
+	@RequiredUIAccess
+	@Override
+	protected void extend(@Nonnull FormBuilder builder)
+	{
+		super.extend(builder);
+
+		myUiDisposable = Disposable.newDisposable();
+
+		BundleBoxBuilder boxBuilder = BundleBoxBuilder.create(myUiDisposable);
+		//boxBuilder.withNoneItem("<Auto Select>", PlatformIconGroup.actionsFind());
+		boxBuilder.withSdkTypeFilter(sdkTypeId -> false);
+		myBundleBox = boxBuilder.build();
+
+		List<MSBuildProcessProvider> providers = MSBuildProcessProvider.EP_NAME.getExtensionList(Application.get());
+
+		for(MSBuildProcessProvider buildProcessProvider : providers)
+		{
+			buildProcessProvider.fillBundles(sdk -> {
+				mySdksFromProviders.put(sdk.getName(), buildProcessProvider);
+				
+				myBundleBox.addBundleItem(sdk);
+			});
+		}
+
+		Sdk targetSdk = null;
+		for(MSBuildProcessProvider provider : providers)
+		{
+			targetSdk = provider.findBundleForImport(myContext);
+			if(targetSdk != null)
+			{
+				myBundleBox.setSelectedBundle(targetSdk.getName());
+				break;
+			}
+		}
+
+		builder.addLabeled(LocalizeValue.localizeTODO("MSBuild:"), myBundleBox.getComponent());
+	}
+
+	@Override
+	public void disposeUIResources()
+	{
+		mySdksFromProviders.clear();
+		
+		if(myUiDisposable != null)
+		{
+			myUiDisposable.disposeWithTree();
+			myUiDisposable = null;
+		}
+
+		myBundleBox = null;
+	}
+
+	@Override
+	public void onStepLeave(@Nonnull C context)
+	{
+		String bundleName = myBundleBox.getSelectedBundleName();
+		if(bundleName != null)
+		{
+			MSBuildProcessProvider msBuildProcessProvider = mySdksFromProviders.get(bundleName);
+
+			context.setMSBuildBundleName(bundleName);
+
+			context.setProvider(msBuildProcessProvider);
+		}
+		else
+		{
+			// TODO [VISTALL] implement autoselect
+			throw new IllegalArgumentException();
+		}
+	}
+}

@@ -1,35 +1,31 @@
 package consulo.msbuild.importProvider;
 
-import java.io.File;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.intellij.lang.annotations.Language;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.project.DumbAwareRunnable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.startup.StartupManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.containers.ContainerUtil;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.ide.newProject.ui.ProjectOrModuleNameStep;
 import consulo.moduleImport.ModuleImportProvider;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.MSBuildSolutionManager;
 import consulo.msbuild.VisualStudioSolutionFileType;
-import consulo.msbuild.importProvider.item.MSBuildImportProject;
+import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.ui.image.Image;
 import consulo.ui.wizard.WizardStep;
+import org.intellij.lang.annotations.Language;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.util.function.Consumer;
 
 /**
  * @author VISTALL
@@ -69,36 +65,60 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 	@Override
 	public boolean canImport(@Nonnull File fileOrDirectory)
 	{
-		return !fileOrDirectory.isDirectory() && FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
+		if(fileOrDirectory.isDirectory())
+		{
+			return findSingleSolutionFile(fileOrDirectory) != null;
+		}
+		else
+		{
+			return FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
+		}
 	}
 
 	@Override
 	public String getPathToBeImported(@Nonnull VirtualFile file)
 	{
+		if(file.isDirectory())
+		{
+			File solutionFile = findSingleSolutionFile(VfsUtil.virtualToIoFile(file));
+			if(solutionFile != null)
+			{
+				return solutionFile.getPath();
+			}
+		}
 		return file.getPath();
+	}
+
+	public static File findSingleSolutionFile(File directory)
+	{
+		File firstSolution = null;
+		if(directory.isDirectory())
+		{
+			for(File file : directory.listFiles())
+			{
+				if(file.isFile())
+				{
+					if(FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE)
+					{
+						// already found - return null
+						if(firstSolution != null)
+						{
+							return null;
+						}
+
+						firstSolution = file;
+					}
+				}
+			}
+
+		}
+		return firstSolution;
 	}
 
 	@Override
 	public void buildSteps(@Nonnull Consumer<WizardStep<SolutionModuleImportContext>> consumer, @Nonnull SolutionModuleImportContext context)
 	{
-		List<MSBuildSetupStepEP> extensions = MSBuildSetupStepEP.EP.getExtensionList();
-
-		Set<Class> classes = new LinkedHashSet<>();
-		for(MSBuildImportProject project : context.getMappedProjects())
-		{
-			classes.add(project.getClass());
-		}
-
-		for(Class aClass : classes)
-		{
-			MSBuildSetupStepEP stepEP = ContainerUtil.find(extensions, it -> it.getImportProjectClass() == aClass);
-			if(stepEP != null)
-			{
-				consumer.accept(stepEP.createStep(context));
-			}
-		}
-
-		consumer.accept(new ProjectOrModuleNameStep<>(context));
+		consumer.accept(new MSBuildProjectOrModuleNameStep<>(context));
 	}
 
 	@RequiredReadAction
@@ -112,25 +132,33 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 
 		VirtualFile solutionFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
 		assert solutionFile != null;
-		MSBuildSolutionManager solutionManager = MSBuildSolutionManager.getInstance(project);
-		solutionManager.setEnabled(true);
-		solutionManager.setUrl(solutionFile);
-		for(Map.Entry<String, MSBuildSolutionManager.ProjectOptions> entry : context.getProjectOptions().entrySet())
-		{
-			solutionManager.putOptions(entry.getKey(), entry.getValue());
-		}
 
 		VirtualFile parent = solutionFile.getParent();
 
-		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName() + " (Solution)", parent, modifiableModuleModel);
-		consumer.accept(mainModuleModel.getModule());
+		final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName(), parent, modifiableModuleModel);
+
+		MSBuildSolutionMutableModuleExtension<?> solExtension = mainModuleModel.getExtensionWithoutCheck(context.getProvider().getSolutionModuleExtensionId());
+		assert solExtension != null;
+		solExtension.setEnabled(true);
+		solExtension.setSolutionFileUrl(solutionFile.getUrl());
+		solExtension.setSdkName(context.getMSBuildBundleName());
+		solExtension.setProcessProviderId(context.getProvider().getId());
+
 		WriteAction.run(mainModuleModel::commit);
+
+		consumer.accept(mainModuleModel.getModule());
+
+		StartupManager.getInstance(project).registerPostStartupActivity((DumbAwareRunnable) () -> {
+			MSBuildDaemonService.getInstance(project).forceUpdate();
+
+			// TODO [VISTALL] create run configurations after reimport
+		});
 	}
 
 	@RequiredReadAction
-	private ModifiableRootModel createModuleWithSingleContent(String name, VirtualFile dir, ModifiableModuleModel modifiableModuleModel)
+	public static ModifiableRootModel createModuleWithSingleContent(String dirName, VirtualFile dir, ModifiableModuleModel modifiableModuleModel)
 	{
-		Module module = modifiableModuleModel.newModule(name, dir.getPath());
+		Module module = modifiableModuleModel.newModule(dirName + " (Root)", dir.getPath());
 
 		ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
 		ModifiableRootModel modifiableModel = moduleRootManager.getModifiableModel();

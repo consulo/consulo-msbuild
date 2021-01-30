@@ -21,16 +21,10 @@
 	</extensions>
 
 	<extensions defaultExtensionNs="consulo.msbuild">
-		<projectType ext="csproj" guid="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}" implementationClass="consulo.msbuild.csharp.CSharpProjectType"/>
+		<projectFile extension="csproj"/>
 	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<moduleExtensionProvider key="msbuild-csharp"
-								 systemOnly="true"
-								 parentKey="msbuild-dotnet"
-								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
-								 name="C#"
-								 immutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpModuleExtension"
-								 mutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension"/>
+
 	</extensions>
 </consulo-plugin>

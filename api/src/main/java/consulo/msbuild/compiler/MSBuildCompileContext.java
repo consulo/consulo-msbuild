@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import consulo.msbuild.module.extension.MSBuildRootExtension;
+import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 
 /**
  * @author VISTALL
@@ -17,7 +17,7 @@ import consulo.msbuild.module.extension.MSBuildRootExtension;
  */
 public class MSBuildCompileContext
 {
-	private final MSBuildRootExtension myExtension;
+	private final MSBuildProjectModuleExtension myExtension;
 	private final VirtualFile mySolutionFile;
 	private final String myProjectName;
 	private final CompileContext myCompileContext;
@@ -25,7 +25,7 @@ public class MSBuildCompileContext
 	private File myTempErrorFile;
 	private File myTempWarningFile;
 
-	public MSBuildCompileContext(@Nonnull MSBuildRootExtension extension, @Nonnull VirtualFile solutionFile, @Nonnull String projectName, @Nonnull CompileContext compileContext)
+	public MSBuildCompileContext(@Nonnull MSBuildProjectModuleExtension extension, @Nonnull VirtualFile solutionFile, @Nonnull String projectName, @Nonnull CompileContext compileContext)
 	{
 		myExtension = extension;
 		mySolutionFile = solutionFile;
@@ -50,7 +50,7 @@ public class MSBuildCompileContext
 	}
 
 	@Nonnull
-	public MSBuildRootExtension getExtension()
+	public MSBuildProjectModuleExtension getExtension()
 	{
 		return myExtension;
 	}

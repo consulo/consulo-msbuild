@@ -16,15 +16,14 @@
 
 package consulo.msbuild.solution;
 
+import com.intellij.util.xml.DomElement;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Predicate;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.util.xml.DomElement;
 
 /**
  * @author VISTALL
@@ -36,7 +35,7 @@ public class SolutionVirtualCompositeItem extends SolutionVirtualItem
 
 	public SolutionVirtualCompositeItem(@Nonnull String name, @Nullable SolutionVirtualDirectory parent, @Nullable DomElement element)
 	{
-		super(name, parent, element);
+		super(name, parent);
 	}
 
 	@Nonnull

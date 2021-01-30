@@ -50,6 +50,7 @@
 		<module>impl/dotnet-microsoft</module>
 		<module>impl/dotnet-mono</module>
 
+		<module>msbuild-daemon-impl</module>
 		<module>lang-impl/csharp</module>
 	</modules>
 </project>

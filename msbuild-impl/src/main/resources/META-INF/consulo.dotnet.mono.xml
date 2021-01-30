@@ -1,5 +1,35 @@
 <consulo-plugin>
-	<extensions defaultExtensionNs="consulo.msbuild.dotnet">
-		<importTarget implementation="consulo.msbuild.dotnet.mono.MonoDotNetImportTarget" />
+	<extensions defaultExtensionNs="consulo.msbuild">
+		<processProvider implementation="consulo.msbuild.dotnet.mono.MonoMSBuildProcessProvider" order="last"/>
+
+		<projectCapability implementation="consulo.msbuild.dotnet.mono.MonoDotNetCSharpProjectCapability"/>
+		
+		<projectCapability implementation="consulo.msbuild.dotnet.mono.MonoDotNetProjectCapability"/>
+	</extensions>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<sdkType implementation="consulo.msbuild.dotnet.mono.bundle.MonoMSBuildBundleType"/>
+
+		<moduleExtensionProvider key="msbuild-mono"
+								 name="MSBuild Solution (Mono)"
+								 systemOnly="true"
+								 icon="consulo.dotnet.mono.MonoDotNetIconGroup@mono"
+								 immutableClass="consulo.msbuild.module.extension.MSBuildSolutionModuleExtensionImpl"
+								 mutableClass="consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtensionImpl"/>
+
+		<moduleExtensionProvider key="dotnet-mono-by-msbuild"
+								 name="Mono (MSBuild)"
+								 systemOnly="true"
+								 icon="consulo.dotnet.mono.MonoDotNetIconGroup@mono"
+								 immutableClass="consulo.msbuild.dotnet.mono.module.extension.MSBuildMonoDotNetModuleExtension"
+								 mutableClass="consulo.msbuild.dotnet.mono.module.extension.MSBuildMonoDotNetMutableModuleExtension"/>
+
+		<moduleExtensionProvider key="csharp-mono-by-msbuild"
+								 parentKey="dotnet-mono-by-msbuild"
+								 systemOnly="true"
+								 icon="consulo.dotnet.mono.MonoDotNetIconGroup@mono"
+								 name="C#"
+								 immutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpModuleExtension"
+								 mutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension"/>
 	</extensions>
 </consulo-plugin>

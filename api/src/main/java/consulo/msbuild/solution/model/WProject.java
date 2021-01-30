@@ -16,6 +16,7 @@
 
 package consulo.msbuild.solution.model;
 
+import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -24,7 +25,7 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
-import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.DeprecationInfo;
 import consulo.msbuild.MSBuildGUID;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.solution.reader.SlnProject;
@@ -40,7 +41,8 @@ public class WProject
 {
 	public static enum FailReason
 	{
-		not_supported, project_not_found
+		not_supported,
+		project_not_found
 	}
 
 	private SlnProject myProject;
@@ -51,7 +53,6 @@ public class WProject
 
 	private FailReason myFailReason;
 
-	@RequiredReadAction
 	public WProject(com.intellij.openapi.project.Project project, VirtualFile solutionVirtualFile, SlnProject slnProject)
 	{
 		myProject = slnProject;
@@ -67,11 +68,11 @@ public class WProject
 				return;
 			}
 
-			PsiFile psiFile = PsiManager.getInstance(project).findFile(myFile);
+			PsiFile psiFile = ReadAction.compute(() -> PsiManager.getInstance(project).findFile(myFile));
 
 			if(psiFile instanceof XmlFile)
 			{
-				DomFileElement<Project> fileElement = DomManager.getDomManager(project).getFileElement((XmlFile) psiFile, consulo.msbuild.dom.Project.class);
+				DomFileElement<Project> fileElement = ReadAction.compute(() -> DomManager.getDomManager(project).getFileElement((XmlFile) psiFile, consulo.msbuild.dom.Project.class));
 				if(fileElement != null)
 				{
 					myDomProject = fileElement.getRootElement();
@@ -82,6 +83,31 @@ public class WProject
 		}
 	}
 
+	public WProject(com.intellij.openapi.project.Project project, VirtualFile projectFile, String projectUUID)
+	{
+		myProject = new SlnProject();
+		myProject.Id = "{" + projectUUID + "}";
+		myProject.TypeGuid = "{" + "fake id" + "}";
+		myProject.Name = projectFile.getName();
+
+		myFile = projectFile;
+
+		PsiFile psiFile = ReadAction.compute(() -> PsiManager.getInstance(project).findFile(projectFile));
+
+		if(psiFile instanceof XmlFile)
+		{
+			DomFileElement<Project> fileElement = ReadAction.compute(() -> DomManager.getDomManager(project).getFileElement((XmlFile) psiFile, consulo.msbuild.dom.Project.class));
+			if(fileElement != null)
+			{
+				myDomProject = fileElement.getRootElement();
+				return;
+			}
+		}
+		myFailReason = FailReason.not_supported;
+	}
+
+	@Deprecated
+	@DeprecationInfo("For now there no sense of using this method, we don't support xml validation")
 	public Project getDomProject()
 	{
 		return myDomProject;

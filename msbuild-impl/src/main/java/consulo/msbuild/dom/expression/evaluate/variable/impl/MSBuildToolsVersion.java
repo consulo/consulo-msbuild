@@ -16,13 +16,14 @@
 
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.util.Version;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
-import consulo.msbuild.module.extension.MSBuildRootExtension;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 
@@ -32,20 +33,34 @@ import javax.annotation.Nonnull;
  */
 public class MSBuildToolsVersion extends MSBuildVariableProvider
 {
+	private final SdkTable mySdkTable;
+
+	@Inject
+	public MSBuildToolsVersion(SdkTable sdkTable)
+	{
+		mySdkTable = sdkTable;
+	}
+
 	@RequiredReadAction
 	@Override
 	public String evaluateUnsafe(@Nonnull MSBuildEvaluateContext context)
 	{
-		MSBuildRootExtension extension = ModuleUtilCore.getExtension(context.getModule(), MSBuildRootExtension.class);
-		if(extension == null)
+		MSBuildSolutionModuleExtension<?> solutionModuleExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(context.getProject());
+		if(solutionModuleExtension == null)
 		{
 			return null;
 		}
 
-		Object o = extension.getBundleInfo().resolveSdk(extension.getImportTarget(), extension);
-		if(o instanceof Sdk)
+		String msBuildBundleName = solutionModuleExtension.getSdkName();
+		if(msBuildBundleName == null)
 		{
-			Version version = Version.parseVersion(((Sdk) o).getVersionString());
+			return null;
+		}
+
+		Sdk sdk = mySdkTable.findSdk(msBuildBundleName);
+		if(sdk != null)
+		{
+			Version version = Version.parseVersion(sdk.getVersionString());
 
 			if(version == null)
 			{
