@@ -4,9 +4,11 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.util.containers.ContainerUtil;
 import consulo.container.plugin.PluginManager;
 import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.msbuild.importProvider.MSBuildBaseImportContext;
 import consulo.platform.Platform;
 import consulo.util.jdom.JDOMUtil;
 import jakarta.inject.Inject;
@@ -72,6 +74,14 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 		}
 
 		return null;
+	}
+
+	@Nullable
+	@Override
+	public Sdk findBundleForImport(@Nonnull MSBuildBaseImportContext context)
+	{
+		// suggest first any msbuild
+		return ContainerUtil.getFirstItem(mySdkTable.getSdksOfType(MSBuildBundleType.getInstance()));
 	}
 
 	@Nonnull

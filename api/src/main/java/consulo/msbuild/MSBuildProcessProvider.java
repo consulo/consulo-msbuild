@@ -4,6 +4,7 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.projectRoots.Sdk;
 import consulo.extensions.StrictExtensionPointName;
+import consulo.msbuild.importProvider.MSBuildBaseImportContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,7 +30,13 @@ public interface MSBuildProcessProvider
 	void fillBundles(@Nonnull Consumer<Sdk> consumer);
 
 	@Nullable
-	Sdk findBundle(@Nullable String bundleName);
+	Sdk findBundle(@Nonnull String bundleName);
+
+	@Nullable
+	default Sdk findBundleForImport(@Nonnull MSBuildBaseImportContext context)
+	{
+		return null;
+	}
 
 	@Nonnull
 	GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull File exeFile, int port) throws IOException;

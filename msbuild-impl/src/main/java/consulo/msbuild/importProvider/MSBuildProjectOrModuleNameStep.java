@@ -1,6 +1,7 @@
 package consulo.msbuild.importProvider;
 
 import com.intellij.openapi.application.Application;
+import com.intellij.openapi.projectRoots.Sdk;
 import consulo.bundle.ui.BundleBox;
 import consulo.bundle.ui.BundleBoxBuilder;
 import consulo.disposer.Disposable;
@@ -13,6 +14,7 @@ import consulo.ui.util.FormBuilder;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +23,7 @@ import java.util.Map;
  */
 public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> extends UnifiedProjectOrModuleNameStep<C>
 {
+	private final C myContext;
 	private Disposable myUiDisposable;
 	private BundleBox myBundleBox;
 
@@ -29,6 +32,7 @@ public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> 
 	public MSBuildProjectOrModuleNameStep(C context)
 	{
 		super(context);
+		myContext = context;
 	}
 
 	@RequiredUIAccess
@@ -40,11 +44,13 @@ public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> 
 		myUiDisposable = Disposable.newDisposable();
 
 		BundleBoxBuilder boxBuilder = BundleBoxBuilder.create(myUiDisposable);
-		boxBuilder.withNoneItem("<Auto Select>", PlatformIconGroup.actionsFind());
+		//boxBuilder.withNoneItem("<Auto Select>", PlatformIconGroup.actionsFind());
 		boxBuilder.withSdkTypeFilter(sdkTypeId -> false);
 		myBundleBox = boxBuilder.build();
 
-		for(MSBuildProcessProvider buildProcessProvider : MSBuildProcessProvider.EP_NAME.getExtensionList(Application.get()))
+		List<MSBuildProcessProvider> providers = MSBuildProcessProvider.EP_NAME.getExtensionList(Application.get());
+
+		for(MSBuildProcessProvider buildProcessProvider : providers)
 		{
 			buildProcessProvider.fillBundles(sdk -> {
 				mySdksFromProviders.put(sdk.getName(), buildProcessProvider);
@@ -52,6 +58,18 @@ public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> 
 				myBundleBox.addBundleItem(sdk);
 			});
 		}
+
+		Sdk targetSdk = null;
+		for(MSBuildProcessProvider provider : providers)
+		{
+			targetSdk = provider.findBundleForImport(myContext);
+			if(targetSdk != null)
+			{
+				myBundleBox.setSelectedBundle(targetSdk.getName());
+				break;
+			}
+		}
+
 		builder.addLabeled(LocalizeValue.localizeTODO("MSBuild:"), myBundleBox.getComponent());
 	}
 
@@ -69,18 +87,17 @@ public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> 
 		myBundleBox = null;
 	}
 
-
 	@Override
-	public void onStepLeave(@Nonnull C solutionModuleImportContext)
+	public void onStepLeave(@Nonnull C context)
 	{
 		String bundleName = myBundleBox.getSelectedBundleName();
 		if(bundleName != null)
 		{
 			MSBuildProcessProvider msBuildProcessProvider = mySdksFromProviders.get(bundleName);
 
-			solutionModuleImportContext.setMSBuildBundleName(bundleName);
+			context.setMSBuildBundleName(bundleName);
 
-			solutionModuleImportContext.setProvider(msBuildProcessProvider);
+			context.setProvider(msBuildProcessProvider);
 		}
 		else
 		{

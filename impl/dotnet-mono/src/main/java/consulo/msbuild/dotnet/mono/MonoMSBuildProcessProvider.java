@@ -4,10 +4,12 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.util.containers.ContainerUtil;
 import consulo.container.plugin.PluginManager;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.dotnet.mono.bundle.MonoMSBuildBundleType;
+import consulo.msbuild.importProvider.MSBuildBaseImportContext;
 import consulo.platform.Platform;
 import consulo.util.jdom.JDOMUtil;
 import jakarta.inject.Inject;
@@ -55,22 +57,16 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 
 	@Nullable
 	@Override
-	public Sdk findBundle(@Nullable String bundleName)
+	public Sdk findBundle(@Nonnull String bundleName)
 	{
-		if(bundleName != null)
-		{
-			return mySdkTable.findSdk(bundleName);
-		}
-		else
-		{
-			//TODO [VISTALL] auto select
-			for(Sdk sdk : mySdkTable.getSdksOfType(MSBuildBundleType.getInstance()))
-			{
-				return sdk;
-			}
-		}
+		return mySdkTable.findSdk(bundleName);
+	}
 
-		return null;
+	@Nullable
+	@Override
+	public Sdk findBundleForImport(@Nonnull MSBuildBaseImportContext context)
+	{
+		return ContainerUtil.getFirstItem(mySdkTable.getSdksOfType(MSBuildBundleType.getInstance()));
 	}
 
 	@Nonnull

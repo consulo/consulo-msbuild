@@ -1,6 +1,6 @@
 <consulo-plugin>
 	<extensions defaultExtensionNs="consulo.msbuild">
-		<processProvider implementation="consulo.msbuild.dotnet.core.DotNetCoreMSBuildProcessProvider"/>
+		<processProvider implementation="consulo.msbuild.dotnet.core.DotNetCoreMSBuildProcessProvider" order="first"/>
 
 		<projectCapability implementation="consulo.msbuild.dotnet.core.DotNetCoreDotNetProjectCapability"/>
 
