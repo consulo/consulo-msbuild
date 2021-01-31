@@ -67,6 +67,12 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 	{
 		if(fileOrDirectory.isDirectory())
 		{
+			// special case. We don't provide importing Unity project via solution file
+			if(new File(fileOrDirectory, "ProjectSettings/ProjectSettings.asset").exists())
+			{
+				return false;
+			}
+
 			return findSingleSolutionFile(fileOrDirectory) != null;
 		}
 		else
