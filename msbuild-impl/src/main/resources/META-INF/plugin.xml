@@ -21,7 +21,6 @@
 	<vendor>consulo.io</vendor>
 	<category>Build Framework</category>
 	<depends>com.intellij.xml</depends>
-	<experimental>true</experimental>
 
 	<!--.NET Support-->
 	<depends optional="true" config-file="consulo.dotnet.xml">consulo.dotnet</depends>
