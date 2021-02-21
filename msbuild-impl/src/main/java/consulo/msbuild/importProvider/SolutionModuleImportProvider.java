@@ -4,7 +4,6 @@ import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.module.ModifiableModuleModel;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.DumbAwareRunnable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
@@ -18,6 +17,7 @@ import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.VisualStudioSolutionFileType;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
+import consulo.project.startup.StartupActivity;
 import consulo.ui.image.Image;
 import consulo.ui.wizard.WizardStep;
 import org.intellij.lang.annotations.Language;
@@ -55,7 +55,6 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 		return "Visual Studio";
 	}
 
-	@Nullable
 	@Override
 	public Image getIcon()
 	{
@@ -100,23 +99,26 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 		File firstSolution = null;
 		if(directory.isDirectory())
 		{
-			for(File file : directory.listFiles())
+			File[] files = directory.listFiles();
+			if(files != null)
 			{
-				if(file.isFile())
+				for(File file : files)
 				{
-					if(FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE)
+					if(file.isFile())
 					{
-						// already found - return null
-						if(firstSolution != null)
+						if(FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE)
 						{
-							return null;
-						}
+							// already found - return null
+							if(firstSolution != null)
+							{
+								return null;
+							}
 
-						firstSolution = file;
+							firstSolution = file;
+						}
 					}
 				}
 			}
-
 		}
 		return firstSolution;
 	}
@@ -154,7 +156,7 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 
 		consumer.accept(mainModuleModel.getModule());
 
-		StartupManager.getInstance(project).registerPostStartupActivity((DumbAwareRunnable) () -> {
+		StartupManager.getInstance(project).registerPostStartupActivity((StartupActivity.DumbAware) (ui, porject) -> {
 			MSBuildDaemonService.getInstance(project).forceUpdate();
 
 			// TODO [VISTALL] create run configurations after reimport
