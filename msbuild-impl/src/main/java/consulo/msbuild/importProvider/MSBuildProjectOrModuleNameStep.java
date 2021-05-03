@@ -8,7 +8,6 @@ import consulo.disposer.Disposable;
 import consulo.ide.newProject.ui.UnifiedProjectOrModuleNameStep;
 import consulo.localize.LocalizeValue;
 import consulo.msbuild.MSBuildProcessProvider;
-import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.util.FormBuilder;
 
@@ -24,7 +23,6 @@ import java.util.Map;
 public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> extends UnifiedProjectOrModuleNameStep<C>
 {
 	private final C myContext;
-	private Disposable myUiDisposable;
 	private BundleBox myBundleBox;
 
 	private Map<String, MSBuildProcessProvider> mySdksFromProviders = new HashMap<>();
@@ -37,13 +35,11 @@ public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> 
 
 	@RequiredUIAccess
 	@Override
-	protected void extend(@Nonnull FormBuilder builder)
+	protected void extend(@Nonnull FormBuilder builder, @Nonnull Disposable uiDisposable)
 	{
-		super.extend(builder);
+		super.extend(builder, uiDisposable);
 
-		myUiDisposable = Disposable.newDisposable();
-
-		BundleBoxBuilder boxBuilder = BundleBoxBuilder.create(myUiDisposable);
+		BundleBoxBuilder boxBuilder = BundleBoxBuilder.create(uiDisposable);
 		//boxBuilder.withNoneItem("<Auto Select>", PlatformIconGroup.actionsFind());
 		boxBuilder.withSdkTypeFilter(sdkTypeId -> false);
 		myBundleBox = boxBuilder.build();
@@ -71,20 +67,6 @@ public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> 
 		}
 
 		builder.addLabeled(LocalizeValue.localizeTODO("MSBuild:"), myBundleBox.getComponent());
-	}
-
-	@Override
-	public void disposeUIResources()
-	{
-		mySdksFromProviders.clear();
-		
-		if(myUiDisposable != null)
-		{
-			myUiDisposable.disposeWithTree();
-			myUiDisposable = null;
-		}
-
-		myBundleBox = null;
 	}
 
 	@Override

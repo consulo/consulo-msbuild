@@ -14,9 +14,9 @@ public class RunTargetProjectStep extends BaseRunProjectStep
 {
 	private final String myTarget;
 
-	public RunTargetProjectStep(WProject wProject, String target)
+	public RunTargetProjectStep(WProject wProject, String target, boolean continueOnError)
 	{
-		super(wProject, new String[0], new String[] {target});
+		super(wProject, new String[0], new String[] {target}, continueOnError);
 		myTarget = target;
 	}
 

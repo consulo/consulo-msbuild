@@ -163,7 +163,7 @@ public class MSBuildDaemonService implements Disposable
 
 		for(WProject project : projects)
 		{
-			steps.add(new RunTargetProjectStep(project, target));
+			steps.add(new RunTargetProjectStep(project, target, false));
 		}
 
 		runSteps(steps, target);

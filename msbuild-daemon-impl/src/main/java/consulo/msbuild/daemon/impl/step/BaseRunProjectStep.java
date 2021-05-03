@@ -16,12 +16,19 @@ public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProject
 {
 	private final String[] myItems;
 	private final String[] myTargets;
+	private final boolean myContinueOnError;
 
 	public BaseRunProjectStep(WProject wProject, String[] items, String[] targets)
+	{
+		this(wProject, items, targets, true);
+	}
+
+	public BaseRunProjectStep(WProject wProject, String[] items, String[] targets, boolean continueOnError)
 	{
 		super(wProject);
 		myItems = items;
 		myTargets = targets;
+		myContinueOnError = continueOnError;
 	}
 
 	@Nonnull
@@ -36,7 +43,7 @@ public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProject
 		r.Configurations = buildProjectConfigurationInfo(context);
 		// Even though some targets may fail it may still be possible for the main resolve target to return
 		// information so we set ContinueOnError. This matches VS on Windows behaviour.
-		r.GlobalProperties.put("ContinueOnError", "ErrorAndContinue");
+		r.GlobalProperties.put("ContinueOnError", myContinueOnError ? "ErrorAndContinue" : "ErrorAndStop");
 		r.GlobalProperties.put("Silent", "true");
 		r.GlobalProperties.put("DesignTimeBuild", "true");
 

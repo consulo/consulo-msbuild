@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -129,6 +130,40 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 			File roslynTargetsPath = new File(msBuildBinDir, "Roslyn");
 			SetMSBuildConfigProperty(toolset, "RoslynTargetsPath", roslynTargetsPath.getAbsolutePath());
 
+			//			else
+			//			{
+			//				var path = MSBuildProjectService.GetProjectImportSearchPaths(runtime, false).FirstOrDefault(p = > p.Property == "MSBuildSDKsPath");
+			//				if(path != null)
+			//					SetMSBuildConfigProperty(toolset, path.Property, path.Path);
+			//			}
+			//
+			Element projectImportSearchPaths = toolset.getChild("projectImportSearchPaths");
+			if(projectImportSearchPaths != null)
+			{
+				Platform.OperatingSystem rOs = Platform.current().os();
+				String os =  rOs.isMac() ? "osx" : rOs.isWindows() ? "windows" : "unix";
+				Element searchPaths = projectImportSearchPaths.getChildren("searchPaths").stream().filter(sp -> Objects.equals(sp.getAttributeValue("os"), os)).findFirst().orElse(null);
+				if(searchPaths == null)
+				{
+					searchPaths = new Element("searchPaths");
+					searchPaths.setAttribute("os", os);
+					
+					projectImportSearchPaths.addContent(searchPaths);
+				}
+
+				SetMSBuildConfigProperty(searchPaths, "MSBuildExtensionsPath", extensionsPath.getAbsolutePath(), false, true);
+				SetMSBuildConfigProperty(searchPaths, "MSBuildExtensionsPath32", extensionsPath.getAbsolutePath(), false, true);
+				SetMSBuildConfigProperty(searchPaths, "MSBuildExtensionsPath64", extensionsPath.getAbsolutePath(), false, true);
+
+				// msbuild dir/
+				File xBuild = new File(msBuildSdk.getHomePath(), "../../xbuild/Microsoft/VisualStudio");
+
+				SetMSBuildConfigProperty(searchPaths, "VSToolsPath", xBuild.getCanonicalPath(), false, false);
+
+//				foreach(var path in MSBuildProjectService.GetProjectImportSearchPaths(runtime, false))
+//				SetMSBuildConfigProperty(searchPaths, path.Property, path.Path, append:true, insertBefore:false);
+			}
+
 			File targetConfigFile = new File(msBuildRunnerDir, targetFile.getName() + ".config");
 
 			JDOMUtil.writeDocument(new Document(rootElement), targetConfigFile, "\n");
@@ -184,7 +219,7 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public int getVersion()
 	{
-		return 4;
+		return 6;
 	}
 
 	@Nonnull

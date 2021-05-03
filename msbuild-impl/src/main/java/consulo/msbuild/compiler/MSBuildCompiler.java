@@ -62,7 +62,7 @@ public class MSBuildCompiler implements TranslatingCompiler
 
 		for(WProject project : map.keySet())
 		{
-			steps.add(new RunTargetProjectStep(project, "Build"));
+			steps.add(new RunTargetProjectStep(project, "Build", false));
 		}
 
 		MSBuildDaemonService daemonService = MSBuildDaemonService.getInstance(compileContext.getProject());
