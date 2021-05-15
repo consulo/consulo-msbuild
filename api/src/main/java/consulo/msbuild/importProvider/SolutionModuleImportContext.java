@@ -7,7 +7,6 @@ import consulo.msbuild.solution.reader.SlnFile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -38,7 +37,7 @@ public class SolutionModuleImportContext extends MSBuildBaseImportContext
 
 		super.setFileToImport(solutionFile.getPath());
 
-		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(new FileInputStream(solutionFilePath), StandardCharsets.UTF_8)))
+		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(solutionFile.getInputStream(), StandardCharsets.UTF_8)))
 		{
 			mySlnFile.Read(reader);
 		}
