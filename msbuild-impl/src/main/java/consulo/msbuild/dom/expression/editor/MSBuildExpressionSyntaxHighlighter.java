@@ -16,12 +16,6 @@
 
 package consulo.msbuild.dom.expression.editor;
 
-import gnu.trove.THashMap;
-
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
@@ -30,13 +24,17 @@ import com.intellij.psi.tree.IElementType;
 import consulo.msbuild.dom.expression.lang.lexer.MSBuildExpressionMergeLexer;
 import consulo.msbuild.dom.expression.lang.psi.MSBuildExpressionTokens;
 
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author VISTALL
  * @since 16-Jun-17
  */
 public class MSBuildExpressionSyntaxHighlighter extends SyntaxHighlighterBase
 {
-	private static final Map<IElementType, TextAttributesKey> ourKeys = new THashMap<>();
+	private static final Map<IElementType, TextAttributesKey> ourKeys = new HashMap<>();
 
 	static
 	{
