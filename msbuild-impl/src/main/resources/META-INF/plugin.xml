@@ -22,6 +22,11 @@
 	<category>Build Framework</category>
 	<depends>com.intellij.xml</depends>
 
+	<permissions>
+		<permission type="SOCKET"/>
+		<permission type="PROCESS"/>
+	</permissions>
+
 	<!--.NET Support-->
 	<depends optional="true" config-file="consulo.dotnet.xml">consulo.dotnet</depends>
 	<depends optional="true" config-file="consulo.dotnet.mono.xml">consulo.dotnet.mono</depends>
