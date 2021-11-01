@@ -217,7 +217,7 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public int getVersion()
 	{
-		return 6;
+		return 7;
 	}
 
 	@Nonnull
