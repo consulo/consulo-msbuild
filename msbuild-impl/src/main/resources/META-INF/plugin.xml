@@ -22,9 +22,15 @@
 	<category>Build Framework</category>
 	<depends>com.intellij.xml</depends>
 
+	<tags>
+		<tag>build.framework</tag>
+	</tags>
+
 	<permissions>
-		<permission type="SOCKET"/>
-		<permission type="PROCESS"/>
+		<permission type="SOCKET_BIND"/>
+		<permission type="SOCKET_CONNECT"/>
+		<permission type="PROCESS_CREATE"/>
+		<permission type="PROCESS_MANAGE"/>
 	</permissions>
 
 	<!--.NET Support-->
