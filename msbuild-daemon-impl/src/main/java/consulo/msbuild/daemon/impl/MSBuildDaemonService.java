@@ -236,6 +236,11 @@ public class MSBuildDaemonService implements Disposable
 					}
 				}
 
+				if(loggingSession != null)
+				{
+					loggingSession.start(indicator);
+				}
+
 				for(DaemonStep step : steps)
 				{
 					indicator.setText(step.getStepText());
@@ -274,9 +279,9 @@ public class MSBuildDaemonService implements Disposable
 
 				if(loggingSession != null)
 				{
+					loggingSession.stop();
+
 					myLoggingSessions.remove(loggingSession.getId());
-					final MSBuildLoggingSession finalLoggingSession = loggingSession;
-					Application.get().getLastUIAccess().give(() -> finalLoggingSession.flush());
 					loggingSession.disposeWithTree();
 				}
 

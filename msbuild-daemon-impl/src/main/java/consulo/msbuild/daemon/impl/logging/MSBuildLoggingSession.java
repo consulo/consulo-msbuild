@@ -1,26 +1,19 @@
 package consulo.msbuild.daemon.impl.logging;
 
-import com.intellij.execution.filters.TextConsoleBuilder;
-import com.intellij.execution.filters.TextConsoleBuilderFactory;
-import com.intellij.execution.ui.ConsoleView;
-import com.intellij.execution.ui.ConsoleViewContentType;
+import com.intellij.build.BuildDescriptor;
+import com.intellij.build.BuildViewManager;
+import com.intellij.build.DefaultBuildDescriptor;
+import com.intellij.build.events.MessageEvent;
+import com.intellij.build.progress.BuildProgress;
+import com.intellij.build.progress.BuildProgressDescriptor;
+import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.ZipperUpdater;
-import com.intellij.ui.content.Content;
-import com.intellij.ui.content.ContentManager;
-import com.intellij.ui.content.MessageView;
-import com.intellij.util.Alarm;
 import consulo.disposer.Disposable;
-import consulo.disposer.Disposer;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
-import consulo.ui.UIAccess;
-import consulo.util.dataholder.Key;
 import consulo.util.lang.StringUtil;
+import org.jetbrains.annotations.Nls;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -28,21 +21,73 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class MSBuildLoggingSession implements Disposable
 {
-	private static final Key<MSBuildLoggingSession> KEY = Key.create("MSBuildLoggingSession");
+	private static final String ANSI_RESET = "\u001B[0m";
+	private static final String ANSI_RED = "\u001B[31m";
+	private static final String ANSI_YELLOW = "\u001B[33m";
+	private static final String ANSI_BOLD = "\u001b[1m";
+
+	private static class ConsolePrinter
+	{
+		@Nonnull
+		private final BuildProgress<BuildProgressDescriptor> progress;
+		private volatile boolean isNewLinePosition = true;
+
+		private ConsolePrinter(@Nonnull BuildProgress<BuildProgressDescriptor> progress)
+		{
+			this.progress = progress;
+		}
+
+		private void print(@Nonnull String message, @Nonnull MessageEvent.Kind kind)
+		{
+			String text = wrapWithAnsiColor(kind, message);
+			if(!isNewLinePosition && !com.intellij.openapi.util.text.StringUtil.startsWithChar(message, '\r'))
+			{
+				text = '\n' + text;
+			}
+			isNewLinePosition = com.intellij.openapi.util.text.StringUtil.endsWithLineBreak(message);
+			progress.output(text, kind != MessageEvent.Kind.ERROR);
+		}
+
+		@Nls
+		private static String wrapWithAnsiColor(MessageEvent.Kind kind, @Nls String message)
+		{
+			if(kind == MessageEvent.Kind.SIMPLE)
+			{
+				return message;
+			}
+			String color;
+			if(kind == MessageEvent.Kind.ERROR)
+			{
+				color = ANSI_RED;
+			}
+			else if(kind == MessageEvent.Kind.WARNING)
+			{
+				color = ANSI_YELLOW;
+			}
+			else
+			{
+				color = ANSI_BOLD;
+			}
+			final String ansiReset = ANSI_RESET;
+			return color + message + ansiReset;
+		}
+	}
 
 	private final int myId;
 	private final Project myProject;
 	private final String myLoggingGroup;
 
-	private ZipperUpdater myZipperUpdater = new ZipperUpdater(1000, Alarm.ThreadToUse.SWING_THREAD, this);
+	private final BuildProgress<BuildProgressDescriptor> myBuildProgress;
 
-	private Queue<LogMessage> myLogMessages = new ConcurrentLinkedQueue<>();
+	private final ConsolePrinter myConsolePrinter;
 
 	public MSBuildLoggingSession(int id, Project project, String loggingGroup)
 	{
 		myId = id;
 		myProject = project;
 		myLoggingGroup = loggingGroup;
+		myBuildProgress = BuildViewManager.createBuildProgress(project);
+		myConsolePrinter = new ConsolePrinter(myBuildProgress);
 	}
 
 	public int getId()
@@ -52,72 +97,33 @@ public class MSBuildLoggingSession implements Disposable
 
 	public void acceptMessage(LogMessage logMessage)
 	{
-		myLogMessages.add(logMessage);
-
-		myZipperUpdater.queue(this::flush);
+		myConsolePrinter.print(logMessage.LogText, MessageEvent.Kind.INFO);
 	}
 
-	public void flush()
+	public void start(ProgressIndicator indicator)
 	{
-		MessageView messageView = MessageView.SERVICE.getInstance(myProject);
-		messageView.runWhenInitialized(() -> printToConsole(messageView));
-	}
-
-	private void printToConsole(MessageView messageView)
-	{
-		List<LogMessage> messages = new ArrayList<>();
-		LogMessage target = null;
-
-		while((target = myLogMessages.poll()) != null)
+		DefaultBuildDescriptor buildDescriptor = new DefaultBuildDescriptor(myId, "MSBuild", StringUtil.notNullize(myProject.getBasePath()), System.currentTimeMillis());
+		myBuildProgress.start(new BuildProgressDescriptor()
 		{
-			messages.add(target);
-		}
-
-		if(messages.isEmpty())
-		{
-			return;
-		}
-
-		ConsoleView console = getConsole(messageView);
-		for(LogMessage message : messages)
-		{
-			console.print(message.LogText, ConsoleViewContentType.NORMAL_OUTPUT);
-		}
-	}
-
-	private ConsoleView getConsole(MessageView messageView)
-	{
-		ContentManager contentManager = messageView.getContentManager();
-		Content[] contents = contentManager.getContents();
-		for(Content content : contents)
-		{
-			MSBuildLoggingSession data = content.getUserData(KEY);
-			if(data == this)
+			@Nonnull
+			@Override
+			public String getTitle()
 			{
-				MSBuildLoggingPanel component = (MSBuildLoggingPanel) content.getComponent();
-				return component.getConsoleView();
+				return myLoggingGroup;
 			}
-		}
 
-		TextConsoleBuilder builder = TextConsoleBuilderFactory.getInstance().createBuilder(myProject);
-
-		ConsoleView console = builder.getConsole();
-
-		String tabName = StringUtil.isEmpty(myLoggingGroup) ? "MSBuild" : "MSBuild - " + myLoggingGroup;
-
-		Content content = contentManager.getFactory().createContent(new MSBuildLoggingPanel(console), tabName, false);
-		Disposer.register(content, console);
-
-		content.putUserData(KEY, this);
-		contentManager.addContent(content);
-		contentManager.setSelectedContent(content);
-
-		UIAccess uiAccess = UIAccess.current();
-
-		uiAccess.give(() -> {
-			messageView.getToolWindow().activate(null);
+			@Override
+			@Nonnull
+			public BuildDescriptor getBuildDescriptor()
+			{
+				return buildDescriptor;
+			}
 		});
-		return console;
+	}
+
+	public void stop()
+	{
+		myBuildProgress.finish(System.currentTimeMillis());
 	}
 
 	@Override
