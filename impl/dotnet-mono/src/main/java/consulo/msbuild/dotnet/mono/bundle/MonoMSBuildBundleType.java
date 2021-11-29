@@ -63,9 +63,13 @@ public class MonoMSBuildBundleType extends SdkType
 		{
 			// dir msbuild inside mono, it's holder
 			File msRoot = new File(p);
-			for(File file : msRoot.listFiles())
+			File[] files = msRoot.listFiles();
+			if(files != null)
 			{
-				msBuildPaths.add(file.getAbsolutePath());
+				for (File file : files)
+				{
+					msBuildPaths.add(file.getAbsolutePath());
+				}
 			}
 		}
 		return msBuildPaths;
