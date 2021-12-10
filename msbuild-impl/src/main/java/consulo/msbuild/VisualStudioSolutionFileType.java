@@ -16,12 +16,13 @@
 
 package consulo.msbuild;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.openapi.fileTypes.PlainTextLanguage;
+import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
@@ -45,9 +46,9 @@ public class VisualStudioSolutionFileType extends LanguageFileType
 
 	@Nonnull
 	@Override
-	public String getDescription()
+	public LocalizeValue getDescription()
 	{
-		return "Visual Studio Solutions";
+		return LocalizeValue.localizeTODO("Visual Studio Solutions");
 	}
 
 	@Nonnull
