@@ -120,7 +120,7 @@
 
 		<projectService serviceImplementation="consulo.msbuild.daemon.impl.MSBuildDaemonService"/>
 
-		<toolWindow id="MSBuild" anchor="right" canCloseContents="false" icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild" factoryClass="consulo.msbuild.toolWindow.MSBuildToolWindowFactory"
+		<toolWindow id="MSBuild" anchor="right" canCloseContents="false" icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuildtoolwindow" factoryClass="consulo.msbuild.toolWindow.MSBuildToolWindowFactory"
 					conditionClass="consulo.msbuild.toolWindow.MSBuildToolWindowCondition"/>
 
 		<getDataRule implementation="consulo.msbuild.toolWindow.dataRules.MSBuildTreeStructureGetDataRule"/>
