@@ -1,11 +1,14 @@
 package consulo.msbuild;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StoragePathMacros;
-import com.intellij.openapi.project.Project;
-import com.intellij.util.xmlb.XmlSerializerUtil;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.component.persist.PersistentStateComponent;
+import consulo.component.persist.State;
+import consulo.component.persist.Storage;
+import consulo.component.persist.StoragePathMacros;
+import consulo.project.Project;
+import consulo.util.xml.serializer.XmlSerializerUtil;
 import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
@@ -18,6 +21,8 @@ import java.util.*;
  */
 @State(name = "MSBuildSolutionManager", storages = @Storage(StoragePathMacros.WORKSPACE_FILE))
 @Singleton
+@ServiceAPI(ComponentScope.PROJECT)
+@ServiceImpl
 public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWorkspaceData.State>
 {
 	public static MSBuildWorkspaceData getInstance(@Nonnull Project project)
@@ -92,7 +97,7 @@ public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWor
 	{
 		ProjectInfo projectInfo = myState.projectInfos.computeIfAbsent(projectId, (it) -> new ProjectInfo());
 		projectInfo.items.clear();
-		
+
 		for(MSBuildEvaluatedItem item : items)
 		{
 			ProjectItemInfo projectItemInfo = new ProjectItemInfo();

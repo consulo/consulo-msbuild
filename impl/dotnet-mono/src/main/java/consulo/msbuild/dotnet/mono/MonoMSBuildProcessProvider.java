@@ -1,16 +1,17 @@
 package consulo.msbuild.dotnet.mono;
 
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.SdkTable;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.container.plugin.PluginManager;
+import consulo.content.bundle.Sdk;
+import consulo.content.bundle.SdkTable;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.dotnet.mono.bundle.MonoMSBuildBundleType;
 import consulo.msbuild.importProvider.MSBuildBaseImportContext;
 import consulo.platform.Platform;
+import consulo.process.cmd.GeneralCommandLine;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.io.FileUtil;
 import consulo.util.jdom.JDOMUtil;
 import jakarta.inject.Inject;
 import org.jdom.Document;
@@ -29,6 +30,7 @@ import java.util.function.Consumer;
  * @author VISTALL
  * @since 21/01/2021
  */
+@ExtensionImpl(order = "last")
 public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 {
 	private final SdkTable mySdkTable;

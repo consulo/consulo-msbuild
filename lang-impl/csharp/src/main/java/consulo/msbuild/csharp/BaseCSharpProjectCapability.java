@@ -1,13 +1,13 @@
 package consulo.msbuild.csharp;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.msbuild.MSBuildProcessProvider;
+import consulo.content.bundle.Sdk;
+import consulo.module.Module;
+import consulo.module.content.layer.ModifiableRootModel;
 import consulo.msbuild.MSBuildEvaluatedItem;
+import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension;
-import consulo.msbuild.impl.DotNetLanguageProjectCapability;
+import consulo.msbuild.dotnet.impl.DotNetLanguageProjectCapability;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import java.util.List;

@@ -16,7 +16,7 @@
 
 package consulo.msbuild.dom.walk;
 
-import com.intellij.util.xml.DomElement;
+import consulo.xml.util.xml.DomElement;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;

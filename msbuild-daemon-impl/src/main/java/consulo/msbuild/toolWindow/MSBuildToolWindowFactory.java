@@ -1,16 +1,20 @@
 package consulo.msbuild.toolWindow;
 
-import com.intellij.openapi.actionSystem.AnSeparator;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowFactory;
-import com.intellij.openapi.wm.ex.ToolWindowEx;
-import com.intellij.ui.content.Content;
-import com.intellij.ui.content.ContentManager;
+import consulo.application.dumb.DumbAware;
+import consulo.localize.LocalizeValue;
+import consulo.msbuild.icon.MSBuildIconGroup;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.toolWindow.actions.FilterTargetsAction;
 import consulo.msbuild.toolWindow.actions.RefreshProjectsAction;
+import consulo.project.Project;
+import consulo.project.ui.wm.ToolWindowFactory;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.action.AnSeparator;
+import consulo.ui.ex.content.Content;
+import consulo.ui.ex.content.ContentManager;
+import consulo.ui.ex.toolWindow.ToolWindow;
+import consulo.ui.ex.toolWindow.ToolWindowAnchor;
+import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;
 
@@ -32,6 +36,46 @@ public class MSBuildToolWindowFactory implements ToolWindowFactory, DumbAware
 		content.setDisposer(panel);
 		contentManager.addContent(content);
 
-		((ToolWindowEx)toolWindow).setTitleActions(new RefreshProjectsAction(), AnSeparator.create(), new FilterTargetsAction());
+		toolWindow.setTitleActions(new RefreshProjectsAction(), AnSeparator.create(), new FilterTargetsAction());
+	}
+
+	@Nonnull
+	@Override
+	public String getId()
+	{
+		return "MSBuild";
+	}
+
+	@Nonnull
+	@Override
+	public ToolWindowAnchor getAnchor()
+	{
+		return ToolWindowAnchor.RIGHT;
+	}
+
+	@Nonnull
+	@Override
+	public Image getIcon()
+	{
+		return MSBuildIconGroup.msbuildtoolwindow();
+	}
+
+	@Nonnull
+	@Override
+	public LocalizeValue getDisplayName()
+	{
+		return LocalizeValue.of("MSBuild");
+	}
+
+	@Override
+	public boolean canCloseContents()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean validate(@Nonnull Project project)
+	{
+		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(project) != null;
 	}
 }

@@ -16,8 +16,8 @@
 
 package consulo.msbuild.dom;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.xml.DomNameStrategy;
+import consulo.util.lang.StringUtil;
+import consulo.xml.util.xml.DomNameStrategy;
 
 /**
  * @author VISTALL

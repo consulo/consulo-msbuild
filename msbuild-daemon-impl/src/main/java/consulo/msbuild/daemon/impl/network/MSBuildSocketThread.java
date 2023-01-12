@@ -1,6 +1,6 @@
 package consulo.msbuild.daemon.impl.network;
 
-import com.intellij.util.concurrency.AppExecutorUtil;
+import consulo.application.util.concurrent.AppExecutorUtil;
 import consulo.logging.Logger;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.daemon.impl.message.BinaryMessage;

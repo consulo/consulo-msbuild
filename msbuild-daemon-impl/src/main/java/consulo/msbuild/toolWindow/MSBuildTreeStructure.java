@@ -1,9 +1,9 @@
 package consulo.msbuild.toolWindow;
 
-import com.intellij.ide.projectView.TreeStructureProvider;
-import com.intellij.ide.util.treeView.AbstractTreeStructureBase;
-import com.intellij.openapi.project.Project;
 import consulo.msbuild.toolWindow.nodes.RootNodeDescriptor;
+import consulo.project.Project;
+import consulo.project.ui.view.tree.AbstractTreeStructureBase;
+import consulo.project.ui.view.tree.TreeStructureProvider;
 import consulo.util.lang.ObjectUtil;
 
 import javax.annotation.Nonnull;

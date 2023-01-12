@@ -16,39 +16,33 @@
 
 package consulo.msbuild.dom.expression.evaluate.variable;
 
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.util.NotNullLazyValue;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.application.Application;
+import consulo.component.extension.ExtensionPointCacheKey;
+import consulo.component.extension.ExtensionPointName;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author VISTALL
  * @since 16-Jun-17
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class MSBuildVariableProvider
 {
-	public static final ExtensionPointName<MSBuildVariableProvider> EP_NAME = ExtensionPointName.create("consulo.msbuild.variableProvider");
-
-	private static NotNullLazyValue<Map<String, MSBuildVariableProvider>> ourValue = NotNullLazyValue.createValue(() ->
-	{
-		Map<String, MSBuildVariableProvider> map = new HashMap<>();
-		for(MSBuildVariableProvider provider : EP_NAME.getExtensionList())
-		{
-			map.put(provider.getName(), provider);
-		}
-		return map;
-	});
+	private static final ExtensionPointCacheKey<MSBuildVariableProvider, Map<String, MSBuildVariableProvider>> CACHE_KEY =
+			ExtensionPointCacheKey.groupBy("MSBuildVariableProvider", MSBuildVariableProvider::getName);
 
 	@Nullable
-	public static MSBuildVariableProvider findProvider(String name)
+	public static MSBuildVariableProvider findProvider(Application application, String name)
 	{
-		return ourValue.getValue().get(name);
+		return application.getExtensionPoint(MSBuildVariableProvider.class).getOrBuildCache(CACHE_KEY).get(name);
 	}
 
 	private final String myName;

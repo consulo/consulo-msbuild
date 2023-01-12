@@ -1,12 +1,13 @@
 package consulo.msbuild.dotnet.mono;
 
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.SdkTable;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.content.bundle.Sdk;
+import consulo.content.bundle.SdkTable;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.mono.dotnet.sdk.MonoSdkType;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.dotnet.mono.module.extension.MSBuildMonoDotNetMutableModuleExtension;
-import consulo.msbuild.impl.BaseDotNetProjectCapability;
+import consulo.msbuild.dotnet.impl.BaseDotNetProjectCapability;
 import consulo.util.lang.StringUtil;
 
 import javax.annotation.Nonnull;
@@ -17,6 +18,7 @@ import java.util.Map;
  * @author VISTALL
  * @since 21/01/2021
  */
+@ExtensionImpl
 public class MonoDotNetProjectCapability extends BaseDotNetProjectCapability
 {
 	@Override

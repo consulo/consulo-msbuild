@@ -16,10 +16,10 @@
 
 package consulo.msbuild.solution.reader;
 
+import consulo.util.lang.StringUtil;
+
 import java.util.Map;
 import java.util.TreeMap;
-
-import com.intellij.openapi.util.text.StringUtil;
 
 /**
  * @author VISTALL

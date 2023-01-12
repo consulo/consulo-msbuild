@@ -1,19 +1,19 @@
 package consulo.msbuild.dotnet.microsoft.module.extension;
 
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.configurations.RunProfile;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.SdkType;
-import com.intellij.xdebugger.XDebugSession;
+import consulo.content.bundle.Sdk;
+import consulo.content.bundle.SdkType;
 import consulo.dotnet.compiler.DotNetMacroUtil;
-import consulo.dotnet.debugger.DotNetDebugProcessBase;
-import consulo.dotnet.execution.DebugConnectionInfo;
+import consulo.dotnet.debugger.impl.DotNetDebugProcessBase;
 import consulo.dotnet.microsoft.debugger.MicrosoftDebugProcess;
+import consulo.dotnet.util.DebugConnectionInfo;
+import consulo.execution.configuration.RunProfile;
+import consulo.execution.debug.XDebugSession;
 import consulo.microsoft.dotnet.module.extension.MicrosoftDotNetModuleExtension;
 import consulo.microsoft.dotnet.sdk.MicrosoftDotNetSdkType;
-import consulo.msbuild.module.extension.MSBuildBaseDotNetModuleExtension;
-import consulo.roots.ModuleRootLayer;
+import consulo.module.content.layer.ModuleRootLayer;
+import consulo.msbuild.dotnet.impl.module.extension.MSBuildBaseDotNetModuleExtension;
+import consulo.process.ExecutionException;
+import consulo.process.cmd.GeneralCommandLine;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

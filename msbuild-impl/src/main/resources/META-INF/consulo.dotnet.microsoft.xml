@@ -1,9 +1,4 @@
 <consulo-plugin>
-	<extensions defaultExtensionNs="consulo.msbuild">
-		<projectCapability implementation="consulo.msbuild.dotnet.microsoft.MicrosoftDotNetProjectCapability"/>
-
-		<projectCapability implementation="consulo.msbuild.dotnet.microsoft.MicrosoftDotNetCSharpProjectCapability"/>
-	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
 		<moduleExtensionProvider key="dotnet-by-msbuild"

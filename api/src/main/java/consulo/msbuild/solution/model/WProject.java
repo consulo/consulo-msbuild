@@ -16,19 +16,19 @@
 
 package consulo.msbuild.solution.model;
 
-import com.intellij.openapi.application.ReadAction;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.xml.DomFileElement;
-import com.intellij.util.xml.DomManager;
 import consulo.annotation.DeprecationInfo;
+import consulo.application.ReadAction;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
 import consulo.msbuild.MSBuildGUID;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.solution.reader.SlnProject;
+import consulo.util.io.FileUtil;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.util.xml.DomManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -53,7 +53,7 @@ public class WProject
 
 	private FailReason myFailReason;
 
-	public WProject(com.intellij.openapi.project.Project project, VirtualFile solutionVirtualFile, SlnProject slnProject)
+	public WProject(consulo.project.Project project, VirtualFile solutionVirtualFile, SlnProject slnProject)
 	{
 		myProject = slnProject;
 
@@ -83,12 +83,12 @@ public class WProject
 		}
 	}
 
-	public WProject(com.intellij.openapi.project.Project project, VirtualFile projectFile, String projectUUID)
+	public WProject(consulo.project.Project project, VirtualFile projectFile, String projectUUID)
 	{
 		myProject = new SlnProject();
 		myProject.Id = "{" + projectUUID + "}";
 		myProject.TypeGuid = "{" + "fake id" + "}";
-		myProject.Name = projectFile.getName();
+		myProject.Name = projectFile.getNameWithoutExtension();
 
 		myFile = projectFile;
 

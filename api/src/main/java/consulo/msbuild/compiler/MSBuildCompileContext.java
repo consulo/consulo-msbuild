@@ -1,15 +1,14 @@
 package consulo.msbuild.compiler;
 
+import consulo.compiler.CompileContext;
+import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
+import consulo.util.io.FileUtil;
+import consulo.virtualFileSystem.VirtualFile;
+
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.compiler.CompileContext;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 
 /**
  * @author VISTALL

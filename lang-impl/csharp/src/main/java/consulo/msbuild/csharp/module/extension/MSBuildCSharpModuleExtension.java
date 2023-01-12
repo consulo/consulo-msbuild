@@ -16,9 +16,9 @@
 
 package consulo.msbuild.csharp.module.extension;
 
-import consulo.csharp.module.extension.BaseCSharpModuleExtension;
+import consulo.csharp.base.module.extension.BaseCSharpModuleExtension;
 import consulo.csharp.module.extension.CSharpModuleExtension;
-import consulo.roots.ModuleRootLayer;
+import consulo.module.content.layer.ModuleRootLayer;
 
 import javax.annotation.Nonnull;
 

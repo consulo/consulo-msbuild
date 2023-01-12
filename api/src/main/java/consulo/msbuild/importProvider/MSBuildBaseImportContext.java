@@ -1,8 +1,8 @@
 package consulo.msbuild.importProvider;
 
-import com.intellij.openapi.project.Project;
-import consulo.moduleImport.ModuleImportContext;
+import consulo.ide.moduleImport.ModuleImportContext;
 import consulo.msbuild.MSBuildProcessProvider;
+import consulo.project.Project;
 
 import javax.annotation.Nullable;
 

@@ -5,8 +5,8 @@ package consulo.msbuild.dom;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.Required;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.Required;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:OtherwiseType interface.

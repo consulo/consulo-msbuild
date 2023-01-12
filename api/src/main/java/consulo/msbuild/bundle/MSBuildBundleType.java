@@ -16,16 +16,17 @@
 
 package consulo.msbuild.bundle;
 
-import com.intellij.execution.ExecutionException;
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.ProcessOutput;
-import com.intellij.execution.util.ExecUtil;
-import com.intellij.openapi.util.SystemInfo;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.util.SystemInfo;
 import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildVersion;
 import consulo.platform.Platform;
+import consulo.process.ExecutionException;
+import consulo.process.cmd.GeneralCommandLine;
+import consulo.process.local.CapturingProcessHandler;
+import consulo.process.local.ProcessOutput;
 import consulo.ui.image.Image;
+import consulo.util.collection.ContainerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
  * @author VISTALL
  * @since 08.06.2015
  */
+@ExtensionImpl
 public class MSBuildBundleType extends BaseMSBuildBundleType
 {
 	public static class MSBuildInfo
@@ -181,7 +183,7 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 	{
 		try
 		{
-			ProcessOutput processOutput = ExecUtil.execAndGetOutput(new GeneralCommandLine(getExecutable(sdkHome), "/version").withWorkDirectory(sdkHome));
+			ProcessOutput processOutput = new CapturingProcessHandler(new GeneralCommandLine(getExecutable(sdkHome), "/version").withWorkDirectory(sdkHome)).runProcess();
 			return ContainerUtil.getLastItem(processOutput.getStdoutLines());
 		}
 		catch(ExecutionException e)

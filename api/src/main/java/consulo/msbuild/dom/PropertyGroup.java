@@ -3,16 +3,11 @@
 
 package consulo.msbuild.dom;
 
-import java.util.List;
+import consulo.msbuild.dom.annotation.ExpressionFragment;
+import consulo.xml.util.xml.*;
 
 import javax.annotation.Nonnull;
-
-import com.intellij.util.xml.CustomChildren;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.NameStrategy;
-import com.intellij.util.xml.NameStrategyForAttributes;
-import consulo.msbuild.dom.annotation.ExpressionFragment;
+import java.util.List;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:PropertyGroupType interface.

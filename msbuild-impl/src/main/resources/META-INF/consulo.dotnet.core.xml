@@ -1,33 +1,3 @@
 <consulo-plugin>
-	<extensions defaultExtensionNs="consulo.msbuild">
-		<processProvider implementation="consulo.msbuild.dotnet.core.DotNetCoreMSBuildProcessProvider" order="first"/>
 
-		<projectCapability implementation="consulo.msbuild.dotnet.core.DotNetCoreDotNetProjectCapability"/>
-
-		<projectCapability implementation="consulo.msbuild.dotnet.core.DotNetCoreCSharpProjectCapability"/>
-	</extensions>
-
-	<extensions defaultExtensionNs="com.intellij">
-		<moduleExtensionProvider key="msbuild-dotnet-core"
-								 name="MSBuild Solution (.NET Core)"
-								 systemOnly="true"
-								 icon="consulo.dotnet.DotNetIconGroup@netfoundation"
-								 immutableClass="consulo.msbuild.module.extension.MSBuildSolutionModuleExtensionImpl"
-								 mutableClass="consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtensionImpl"/>
-
-		<moduleExtensionProvider key="dotnet-core-by-msbuild"
-								 name=".NET/.NET Core (MSBuild)"
-								 systemOnly="true"
-								 icon="consulo.dotnet.DotNetIconGroup@netfoundation"
-								 immutableClass="consulo.msbuild.dotnet.core.module.extension.MSBuildDotNetCoreModuleExtension"
-								 mutableClass="consulo.msbuild.dotnet.core.module.extension.MSBuildDotNetCoreMutableModuleExtension"/>
-
-		<moduleExtensionProvider key="dotnet-core-csharp-by-msbuild"
-								 parentKey="dotnet-core-by-msbuild"
-								 systemOnly="true"
-								 icon="consulo.dotnet.DotNetIconGroup@netfoundation"
-								 name="C#"
-								 immutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpModuleExtension"
-								 mutableClass="consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtension"/>
-	</extensions>
 </consulo-plugin>

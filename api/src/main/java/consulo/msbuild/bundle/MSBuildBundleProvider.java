@@ -1,19 +1,20 @@
 package consulo.msbuild.bundle;
 
-import java.util.List;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.content.bundle.PredefinedBundlesProvider;
+import consulo.content.bundle.Sdk;
+import consulo.content.bundle.SdkModificator;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
-
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.SdkModificator;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.bundle.PredefinedBundlesProvider;
+import java.util.List;
 
 /**
  * @author VISTALL
  * @since 2018-02-08
  */
+@ExtensionImpl
 public class MSBuildBundleProvider extends PredefinedBundlesProvider
 {
 	@Override

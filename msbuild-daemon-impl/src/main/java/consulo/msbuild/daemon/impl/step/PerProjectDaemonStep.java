@@ -1,6 +1,6 @@
 package consulo.msbuild.daemon.impl.step;
 
-import com.intellij.BundleBase;
+import consulo.component.util.localize.BundleBase;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.model.DataObject;

@@ -1,5 +1,6 @@
 package consulo.msbuild.dotnet.mono;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.csharp.BaseCSharpProjectCapability;
 
@@ -9,6 +10,7 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 21/01/2021
  */
+@ExtensionImpl
 public class MonoDotNetCSharpProjectCapability extends BaseCSharpProjectCapability
 {
 	@Override

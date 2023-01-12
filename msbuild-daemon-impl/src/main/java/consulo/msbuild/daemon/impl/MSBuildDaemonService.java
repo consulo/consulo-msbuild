@@ -1,25 +1,20 @@
 package consulo.msbuild.daemon.impl;
 
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.execution.process.ProcessAdapter;
-import com.intellij.execution.process.ProcessEvent;
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.application.WriteAction;
-import com.intellij.openapi.module.ModifiableModuleModel;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.progress.Task;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.io.BaseOutputReader;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
 import consulo.application.AccessRule;
+import consulo.application.Application;
+import consulo.application.WriteAction;
+import consulo.application.progress.Task;
 import consulo.container.boot.ContainerPathManager;
+import consulo.content.bundle.Sdk;
 import consulo.disposer.Disposable;
+import consulo.module.ModifiableModuleModel;
+import consulo.module.Module;
+import consulo.module.ModuleManager;
+import consulo.module.content.ModuleRootManager;
+import consulo.module.content.layer.ModifiableRootModel;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
 import consulo.msbuild.MSBuildProjectListener;
@@ -36,9 +31,18 @@ import consulo.msbuild.daemon.impl.network.MSBuildSocketThread;
 import consulo.msbuild.daemon.impl.step.*;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
-import consulo.net.util.NetUtil;
+import consulo.process.ProcessHandler;
+import consulo.process.ProcessHandlerBuilder;
+import consulo.process.cmd.GeneralCommandLine;
+import consulo.process.event.ProcessAdapter;
+import consulo.process.event.ProcessEvent;
+import consulo.project.Project;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.dataholder.Key;
+import consulo.util.io.FilePermissionCopier;
+import consulo.util.io.FileUtil;
+import consulo.util.io.NetUtil;
+import consulo.virtualFileSystem.VirtualFile;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -46,6 +50,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -59,6 +64,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Contains some code parts from MonoDeveloper (MIT)
  */
 @Singleton
+@ServiceAPI(ComponentScope.PROJECT)
+@ServiceImpl
 public class MSBuildDaemonService implements Disposable
 {
 	@Nonnull
@@ -337,7 +344,7 @@ public class MSBuildDaemonService implements Disposable
 
 			WriteAction.runAndWait(moduleModel::commit);
 
-			myProject.getMessageBus().syncPublisher(MSBuildProjectListener.TOPIC).projectsReloaded();
+			myProject.getMessageBus().syncPublisher(MSBuildProjectListener.class).projectsReloaded();
 		});
 	}
 
@@ -377,7 +384,7 @@ public class MSBuildDaemonService implements Disposable
 		Collection<String> projectCapacility = info.oldItems.get("ProjectCapability");
 
 		List<MSBuildProjectCapability> capabilities = new ArrayList<>();
-		for(MSBuildProjectCapability capability : MSBuildProjectCapability.EP_NAME.getExtensionList(myProject.getApplication()))
+		for(MSBuildProjectCapability capability : myProject.getApplication().getExtensionList(MSBuildProjectCapability.class))
 		{
 			if(projectCapacility.contains(capability.getId()) && capability.isApplicable(buildProcessProvider))
 			{
@@ -396,7 +403,7 @@ public class MSBuildDaemonService implements Disposable
 	@Nonnull
 	private MSBuildProcessProvider findBuildProcessProvider(@Nonnull MSBuildSolutionModuleExtension<?> solutionModuleExtension)
 	{
-		for(MSBuildProcessProvider msBuildProcessProvider : MSBuildProcessProvider.EP_NAME.getExtensionList(Application.get()))
+		for(MSBuildProcessProvider msBuildProcessProvider : Application.get().getExtensionList(MSBuildProcessProvider.class))
 		{
 			if(Objects.equals(solutionModuleExtension.getProcessProviderId(), msBuildProcessProvider.getId()))
 			{
@@ -419,7 +426,7 @@ public class MSBuildDaemonService implements Disposable
 		File versionFile = new File(msBuildRunnerDir, "version.txt");
 		if(versionFile.exists())
 		{
-			ver = Integer.parseInt(FileUtil.loadFile(versionFile));
+			ver = Integer.parseInt(Files.readString(versionFile.toPath()));
 		}
 
 		int requiredVersion = VERSION + buildProcessProvider.getVersion();
@@ -441,7 +448,7 @@ public class MSBuildDaemonService implements Disposable
 
 		FileUtil.createParentDirs(msBuildRunnerDir);
 
-		FileUtil.copy(originalExeFile, msBuildFile);
+		FileUtil.copy(originalExeFile, msBuildFile, FilePermissionCopier.BY_NIO2);
 
 		File parentDir = originalExeFile.getParentFile();
 
@@ -452,7 +459,7 @@ public class MSBuildDaemonService implements Disposable
 			if(attachFile.exists())
 			{
 				File targetPdb = new File(msBuildRunnerDir, attachFile.getName());
-				FileUtil.copy(attachFile, targetPdb);
+				FileUtil.copy(attachFile, targetPdb, FilePermissionCopier.BY_NIO2);
 			}
 		}
 
@@ -500,15 +507,7 @@ public class MSBuildDaemonService implements Disposable
 
 		GeneralCommandLine commandLine = provider.buildCommandLine(msBuildSdk, exeFile, myPort);
 
-		OSProcessHandler handler = new OSProcessHandler(commandLine)
-		{
-			@Nonnull
-			@Override
-			protected BaseOutputReader.Options readerOptions()
-			{
-				return BaseOutputReader.Options.forMostlySilentProcess();
-			}
-		};
+		ProcessHandler handler = ProcessHandlerBuilder.create(commandLine).silentReader().build();
 		handler.addProcessListener(new ProcessAdapter()
 		{
 			@Override

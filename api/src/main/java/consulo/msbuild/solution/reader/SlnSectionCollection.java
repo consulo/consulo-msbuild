@@ -16,9 +16,9 @@
 
 package consulo.msbuild.solution.reader;
 
-import java.util.ArrayList;
+import consulo.util.collection.ContainerUtil;
 
-import com.intellij.util.containers.ContainerUtil;
+import java.util.ArrayList;
 
 /**
  * @author VISTALL

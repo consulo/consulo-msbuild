@@ -1,12 +1,9 @@
 package consulo.msbuild.dotnet.core;
 
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.SdkTable;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.vfs.CharsetToolkit;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.container.plugin.PluginManager;
+import consulo.content.bundle.Sdk;
+import consulo.content.bundle.SdkTable;
 import consulo.dotnet.core.bundle.DotNetCoreBundleType;
 import consulo.logging.Logger;
 import consulo.msbuild.MSBuildProcessProvider;
@@ -15,6 +12,11 @@ import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.solution.reader.SlnFile;
 import consulo.msbuild.solution.reader.SlnProject;
+import consulo.process.cmd.GeneralCommandLine;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.io.CharsetToolkit;
+import consulo.util.io.FilePermissionCopier;
+import consulo.util.io.FileUtil;
 import consulo.util.jdom.JDOMUtil;
 import consulo.util.lang.StringUtil;
 import jakarta.inject.Inject;
@@ -34,6 +36,7 @@ import java.util.function.Consumer;
  * @author VISTALL
  * @since 10/01/2021
  */
+@ExtensionImpl(order = "first")
 public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 {
 	private static final Logger LOG = Logger.getInstance(DotNetCoreMSBuildProcessProvider.class);
@@ -178,7 +181,7 @@ public class DotNetCoreMSBuildProcessProvider implements MSBuildProcessProvider
 		File msBuildRuntimeJson = new File(msBuildSdk.getHomePath(), "MSBuild" + ourRuntimeJsonSuffix);
 		if(msBuildRuntimeJson.exists())
 		{
-			FileUtil.copy(msBuildRuntimeJson, new File(msBuildRunnerDir, nameWithoutExtension + ourRuntimeJsonSuffix));
+			FileUtil.copy(msBuildRuntimeJson, new File(msBuildRunnerDir, nameWithoutExtension + ourRuntimeJsonSuffix), FilePermissionCopier.BY_NIO2);
 		}
 
 		//		String depsFileName = "MSBuild" + ourDepsJsonSuffix;

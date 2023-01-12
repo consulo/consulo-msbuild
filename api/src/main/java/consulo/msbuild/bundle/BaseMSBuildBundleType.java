@@ -16,8 +16,7 @@
 
 package consulo.msbuild.bundle;
 
-import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.projectRoots.SdkType;
+import consulo.content.bundle.SdkType;
 
 /**
  * @author VISTALL
@@ -25,7 +24,7 @@ import com.intellij.openapi.projectRoots.SdkType;
  */
 public abstract class BaseMSBuildBundleType extends SdkType
 {
-	public BaseMSBuildBundleType(@NonNls String name)
+	public BaseMSBuildBundleType(String name)
 	{
 		super(name);
 	}

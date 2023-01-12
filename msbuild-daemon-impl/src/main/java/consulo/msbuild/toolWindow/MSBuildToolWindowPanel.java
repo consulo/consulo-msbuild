@@ -1,17 +1,17 @@
 package consulo.msbuild.toolWindow;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.SimpleToolWindowPanel;
-import com.intellij.ui.DoubleClickListener;
-import com.intellij.ui.ScrollPaneFactory;
-import com.intellij.ui.tree.AsyncTreeModel;
-import com.intellij.ui.tree.StructureTreeModel;
-import com.intellij.ui.treeStructure.Tree;
-import com.intellij.util.ui.tree.TreeUtil;
 import consulo.disposer.Disposable;
 import consulo.msbuild.MSBuildProjectListener;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.toolWindow.nodes.TargetNodeDescriptor;
+import consulo.project.Project;
+import consulo.ui.ex.awt.ScrollPaneFactory;
+import consulo.ui.ex.awt.SimpleToolWindowPanel;
+import consulo.ui.ex.awt.event.DoubleClickListener;
+import consulo.ui.ex.awt.tree.AsyncTreeModel;
+import consulo.ui.ex.awt.tree.StructureTreeModel;
+import consulo.ui.ex.awt.tree.Tree;
+import consulo.ui.ex.awt.tree.TreeUtil;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
@@ -56,7 +56,7 @@ public class MSBuildToolWindowPanel extends SimpleToolWindowPanel implements Dis
 
 		setContent(ScrollPaneFactory.createScrollPane(myTree, true));
 
-		project.getMessageBus().connect().subscribe(MSBuildProjectListener.TOPIC, () -> myModel.invalidate());
+		project.getMessageBus().connect().subscribe(MSBuildProjectListener.class, () -> myModel.invalidate());
 	}
 
 	@Nullable

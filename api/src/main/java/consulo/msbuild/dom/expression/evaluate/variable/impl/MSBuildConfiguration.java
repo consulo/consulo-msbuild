@@ -1,6 +1,7 @@
 package consulo.msbuild.dom.expression.evaluate.variable.impl;
 
 import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
@@ -13,6 +14,7 @@ import javax.annotation.Nullable;
  * @author VISTALL
  * @since 2018-07-30
  */
+@ExtensionImpl
 public class MSBuildConfiguration extends MSBuildVariableProvider
 {
 	public MSBuildConfiguration()

@@ -1,6 +1,6 @@
 package consulo.msbuild.toolWindow;
 
-import com.intellij.ui.tree.StructureTreeModel;
+import consulo.ui.ex.awt.tree.StructureTreeModel;
 import consulo.util.dataholder.Key;
 
 /**

@@ -1,14 +1,5 @@
 <consulo-plugin>
-	<extensions defaultExtensionNs="consulo.msbuild">
-		<processProvider implementation="consulo.msbuild.dotnet.mono.MonoMSBuildProcessProvider" order="last"/>
-
-		<projectCapability implementation="consulo.msbuild.dotnet.mono.MonoDotNetCSharpProjectCapability"/>
-		
-		<projectCapability implementation="consulo.msbuild.dotnet.mono.MonoDotNetProjectCapability"/>
-	</extensions>
-
 	<extensions defaultExtensionNs="com.intellij">
-		<sdkType implementation="consulo.msbuild.dotnet.mono.bundle.MonoMSBuildBundleType"/>
 
 		<moduleExtensionProvider key="msbuild-mono"
 								 name="MSBuild Solution (Mono)"

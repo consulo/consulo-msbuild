@@ -1,8 +1,8 @@
 package consulo.msbuild.daemon.impl.network;
 
-import com.intellij.openapi.util.io.StreamUtil;
 import consulo.logging.Logger;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.util.io.StreamUtil;
 
 import java.io.IOException;
 import java.net.InetAddress;

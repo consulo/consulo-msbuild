@@ -1,11 +1,11 @@
 package consulo.msbuild;
 
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.extensions.StrictExtensionPointName;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.content.bundle.Sdk;
+import consulo.module.Module;
+import consulo.module.content.layer.ModifiableRootModel;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -16,10 +16,9 @@ import java.util.Set;
  * @author VISTALL
  * @since 16/01/2021
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface MSBuildProjectCapability
 {
-	StrictExtensionPointName<Application, MSBuildProjectCapability> EP_NAME = StrictExtensionPointName.forApplication("consulo.msbuild.projectCapability");
-
 	// Internal Capablity, which is not provided by MSBuild for .NET
 	String DOTNET_CAPABILITY = "_DotNet";
 

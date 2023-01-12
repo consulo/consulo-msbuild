@@ -1,14 +1,14 @@
 package consulo.msbuild.toolWindow.actions;
 
-import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.ToggleAction;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.openapi.project.Project;
-import com.intellij.ui.tree.StructureTreeModel;
+import consulo.application.dumb.DumbAware;
 import consulo.localize.LocalizeValue;
 import consulo.msbuild.toolWindow.MSBuildToolWindowKeys;
 import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.project.Project;
+import consulo.project.ProjectPropertiesComponent;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.ToggleAction;
+import consulo.ui.ex.awt.tree.StructureTreeModel;
 
 import javax.annotation.Nonnull;
 
@@ -22,7 +22,7 @@ public class FilterTargetsAction extends ToggleAction implements DumbAware
 
 	public static boolean isFiltered(@Nonnull Project project)
 	{
-		return PropertiesComponent.getInstance(project).getBoolean(KEY, true);
+		return ProjectPropertiesComponent.getInstance(project).getBoolean(KEY, true);
 	}
 
 	public FilterTargetsAction()
@@ -33,14 +33,14 @@ public class FilterTargetsAction extends ToggleAction implements DumbAware
 	@Override
 	public boolean isSelected(@Nonnull AnActionEvent e)
 	{
-		Project project = e.getProject();
+		Project project = e.getData(Project.KEY);
 		return project != null && isFiltered(project);
 	}
 
 	@Override
 	public void setSelected(@Nonnull AnActionEvent e, boolean state)
 	{
-		PropertiesComponent.getInstance(e.getProject()).setValue(KEY, state, true);
+		ProjectPropertiesComponent.getInstance(e.getData(Project.KEY)).setValue(KEY, state, true);
 
 		StructureTreeModel<?> model = e.getRequiredData(MSBuildToolWindowKeys.TREE_STRUCTURE);
 

@@ -16,12 +16,12 @@
 
 package consulo.msbuild.csharp.module.extension;
 
-import consulo.csharp.module.extension.CSharpConfigurationPanel;
+import consulo.csharp.base.module.extension.CSharpConfigurationPanel;
 import consulo.csharp.module.extension.CSharpMutableModuleExtension;
 import consulo.disposer.Disposable;
 import consulo.localize.LocalizeValue;
+import consulo.module.content.layer.ModuleRootLayer;
 import consulo.module.extension.swing.SwingMutableModuleExtension;
-import consulo.roots.ModuleRootLayer;
 import consulo.ui.Component;
 import consulo.ui.Label;
 import consulo.ui.annotation.RequiredUIAccess;

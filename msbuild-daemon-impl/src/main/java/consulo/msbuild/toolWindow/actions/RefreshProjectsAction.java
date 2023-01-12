@@ -1,11 +1,11 @@
 package consulo.msbuild.toolWindow.actions;
 
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.DumbAwareAction;
-import com.intellij.openapi.project.Project;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.DumbAwareAction;
 
 import javax.annotation.Nonnull;
 
@@ -24,20 +24,20 @@ public class RefreshProjectsAction extends DumbAwareAction
 	@Override
 	public void actionPerformed(@Nonnull AnActionEvent e)
 	{
-		MSBuildDaemonService.getInstance(e.getProject()).forceUpdate();
+		MSBuildDaemonService.getInstance(e.getData(Project.KEY)).forceUpdate();
 	}
 
 	@RequiredUIAccess
 	@Override
 	public void update(@Nonnull AnActionEvent e)
 	{
-		Project project = e.getProject();
+		Project project = e.getData(Project.KEY);
 		if(project == null)
 		{
 			return;
 		}
 
-		MSBuildDaemonService buildDaemonService = MSBuildDaemonService.getInstance(e.getProject());
+		MSBuildDaemonService buildDaemonService = MSBuildDaemonService.getInstance(project);
 		e.getPresentation().setEnabled(!buildDaemonService.isBusy());
 	}
 }

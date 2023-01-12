@@ -1,15 +1,15 @@
 package consulo.msbuild.daemon.impl.logging;
 
-import com.intellij.build.BuildDescriptor;
-import com.intellij.build.BuildViewManager;
-import com.intellij.build.DefaultBuildDescriptor;
-import com.intellij.build.events.MessageEvent;
-import com.intellij.build.progress.BuildProgress;
-import com.intellij.build.progress.BuildProgressDescriptor;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.project.Project;
+import consulo.application.progress.ProgressIndicator;
+import consulo.build.ui.BuildDescriptor;
+import consulo.build.ui.BuildViewManager;
+import consulo.build.ui.DefaultBuildDescriptor;
+import consulo.build.ui.event.MessageEvent;
+import consulo.build.ui.progress.BuildProgress;
+import consulo.build.ui.progress.BuildProgressDescriptor;
 import consulo.disposer.Disposable;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
+import consulo.project.Project;
 import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.Nls;
 
@@ -40,11 +40,11 @@ public class MSBuildLoggingSession implements Disposable
 		private void print(@Nonnull String message, @Nonnull MessageEvent.Kind kind)
 		{
 			String text = wrapWithAnsiColor(kind, message);
-			if(!isNewLinePosition && !com.intellij.openapi.util.text.StringUtil.startsWithChar(message, '\r'))
+			if(!isNewLinePosition && !StringUtil.startsWithChar(message, '\r'))
 			{
 				text = '\n' + text;
 			}
-			isNewLinePosition = com.intellij.openapi.util.text.StringUtil.endsWithLineBreak(message);
+			isNewLinePosition = StringUtil.endsWithLineBreak(message);
 			progress.output(text, kind != MessageEvent.Kind.ERROR);
 		}
 
@@ -86,7 +86,7 @@ public class MSBuildLoggingSession implements Disposable
 		myId = id;
 		myProject = project;
 		myLoggingGroup = loggingGroup;
-		myBuildProgress = BuildViewManager.createBuildProgress(project);
+		myBuildProgress = BuildViewManager.getInstance(project).createBuildProgress();
 		myConsolePrinter = new ConsolePrinter(myBuildProgress);
 	}
 

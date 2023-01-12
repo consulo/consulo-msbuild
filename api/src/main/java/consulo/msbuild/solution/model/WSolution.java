@@ -16,14 +16,13 @@
 
 package consulo.msbuild.solution.model;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.vfs.VirtualFile;
-import consulo.annotation.access.RequiredReadAction;
 import consulo.logging.Logger;
 import consulo.msbuild.solution.reader.SlnFile;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.msbuild.solution.reader.SlnSection;
+import consulo.project.Project;
+import consulo.util.lang.Comparing;
+import consulo.virtualFileSystem.VirtualFile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -1,7 +1,7 @@
 package consulo.msbuild.daemon.impl.logging;
 
-import com.intellij.execution.ui.ConsoleView;
-import com.intellij.ui.components.panels.Wrapper;
+import consulo.execution.ui.console.ConsoleView;
+import consulo.ui.ex.awt.Wrapper;
 
 /**
  * @author VISTALL

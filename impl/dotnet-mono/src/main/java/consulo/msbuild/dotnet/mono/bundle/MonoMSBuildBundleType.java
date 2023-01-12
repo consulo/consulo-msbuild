@@ -1,6 +1,7 @@
 package consulo.msbuild.dotnet.mono.bundle;
 
-import com.intellij.openapi.projectRoots.SdkType;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.content.bundle.SdkType;
 import consulo.dotnet.module.extension.AssemblyInfoCacheService;
 import consulo.internal.dotnet.asm.mbel.AssemblyInfo;
 import consulo.mono.dotnet.sdk.MonoSdkType;
@@ -18,6 +19,7 @@ import java.util.Set;
  * @author VISTALL
  * @since 21/01/2021
  */
+@ExtensionImpl
 public class MonoMSBuildBundleType extends SdkType
 {
 	@Nonnull

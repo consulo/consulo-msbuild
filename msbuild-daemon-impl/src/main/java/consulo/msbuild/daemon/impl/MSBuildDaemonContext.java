@@ -1,11 +1,11 @@
 package consulo.msbuild.daemon.impl;
 
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.util.containers.MultiMap;
+import consulo.content.bundle.Sdk;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
 import consulo.msbuild.daemon.impl.message.model.ProjectItem;
 import consulo.msbuild.solution.model.WProject;
+import consulo.util.collection.MultiMap;
 
 import javax.annotation.Nonnull;
 import java.util.*;

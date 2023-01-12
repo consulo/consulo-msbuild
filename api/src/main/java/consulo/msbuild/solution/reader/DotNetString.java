@@ -16,7 +16,7 @@
 
 package consulo.msbuild.solution.reader;
 
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.util.lang.StringUtil;
 
 /**
  * @author VISTALL

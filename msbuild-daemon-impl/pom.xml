@@ -20,8 +20,8 @@
 
 	<parent>
 		<groupId>consulo</groupId>
-		<artifactId>arch.ide-provided</artifactId>
-		<version>2-SNAPSHOT</version>
+		<artifactId>arch.ide-api-provided</artifactId>
+		<version>3-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
@@ -38,35 +38,8 @@
 
 	<groupId>consulo.plugin</groupId>
 	<artifactId>consulo.msbuild-daemon-impl</artifactId>
-	<version>2-SNAPSHOT</version>
+	<version>3-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>consulo.maven</groupId>
-				<artifactId>maven-consulo-plugin</artifactId>
-				<version>2-SNAPSHOT</version>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<id>gen</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>generate-icon</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>pack</id>
-						<phase>package</phase>
-						<goals>
-							<goal>workspace</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 
 	<dependencies>
 		<dependency>
@@ -76,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>consulo</groupId>
-			<artifactId>consulo-build-ui-impl</artifactId>
+			<artifactId>consulo-build-ui-api</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>

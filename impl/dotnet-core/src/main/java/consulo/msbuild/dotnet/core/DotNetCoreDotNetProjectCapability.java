@@ -1,11 +1,12 @@
 package consulo.msbuild.dotnet.core;
 
-import com.intellij.openapi.projectRoots.Sdk;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.content.bundle.Sdk;
 import consulo.dotnet.DotNetTarget;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.dotnet.core.module.extension.MSBuildDotNetCoreMutableModuleExtension;
-import consulo.msbuild.impl.BaseDotNetProjectCapability;
+import consulo.msbuild.dotnet.impl.BaseDotNetProjectCapability;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @author VISTALL
  * @since 18/01/2021
  */
+@ExtensionImpl
 public class DotNetCoreDotNetProjectCapability extends BaseDotNetProjectCapability
 {
 	@Override

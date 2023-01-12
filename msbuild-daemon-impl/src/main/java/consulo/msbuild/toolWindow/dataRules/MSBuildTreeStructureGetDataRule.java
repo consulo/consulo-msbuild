@@ -1,13 +1,14 @@
 package consulo.msbuild.toolWindow.dataRules;
 
-import com.intellij.ide.impl.dataRules.GetDataRule;
-import com.intellij.openapi.actionSystem.DataProvider;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.ui.content.Content;
-import com.intellij.ui.tree.StructureTreeModel;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.dataContext.DataProvider;
+import consulo.dataContext.GetDataRule;
+import consulo.language.editor.PlatformDataKeys;
 import consulo.msbuild.toolWindow.MSBuildToolWindowKeys;
 import consulo.msbuild.toolWindow.MSBuildToolWindowPanel;
+import consulo.ui.ex.awt.tree.StructureTreeModel;
+import consulo.ui.ex.content.Content;
+import consulo.ui.ex.toolWindow.ToolWindow;
 import consulo.util.dataholder.Key;
 
 import javax.annotation.Nonnull;
@@ -17,6 +18,7 @@ import javax.annotation.Nullable;
  * @author VISTALL
  * @since 21/01/2021
  */
+@ExtensionImpl
 public class MSBuildTreeStructureGetDataRule implements GetDataRule<StructureTreeModel<?>>
 {
 	@Nonnull

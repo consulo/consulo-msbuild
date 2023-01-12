@@ -35,94 +35,18 @@
 	</permissions>
 
 	<!--.NET Support-->
-	<depends optional="true" config-file="consulo.dotnet.xml">consulo.dotnet</depends>
-	<depends optional="true" config-file="consulo.dotnet.mono.xml">consulo.dotnet.mono</depends>
-	<depends optional="true" config-file="consulo.dotnet.microsoft.xml">consulo.dotnet.microsoft</depends>
-	<depends optional="true" config-file="consulo.dotnet.core.xml">consulo.dotnet.core</depends>
+	<depends optional="true">consulo.dotnet</depends>
+	<depends optional="true">consulo.dotnet.mono</depends>
+	<depends optional="true">consulo.dotnet.microsoft</depends>
+	<depends optional="true">consulo.dotnet.core</depends>
 
-	<depends optional="true" config-file="consulo.csharp.xml">consulo.csharp</depends>
+	<depends optional="true">consulo.csharp</depends>
 
-	<extensionPoints>
-		<extensionPoint name="variableProvider" interface="consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider"/>
 
-		<extensionPoint name="processProvider" interface="consulo.msbuild.MSBuildProcessProvider"/>
-
-		<extensionPoint name="projectFile" beanClass="consulo.msbuild.MSBuildProjectFileEP"/>
-
-		<extensionPoint name="projectCapability" interface="consulo.msbuild.MSBuildProjectCapability"/>
-	</extensionPoints>
-
-	<extensions defaultExtensionNs="consulo.msbuild">
-		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildExtensionsPath"/>
-		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsVersion"/>
-		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildToolsPath"/>
-		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildConfiguration"/>
-		<variableProvider implementation="consulo.msbuild.dom.expression.evaluate.variable.impl.MSBuildPlatform"/>
-
-		<processProvider implementation="consulo.msbuild.DefaultMSBuildProcessProvider"/>
-	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xml">
 		<standardResource url="http://schemas.microsoft.com/developer/msbuild/2003" path="/standardSchemes/Microsoft.Build.xsd"/>
 
-		<dom.fileDescription implementation="consulo.msbuild.MSBuildDomDescriptor"/>
 
-		<dom.extender domClass="consulo.msbuild.dom.PropertyGroup" extenderClass="consulo.msbuild.dom.extender.MSBuildPropertyGroupDomExtender"/>
-	</extensions>
-
-	<extensions defaultExtensionNs="com.intellij">
-		<compiler implementation="consulo.msbuild.compiler.MSBuildCompiler"/>
-
-		<moduleExtensionProvider key="msbuild-default"
-								 name="MSBuild Solution"
-								 systemOnly="true"
-								 icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuild"
-								 immutableClass="consulo.msbuild.module.extension.MSBuildSolutionModuleExtensionImpl"
-								 mutableClass="consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtensionImpl"/>
-
-		<compiler.moduleScopeFactory implementation="consulo.msbuild.compiler.MSBuildCompileModuleScopeFactory"/>
-
-		<editorNotificationProvider implementation="consulo.msbuild.editor.MSBuildOutOfProjectEditorNotificationProvider"/>
-
-		<createFromTemplateActionModuleResolver implementation="consulo.msbuild.action.MSBuildModuleResolver"/>
-
-		<sdkType implementation="consulo.msbuild.bundle.MSBuildBundleType"/>
-		<predefinedBundlesProvider implementation="consulo.msbuild.bundle.MSBuildBundleProvider"/>
-
-		<fileTypeFactory implementation="consulo.msbuild.MSBuildFileTypeFactory"/>
-
-		<projectViewPane implementation="consulo.msbuild.projectView.SolutionViewPane"/>
-
-		<projectService serviceImplementation="consulo.msbuild.MSBuildWorkspaceData"/>
-
-		<moduleImportProvider implementation="consulo.msbuild.importProvider.SolutionModuleImportProvider"/>
-
-		<moduleImportProvider implementation="consulo.msbuild.importProvider.MSBuildModuleImportProvider"/>
-
-		<generatedSourcesFilter implementation="consulo.msbuild.roots.MSBuildGeneratedSourcesFilter"/>
-
-		<treeStructureProvider implementation="consulo.msbuild.projectView.SolutionViewTreePatcher"/>
-
-		<iconDescriptorUpdater implementation="consulo.msbuild.MSBuildIconDescriptorUpdater"/>
-
-		<localInspection language="XML" implementationClass="consulo.msbuild.codeInspection.MSBuildDomElementsInspection" displayName="MSBuild validation" groupName="MSBuild"/>
-
-		<lang.braceMatcher language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.editor.MSBuildExpressionPairBraceMatcher"/>
-		<lang.parserDefinition language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionParserDefinition"/>
-
-		<lang.syntaxHighlighterFactory language="MSBuildExpression" implementationClass="consulo.msbuild.dom.expression.editor.MSBuildExpressionSyntaxHighlighterFactory"/>
-		<highlightVisitor implementation="consulo.msbuild.dom.expression.editor.MSBuildExpressionHighlightVisitor"/>
-
-		<documentationProvider implementation="consulo.msbuild.dom.expression.editor.MSBuildExpressionDocumentationProvider"/>
-
-		<multiHostInjector forClass="com.intellij.psi.xml.XmlAttributeValue" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
-		<multiHostInjector forClass="com.intellij.psi.xml.XmlText" implementationClass="consulo.msbuild.dom.expression.lang.MSBuildExpressionXmlInjector"/>
-
-		<projectService serviceImplementation="consulo.msbuild.daemon.impl.MSBuildDaemonService"/>
-
-		<toolWindow id="MSBuild" anchor="right" canCloseContents="false" icon="consulo.msbuild.api.MSBuildApiIconGroup@msbuildtoolwindow" factoryClass="consulo.msbuild.toolWindow.MSBuildToolWindowFactory"
-					conditionClass="consulo.msbuild.toolWindow.MSBuildToolWindowCondition"/>
-
-		<getDataRule implementation="consulo.msbuild.toolWindow.dataRules.MSBuildTreeStructureGetDataRule"/>
 	</extensions>
 </consulo-plugin>

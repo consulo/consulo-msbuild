@@ -3,11 +3,11 @@
 
 package consulo.msbuild.dom;
 
-import java.util.List;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.GenericAttributeValue;
 
 import javax.annotation.Nonnull;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericAttributeValue;
+import java.util.List;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:TaskType interface.

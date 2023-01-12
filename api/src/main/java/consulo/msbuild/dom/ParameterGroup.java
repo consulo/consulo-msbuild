@@ -3,7 +3,7 @@
 
 package consulo.msbuild.dom;
 
-import com.intellij.util.xml.DomElement;
+import consulo.xml.util.xml.DomElement;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ParameterGroupType interface.

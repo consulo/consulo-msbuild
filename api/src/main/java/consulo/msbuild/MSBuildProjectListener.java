@@ -1,14 +1,14 @@
 package consulo.msbuild;
 
-import com.intellij.util.messages.Topic;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.TopicAPI;
 
 /**
  * @author VISTALL
  * @since 20/01/2021
  */
+@TopicAPI(ComponentScope.PROJECT)
 public interface MSBuildProjectListener
 {
-	Topic<MSBuildProjectListener> TOPIC = Topic.create("MSBuildProjectListener", MSBuildProjectListener.class);
-
 	void projectsReloaded();
 }

@@ -1,14 +1,15 @@
 package consulo.msbuild.compiler;
 
+import consulo.application.util.AsyncFileService;
+import consulo.compiler.CompileContext;
+import consulo.compiler.CompilerMessageCategory;
+import consulo.util.io.FileUtil;
+import consulo.virtualFileSystem.LocalFileSystem;
+import consulo.virtualFileSystem.VirtualFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import com.intellij.openapi.compiler.CompileContext;
-import com.intellij.openapi.compiler.CompilerMessageCategory;
-import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
 
 /**
  * @author VISTALL
@@ -16,7 +17,7 @@ import com.intellij.openapi.vfs.VirtualFile;
  */
 public class MSBuildReporter
 {
-	public static void report(MSBuildCompileContext context)
+	public static void report(AsyncFileService asyncFileService, MSBuildCompileContext context)
 	{
 		File tempErrorFile = context.getTempErrorFile();
 		File tempWarningFile = context.getTempWarningFile();
@@ -24,7 +25,7 @@ public class MSBuildReporter
 		try
 		{
 			List<String> errors = FileUtil.loadLines(tempErrorFile);
-			FileUtil.asyncDelete(tempErrorFile);
+			asyncFileService.asyncDelete(tempErrorFile);
 
 			for(String error : errors)
 			{
@@ -32,7 +33,7 @@ public class MSBuildReporter
 			}
 
 			List<String> warnings = FileUtil.loadLines(tempWarningFile);
-			FileUtil.asyncDelete(tempWarningFile);
+			asyncFileService.asyncDelete(tempWarningFile);
 
 			for(String warning : warnings)
 			{

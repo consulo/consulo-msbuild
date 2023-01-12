@@ -16,14 +16,14 @@
 
 package consulo.msbuild.dom.expression.evaluate;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.NullableLazyValue;
-import com.intellij.psi.PsiElement;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.application.util.NullableLazyValue;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
+import consulo.project.Project;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -62,7 +62,7 @@ public class MSBuildEvaluateContext
 	{
 		myElement = element;
 
-		for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensionList())
+		for(MSBuildVariableProvider provider : element.getProject().getApplication().getExtensionPoint(MSBuildVariableProvider.class))
 		{
 			myVariables.put(provider.getName(), provider);
 		}
@@ -105,7 +105,7 @@ public class MSBuildEvaluateContext
 			return value;
 		}
 
-		for(MSBuildVariableProvider provider : MSBuildVariableProvider.EP_NAME.getExtensionList())
+		for(MSBuildVariableProvider provider : myElement.getProject().getApplication().getExtensionPoint(MSBuildVariableProvider.class))
 		{
 			if(provider.getClass() == variableClazz)
 			{

@@ -1,10 +1,10 @@
 package consulo.msbuild;
 
-import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.openapi.application.Application;
-import com.intellij.openapi.projectRoots.Sdk;
-import consulo.extensions.StrictExtensionPointName;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.content.bundle.Sdk;
 import consulo.msbuild.importProvider.MSBuildBaseImportContext;
+import consulo.process.cmd.GeneralCommandLine;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,10 +18,9 @@ import java.util.function.Consumer;
  * @author VISTALL
  * @since 01/01/2021
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public interface MSBuildProcessProvider
 {
-	StrictExtensionPointName<Application, MSBuildProcessProvider> EP_NAME = StrictExtensionPointName.forApplication("consulo.msbuild.processProvider");
-
 	String DEFAULT_ID = "standalone";
 
 	@Nonnull

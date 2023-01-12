@@ -1,16 +1,16 @@
 package consulo.msbuild.toolWindow.nodes;
 
-import com.intellij.ide.projectView.PresentationData;
-import com.intellij.ide.util.treeView.AbstractTreeNode;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.ui.SimpleTextAttributes;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.module.Module;
+import consulo.module.ModuleManager;
 import consulo.msbuild.MSBuildWorkspaceData;
-import consulo.msbuild.api.icon.MSBuildApiIconGroup;
+import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.msbuild.solution.model.WProject;
 import consulo.msbuild.toolWindow.actions.FilterTargetsAction;
+import consulo.project.Project;
+import consulo.project.ui.view.tree.AbstractTreeNode;
+import consulo.ui.ex.SimpleTextAttributes;
+import consulo.ui.ex.tree.PresentationData;
 import consulo.util.collection.ArrayUtil;
 
 import javax.annotation.Nonnull;
@@ -66,6 +66,6 @@ public class ProjectNodeDescriptor extends AbstractTreeNode<WProject>
 	protected void update(PresentationData presentation)
 	{
 		presentation.addText(getValue().getName(), SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
-		presentation.setIcon(MSBuildApiIconGroup.msbuild());
+		presentation.setIcon(MSBuildIconGroup.msbuild());
 	}
 }

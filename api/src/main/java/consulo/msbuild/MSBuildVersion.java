@@ -17,6 +17,7 @@
 package consulo.msbuild;
 
 import javax.annotation.Nonnull;
+import java.util.Set;
 
 /**
  * @author VISTALL
@@ -37,12 +38,10 @@ public enum MSBuildVersion
 	Visual_Studio_2013("2013", "12.0"),
 	Visual_Studio_2015("2015", "14.0"),
 	Visual_Studio_2017("2017", "15.0"),
-	Visual_Studio_2019("2019", "16.0");
+	Visual_Studio_2019("2019", "16.0"),
+	Visual_Studio_2022("2022", "17.0");
 
-	public static final String[] ourVisualStudioEditions = new String[]{
-			"Community",
-			"Professional"
-	};
+	public static final Set<String> ourVisualStudioEditions = Set.of("Community", "Professional");
 
 	private final String myYearVersion;
 	private final String myInternalVersion;

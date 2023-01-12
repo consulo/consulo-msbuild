@@ -1,15 +1,15 @@
 package consulo.msbuild.dotnet.microsoft.module.extension;
 
-import com.intellij.openapi.projectRoots.Sdk;
+import consulo.content.bundle.Sdk;
 import consulo.disposer.Disposable;
 import consulo.dotnet.module.extension.DotNetConfigurationPanel;
 import consulo.dotnet.module.extension.DotNetMutableModuleExtension;
-import consulo.dotnet.module.extension.DotNetQualifiedElementQualifierProducer;
+import consulo.dotnet.psi.impl.module.extension.DotNetQualifiedElementQualifierProducer;
 import consulo.localize.LocalizeValue;
+import consulo.module.content.layer.ModuleRootLayer;
 import consulo.module.extension.MutableModuleInheritableNamedPointer;
 import consulo.module.extension.swing.SwingMutableModuleExtension;
 import consulo.msbuild.module.extension.MSBuildProjectMutableModuleExtension;
-import consulo.roots.ModuleRootLayer;
 import consulo.ui.Component;
 import consulo.ui.Label;
 import consulo.ui.annotation.RequiredUIAccess;

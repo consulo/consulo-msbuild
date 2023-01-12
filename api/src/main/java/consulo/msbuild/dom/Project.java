@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.util.xml.DefinesXml;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.util.xml.GenericDomValue;
-import com.intellij.util.xml.NameStrategy;
-import com.intellij.util.xml.NameStrategyForAttributes;
-import com.intellij.util.xml.SubTagList;
+import consulo.xml.util.xml.DefinesXml;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.util.xml.NameStrategy;
+import consulo.xml.util.xml.NameStrategyForAttributes;
+import consulo.xml.util.xml.SubTagList;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ProjectElemType interface.
