@@ -17,7 +17,6 @@
 package consulo.msbuild.impl.dom.expression.editor;
 
 import consulo.annotation.access.RequiredReadAction;
-import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.DefaultLanguageHighlighterColors;
 import consulo.language.editor.rawHighlight.HighlightInfo;
 import consulo.language.editor.rawHighlight.HighlightInfoHolder;
@@ -26,7 +25,6 @@ import consulo.language.editor.rawHighlight.HighlightVisitor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionElementVisitor;
-import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionFile;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionMacroReference;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildLightMacroValue;
 
@@ -36,16 +34,9 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 16-Jun-17
  */
-@ExtensionImpl
 public class MSBuildExpressionHighlightVisitor extends MSBuildExpressionElementVisitor implements HighlightVisitor
 {
 	private HighlightInfoHolder myHighlightInfoHolder;
-
-	@Override
-	public boolean suitableForFile(@Nonnull PsiFile psiFile)
-	{
-		return psiFile instanceof MSBuildExpressionFile;
-	}
 
 	@RequiredReadAction
 	@Override
@@ -75,12 +66,5 @@ public class MSBuildExpressionHighlightVisitor extends MSBuildExpressionElementV
 		myHighlightInfoHolder = highlightInfoHolder;
 		runnable.run();
 		return true;
-	}
-
-	@Nonnull
-	@Override
-	public HighlightVisitor clone()
-	{
-		return new MSBuildExpressionHighlightVisitor();
 	}
 }
