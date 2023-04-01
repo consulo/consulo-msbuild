@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
  * @since 28-Jan-17
  */
 @ExtensionImpl
-public class MSBuildDomElementsInspection extends BasicDomElementsInspection<Project>
+public class MSBuildDomElementsInspection extends BasicDomElementsInspection<Project, Object>
 {
 	public MSBuildDomElementsInspection()
 	{
