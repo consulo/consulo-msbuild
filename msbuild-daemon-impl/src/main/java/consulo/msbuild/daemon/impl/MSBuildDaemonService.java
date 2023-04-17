@@ -6,6 +6,7 @@ import consulo.annotation.component.ServiceImpl;
 import consulo.application.AccessRule;
 import consulo.application.Application;
 import consulo.application.WriteAction;
+import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.Task;
 import consulo.container.boot.ContainerPathManager;
 import consulo.content.bundle.Sdk;
@@ -151,7 +152,7 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new ListTargetsStep(project));
 		}
 
-		return runSteps(steps, null).doWhenDone(context -> createModules(context));
+		return runSteps(steps, null, null).doWhenDone(context -> createModules(context));
 	}
 
 	public void runTarget(String target)
@@ -173,11 +174,11 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new RunTargetProjectStep(project, target, false));
 		}
 
-		runSteps(steps, target);
+		runSteps(steps, null, target);
 	}
 
 	@Nonnull
-	public AsyncResult<MSBuildDaemonContext> runSteps(List<DaemonStep> steps, String loggingGroup)
+	public AsyncResult<MSBuildDaemonContext> runSteps(List<DaemonStep> steps, @Nullable ProgressIndicator indicator, String loggingGroup)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -192,119 +193,134 @@ public class MSBuildDaemonService implements Disposable
 
 		AsyncResult<MSBuildDaemonContext> runStepResult = AsyncResult.undefined();
 
-		Task.Backgroundable.queue(myProject, "Starting Daemon Service...", indicator ->
+		if(indicator != null)
 		{
-			try
+			indicator.setText("Starting Daemon Service...");
+
+			runInBackground(indicator, solutionExtension, steps, runStepResult, loggingGroup);
+		}
+		else
+		{
+			Task.Backgroundable.queue(myProject, "Starting Daemon Service...", i -> runInBackground(i, solutionExtension, steps, runStepResult, loggingGroup));
+		}
+
+		return runStepResult;
+	}
+
+	private void runInBackground(@Nonnull ProgressIndicator indicator,
+								 MSBuildSolutionModuleExtension<?> solutionExtension,
+								 List<DaemonStep> steps,
+								 AsyncResult<MSBuildDaemonContext> runStepResult,
+								 String loggingGroup)
+	{
+		try
+		{
+			MSBuildProcessProvider buildProcessProvider = findBuildProcessProvider(solutionExtension);
+
+			Sdk msBuildSdk = buildProcessProvider.findBundle(solutionExtension.getSdkName());
+
+			// not connected to server
+			if(myConnection == null)
 			{
-				MSBuildProcessProvider buildProcessProvider = findBuildProcessProvider(solutionExtension);
+				indicator.setText2("Preparing daemon process...");
 
-				Sdk msBuildSdk = buildProcessProvider.findBundle(solutionExtension.getSdkName());
+				initializeServer();
 
-				// not connected to server
-				if(myConnection == null)
+				indicator.setText2("Starting daemon process...");
+
+				startServer(msBuildSdk, buildProcessProvider);
+
+				MSBuildSocketThread socketThread = mySocketResult.getResultSync();
+
+				myConnection = new DaemonConnection(socketThread);
+				socketThread.setDaemonConnection(myConnection);
+
+				socketThread.waitForConnect();
+
+				InitializeRequest message = new InitializeRequest();
+				message.IdeProcessId = (int) ProcessHandle.current().pid();
+				message.CultureName = buildProcessProvider.getLocaleForProcess();
+				message.BinDir = buildProcessProvider.getBinDir(msBuildSdk).getAbsolutePath();
+
+				fillGlobalProperties(message.GlobalProperties, message.BinDir, msBuildSdk, buildProcessProvider);
+
+				myConnection.sendWithResponse(message).getResultSync();
+			}
+
+			MSBuildDaemonContext context = new MSBuildDaemonContext(buildProcessProvider, msBuildSdk);
+
+			MSBuildLoggingSession loggingSession = null;
+			for(DaemonStep step : steps)
+			{
+				if(step instanceof BaseRunProjectStep)
 				{
-					indicator.setText2("Preparing daemon process...");
-
-					initializeServer();
-
-					indicator.setText2("Starting daemon process...");
-
-					startServer(msBuildSdk, buildProcessProvider);
-
-					MSBuildSocketThread socketThread = mySocketResult.getResultSync();
-
-					myConnection = new DaemonConnection(socketThread);
-					socketThread.setDaemonConnection(myConnection);
-
-					socketThread.waitForConnect();
-
-					InitializeRequest message = new InitializeRequest();
-					message.IdeProcessId = (int) ProcessHandle.current().pid();
-					message.CultureName = buildProcessProvider.getLocaleForProcess();
-					message.BinDir = buildProcessProvider.getBinDir(msBuildSdk).getAbsolutePath();
-
-					fillGlobalProperties(message.GlobalProperties, message.BinDir, msBuildSdk, buildProcessProvider);
-
-					myConnection.sendWithResponse(message).getResultSync();
-				}
-
-				MSBuildDaemonContext context = new MSBuildDaemonContext(buildProcessProvider, msBuildSdk);
-
-				MSBuildLoggingSession loggingSession = null;
-				for(DaemonStep step : steps)
-				{
-					if(step instanceof BaseRunProjectStep)
+					if(((BaseRunProjectStep) step).wantLogging())
 					{
-						if(((BaseRunProjectStep) step).wantLogging())
-						{
-							loggingSession = newLoggingSession(loggingGroup);
-							break;
-						}
-					}
-				}
-
-				if(loggingSession != null)
-				{
-					loggingSession.start(indicator);
-				}
-
-				for(DaemonStep step : steps)
-				{
-					indicator.setText(step.getStepText());
-
-					DaemonMessage request = step.prepareRequest(context);
-
-					myConnection.prepareLogging(request, step, loggingSession);
-
-					AsyncResult<DataObject> result = myConnection.sendWithResponse(request);
-					DataObject object = (DataObject) result.getResultSync();
-
-					if(object != null)
-					{
-						step.handleResponse(context, object);
-					}
-					else
-					{
-						// todo error
-						throw new IOException("failed");
-					}
-				}
-
-				for(DaemonStep step : steps)
-				{
-					if(step instanceof ListTargetsStep)
-					{
-						MSBuildWorkspaceData msBuildWorkspaceData = MSBuildWorkspaceData.getInstance(myProject);
-						for(MSBuildDaemonContext.PerProjectInfo projectInfo : context.getInfos())
-						{
-							msBuildWorkspaceData.setTargets(projectInfo.wProject.getId(), projectInfo.targets);
-						}
-
+						loggingSession = newLoggingSession(loggingGroup);
 						break;
 					}
 				}
+			}
 
-				if(loggingSession != null)
+			if(loggingSession != null)
+			{
+				loggingSession.start(indicator);
+			}
+
+			for(DaemonStep step : steps)
+			{
+				indicator.setText(step.getStepText());
+
+				DaemonMessage request = step.prepareRequest(context);
+
+				myConnection.prepareLogging(request, step, loggingSession);
+
+				AsyncResult<DataObject> result = myConnection.sendWithResponse(request);
+				DataObject object = (DataObject) result.getResultSync();
+
+				if(object != null)
 				{
-					loggingSession.stop();
-
-					myLoggingSessions.remove(loggingSession.getId());
-					loggingSession.disposeWithTree();
+					step.handleResponse(context, object);
 				}
+				else
+				{
+					// todo error
+					throw new IOException("failed");
+				}
+			}
 
-				runStepResult.setDone(context);
-			}
-			catch(Exception e)
+			for(DaemonStep step : steps)
 			{
-				runStepResult.rejectWithThrowable(e);
-			}
-			finally
-			{
-				myBusy.compareAndSet(true, false);
-			}
-		});
+				if(step instanceof ListTargetsStep)
+				{
+					MSBuildWorkspaceData msBuildWorkspaceData = MSBuildWorkspaceData.getInstance(myProject);
+					for(MSBuildDaemonContext.PerProjectInfo projectInfo : context.getInfos())
+					{
+						msBuildWorkspaceData.setTargets(projectInfo.wProject.getId(), projectInfo.targets);
+					}
 
-		return runStepResult;
+					break;
+				}
+			}
+
+			if(loggingSession != null)
+			{
+				loggingSession.stop();
+
+				myLoggingSessions.remove(loggingSession.getId());
+				loggingSession.disposeWithTree();
+			}
+
+			runStepResult.setDone(context);
+		}
+		catch(Exception e)
+		{
+			runStepResult.rejectWithThrowable(e);
+		}
+		finally
+		{
+			myBusy.compareAndSet(true, false);
+		}
 	}
 
 	private void createModules(MSBuildDaemonContext context)
