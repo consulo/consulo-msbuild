@@ -16,13 +16,10 @@ import java.util.Set;
 @ExtensionAPI(ComponentScope.APPLICATION)
 public interface MSBuildProjectFile
 {
-	ExtensionPointCacheKey<MSBuildProjectFile, Set<String>> CACHE_KEY = ExtensionPointCacheKey.create("MSBuildProjectFile", msBuildProjectFiles ->
+	ExtensionPointCacheKey<MSBuildProjectFile, Set<String>> CACHE_KEY = ExtensionPointCacheKey.create("MSBuildProjectFile", walker ->
 	{
 		Set<String> extensions = new LinkedHashSet<>();
-		for(MSBuildProjectFile file : msBuildProjectFiles)
-		{
-			extensions.add(file.getExtension());
-		}
+		walker.walk(file -> extensions.add(file.getExtension()));
 		return extensions;
 	});
 
