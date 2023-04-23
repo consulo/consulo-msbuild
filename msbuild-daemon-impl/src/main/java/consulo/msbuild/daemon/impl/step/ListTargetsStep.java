@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 01/01/2021
  */
-public class ListTargetsStep extends PerProjectDaemonStep<GetTargetsRequest, GetTargetsResponse>
+public class ListTargetsStep extends PerProjectRemoteDaemonStep<GetTargetsRequest, GetTargetsResponse>
 {
 	public ListTargetsStep(WProject wProject)
 	{

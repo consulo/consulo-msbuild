@@ -1,5 +1,6 @@
 package consulo.msbuild.toolWindow;
 
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.dumb.DumbAware;
 import consulo.localize.LocalizeValue;
 import consulo.msbuild.icon.MSBuildIconGroup;
@@ -22,6 +23,7 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 01/01/2021
  */
+@ExtensionImpl
 public class MSBuildToolWindowFactory implements ToolWindowFactory, DumbAware
 {
 	@RequiredUIAccess

@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 01/01/2021
  */
-public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProjectRequest, RunProjectResponse>
+public abstract class BaseRunProjectStep extends PerProjectRemoteDaemonStep<RunProjectRequest, RunProjectResponse>
 {
 	private final String[] myItems;
 	private final String[] myTargets;
@@ -51,10 +51,5 @@ public abstract class BaseRunProjectStep extends PerProjectDaemonStep<RunProject
 		r.GlobalProperties.put("GenerateResourceMSBuildRuntime", "CurrentRuntime");
 
 		return r;
-	}
-
-	public boolean wantLogging()
-	{
-		return false;
 	}
 }

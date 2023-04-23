@@ -97,7 +97,12 @@ public class MSBuildLoggingSession implements Disposable
 
 	public void acceptMessage(LogMessage logMessage)
 	{
-		myConsolePrinter.print(logMessage.LogText, MessageEvent.Kind.INFO);
+		acceptMessage(logMessage.LogText, MessageEvent.Kind.INFO);
+	}
+
+	public void acceptMessage(String text, MessageEvent.Kind kind)
+	{
+		myConsolePrinter.print(text, kind);
 	}
 
 	public void start(ProgressIndicator indicator)

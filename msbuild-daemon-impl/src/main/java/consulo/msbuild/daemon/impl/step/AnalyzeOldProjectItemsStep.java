@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * https://github.com/microsoft/VSProjectSystem/blob/master/doc/overview/project_capabilities.md
  */
 @Deprecated
-public class AnalyzeOldProjectItemsStep extends PerProjectDaemonStep<GetProjectItemsRequest, GetProjectItemsResponse>
+public class AnalyzeOldProjectItemsStep extends PerProjectRemoteDaemonStep<GetProjectItemsRequest, GetProjectItemsResponse>
 {
 	public AnalyzeOldProjectItemsStep(WProject wProject)
 	{

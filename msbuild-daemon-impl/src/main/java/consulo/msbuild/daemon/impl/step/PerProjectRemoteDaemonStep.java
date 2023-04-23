@@ -1,6 +1,7 @@
 package consulo.msbuild.daemon.impl.step;
 
 import consulo.component.util.localize.BundleBase;
+import consulo.localize.LocalizeValue;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
@@ -13,19 +14,20 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 01/01/2021
  */
-public abstract class PerProjectDaemonStep<Request extends DaemonMessage<Response>, Response extends DataObject> extends DaemonStep<Request, Response>
+public abstract class PerProjectRemoteDaemonStep<Request extends DaemonMessage<Response>, Response extends DataObject> extends RemoteDaemonStep<Request, Response>
 {
 	protected WProject myWProject;
 
-	protected PerProjectDaemonStep(WProject wProject)
+	protected PerProjectRemoteDaemonStep(WProject wProject)
 	{
 		myWProject = wProject;
 	}
 
+	@Nonnull
 	@Override
-	public String getStepText()
+	public LocalizeValue getStepText()
 	{
-		return BundleBase.format(getProjectStepText(), myWProject.getName());
+		return LocalizeValue.localizeTODO(BundleBase.format(getProjectStepText(), myWProject.getName()));
 	}
 
 	@Nonnull

@@ -30,7 +30,6 @@ public class RunTargetProjectStep extends BaseRunProjectStep
 	@Override
 	public void handleResponse(@Nonnull MSBuildDaemonContext context, @Nonnull RunProjectResponse runProjectResponse)
 	{
-
 	}
 
 	@Override

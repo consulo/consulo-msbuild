@@ -5,7 +5,7 @@ import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.RunProjectRequest;
 import consulo.msbuild.daemon.impl.network.MSBuildSocketThread;
 import consulo.msbuild.daemon.impl.step.BaseRunProjectStep;
-import consulo.msbuild.daemon.impl.step.DaemonStep;
+import consulo.msbuild.daemon.impl.step.RemoteDaemonStep;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.lang.Pair;
 
@@ -50,9 +50,9 @@ public class DaemonConnection
 		//myPingFutures.cancel(false);
 	}
 
-	public void prepareLogging(DaemonMessage request, DaemonStep step, MSBuildLoggingSession loggingSession)
+	public void prepareLogging(DaemonMessage request, RemoteDaemonStep step, MSBuildLoggingSession loggingSession)
 	{
-		if(step instanceof BaseRunProjectStep && ((BaseRunProjectStep) step).wantLogging())
+		if(step.wantLogging())
 		{
 			RunProjectRequest runProjectRequest = (RunProjectRequest) request;
 

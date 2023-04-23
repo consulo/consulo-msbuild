@@ -13,7 +13,7 @@ import java.util.Map;
  * @author VISTALL
  * @since 16/01/2021
  */
-public class AnalyzePropertiesStep extends PerProjectDaemonStep<GetPropertiesRequest, GetPropertiesResponse>
+public class AnalyzePropertiesStep extends PerProjectRemoteDaemonStep<GetPropertiesRequest, GetPropertiesResponse>
 {
 	public AnalyzePropertiesStep(WProject wProject)
 	{

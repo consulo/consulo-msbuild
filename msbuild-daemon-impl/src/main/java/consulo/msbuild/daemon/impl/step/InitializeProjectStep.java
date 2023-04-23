@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
  * @author VISTALL
  * @since 01/01/2021
  */
-public class InitializeProjectStep extends PerProjectDaemonStep<LoadProjectRequest, LoadProjectResponse>
+public class InitializeProjectStep extends PerProjectRemoteDaemonStep<LoadProjectRequest, LoadProjectResponse>
 {
 	public InitializeProjectStep(WProject wProject)
 	{

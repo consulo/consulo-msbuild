@@ -1,21 +1,28 @@
 package consulo.msbuild.daemon.impl.step;
 
+import consulo.localize.LocalizeValue;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
-import consulo.msbuild.daemon.impl.message.DaemonMessage;
-import consulo.msbuild.daemon.impl.message.model.DataObject;
+import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
+import consulo.msbuild.daemon.impl.message.DaemonConnection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.IOException;
 
 /**
  * @author VISTALL
- * @since 01/01/2021
+ * @since 23/04/2023
  */
-public abstract class DaemonStep<Request extends DaemonMessage<Response>, Response extends DataObject>
+public interface DaemonStep
 {
 	@Nonnull
-	public abstract Request prepareRequest(@Nonnull MSBuildDaemonContext context);
+	LocalizeValue getStepText();
 
-	public abstract void handleResponse(@Nonnull MSBuildDaemonContext context, @Nonnull Response response);
+	@SuppressWarnings("unchecked")
+	void execute(@Nonnull MSBuildDaemonContext context, @Nonnull DaemonConnection connection, @Nullable MSBuildLoggingSession loggingSession) throws IOException;
 
-	public abstract String getStepText();
+	default boolean wantLogging()
+	{
+		return false;
+	}
 }

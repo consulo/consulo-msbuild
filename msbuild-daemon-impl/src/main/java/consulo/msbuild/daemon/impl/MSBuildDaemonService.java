@@ -22,8 +22,6 @@ import consulo.msbuild.MSBuildProjectListener;
 import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
-import consulo.msbuild.daemon.impl.message.DaemonMessage;
-import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.InitializeRequest;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
@@ -35,8 +33,8 @@ import consulo.msbuild.solution.model.WProject;
 import consulo.process.ProcessHandler;
 import consulo.process.ProcessHandlerBuilder;
 import consulo.process.cmd.GeneralCommandLine;
-import consulo.process.event.ProcessAdapter;
 import consulo.process.event.ProcessEvent;
+import consulo.process.event.ProcessListener;
 import consulo.project.Project;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.dataholder.Key;
@@ -56,6 +54,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author VISTALL
@@ -107,6 +106,12 @@ public class MSBuildDaemonService implements Disposable
 	@Nonnull
 	public AsyncResult<MSBuildDaemonContext> forceUpdate()
 	{
+		return forceUpdate(daemonSteps -> {	});
+	}
+
+	@Nonnull
+	public AsyncResult<MSBuildDaemonContext> forceUpdate(@Nonnull Consumer<List<DaemonStep>> modifier)
+	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
 		{
@@ -152,7 +157,9 @@ public class MSBuildDaemonService implements Disposable
 			steps.add(new ListTargetsStep(project));
 		}
 
-		return runSteps(steps, null, null).doWhenDone(context -> createModules(context));
+		modifier.accept(steps);
+
+		return runSteps(steps, null, null).doWhenDone(this::createModules);
 	}
 
 	public void runTarget(String target)
@@ -252,13 +259,10 @@ public class MSBuildDaemonService implements Disposable
 			MSBuildLoggingSession loggingSession = null;
 			for(DaemonStep step : steps)
 			{
-				if(step instanceof BaseRunProjectStep)
+				if(step.wantLogging())
 				{
-					if(((BaseRunProjectStep) step).wantLogging())
-					{
-						loggingSession = newLoggingSession(loggingGroup);
-						break;
-					}
+					loggingSession = newLoggingSession(loggingGroup);
+					break;
 				}
 			}
 
@@ -269,24 +273,9 @@ public class MSBuildDaemonService implements Disposable
 
 			for(DaemonStep step : steps)
 			{
-				indicator.setText(step.getStepText());
+				indicator.setTextValue(step.getStepText());
 
-				DaemonMessage request = step.prepareRequest(context);
-
-				myConnection.prepareLogging(request, step, loggingSession);
-
-				AsyncResult<DataObject> result = myConnection.sendWithResponse(request);
-				DataObject object = (DataObject) result.getResultSync();
-
-				if(object != null)
-				{
-					step.handleResponse(context, object);
-				}
-				else
-				{
-					// todo error
-					throw new IOException("failed");
-				}
+				step.execute(context, myConnection, loggingSession);
 			}
 
 			for(DaemonStep step : steps)
@@ -524,7 +513,7 @@ public class MSBuildDaemonService implements Disposable
 		GeneralCommandLine commandLine = provider.buildCommandLine(msBuildSdk, exeFile, myPort);
 
 		ProcessHandler handler = ProcessHandlerBuilder.create(commandLine).silentReader().build();
-		handler.addProcessListener(new ProcessAdapter()
+		handler.addProcessListener(new ProcessListener()
 		{
 			@Override
 			public void processTerminated(ProcessEvent processEvent)
