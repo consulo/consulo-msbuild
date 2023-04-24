@@ -35,6 +35,10 @@ public class AnalyzeProjectItemsStep extends BaseRunProjectStep
 		for(String item : ITEMS)
 		{
 			MSBuildEvaluatedItem[] items = runProjectResponse.Result.items.get(item);
+			if(items == null)
+			{
+				continue;
+			}
 
 			context.addProjectItems(myWProject, items);
 		}
