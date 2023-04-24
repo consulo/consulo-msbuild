@@ -8,6 +8,7 @@ import consulo.build.ui.event.MessageEvent;
 import consulo.build.ui.progress.BuildProgress;
 import consulo.build.ui.progress.BuildProgressDescriptor;
 import consulo.disposer.Disposable;
+import consulo.localize.LocalizeValue;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
@@ -75,13 +76,13 @@ public class MSBuildLoggingSession implements Disposable
 
 	private final int myId;
 	private final Project myProject;
-	private final String myLoggingGroup;
+	private final LocalizeValue myLoggingGroup;
 
 	private final BuildProgress<BuildProgressDescriptor> myBuildProgress;
 
 	private final ConsolePrinter myConsolePrinter;
 
-	public MSBuildLoggingSession(int id, Project project, String loggingGroup)
+	public MSBuildLoggingSession(int id, Project project, @Nonnull LocalizeValue loggingGroup)
 	{
 		myId = id;
 		myProject = project;
@@ -114,7 +115,7 @@ public class MSBuildLoggingSession implements Disposable
 			@Override
 			public String getTitle()
 			{
-				return myLoggingGroup;
+				return myLoggingGroup.get();
 			}
 
 			@Override

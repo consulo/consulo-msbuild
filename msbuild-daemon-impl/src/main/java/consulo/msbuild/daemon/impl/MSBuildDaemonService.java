@@ -11,6 +11,7 @@ import consulo.application.progress.Task;
 import consulo.container.boot.ContainerPathManager;
 import consulo.content.bundle.Sdk;
 import consulo.disposer.Disposable;
+import consulo.localize.LocalizeValue;
 import consulo.module.ModifiableModuleModel;
 import consulo.module.Module;
 import consulo.module.ModuleManager;
@@ -122,7 +123,7 @@ public class MSBuildDaemonService implements Disposable
 			queue.join(initialStep);
 		}
 
-		return runSteps(queue, null, null).doWhenDone(this::createModules);
+		return runSteps(queue, null, LocalizeValue.localizeTODO("Update")).doWhenDone(this::createModules);
 	}
 
 	@Nonnull
@@ -138,7 +139,7 @@ public class MSBuildDaemonService implements Disposable
 
 		fillDefaultSteps(queue);
 
-		return runSteps(queue, null, null).doWhenDone(this::createModules);
+		return runSteps(queue, null, LocalizeValue.localizeTODO("Update")).doWhenDone(this::createModules);
 	}
 
 	public void fillDefaultSteps(@Nonnull DaemonStepQueue queue)
@@ -207,11 +208,11 @@ public class MSBuildDaemonService implements Disposable
 			steps.join(new RunTargetProjectStep(project, target, false));
 		}
 
-		runSteps(steps, null, target);
+		runSteps(steps, null, LocalizeValue.of(target));
 	}
 
 	@Nonnull
-	public AsyncResult<MSBuildDaemonContext> runSteps(DaemonStepQueue queue, @Nullable ProgressIndicator indicator, String loggingGroup)
+	public AsyncResult<MSBuildDaemonContext> runSteps(DaemonStepQueue queue, @Nullable ProgressIndicator indicator, @Nonnull LocalizeValue loggingGroup)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -244,7 +245,7 @@ public class MSBuildDaemonService implements Disposable
 								 MSBuildSolutionModuleExtension<?> solutionExtension,
 								 DaemonStepQueue queue,
 								 AsyncResult<MSBuildDaemonContext> runStepResult,
-								 String loggingGroup)
+								 @Nonnull LocalizeValue loggingGroup)
 	{
 		try
 		{
@@ -573,7 +574,7 @@ public class MSBuildDaemonService implements Disposable
 		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(myProject);
 	}
 
-	public MSBuildLoggingSession newLoggingSession(String loggingGroup)
+	public MSBuildLoggingSession newLoggingSession(@Nonnull LocalizeValue loggingGroup)
 	{
 		int id = myLoggers.incrementAndGet();
 		MSBuildLoggingSession session = new MSBuildLoggingSession(id, myProject, loggingGroup);

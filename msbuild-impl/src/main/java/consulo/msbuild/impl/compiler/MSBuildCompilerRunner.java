@@ -64,7 +64,7 @@ public class MSBuildCompilerRunner implements CompilerRunner
 
 		ProgressIndicator indicator = ProgressIndicatorProvider.getGlobalProgressIndicator();
 
-		daemonService.runSteps(steps, indicator, "Build").getResultSync();
+		daemonService.runSteps(steps, indicator, LocalizeValue.localizeTODO("Build")).getResultSync();
 
 		return true;
 	}
