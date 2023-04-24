@@ -54,7 +54,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 /**
  * @author VISTALL
@@ -103,14 +102,13 @@ public class MSBuildDaemonService implements Disposable
 		return myBusy.get();
 	}
 
+	/**
+	 * Start daemon service, with initialSteps.
+	 * Initial steps required to impl {@link DaemonStep#refill(MSBuildDaemonService, DaemonStepQueue)}
+	 * and call {@link #fillDefaultSteps(DaemonStepQueue)}  when ready
+	 */
 	@Nonnull
-	public AsyncResult<MSBuildDaemonContext> forceUpdate()
-	{
-		return forceUpdate(daemonSteps -> {	});
-	}
-
-	@Nonnull
-	public AsyncResult<MSBuildDaemonContext> forceUpdate(@Nonnull Consumer<List<DaemonStep>> modifier)
+	public AsyncResult<MSBuildDaemonContext> externalUpdate(@Nonnull DaemonStep... initialSteps)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -118,48 +116,76 @@ public class MSBuildDaemonService implements Disposable
 			return AsyncResult.rejected();
 		}
 
-		List<DaemonStep> steps = new ArrayList<>();
+		DaemonStepQueue queue = new DaemonStepQueue();
+		for(DaemonStep initialStep : initialSteps)
+		{
+			queue.join(initialStep);
+		}
+
+		return runSteps(queue, null, null).doWhenDone(this::createModules);
+	}
+
+	@Nonnull
+	public AsyncResult<MSBuildDaemonContext> forceUpdate()
+	{
+		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
+		if(solutionExtension == null)
+		{
+			return AsyncResult.rejected();
+		}
+
+		DaemonStepQueue queue = new DaemonStepQueue();
+
+		fillDefaultSteps(queue);
+
+		return runSteps(queue, null, null).doWhenDone(this::createModules);
+	}
+
+	public void fillDefaultSteps(@Nonnull DaemonStepQueue queue)
+	{
+		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
+		if(solutionExtension == null)
+		{
+			return;
+		}
+
 		Collection<WProject> projects = solutionExtension.getProjects();
 		for(WProject wProject : projects)
 		{
-			steps.add(new InitializeProjectStep(wProject));
+			queue.join(new InitializeProjectStep(wProject));
 		}
 
 		for(WProject project : projects)
 		{
-			steps.add(new AnalyzeProjectItemsStep(project));
+			queue.join(new AnalyzeProjectItemsStep(project));
 		}
 
 		for(WProject project : projects)
 		{
-			steps.add(new AnalyzeOldProjectItemsStep(project));
+			queue.join(new AnalyzeOldProjectItemsStep(project));
 		}
 
 		for(WProject project : projects)
 		{
-			steps.add(new AnalyzePropertiesStep(project));
+			queue.join(new AnalyzePropertiesStep(project));
 		}
 
 		for(WProject project : projects)
 		{
-			steps.add(new RestoreDependenciesStep(project));
+			queue.join(new RestoreDependenciesStep(project));
 		}
 
 		MSBuildProcessProvider provider = findBuildProcessProvider(solutionExtension);
 
 		for(WProject project : projects)
 		{
-			steps.add(new AnalyzeDependenciesStep(project, provider));
+			queue.join(new AnalyzeDependenciesStep(project, provider));
 		}
 
 		for(WProject project : projects)
 		{
-			steps.add(new ListTargetsStep(project));
+			queue.join(new ListTargetsStep(project));
 		}
-
-		modifier.accept(steps);
-
-		return runSteps(steps, null, null).doWhenDone(this::createModules);
 	}
 
 	public void runTarget(String target)
@@ -169,23 +195,23 @@ public class MSBuildDaemonService implements Disposable
 		{
 			return;
 		}
-		List<DaemonStep> steps = new ArrayList<>();
+		DaemonStepQueue steps = new DaemonStepQueue();
 		Collection<WProject> projects = solutionExtension.getProjects();
 		for(WProject wProject : projects)
 		{
-			steps.add(new InitializeProjectStep(wProject));
+			steps.join(new InitializeProjectStep(wProject));
 		}
 
 		for(WProject project : projects)
 		{
-			steps.add(new RunTargetProjectStep(project, target, false));
+			steps.join(new RunTargetProjectStep(project, target, false));
 		}
 
 		runSteps(steps, null, target);
 	}
 
 	@Nonnull
-	public AsyncResult<MSBuildDaemonContext> runSteps(List<DaemonStep> steps, @Nullable ProgressIndicator indicator, String loggingGroup)
+	public AsyncResult<MSBuildDaemonContext> runSteps(DaemonStepQueue queue, @Nullable ProgressIndicator indicator, String loggingGroup)
 	{
 		MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
 		if(solutionExtension == null)
@@ -204,11 +230,11 @@ public class MSBuildDaemonService implements Disposable
 		{
 			indicator.setText("Starting Daemon Service...");
 
-			runInBackground(indicator, solutionExtension, steps, runStepResult, loggingGroup);
+			runInBackground(indicator, solutionExtension, queue, runStepResult, loggingGroup);
 		}
 		else
 		{
-			Task.Backgroundable.queue(myProject, "Starting Daemon Service...", i -> runInBackground(i, solutionExtension, steps, runStepResult, loggingGroup));
+			Task.Backgroundable.queue(myProject, "Starting Daemon Service...", i -> runInBackground(i, solutionExtension, queue, runStepResult, loggingGroup));
 		}
 
 		return runStepResult;
@@ -216,7 +242,7 @@ public class MSBuildDaemonService implements Disposable
 
 	private void runInBackground(@Nonnull ProgressIndicator indicator,
 								 MSBuildSolutionModuleExtension<?> solutionExtension,
-								 List<DaemonStep> steps,
+								 DaemonStepQueue queue,
 								 AsyncResult<MSBuildDaemonContext> runStepResult,
 								 String loggingGroup)
 	{
@@ -257,38 +283,37 @@ public class MSBuildDaemonService implements Disposable
 			MSBuildDaemonContext context = new MSBuildDaemonContext(buildProcessProvider, msBuildSdk);
 
 			MSBuildLoggingSession loggingSession = null;
-			for(DaemonStep step : steps)
+			DaemonStep wantLogging = queue.find(DaemonStep::wantLogging);
+			if(wantLogging != null)
 			{
-				if(step.wantLogging())
-				{
-					loggingSession = newLoggingSession(loggingGroup);
-					break;
-				}
-			}
+				loggingSession = newLoggingSession(loggingGroup);
 
-			if(loggingSession != null)
-			{
 				loggingSession.start(indicator);
 			}
 
-			for(DaemonStep step : steps)
+			boolean[] foundListTargetsStep = new boolean[1];
+
+			final MSBuildLoggingSession finalLoggingSession = loggingSession;
+			queue.eat(step ->
 			{
 				indicator.setTextValue(step.getStepText());
 
-				step.execute(context, myConnection, loggingSession);
-			}
+				step.execute(context, myConnection, finalLoggingSession);
 
-			for(DaemonStep step : steps)
-			{
+				step.refill(this, queue);
+
 				if(step instanceof ListTargetsStep)
 				{
-					MSBuildWorkspaceData msBuildWorkspaceData = MSBuildWorkspaceData.getInstance(myProject);
-					for(MSBuildDaemonContext.PerProjectInfo projectInfo : context.getInfos())
-					{
-						msBuildWorkspaceData.setTargets(projectInfo.wProject.getId(), projectInfo.targets);
-					}
+					foundListTargetsStep[0] = true;
+				}
+			});
 
-					break;
+			if(foundListTargetsStep[0])
+			{
+				MSBuildWorkspaceData msBuildWorkspaceData = MSBuildWorkspaceData.getInstance(myProject);
+				for(MSBuildDaemonContext.PerProjectInfo projectInfo : context.getInfos())
+				{
+					msBuildWorkspaceData.setTargets(projectInfo.wProject.getId(), projectInfo.targets);
 				}
 			}
 

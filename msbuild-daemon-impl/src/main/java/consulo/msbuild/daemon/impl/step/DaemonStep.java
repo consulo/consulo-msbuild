@@ -2,6 +2,7 @@ package consulo.msbuild.daemon.impl.step;
 
 import consulo.localize.LocalizeValue;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
+import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 
@@ -24,5 +25,9 @@ public interface DaemonStep
 	default boolean wantLogging()
 	{
 		return false;
+	}
+
+	default void refill(@Nonnull MSBuildDaemonService service, @Nonnull DaemonStepQueue queue)
+	{
 	}
 }

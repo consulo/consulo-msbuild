@@ -10,15 +10,13 @@ import consulo.compiler.ExitException;
 import consulo.localize.LocalizeValue;
 import consulo.module.extension.ModuleExtensionHelper;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
-import consulo.msbuild.daemon.impl.step.DaemonStep;
+import consulo.msbuild.daemon.impl.step.DaemonStepQueue;
 import consulo.msbuild.daemon.impl.step.InitializeProjectStep;
 import consulo.msbuild.daemon.impl.step.RunTargetProjectStep;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author VISTALL
@@ -50,16 +48,16 @@ public class MSBuildCompilerRunner implements CompilerRunner
 			return false;
 		}
 
-		List<DaemonStep> steps = new ArrayList<>();
+		DaemonStepQueue steps = new DaemonStepQueue();
 
 		for(WProject wProject : solutionExtension.getProjects())
 		{
-			steps.add(new InitializeProjectStep(wProject));
+			steps.join(new InitializeProjectStep(wProject));
 		}
 
 		for(WProject project : solutionExtension.getProjects())
 		{
-			steps.add(new RunTargetProjectStep(project, "Build", false));
+			steps.join(new RunTargetProjectStep(project, "Build", false));
 		}
 
 		MSBuildDaemonService daemonService = MSBuildDaemonService.getInstance(context.getProject());
