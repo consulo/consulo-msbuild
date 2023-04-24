@@ -38,7 +38,6 @@
 	<depends optional="true">consulo.dotnet</depends>
 	<depends optional="true">consulo.dotnet.mono</depends>
 	<depends optional="true">consulo.dotnet.microsoft</depends>
-	<depends optional="true">consulo.dotnet.core</depends>
 
 	<depends optional="true">consulo.csharp</depends>
 

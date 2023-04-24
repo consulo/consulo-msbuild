@@ -46,7 +46,6 @@
 		<module>msbuild-impl</module>
 
 		<module>impl/dotnet</module>
-		<module>impl/dotnet-core</module>
 		<module>impl/dotnet-microsoft</module>
 		<module>impl/dotnet-mono</module>
 

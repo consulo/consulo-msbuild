@@ -87,11 +87,6 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>consulo.msbuild-impl.dotnet.core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
 			<artifactId>consulo.msbuild-impl.dotnet.microsoft</artifactId>
 			<version>${project.version}</version>
 		</dependency>
