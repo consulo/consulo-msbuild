@@ -17,15 +17,17 @@
 package consulo.msbuild.impl;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.application.Application;
 import consulo.component.util.Iconable;
-import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildProjectFile;
 import consulo.msbuild.dom.Project;
+import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.ui.image.Image;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileDescription;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,9 +39,13 @@ import javax.annotation.Nullable;
 @ExtensionImpl
 public class MSBuildDomDescriptor extends DomFileDescription<Project>
 {
-	public MSBuildDomDescriptor()
+	private final Application myApplication;
+
+	@Inject
+	public MSBuildDomDescriptor(Application application)
 	{
 		super(Project.class, "Project");
+		myApplication = application;
 
 		registerNamespacePolicy("", "http://schemas.microsoft.com/developer/msbuild/2003");
 	}
@@ -53,7 +59,7 @@ public class MSBuildDomDescriptor extends DomFileDescription<Project>
 			return false;
 		}
 
-		for(String projectFileExtension : MSBuildProjectFile.listAll())
+		for(String projectFileExtension : MSBuildProjectFile.listAll(myApplication))
 		{
 			if(StringUtil.equalsIgnoreCase(virtualFile.getExtension(), projectFileExtension))
 			{
@@ -68,6 +74,6 @@ public class MSBuildDomDescriptor extends DomFileDescription<Project>
 	@Override
 	public Image getFileIcon(@Iconable.IconFlags int flags)
 	{
-		return MSBuildIcons.Msbuild;
+		return MSBuildIconGroup.msbuild();
 	}
 }

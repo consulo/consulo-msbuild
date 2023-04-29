@@ -2,6 +2,7 @@ package consulo.msbuild.impl.importProvider;
 
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.application.Application;
 import consulo.application.WriteAction;
 import consulo.application.dumb.DumbAwareRunnable;
 import consulo.application.util.HtmlBuilder;
@@ -9,9 +10,9 @@ import consulo.ide.moduleImport.ModuleImportProvider;
 import consulo.module.ModifiableModuleModel;
 import consulo.module.Module;
 import consulo.module.content.layer.ModifiableRootModel;
-import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildProjectFile;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.msbuild.importProvider.MSBuildModuleImportContext;
 import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.project.Project;
@@ -22,6 +23,7 @@ import consulo.util.io.FileUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
+import jakarta.inject.Inject;
 import org.intellij.lang.annotations.Language;
 
 import javax.annotation.Nonnull;
@@ -37,6 +39,14 @@ import java.util.function.Consumer;
 @ExtensionImpl
 public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuildModuleImportContext>
 {
+	private final Application myApplication;
+
+	@Inject
+	public MSBuildModuleImportProvider(Application application)
+	{
+		myApplication = application;
+	}
+
 	@Nonnull
 	@Override
 	public MSBuildModuleImportContext createContext(@Nullable Project project)
@@ -52,7 +62,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		HtmlBuilder builder = new HtmlBuilder();
 		builder.wrapWith("b").addText("MSBuild");
 		builder.append("project files (");
-		for(String ext : MSBuildProjectFile.listAll())
+		for(String ext : MSBuildProjectFile.listAll(myApplication))
 		{
 			builder.append("*." + ext);
 		}
@@ -67,11 +77,11 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		return "MSBuild";
 	}
 
-	@Nullable
+	@Nonnull
 	@Override
 	public Image getIcon()
 	{
-		return MSBuildIcons.Msbuild;
+		return MSBuildIconGroup.msbuild();
 	}
 
 	@Override
@@ -93,7 +103,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 		else
 		{
 			String ext = FileUtil.getExtension(fileOrDirectory.getName());
-			return MSBuildProjectFile.listAll().contains(ext);
+			return MSBuildProjectFile.listAll(myApplication).contains(ext);
 		}
 	}
 
@@ -113,7 +123,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 
 	private File findSingleSolutionFile(File directory)
 	{
-		Set<String> exts = MSBuildProjectFile.listAll();
+		Set<String> exts = MSBuildProjectFile.listAll(myApplication);
 
 		File firstSolution = null;
 		if(directory.isDirectory())
