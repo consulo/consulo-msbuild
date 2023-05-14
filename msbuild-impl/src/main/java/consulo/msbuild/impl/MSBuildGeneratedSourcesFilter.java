@@ -18,6 +18,7 @@ package consulo.msbuild.impl;
 
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.module.extension.ModuleExtensionHelper;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.impl.solution.SolutionVirtualBuilder;
 import consulo.msbuild.impl.solution.SolutionVirtualDirectory;
@@ -27,6 +28,7 @@ import consulo.project.Project;
 import consulo.project.content.GeneratedSourcesFilter;
 import consulo.util.lang.ref.SimpleReference;
 import consulo.virtualFileSystem.VirtualFile;
+import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -36,13 +38,28 @@ import java.util.Objects;
  * @since 29-Jan-17
  */
 @ExtensionImpl
-public class MSBuildGeneratedSourcesFilter extends GeneratedSourcesFilter
+public class MSBuildGeneratedSourcesFilter implements GeneratedSourcesFilter
 {
+	private final Project myProject;
+	private final ModuleExtensionHelper myModuleExtensionHelper;
+
+	@Inject
+	public MSBuildGeneratedSourcesFilter(Project project, ModuleExtensionHelper moduleExtensionHelper)
+	{
+		myProject = project;
+		myModuleExtensionHelper = moduleExtensionHelper;
+	}
+
 	@RequiredReadAction
 	@Override
-	public boolean isGeneratedSource(@Nonnull VirtualFile virtualFile, @Nonnull Project project)
+	public boolean isGeneratedSource(@Nonnull VirtualFile virtualFile)
 	{
-		return isGeneratedFile(virtualFile, project);
+		if(!myModuleExtensionHelper.hasModuleExtension(MSBuildSolutionModuleExtension.class))
+		{
+			return false;
+		}
+
+		return isGeneratedFile(virtualFile, myProject);
 	}
 
 	@RequiredReadAction
