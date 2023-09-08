@@ -23,8 +23,8 @@ import consulo.msbuild.MSBuildVersion;
 import consulo.platform.Platform;
 import consulo.process.ExecutionException;
 import consulo.process.cmd.GeneralCommandLine;
-import consulo.process.local.ExecUtil;
-import consulo.process.local.ProcessOutput;
+import consulo.process.util.CapturingProcessUtil;
+import consulo.process.util.ProcessOutput;
 import consulo.ui.image.Image;
 import consulo.util.collection.ContainerUtil;
 
@@ -183,12 +183,12 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 	{
 		try
 		{
-			ProcessOutput processOutput = ExecUtil.execAndGetOutput(new GeneralCommandLine(getExecutable(sdkHome), "/version").withWorkDirectory(sdkHome));
+			ProcessOutput processOutput = CapturingProcessUtil.execAndGetOutput(new GeneralCommandLine(getExecutable(sdkHome), "/version").withWorkDirectory(sdkHome));
 			return ContainerUtil.getLastItem(processOutput.getStdoutLines());
 		}
 		catch(ExecutionException e)
 		{
-			return "0.0";
+			return null;
 		}
 	}
 
