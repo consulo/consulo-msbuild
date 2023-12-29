@@ -12,6 +12,7 @@ import consulo.container.boot.ContainerPathManager;
 import consulo.content.bundle.Sdk;
 import consulo.disposer.Disposable;
 import consulo.localize.LocalizeValue;
+import consulo.logging.Logger;
 import consulo.module.ModifiableModuleModel;
 import consulo.module.Module;
 import consulo.module.ModuleManager;
@@ -73,6 +74,8 @@ public class MSBuildDaemonService implements Disposable
 	{
 		return project.getInstance(MSBuildDaemonService.class);
 	}
+
+	private static final Logger LOG = Logger.getInstance(MSBuildDaemonService.class);
 
 	public static final int VERSION = 9;
 
@@ -555,7 +558,7 @@ public class MSBuildDaemonService implements Disposable
 			@Override
 			public void onTextAvailable(ProcessEvent processEvent, Key key)
 			{
-				//System.out.println("> " + processEvent.getText().trim());
+				LOG.info("> " + processEvent.getText().trim());
 			}
 		});
 		handler.startNotify();

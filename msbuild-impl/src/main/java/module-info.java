@@ -12,4 +12,7 @@ module consulo.msbuild
 
 	// TODO remove in future
 	requires java.desktop;
+
+	// opens to MSBuildStandardResourceProvider
+	exports consulo.msbuild.impl to com.intellij.xml;
 }

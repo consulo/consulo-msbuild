@@ -14,6 +14,6 @@ public class MSBuildStandardResourceProvider implements StandardResourceProvider
 	@Override
 	public void registerResources(ResourceRegistrar registrar)
 	{
-		registrar.addStdResource("http://schemas.microsoft.com/developer/msbuild/2003", "/standardSchemes/Microsoft.Build.xsd");
+		registrar.addStdResource("http://schemas.microsoft.com/developer/msbuild/2003", "/consulo/msbuild/impl/Microsoft.Build.xsd", MSBuildStandardResourceProvider.class);
 	}
 }
