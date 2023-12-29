@@ -53,11 +53,14 @@ public class WProject
 
 	private FailReason myFailReason;
 
+	private boolean isSolutionFolder;
+
 	public WProject(consulo.project.Project project, VirtualFile solutionVirtualFile, SlnProject slnProject)
 	{
 		myProject = slnProject;
 
-		if(!StringUtil.isEmpty(slnProject.FilePath) && !MSBuildGUID.SolutionFolder.equals(slnProject.TypeGuid))
+		isSolutionFolder = MSBuildGUID.SolutionFolder.equals(slnProject.TypeGuid);
+		if(!StringUtil.isEmpty(slnProject.FilePath) && !isSolutionFolder)
 		{
 			VirtualFile parent = solutionVirtualFile.getParent();
 
@@ -140,5 +143,10 @@ public class WProject
 	public VirtualFile getVirtualFile()
 	{
 		return myFile;
+	}
+
+	public boolean isSolutionFolder()
+	{
+		return isSolutionFolder;
 	}
 }

@@ -108,7 +108,7 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 					MSBuildSolutionModuleExtension<?> solutionModuleExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(module.getProject());
 					if(solutionModuleExtension != null)
 					{
-						for(WProject wProject : solutionModuleExtension.getProjects())
+						for(WProject wProject : solutionModuleExtension.getValidProjects())
 						{
 							if(Objects.equals(wProject.getVirtualFile(), refProjectFile))
 							{

@@ -71,7 +71,7 @@ public class MSBuildGeneratedSourcesFilter implements GeneratedSourcesFilter
 			return false;
 		}
 
-		for(WProject wProject : solutionModuleExtension.getProjects())
+		for(WProject wProject : solutionModuleExtension.getValidProjects())
 		{
 			VirtualFile projectFile = wProject.getVirtualFile();
 			if(projectFile == null)

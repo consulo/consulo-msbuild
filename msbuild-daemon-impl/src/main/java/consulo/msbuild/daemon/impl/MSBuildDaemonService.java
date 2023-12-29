@@ -153,7 +153,7 @@ public class MSBuildDaemonService implements Disposable
 			return;
 		}
 
-		Collection<WProject> projects = solutionExtension.getProjects();
+		Collection<WProject> projects = solutionExtension.getValidProjects();
 		for(WProject wProject : projects)
 		{
 			queue.join(new InitializeProjectStep(wProject));
@@ -200,7 +200,7 @@ public class MSBuildDaemonService implements Disposable
 			return;
 		}
 		DaemonStepQueue steps = new DaemonStepQueue();
-		Collection<WProject> projects = solutionExtension.getProjects();
+		Collection<WProject> projects = solutionExtension.getValidProjects();
 		for(WProject wProject : projects)
 		{
 			steps.join(new InitializeProjectStep(wProject));
@@ -333,6 +333,8 @@ public class MSBuildDaemonService implements Disposable
 		}
 		catch(Exception e)
 		{
+			LOG.warn(e);
+
 			runStepResult.rejectWithThrowable(e);
 		}
 		finally

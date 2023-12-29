@@ -67,5 +67,15 @@ public interface MSBuildSolutionModuleExtension<T extends ModuleExtension<T>> ex
 	Collection<WProject> getProjects();
 
 	@Nonnull
+	default Collection<WProject> getValidProjects()
+	{
+		return getProjects()
+				.stream()
+				.filter(wProject -> !wProject.isSolutionFolder())
+				.filter(wProject -> wProject.getFailReason() == null)
+				.toList();
+	}
+
+	@Nonnull
 	String getProcessProviderId();
 }

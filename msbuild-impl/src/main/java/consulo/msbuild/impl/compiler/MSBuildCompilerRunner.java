@@ -50,12 +50,12 @@ public class MSBuildCompilerRunner implements CompilerRunner
 
 		DaemonStepQueue steps = new DaemonStepQueue();
 
-		for(WProject wProject : solutionExtension.getProjects())
+		for(WProject wProject : solutionExtension.getValidProjects())
 		{
 			steps.join(new InitializeProjectStep(wProject));
 		}
 
-		for(WProject project : solutionExtension.getProjects())
+		for(WProject project : solutionExtension.getValidProjects())
 		{
 			steps.join(new RunTargetProjectStep(project, "Build", false));
 		}
