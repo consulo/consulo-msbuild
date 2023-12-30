@@ -146,12 +146,11 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 		String propertyValue = entry.getValue();
 
 		VirtualFile parent = projectFile.getParent();
-		System.out.println(propertyName + " = " + propertyValue);
 		switch(propertyName)
 		{
-			case "TargetFrameworkMonikerAssemblyAttributesPath": // obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
-			case "GeneratedGlobalUsingsFile": // obj\Debug\net8.0\untitled4.GlobalUsings.g.cs
-			case "GeneratedAssemblyInfoFile": //obj\Debug\net8.0\untitled4.AssemblyInfo.cs
+			case "TargetFrameworkMonikerAssemblyAttributesPath": // obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+			case "GeneratedGlobalUsingsFile": // obj/Debug/net8.0/untitled4.GlobalUsings.g.cs
+			case "GeneratedAssemblyInfoFile": //obj/Debug/net8.0/untitled4.AssemblyInfo.cs
 			{
 				assert parent != null;
 				String generatedSourceFile = parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue);
