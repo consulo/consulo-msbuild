@@ -145,8 +145,18 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 
 		String propertyValue = entry.getValue();
 
+		VirtualFile parent = projectFile.getParent();
 		switch(propertyName)
 		{
+			case "GeneratedGlobalUsingsFile":
+			{
+				assert parent != null;
+				String generatedSourceFile = parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue);
+				String generatedSourceFileUrl = VirtualFileManager.constructUrl(StandardFileSystems.FILE_PROTOCOL, FileUtil.toSystemIndependentName(generatedSourceFile));
+
+				rootLayer.addContentEntry(generatedSourceFileUrl).addFolder(generatedSourceFileUrl, ProductionContentFolderTypeProvider.getInstance());
+				break;
+			}
 			case "DebugSymbols":
 				moduleExtension.setAllowDebugInfo(Boolean.parseBoolean(propertyValue));
 				break;
@@ -178,7 +188,6 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 				}
 				else
 				{
-					VirtualFile parent = projectFile.getParent();
 					assert parent != null;
 					moduleExtension.setOutputDir(path = (parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue)));
 				}
@@ -199,7 +208,6 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
 			}
 			case "TargetFrameworkVersion":
 			{
-
 				break;
 			}
 		}
