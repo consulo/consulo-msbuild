@@ -9,6 +9,7 @@ import consulo.msbuild.bundle.MSBuildBundleType;
 import consulo.msbuild.dotnet.mono.bundle.MonoMSBuildBundleType;
 import consulo.msbuild.importProvider.MSBuildBaseImportContext;
 import consulo.platform.Platform;
+import consulo.platform.PlatformOperatingSystem;
 import consulo.process.cmd.GeneralCommandLine;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
@@ -142,7 +143,7 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 			Element projectImportSearchPaths = toolset.getChild("projectImportSearchPaths");
 			if(projectImportSearchPaths != null)
 			{
-				Platform.OperatingSystem rOs = Platform.current().os();
+				PlatformOperatingSystem rOs = Platform.current().os();
 				String os =  rOs.isMac() ? "osx" : rOs.isWindows() ? "windows" : "unix";
 				Element searchPaths = projectImportSearchPaths.getChildren("searchPaths").stream().filter(sp -> Objects.equals(sp.getAttributeValue("os"), os)).findFirst().orElse(null);
 				if(searchPaths == null)
