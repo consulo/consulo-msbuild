@@ -19,6 +19,7 @@ package consulo.msbuild.impl.projectView;
 import consulo.application.AllIcons;
 import consulo.msbuild.impl.solution.SolutionVirtualFile;
 import consulo.msbuild.impl.solution.SolutionVirtualItem;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.project.Project;
 import consulo.project.ui.view.tree.AbstractTreeNode;
 import consulo.project.ui.view.tree.ProjectViewNode;
@@ -68,15 +69,15 @@ public class SolutionViewGroupNode extends ProjectViewNode<SolutionVirtualFile>
 		switch(value.getSubType())
 		{
 			case Form:
-				presentation.setIcon(AllIcons.FileTypes.UiForm);
+				presentation.setIcon(PlatformIconGroup.filetypesUiform());
 				break;
 			case Designer:
-				presentation.setIcon(AllIcons.Actions.RealIntentionBulb);
+				presentation.setIcon(PlatformIconGroup.actionsEdit());
 				break;
 			case __generator:
 				if(Comparing.equal(value.getName(), "Settings.settings"))
 				{
-					presentation.setIcon(AllIcons.General.GearPlain);
+					presentation.setIcon(PlatformIconGroup.generalGearplain());
 				}
 				break;
 			case __unknown:
