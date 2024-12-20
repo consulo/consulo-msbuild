@@ -18,8 +18,8 @@ package consulo.msbuild.bundle;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.util.SystemInfo;
-import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.MSBuildVersion;
+import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.platform.Platform;
 import consulo.process.ExecutionException;
 import consulo.process.cmd.GeneralCommandLine;
@@ -203,6 +203,6 @@ public class MSBuildBundleType extends BaseMSBuildBundleType
 	@Override
 	public Image getIcon()
 	{
-		return MSBuildIcons.Msbuild;
+		return MSBuildIconGroup.msbuild();
 	}
 }

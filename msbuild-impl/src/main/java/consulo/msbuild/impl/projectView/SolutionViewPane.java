@@ -27,15 +27,14 @@ import consulo.fileEditor.FileEditorManager;
 import consulo.fileEditor.TextEditor;
 import consulo.ide.ServiceManager;
 import consulo.ide.impl.idea.ide.projectView.impl.*;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.language.editor.LangDataKeys;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.language.psi.*;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.impl.projectView.select.SolutionSelectInTarget;
+import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 import consulo.project.Project;
 import consulo.project.ui.view.SelectInContext;
@@ -52,6 +51,7 @@ import consulo.ui.ex.tree.NodeDescriptor;
 import consulo.ui.image.Image;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.inject.Inject;
 
 import javax.annotation.Nonnull;
@@ -266,7 +266,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 						files.add(virtualFile);
 					}
 				}
-				return files.size() > 0 ? VfsUtil.toVirtualFileArray(files) : null;
+				return files.size() > 0 ? VirtualFileUtil.toVirtualFileArray(files) : null;
 			}
 			if(LangDataKeys.MODULE == dataId)
 			{

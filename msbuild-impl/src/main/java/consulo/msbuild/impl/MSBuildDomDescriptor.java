@@ -74,6 +74,6 @@ public class MSBuildDomDescriptor extends DomFileDescription<Project>
 	@Override
 	public Image getFileIcon(@Iconable.IconFlags int flags)
 	{
-		return MSBuildIconGroup.msbuild();
+		return MSBuildIconGroup.msbuildtoolwindow();
 	}
 }

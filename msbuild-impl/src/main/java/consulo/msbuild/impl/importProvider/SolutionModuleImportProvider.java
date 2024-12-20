@@ -3,15 +3,14 @@ package consulo.msbuild.impl.importProvider;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.WriteAction;
-import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import consulo.ide.moduleImport.ModuleImportProvider;
 import consulo.module.ModifiableModuleModel;
 import consulo.module.Module;
 import consulo.module.content.ModuleRootManager;
 import consulo.module.content.layer.ModifiableRootModel;
 import consulo.msbuild.MSBuildIcons;
-import consulo.msbuild.impl.VisualStudioSolutionFileType;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.msbuild.impl.VisualStudioSolutionFileType;
 import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.project.Project;
@@ -22,6 +21,7 @@ import consulo.ui.image.Image;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileTypeRegistry;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import org.intellij.lang.annotations.Language;
 
 import javax.annotation.Nonnull;
@@ -88,7 +88,7 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
 	{
 		if(file.isDirectory())
 		{
-			File solutionFile = findSingleSolutionFile(VfsUtil.virtualToIoFile(file));
+			File solutionFile = findSingleSolutionFile(VirtualFileUtil.virtualToIoFile(file));
 			if(solutionFile != null)
 			{
 				return solutionFile.getPath();

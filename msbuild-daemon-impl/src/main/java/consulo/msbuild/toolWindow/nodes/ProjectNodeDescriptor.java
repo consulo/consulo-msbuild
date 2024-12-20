@@ -66,6 +66,6 @@ public class ProjectNodeDescriptor extends AbstractTreeNode<WProject>
 	protected void update(PresentationData presentation)
 	{
 		presentation.addText(getValue().getName(), SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES);
-		presentation.setIcon(MSBuildIconGroup.msbuild());
+		presentation.setIcon(MSBuildIconGroup.msbuildtoolwindow());
 	}
 }

@@ -18,12 +18,12 @@ package consulo.msbuild.impl;
 
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.AllIcons;
 import consulo.language.icon.IconDescriptor;
 import consulo.language.icon.IconDescriptorUpdater;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.module.extension.ModuleExtensionHelper;
+import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import jakarta.inject.Inject;
 
@@ -57,7 +57,7 @@ public class MSBuildIconDescriptorUpdater implements IconDescriptorUpdater
 
 			if(MSBuildGeneratedSourcesFilter.isGeneratedFile(((PsiFile) element).getVirtualFile(), element.getProject()))
 			{
-				iconDescriptor.addLayerIcon(AllIcons.Modules.GeneratedMark);
+				iconDescriptor.addLayerIcon(MSBuildIconGroup.generatedmark());
 			}
 		}
 	}
