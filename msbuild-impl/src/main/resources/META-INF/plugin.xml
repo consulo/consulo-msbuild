@@ -24,7 +24,7 @@
 
 	<tags>
 		<tag>build.framework</tag>
-		<tag>import</tag>
+		<tag>project.import</tag>
 	</tags>
 
 	<permissions>
