@@ -9,7 +9,7 @@ import consulo.msbuild.csharp.module.extension.MSBuildCSharpMutableModuleExtensi
 import consulo.msbuild.dotnet.impl.DotNetLanguageProjectCapability;
 import consulo.virtualFileSystem.VirtualFile;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

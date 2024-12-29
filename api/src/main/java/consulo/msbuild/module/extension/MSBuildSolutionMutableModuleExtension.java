@@ -2,8 +2,8 @@ package consulo.msbuild.module.extension;
 
 import consulo.module.extension.MutableModuleExtension;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author VISTALL

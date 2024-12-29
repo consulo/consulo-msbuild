@@ -16,7 +16,7 @@
 
 package consulo.msbuild.dom;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.TagValue;

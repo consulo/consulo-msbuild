@@ -21,7 +21,7 @@ import consulo.language.psi.PsiManager;
 import consulo.msbuild.impl.dom.expression.lang.MSBuildExpressionLanguage;
 import consulo.project.Project;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

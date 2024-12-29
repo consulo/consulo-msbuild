@@ -22,7 +22,7 @@ import consulo.project.Project;
 import consulo.project.ui.view.tree.PsiFileNode;
 import consulo.project.ui.view.tree.ViewSettings;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

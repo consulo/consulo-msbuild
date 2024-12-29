@@ -9,7 +9,7 @@ import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 import org.jdom.Element;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

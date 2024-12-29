@@ -9,8 +9,8 @@ import consulo.msbuild.solution.model.WProject;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.Objects;
 

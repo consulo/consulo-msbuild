@@ -19,7 +19,7 @@ package consulo.msbuild.impl.dom.expression.lang;
 import consulo.language.Language;
 import consulo.language.version.LanguageVersion;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

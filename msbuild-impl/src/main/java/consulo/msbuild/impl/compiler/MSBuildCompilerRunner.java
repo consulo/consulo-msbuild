@@ -16,7 +16,7 @@ import consulo.msbuild.daemon.impl.step.RunTargetProjectStep;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

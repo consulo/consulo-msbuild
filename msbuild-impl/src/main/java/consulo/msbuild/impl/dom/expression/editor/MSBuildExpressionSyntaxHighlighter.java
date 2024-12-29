@@ -24,7 +24,7 @@ import consulo.language.lexer.Lexer;
 import consulo.msbuild.impl.dom.expression.lang.lexer.MSBuildExpressionMergeLexer;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionTokens;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 

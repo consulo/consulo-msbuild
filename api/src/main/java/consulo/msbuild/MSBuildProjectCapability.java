@@ -7,7 +7,7 @@ import consulo.module.Module;
 import consulo.module.content.layer.ModifiableRootModel;
 import consulo.virtualFileSystem.VirtualFile;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

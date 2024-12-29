@@ -13,7 +13,7 @@ import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.tree.PresentationData;
 import consulo.util.collection.ArrayUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;

@@ -10,7 +10,7 @@ import consulo.msbuild.dotnet.mono.module.extension.MSBuildMonoDotNetMutableModu
 import consulo.msbuild.dotnet.impl.BaseDotNetProjectCapability;
 import consulo.util.lang.StringUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 

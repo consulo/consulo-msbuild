@@ -25,7 +25,7 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import jakarta.inject.Inject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

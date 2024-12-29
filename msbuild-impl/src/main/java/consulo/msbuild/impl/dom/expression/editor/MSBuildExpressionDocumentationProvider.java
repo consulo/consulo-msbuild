@@ -21,7 +21,7 @@ import consulo.language.editor.documentation.UnrestrictedDocumentationProvider;
 import consulo.language.psi.PsiElement;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildLightMacroValue;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author VISTALL

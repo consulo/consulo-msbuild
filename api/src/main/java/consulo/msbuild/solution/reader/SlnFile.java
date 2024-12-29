@@ -19,7 +19,7 @@ package consulo.msbuild.solution.reader;
 import consulo.util.lang.ref.Ref;
 import consulo.util.lang.ref.SimpleReference;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Collection;

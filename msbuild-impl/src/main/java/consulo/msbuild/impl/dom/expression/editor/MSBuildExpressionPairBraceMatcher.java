@@ -23,7 +23,7 @@ import consulo.language.PairedBraceMatcher;
 import consulo.msbuild.impl.dom.expression.lang.MSBuildExpressionLanguage;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionTokens;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

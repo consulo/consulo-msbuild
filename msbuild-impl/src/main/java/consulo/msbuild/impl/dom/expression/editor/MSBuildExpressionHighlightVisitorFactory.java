@@ -6,7 +6,7 @@ import consulo.language.editor.rawHighlight.HighlightVisitorFactory;
 import consulo.language.psi.PsiFile;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionFile;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

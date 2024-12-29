@@ -26,7 +26,7 @@ import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.util.lang.Version;
 import jakarta.inject.Inject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

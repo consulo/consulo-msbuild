@@ -20,7 +20,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.msbuild.dom.Project;
 import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

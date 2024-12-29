@@ -5,7 +5,7 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericAttributeValue;
 

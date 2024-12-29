@@ -28,7 +28,7 @@ import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionElementVisi
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionMacroReference;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildLightMacroValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

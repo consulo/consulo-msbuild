@@ -22,7 +22,7 @@ import consulo.msbuild.dom.ItemGroup;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.PropertyGroup;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.function.Consumer;
 

@@ -6,8 +6,8 @@ import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author VISTALL

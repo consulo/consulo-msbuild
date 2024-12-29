@@ -29,7 +29,7 @@ import consulo.language.version.LanguageVersion;
 import consulo.msbuild.impl.dom.expression.lang.lexer.MSBuildExpressionMergeLexer;
 import consulo.msbuild.impl.dom.expression.lang.psi.MSBuildExpressionFile;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

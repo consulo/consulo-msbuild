@@ -25,8 +25,8 @@ import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 import consulo.project.Project;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 

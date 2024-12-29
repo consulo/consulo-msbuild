@@ -22,7 +22,7 @@ import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 import consulo.msbuild.dom.expression.evaluate.variable.MSBuildVariableProvider;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

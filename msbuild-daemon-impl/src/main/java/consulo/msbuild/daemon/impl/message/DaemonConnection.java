@@ -9,8 +9,8 @@ import consulo.msbuild.daemon.impl.step.RemoteDaemonStep;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.lang.Pair;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

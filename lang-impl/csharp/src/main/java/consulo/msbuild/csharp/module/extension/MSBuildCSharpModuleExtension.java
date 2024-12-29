@@ -20,7 +20,7 @@ import consulo.csharp.base.module.extension.BaseCSharpModuleExtension;
 import consulo.csharp.module.extension.CSharpModuleExtension;
 import consulo.module.content.layer.ModuleRootLayer;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

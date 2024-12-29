@@ -12,7 +12,7 @@ import consulo.msbuild.importProvider.MSBuildBaseImportContext;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.util.FormBuilder;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

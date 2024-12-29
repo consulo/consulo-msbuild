@@ -5,7 +5,7 @@ import consulo.msbuild.daemon.impl.message.model.GetProjectItemsRequest;
 import consulo.msbuild.daemon.impl.message.model.GetProjectItemsResponse;
 import consulo.msbuild.solution.model.WProject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

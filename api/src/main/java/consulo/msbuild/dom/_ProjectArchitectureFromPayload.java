@@ -7,7 +7,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.GenericDomValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:_ProjectArchitectureFromPayloadElemType interface.

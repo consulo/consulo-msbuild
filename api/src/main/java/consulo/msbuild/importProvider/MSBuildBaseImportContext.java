@@ -4,7 +4,7 @@ import consulo.ide.moduleImport.ModuleImportContext;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.project.Project;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author VISTALL

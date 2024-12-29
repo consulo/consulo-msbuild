@@ -6,8 +6,8 @@ import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.IOException;
 
 /**

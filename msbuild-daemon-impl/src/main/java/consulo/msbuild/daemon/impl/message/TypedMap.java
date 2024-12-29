@@ -2,7 +2,7 @@ package consulo.msbuild.daemon.impl.message;
 
 import consulo.util.lang.Couple;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;

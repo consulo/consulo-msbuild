@@ -6,7 +6,7 @@ import consulo.msbuild.daemon.impl.message.model.GetPropertiesResponse;
 import consulo.msbuild.daemon.impl.message.model.Property;
 import consulo.msbuild.solution.model.WProject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 /**

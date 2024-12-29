@@ -28,8 +28,8 @@ import consulo.process.util.ProcessOutput;
 import consulo.ui.image.Image;
 import consulo.util.collection.ContainerUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;

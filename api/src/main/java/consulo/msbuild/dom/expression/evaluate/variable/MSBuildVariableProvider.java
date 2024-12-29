@@ -25,8 +25,8 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluateContext;
 import consulo.msbuild.dom.expression.evaluate.MSBuildEvaluatioException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Map;
 
 /**

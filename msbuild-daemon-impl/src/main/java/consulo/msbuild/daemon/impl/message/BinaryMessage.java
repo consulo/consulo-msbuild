@@ -4,8 +4,8 @@ import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.EnumInt;
 import consulo.util.lang.Couple;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.lang.reflect.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

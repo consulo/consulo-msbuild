@@ -8,7 +8,7 @@ import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.ProjectConfigurationInfo;
 import consulo.msbuild.solution.model.WProject;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

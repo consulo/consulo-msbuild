@@ -45,7 +45,5 @@
 
 	<extensions defaultExtensionNs="com.intellij.xml">
 		<standardResource url="http://schemas.microsoft.com/developer/msbuild/2003" path="/standardSchemes/Microsoft.Build.xsd"/>
-
-
 	</extensions>
 </consulo-plugin>

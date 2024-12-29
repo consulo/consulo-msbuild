@@ -2,8 +2,8 @@ package consulo.msbuild.daemon.impl.step;
 
 import consulo.util.lang.function.ThrowableConsumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.function.Predicate;
