@@ -562,13 +562,6 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 
 	@Nonnull
 	@Override
-	public Image getIcon()
-	{
-		return MSBuildIcons.VisualStudio;
-	}
-
-	@Nonnull
-	@Override
 	public String getId()
 	{
 		return ID;
