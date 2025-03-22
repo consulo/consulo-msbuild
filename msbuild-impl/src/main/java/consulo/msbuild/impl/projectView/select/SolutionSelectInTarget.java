@@ -1,14 +1,15 @@
 package consulo.msbuild.impl.projectView.select;
 
 import consulo.component.extension.Extensions;
-import consulo.ide.impl.idea.ide.CompositeSelectInTarget;
 import consulo.ide.impl.idea.ide.impl.SelectInTargetPsiWrapper;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFileSystemItem;
 import consulo.language.psi.PsiUtilCore;
+import consulo.localize.LocalizeValue;
 import consulo.msbuild.impl.projectView.SolutionViewPane;
 import consulo.project.DumbService;
 import consulo.project.Project;
+import consulo.project.ui.view.CompositeSelectInTarget;
 import consulo.project.ui.view.ProjectView;
 import consulo.project.ui.view.SelectInContext;
 import consulo.project.ui.view.SelectInTarget;
@@ -17,9 +18,9 @@ import consulo.project.ui.view.tree.TreeStructureProvider;
 import consulo.project.ui.wm.ToolWindowId;
 import consulo.util.concurrent.ActionCallback;
 import consulo.virtualFileSystem.VirtualFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -35,10 +36,11 @@ public class SolutionSelectInTarget extends SelectInTargetPsiWrapper implements 
 		super(project);
 	}
 
+	@Nonnull
 	@Override
-	public String toString()
+	public LocalizeValue getActionText()
 	{
-		return null;
+		return LocalizeValue.localizeTODO("Solution");
 	}
 
 	@Override
@@ -115,19 +117,6 @@ public class SolutionSelectInTarget extends SelectInTargetPsiWrapper implements 
 	public final String getToolWindowId()
 	{
 		return ToolWindowId.PROJECT_VIEW;
-	}
-
-	@Nullable
-	@Override
-	public String getMinorViewId()
-	{
-		return null;
-	}
-
-	@Override
-	public float getWeight()
-	{
-		return 0;
 	}
 
 	@Override

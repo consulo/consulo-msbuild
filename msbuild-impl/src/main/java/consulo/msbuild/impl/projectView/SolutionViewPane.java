@@ -31,8 +31,8 @@ import consulo.language.editor.LangDataKeys;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.language.psi.*;
 import consulo.language.util.ModuleUtilCore;
+import consulo.localize.LocalizeValue;
 import consulo.module.Module;
-import consulo.msbuild.MSBuildIcons;
 import consulo.msbuild.impl.projectView.select.SolutionSelectInTarget;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
@@ -48,14 +48,13 @@ import consulo.ui.ex.awt.AutoScrollFromSourceHandler;
 import consulo.ui.ex.awt.tree.AbstractTreeBuilder;
 import consulo.ui.ex.awt.tree.AbstractTreeUpdater;
 import consulo.ui.ex.tree.NodeDescriptor;
-import consulo.ui.image.Image;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import jakarta.inject.Inject;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -555,9 +554,9 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 
 	@Nonnull
 	@Override
-	public String getTitle()
+	public LocalizeValue getTitle()
 	{
-		return "Solution Explorer";
+		return LocalizeValue.localizeTODO("Solution Explorer");
 	}
 
 	@Nonnull
