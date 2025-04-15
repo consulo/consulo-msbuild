@@ -13,59 +13,71 @@ import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.daemon.impl.step.DaemonStepQueue;
 import consulo.msbuild.daemon.impl.step.InitializeProjectStep;
 import consulo.msbuild.daemon.impl.step.RunTargetProjectStep;
+import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
-
+import consulo.project.Project;
+import consulo.ui.image.Image;
 import jakarta.annotation.Nonnull;
+import jakarta.inject.Inject;
 
 /**
  * @author VISTALL
  * @since 2018-02-06
  */
 @ExtensionImpl
-public class MSBuildCompilerRunner implements CompilerRunner
-{
-	@Nonnull
-	@Override
-	public LocalizeValue getName()
-	{
-		return LocalizeValue.localizeTODO("MSBuild");
-	}
+public class MSBuildCompilerRunner implements CompilerRunner {
+    private final Project myProject;
 
-	@Override
-	public boolean isAvailable(CompileContextEx compileContextEx)
-	{
-		return ModuleExtensionHelper.getInstance(compileContextEx.getProject()).hasModuleExtension(MSBuildSolutionModuleExtension.class);
-	}
+    @Inject
+    public MSBuildCompilerRunner(Project project) {
+        myProject = project;
+    }
 
-	@Override
-	public boolean build(CompileDriver compileDriver, CompileContextEx context, boolean isRebuild, boolean forceCompile, boolean onlyCheckStatus) throws ExitException
-	{
-		MSBuildSolutionModuleExtension<?> solutionExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(context.getProject());
+    @Nonnull
+    @Override
+    public LocalizeValue getName() {
+        return LocalizeValue.localizeTODO("MSBuild");
+    }
 
-		if(solutionExtension == null)
-		{
-			return false;
-		}
+    public Image getBuildIcon() {
+        return MSBuildIconGroup.msbuild();
+    }
 
-		DaemonStepQueue steps = new DaemonStepQueue();
+    public boolean isAvailable() {
+        return ModuleExtensionHelper.getInstance(myProject).hasModuleExtension(MSBuildSolutionModuleExtension.class);
+    }
 
-		for(WProject wProject : solutionExtension.getValidProjects())
-		{
-			steps.join(new InitializeProjectStep(wProject));
-		}
+    @Override
+    @Deprecated
+    public boolean isAvailable(CompileContextEx compileContextEx) {
+        return isAvailable();
+    }
 
-		for(WProject project : solutionExtension.getValidProjects())
-		{
-			steps.join(new RunTargetProjectStep(project, "Build", false));
-		}
+    @Override
+    public boolean build(CompileDriver compileDriver, CompileContextEx context, boolean isRebuild, boolean forceCompile, boolean onlyCheckStatus) throws ExitException {
+        MSBuildSolutionModuleExtension<?> solutionExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(context.getProject());
 
-		MSBuildDaemonService daemonService = MSBuildDaemonService.getInstance(context.getProject());
+        if (solutionExtension == null) {
+            return false;
+        }
 
-		ProgressIndicator indicator = ProgressIndicatorProvider.getGlobalProgressIndicator();
+        DaemonStepQueue steps = new DaemonStepQueue();
 
-		daemonService.runSteps(steps, indicator, LocalizeValue.localizeTODO("Build")).getResultSync();
+        for (WProject wProject : solutionExtension.getValidProjects()) {
+            steps.join(new InitializeProjectStep(wProject));
+        }
 
-		return true;
-	}
+        for (WProject project : solutionExtension.getValidProjects()) {
+            steps.join(new RunTargetProjectStep(project, "Build", false));
+        }
+
+        MSBuildDaemonService daemonService = MSBuildDaemonService.getInstance(context.getProject());
+
+        ProgressIndicator indicator = ProgressIndicatorProvider.getGlobalProgressIndicator();
+
+        daemonService.runSteps(steps, indicator, LocalizeValue.localizeTODO("Build")).getResultSync();
+
+        return true;
+    }
 }
