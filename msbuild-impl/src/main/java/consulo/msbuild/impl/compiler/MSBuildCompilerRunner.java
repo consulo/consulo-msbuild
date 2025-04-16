@@ -40,18 +40,15 @@ public class MSBuildCompilerRunner implements CompilerRunner {
         return LocalizeValue.localizeTODO("MSBuild");
     }
 
+    @Nonnull
+    @Override
     public Image getBuildIcon() {
-        return MSBuildIconGroup.msbuild();
-    }
-
-    public boolean isAvailable() {
-        return ModuleExtensionHelper.getInstance(myProject).hasModuleExtension(MSBuildSolutionModuleExtension.class);
+        return MSBuildIconGroup.msbuildbuild();
     }
 
     @Override
-    @Deprecated
-    public boolean isAvailable(CompileContextEx compileContextEx) {
-        return isAvailable();
+    public boolean isAvailable() {
+        return ModuleExtensionHelper.getInstance(myProject).hasModuleExtension(MSBuildSolutionModuleExtension.class);
     }
 
     @Override
