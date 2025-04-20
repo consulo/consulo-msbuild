@@ -19,6 +19,7 @@ package consulo.msbuild.bundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
 import consulo.application.util.SystemInfo;
+import consulo.content.bundle.SdkType;
 import consulo.msbuild.MSBuildVersion;
 import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.platform.Platform;
@@ -86,7 +87,7 @@ public class MSBuildBundleType extends BaseMSBuildBundleType {
 
     @Nonnull
     public static MSBuildBundleType getInstance() {
-        return Application.get().getExtensionPoint(MSBuildBundleType.class).findExtensionOrFail(MSBuildBundleType.class);
+        return Application.get().getExtensionPoint(SdkType.class).findExtensionOrFail(MSBuildBundleType.class);
     }
 
     public MSBuildBundleType() {
