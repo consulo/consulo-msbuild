@@ -9,10 +9,10 @@ import consulo.component.persist.Storage;
 import consulo.component.persist.StoragePathMacros;
 import consulo.project.Project;
 import consulo.util.xml.serializer.XmlSerializerUtil;
-import jakarta.inject.Singleton;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.inject.Singleton;
+
 import java.util.*;
 
 /**
@@ -23,109 +23,107 @@ import java.util.*;
 @Singleton
 @ServiceAPI(ComponentScope.PROJECT)
 @ServiceImpl
-public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWorkspaceData.State>
-{
-	public static MSBuildWorkspaceData getInstance(@Nonnull Project project)
-	{
-		return project.getInstance(MSBuildWorkspaceData.class);
-	}
+public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWorkspaceData.State> {
+    public static MSBuildWorkspaceData getInstance(@Nonnull Project project) {
+        return project.getInstance(MSBuildWorkspaceData.class);
+    }
 
-	public static class State
-	{
-		public Map<String, ProjectInfo> projectInfos = new LinkedHashMap<>();
-	}
+    public static class State {
+        public Map<String, ProjectInfo> projectInfos = new LinkedHashMap<>();
+    }
 
-	public static class ProjectInfo
-	{
-		public Set<String> targets = new LinkedHashSet<>();
+    public static class ProjectInfo {
+        public String moduleName;
+        
+        public Set<String> targets = new LinkedHashSet<>();
 
-		public List<ProjectItemInfo> items = new LinkedList<>();
-	}
+        public List<ProjectItemInfo> items = new LinkedList<>();
 
-	public static class ProjectItemInfo implements MSBuildEvaluatedItem
-	{
-		public String name;
+        public TreeMap<String, String> properties = new TreeMap<>();
+    }
 
-		public String itemSpec;
+    public static class ProjectItemInfo implements MSBuildEvaluatedItem {
+        public String name;
 
-		public Map<String, String> metadata = new LinkedHashMap<>();
+        public String itemSpec;
 
-		@Nonnull
-		@Override
-		public String getName()
-		{
-			return name;
-		}
+        public Map<String, String> metadata = new LinkedHashMap<>();
 
-		@Nonnull
-		@Override
-		public String getItemSpec()
-		{
-			return itemSpec;
-		}
+        @Nonnull
+        @Override
+        public String getName() {
+            return name;
+        }
 
-		@Nonnull
-		@Override
-		public Map<String, String> getMetadata()
-		{
-			return metadata;
-		}
-	}
+        @Nonnull
+        @Override
+        public String getItemSpec() {
+            return itemSpec;
+        }
 
-	private State myState = new State();
+        @Nonnull
+        @Override
+        public Map<String, String> getMetadata() {
+            return metadata;
+        }
+    }
 
-	@Nonnull
-	public Set<String> getTargets(@Nonnull String projectId)
-	{
-		ProjectInfo projectInfo = myState.projectInfos.get(projectId);
-		if(projectInfo == null)
-		{
-			return Set.of();
-		}
-		return projectInfo.targets;
-	}
+    private State myState = new State();
 
-	public void setTargets(@Nonnull String projectId, @Nonnull Set<String> targets)
-	{
-		ProjectInfo projectInfo = myState.projectInfos.computeIfAbsent(projectId, (it) -> new ProjectInfo());
+    @Nonnull
+    public Set<String> getTargets(@Nonnull String projectId) {
+        ProjectInfo projectInfo = myState.projectInfos.get(projectId);
+        if (projectInfo == null) {
+            return Set.of();
+        }
+        return projectInfo.targets;
+    }
 
-		projectInfo.targets.clear();
-		projectInfo.targets.addAll(targets);
-	}
+    public Collection<? extends ProjectInfo> getProjectInfos() {
+        return myState.projectInfos.values();
+    }
 
-	public void setItems(@Nonnull String projectId, @Nonnull Collection<? extends MSBuildEvaluatedItem> items)
-	{
-		ProjectInfo projectInfo = myState.projectInfos.computeIfAbsent(projectId, (it) -> new ProjectInfo());
-		projectInfo.items.clear();
+    public void setTargets(@Nonnull String projectId, @Nonnull Set<String> targets) {
+        ProjectInfo projectInfo = myState.projectInfos.computeIfAbsent(projectId, (it) -> new ProjectInfo());
 
-		for(MSBuildEvaluatedItem item : items)
-		{
-			ProjectItemInfo projectItemInfo = new ProjectItemInfo();
-			projectItemInfo.metadata.putAll(item.getMetadata());
-			projectItemInfo.itemSpec = item.getItemSpec();
-			projectItemInfo.name = item.getName();
+        projectInfo.targets.clear();
+        projectInfo.targets.addAll(targets);
+    }
 
-			projectInfo.items.add(projectItemInfo);
-		}
-	}
+    public void updateData(@Nonnull String projectId,
+                           @Nonnull String moduleName,
+                           @Nonnull Collection<? extends MSBuildEvaluatedItem> items,
+                           @Nonnull Map<String, String> properties) {
+        ProjectInfo projectInfo = myState.projectInfos.computeIfAbsent(projectId, (it) -> new ProjectInfo());
+        projectInfo.items.clear();
 
-	@Nonnull
-	public Collection<? extends MSBuildEvaluatedItem> getItems(@Nonnull String projectId)
-	{
-		ProjectInfo info = myState.projectInfos.get(projectId);
-		return info == null ? List.of() : info.items;
-	}
+        projectInfo.moduleName = moduleName;
+        projectInfo.properties = new TreeMap<>(properties);
 
-	@Nullable
-	@Override
-	public MSBuildWorkspaceData.State getState()
-	{
-		return myState;
-	}
+        for (MSBuildEvaluatedItem item : items) {
+            ProjectItemInfo projectItemInfo = new ProjectItemInfo();
+            projectItemInfo.metadata.putAll(item.getMetadata());
+            projectItemInfo.itemSpec = item.getItemSpec();
+            projectItemInfo.name = item.getName();
 
-	@Override
-	public void loadState(MSBuildWorkspaceData.State state)
-	{
-		XmlSerializerUtil.copyBean(state, myState);
-	}
+            projectInfo.items.add(projectItemInfo);
+        }
+    }
+
+    @Nonnull
+    public Collection<? extends MSBuildEvaluatedItem> getItems(@Nonnull String projectId) {
+        ProjectInfo info = myState.projectInfos.get(projectId);
+        return info == null ? List.of() : info.items;
+    }
+
+    @Nullable
+    @Override
+    public State getState() {
+        return myState;
+    }
+
+    @Override
+    public void loadState(State state) {
+        XmlSerializerUtil.copyBean(state, myState);
+    }
 }
