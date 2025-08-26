@@ -52,6 +52,9 @@ public class MSBuildModuleResolver implements NewFileModuleResolver {
 
         for (MSBuildWorkspaceData.ProjectInfo projectInfo : projectInfos) {
             String projectDir = projectInfo.properties.get("ProjectDir");
+            if (projectDir == null) {
+                continue;
+            }
 
             VirtualFile projectDirFile = LocalFileSystem.getInstance().findFileByPathIfCached(projectDir);
             if (projectDirFile == null) {
