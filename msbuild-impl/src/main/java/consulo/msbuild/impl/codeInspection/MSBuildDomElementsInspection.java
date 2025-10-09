@@ -17,9 +17,9 @@
 package consulo.msbuild.impl.codeInspection;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.localize.LocalizeValue;
 import consulo.msbuild.dom.Project;
 import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -27,30 +27,25 @@ import jakarta.annotation.Nonnull;
  * @since 28-Jan-17
  */
 @ExtensionImpl
-public class MSBuildDomElementsInspection extends BasicDomElementsInspection<Project, Object>
-{
-	public MSBuildDomElementsInspection()
-	{
-		super(Project.class);
-	}
+public class MSBuildDomElementsInspection extends BasicDomElementsInspection<Project, Object> {
+    public MSBuildDomElementsInspection() {
+        super(Project.class);
+    }
 
-	@Override
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+    @Override
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-	@Nonnull
-	@Override
-	public String getGroupDisplayName()
-	{
-		return "MSBuild";
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return LocalizeValue.localizeTODO("MSBuild");
+    }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		return "MSBuild validation";
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("MSBuild validation");
+    }
 }
