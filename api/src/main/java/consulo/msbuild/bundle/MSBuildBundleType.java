@@ -20,6 +20,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.application.Application;
 import consulo.application.util.SystemInfo;
 import consulo.content.bundle.SdkType;
+import consulo.localize.LocalizeValue;
 import consulo.msbuild.MSBuildVersion;
 import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.platform.Platform;
@@ -27,7 +28,6 @@ import consulo.process.ExecutionException;
 import consulo.process.cmd.GeneralCommandLine;
 import consulo.process.util.CapturingProcessUtil;
 import consulo.process.util.ProcessOutput;
-import consulo.ui.image.Image;
 import consulo.util.collection.ContainerUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -91,7 +91,7 @@ public class MSBuildBundleType extends BaseMSBuildBundleType {
     }
 
     public MSBuildBundleType() {
-        super("MSBUILD_BUNDLE");
+        super("MSBUILD_BUNDLE", LocalizeValue.localizeTODO("MSBuild"), MSBuildIconGroup.msbuild());
     }
 
     @Nonnull
@@ -165,17 +165,5 @@ public class MSBuildBundleType extends BaseMSBuildBundleType {
         catch (ExecutionException e) {
             return null;
         }
-    }
-
-    @Nonnull
-    @Override
-    public String getPresentableName() {
-        return "MSBuild";
-    }
-
-    @Nullable
-    @Override
-    public Image getIcon() {
-        return MSBuildIconGroup.msbuild();
     }
 }

@@ -17,21 +17,16 @@
 package consulo.msbuild.bundle;
 
 import consulo.content.bundle.SdkType;
+import consulo.localize.LocalizeValue;
+import consulo.ui.image.Image;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL
  * @since 08.06.2015
  */
-public abstract class BaseMSBuildBundleType extends SdkType
-{
-	public BaseMSBuildBundleType(String name)
-	{
-		super(name);
-	}
-
-	@Override
-	public String suggestSdkName(String currentSdkName, String sdkHome)
-	{
-		return getPresentableName() + " " + getVersionString(sdkHome);
-	}
+public abstract class BaseMSBuildBundleType extends SdkType {
+    public BaseMSBuildBundleType(@Nonnull String id, @Nonnull LocalizeValue displayName, @Nonnull Image icon) {
+        super(id, displayName, icon);
+    }
 }

@@ -5,6 +5,8 @@ import consulo.application.Application;
 import consulo.content.bundle.SdkType;
 import consulo.dotnet.module.extension.AssemblyInfoCacheService;
 import consulo.internal.dotnet.asm.mbel.AssemblyInfo;
+import consulo.localize.LocalizeValue;
+import consulo.mono.dotnet.icon.MonoDotNetIconGroup;
 import consulo.mono.dotnet.sdk.MonoSdkType;
 import consulo.ui.image.Image;
 import jakarta.annotation.Nonnull;
@@ -32,7 +34,7 @@ public class MonoMSBuildBundleType extends SdkType {
     }
 
     public MonoMSBuildBundleType() {
-        super("MONO_MSBUILD_BUNDLE");
+        super("MONO_MSBUILD_BUNDLE", LocalizeValue.localizeTODO("Mono MSBuild"), MonoDotNetIconGroup.mono());
     }
 
     @Nonnull
@@ -87,26 +89,9 @@ public class MonoMSBuildBundleType extends SdkType {
         return assemblyInfo.getMajorVersion() + "." + assemblyInfo.getMinorVersion();
     }
 
-    @Override
-    public String suggestSdkName(String currentSdkName, String sdkHome) {
-        return getPresentableName() + " " + getVersionString(sdkHome);
-    }
-
-    @Nonnull
-    @Override
-    public String getPresentableName() {
-        return "Mono MSBuild";
-    }
-
     @Nullable
     @Override
     public Image getGroupIcon() {
         return MonoSdkType.getInstance().getGroupIcon();
-    }
-
-    @Nullable
-    @Override
-    public Image getIcon() {
-        return MonoSdkType.getInstance().getIcon();
     }
 }
