@@ -3,7 +3,10 @@ package consulo.msbuild.impl.compiler;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.ProgressIndicatorProvider;
+import consulo.build.ui.progress.BuildProgress;
+import consulo.build.ui.progress.BuildProgressDescriptor;
 import consulo.compiler.*;
+import consulo.dataContext.DataContext;
 import consulo.localize.LocalizeValue;
 import consulo.module.extension.ModuleExtensionHelper;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
@@ -16,8 +19,6 @@ import consulo.msbuild.daemon.impl.step.RunTargetProjectStep;
 import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
-import consulo.project.Project;
-import consulo.ui.image.Image;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
@@ -30,11 +31,13 @@ import java.io.File;
  */
 @ExtensionImpl
 public class MSBuildCompilerRunner implements CompilerRunner {
-    private final Project myProject;
+    private static final YesResult YES = new YesResult(MSBuildIconGroup.msbuildbuild());
+
+    private final ModuleExtensionHelper myModuleExtensionHelper;
 
     @Inject
-    public MSBuildCompilerRunner(Project project) {
-        myProject = project;
+    public MSBuildCompilerRunner(ModuleExtensionHelper moduleExtensionHelper) {
+        myModuleExtensionHelper = moduleExtensionHelper;
     }
 
     @Nonnull
@@ -45,18 +48,18 @@ public class MSBuildCompilerRunner implements CompilerRunner {
 
     @Nonnull
     @Override
-    public Image getBuildIcon() {
-        return MSBuildIconGroup.msbuildbuild();
+    public Result checkAvailable(@Nonnull DataContext dataContext) {
+        if (myModuleExtensionHelper.hasModuleExtension(MSBuildSolutionModuleExtension.class)) {
+            return YES;
+        }
+        return NO;
     }
 
-    @Override
-    public boolean isAvailable() {
-        return ModuleExtensionHelper.getInstance(myProject).hasModuleExtension(MSBuildSolutionModuleExtension.class);
-    }
 
     @Override
     public boolean build(CompileDriver compileDriver,
                          CompileContextEx compileContext,
+                         BuildProgress<BuildProgressDescriptor> buildProgress,
                          boolean isRebuild,
                          boolean forceCompile,
                          boolean onlyCheckStatus) throws ExitException {
