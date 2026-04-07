@@ -2,8 +2,8 @@ package consulo.msbuild.impl.dom.expression.lang;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlText;
 
+import consulo.xml.language.psi.XmlText;
 import jakarta.annotation.Nonnull;
 
 /**

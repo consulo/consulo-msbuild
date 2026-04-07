@@ -25,7 +25,7 @@ import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.language.version.LanguageVersion;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.annotation.ExpressionFragment;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
