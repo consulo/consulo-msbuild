@@ -3,8 +3,8 @@ package consulo.msbuild.daemon.impl;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
-import consulo.application.AccessRule;
 import consulo.application.Application;
+import consulo.application.ReadAction;
 import consulo.application.WriteAction;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.Task;
@@ -43,6 +43,7 @@ import consulo.util.dataholder.Key;
 import consulo.util.io.FilePermissionCopier;
 import consulo.util.io.FileUtil;
 import consulo.util.io.NetUtil;
+import consulo.util.lang.function.ThrowableSupplier;
 import consulo.virtualFileSystem.VirtualFile;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -58,11 +59,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author VISTALL
- * @since 12/12/2020
- * <p>
- * <p>
  * Contains some code parts from MonoDeveloper (MIT)
+ *
+ * @author VISTALL
+ * @since 2020-12-12
  */
 @Singleton
 @ServiceAPI(ComponentScope.PROJECT)
@@ -193,7 +193,11 @@ public class MSBuildDaemonService implements Disposable {
     }
 
     @Nonnull
-    public AsyncResult<MSBuildDaemonContext> runSteps(DaemonStepQueue queue, @Nullable ProgressIndicator indicator, @Nonnull LocalizeValue loggingGroup) {
+    public AsyncResult<MSBuildDaemonContext> runSteps(
+        DaemonStepQueue queue,
+        @Nullable ProgressIndicator indicator,
+        @Nonnull LocalizeValue loggingGroup
+    ) {
         MSBuildSolutionModuleExtension<?> solutionExtension = getSolutionExtension();
         if (solutionExtension == null) {
             throw new UnsupportedOperationException();
@@ -211,17 +215,23 @@ public class MSBuildDaemonService implements Disposable {
             runInBackground(indicator, solutionExtension, queue, runStepResult, loggingGroup);
         }
         else {
-            Task.Backgroundable.queue(myProject, "Starting Daemon Service...", i -> runInBackground(i, solutionExtension, queue, runStepResult, loggingGroup));
+            Task.Backgroundable.queue(
+                myProject,
+                "Starting Daemon Service...",
+                i -> runInBackground(i, solutionExtension, queue, runStepResult, loggingGroup)
+            );
         }
 
         return runStepResult;
     }
 
-    private void runInBackground(@Nonnull ProgressIndicator indicator,
-                                 MSBuildSolutionModuleExtension<?> solutionExtension,
-                                 DaemonStepQueue queue,
-                                 AsyncResult<MSBuildDaemonContext> runStepResult,
-                                 @Nonnull LocalizeValue loggingGroup) {
+    private void runInBackground(
+        @Nonnull ProgressIndicator indicator,
+        MSBuildSolutionModuleExtension<?> solutionExtension,
+        DaemonStepQueue queue,
+        AsyncResult<MSBuildDaemonContext> runStepResult,
+        @Nonnull LocalizeValue loggingGroup
+    ) {
         try {
             MSBuildProcessProvider buildProcessProvider = findBuildProcessProvider(solutionExtension);
 
@@ -267,9 +277,8 @@ public class MSBuildDaemonService implements Disposable {
             boolean[] foundListTargetsStep = new boolean[1];
 
             final MSBuildLoggingSession finalLoggingSession = loggingSession;
-            queue.eat(step ->
-            {
-                indicator.setTextValue(step.getStepText());
+            queue.eat(step -> {
+                indicator.setText(step.getStepText());
 
                 step.execute(context, myConnection, finalLoggingSession);
 
@@ -310,41 +319,52 @@ public class MSBuildDaemonService implements Disposable {
         MSBuildProcessProvider buildProcessProvider = context.getBuildProcessProvider();
         Sdk msBuildSdk = context.getMSBuildSdk();
 
-        Task.Backgroundable.queue(myProject, "Creating Project Structure...", indicator -> {
-            Collection<MSBuildDaemonContext.PerProjectInfo> infos = context.getInfos();
+        Task.Backgroundable.queue(
+            myProject,
+            "Creating Project Structure...",
+            indicator -> {
+                Collection<MSBuildDaemonContext.PerProjectInfo> infos = context.getInfos();
 
-            ModuleManager moduleManager = ModuleManager.getInstance(myProject);
+                ModuleManager moduleManager = ModuleManager.getInstance(myProject);
 
-            ModifiableModuleModel moduleModel = AccessRule.read(moduleManager::getModifiableModel);
+                ModifiableModuleModel moduleModel = ReadAction.compute(moduleManager::getModifiableModel);
 
-            assert moduleModel != null;
+                assert moduleModel != null;
 
-            for (MSBuildDaemonContext.PerProjectInfo info : infos) {
-                WProject wProject = info.wProject;
+                for (MSBuildDaemonContext.PerProjectInfo info : infos) {
+                    WProject wProject = info.wProject;
 
-                Module moduleByName = moduleModel.findModuleByName(wProject.getName());
-                if (moduleByName == null) {
-                    moduleByName = moduleModel.newModule(wProject.getName(), null);
+                    Module moduleByName = moduleModel.findModuleByName(wProject.getName());
+                    if (moduleByName == null) {
+                        moduleByName = moduleModel.newModule(wProject.getName(), null);
+                    }
+
+                    final Module finalModuleByName = moduleByName;
+                    ThrowableSupplier<ModifiableRootModel, RuntimeException> action =
+                        () -> ModuleRootManager.getInstance(finalModuleByName).getModifiableModel();
+                    assert ReadAction.compute(action) != null;
+
+                    ReadAction.compute(action).removeAllLayers(true);
+
+                    importModule(finalModuleByName, ReadAction.compute(action), info, buildProcessProvider, msBuildSdk);
+
+                    WriteAction.runAndWait(ReadAction.compute(action)::commit);
                 }
 
-                final Module finalModuleByName = moduleByName;
-                ModifiableRootModel rootModel = AccessRule.read(() -> ModuleRootManager.getInstance(finalModuleByName).getModifiableModel());
-                assert rootModel != null;
+                WriteAction.runAndWait(moduleModel::commit);
 
-                rootModel.removeAllLayers(true);
-
-                importModule(finalModuleByName, rootModel, info, buildProcessProvider, msBuildSdk);
-
-                WriteAction.runAndWait(rootModel::commit);
+                myProject.getMessageBus().syncPublisher(MSBuildProjectListener.class).projectsReloaded();
             }
-
-            WriteAction.runAndWait(moduleModel::commit);
-
-            myProject.getMessageBus().syncPublisher(MSBuildProjectListener.class).projectsReloaded();
-        });
+        );
     }
 
-    private void importModule(Module module, ModifiableRootModel rootModel, MSBuildDaemonContext.PerProjectInfo info, MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk) {
+    private void importModule(
+        Module module,
+        ModifiableRootModel rootModel,
+        MSBuildDaemonContext.PerProjectInfo info,
+        MSBuildProcessProvider buildProcessProvider,
+        Sdk msBuildSdk
+    ) {
         VirtualFile projectFile = info.wProject.getVirtualFile();
         // project file found
         if (projectFile == null) {
@@ -385,7 +405,16 @@ public class MSBuildDaemonService implements Disposable {
         capabilities.sort((o1, o2) -> Integer.compareUnsigned(o1.getWeight(), o2.getWeight()));
 
         for (MSBuildProjectCapability capability : capabilities) {
-            capability.importModule(module, rootModel, projectFile, buildProcessProvider, msBuildSdk, info.properties, info.dependencies, info.targets);
+            capability.importModule(
+                module,
+                rootModel,
+                projectFile,
+                buildProcessProvider,
+                msBuildSdk,
+                info.properties,
+                info.dependencies,
+                info.targets
+            );
         }
     }
 
@@ -450,7 +479,12 @@ public class MSBuildDaemonService implements Disposable {
         return msBuildFile;
     }
 
-    private void fillGlobalProperties(Map<String, String> dictionary, String binDir, Sdk msBuildSdk, MSBuildProcessProvider buildProcessProvider) {
+    private void fillGlobalProperties(
+        Map<String, String> dictionary,
+        String binDir,
+        Sdk msBuildSdk,
+        MSBuildProcessProvider buildProcessProvider
+    ) {
         // This causes build targets to behave how they should inside an IDE, instead of in a command-line process
         dictionary.put("BuildingInsideVisualStudio", "true");
 
