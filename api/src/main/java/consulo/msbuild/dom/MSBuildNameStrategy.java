@@ -17,7 +17,7 @@
 package consulo.msbuild.dom;
 
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.DomNameStrategy;
+import consulo.xml.dom.DomNameStrategy;
 
 /**
  * @author VISTALL

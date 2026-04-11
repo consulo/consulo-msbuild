@@ -21,7 +21,7 @@ import consulo.application.Application;
 import consulo.msbuild.MSBuildProjectFile;
 import consulo.virtualFileSystem.fileType.FileTypeConsumer;
 import consulo.virtualFileSystem.fileType.FileTypeFactory;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import jakarta.inject.Inject;
 
 import jakarta.annotation.Nonnull;

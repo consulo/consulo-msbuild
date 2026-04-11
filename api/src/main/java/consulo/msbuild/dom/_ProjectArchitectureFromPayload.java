@@ -3,9 +3,9 @@
 
 package consulo.msbuild.dom;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 

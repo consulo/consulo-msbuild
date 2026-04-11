@@ -25,8 +25,8 @@ import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.ui.image.Image;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.xml.dom.DomFileDescription;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileDescription;
 import jakarta.inject.Inject;
 
 import jakarta.annotation.Nonnull;

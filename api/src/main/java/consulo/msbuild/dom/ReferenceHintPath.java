@@ -18,8 +18,8 @@ package consulo.msbuild.dom;
 
 import jakarta.annotation.Nullable;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.TagValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.TagValue;
 
 /**
  * @author VISTALL

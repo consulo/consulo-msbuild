@@ -5,12 +5,12 @@ package consulo.msbuild.dom;
 
 import jakarta.annotation.Nonnull;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.NameStrategy;
-import consulo.xml.util.xml.NameStrategyForAttributes;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.NameStrategy;
+import consulo.xml.dom.NameStrategyForAttributes;
+import consulo.xml.dom.Required;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:NoneElemType interface.

@@ -19,8 +19,8 @@ package consulo.msbuild.impl.dom.extender;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.msbuild.dom.Property;
 import consulo.msbuild.dom.PropertyGroup;
-import consulo.xml.util.xml.reflect.DomExtender;
-import consulo.xml.util.xml.reflect.DomExtensionsRegistrar;
+import consulo.xml.dom.reflect.DomExtender;
+import consulo.xml.dom.reflect.DomExtensionsRegistrar;
 
 import jakarta.annotation.Nonnull;
 

@@ -17,7 +17,7 @@
 package consulo.msbuild.impl.solution;
 
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

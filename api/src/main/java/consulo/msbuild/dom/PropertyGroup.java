@@ -4,7 +4,7 @@
 package consulo.msbuild.dom;
 
 import consulo.msbuild.dom.annotation.ExpressionFragment;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import jakarta.annotation.Nonnull;
 import java.util.List;

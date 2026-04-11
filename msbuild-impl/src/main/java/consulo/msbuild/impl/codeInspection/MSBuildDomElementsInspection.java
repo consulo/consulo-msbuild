@@ -19,7 +19,7 @@ package consulo.msbuild.impl.codeInspection;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.localize.LocalizeValue;
 import consulo.msbuild.dom.Project;
-import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
+import consulo.xml.dom.editor.BasicDomElementsInspection;
 import jakarta.annotation.Nonnull;
 
 /**

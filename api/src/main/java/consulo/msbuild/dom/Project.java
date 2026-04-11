@@ -5,15 +5,8 @@ package consulo.msbuild.dom;
 
 import java.util.List;
 
+import consulo.xml.dom.*;
 import jakarta.annotation.Nonnull;
-
-import consulo.xml.util.xml.DefinesXml;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.NameStrategy;
-import consulo.xml.util.xml.NameStrategyForAttributes;
-import consulo.xml.util.xml.SubTagList;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ProjectElemType interface.
@@ -36,7 +29,7 @@ public interface Project extends DomElement
 	 * @return the value of the DefaultTargets child.
 	 */
 	@Nonnull
-	GenericAttributeValue<String> getDefaultTargets();
+    GenericAttributeValue<String> getDefaultTargets();
 
 
 	/**

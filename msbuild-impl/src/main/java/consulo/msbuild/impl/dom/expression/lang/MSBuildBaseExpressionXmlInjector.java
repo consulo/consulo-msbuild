@@ -26,10 +26,10 @@ import consulo.language.version.LanguageVersion;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dom.annotation.ExpressionFragment;
 import consulo.xml.language.psi.*;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

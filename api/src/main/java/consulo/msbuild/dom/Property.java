@@ -18,11 +18,11 @@ package consulo.msbuild.dom;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.NameStrategy;
-import consulo.xml.util.xml.NameStrategyForAttributes;
-import consulo.xml.util.xml.TagValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.NameStrategy;
+import consulo.xml.dom.NameStrategyForAttributes;
+import consulo.xml.dom.TagValue;
 import consulo.msbuild.dom.annotation.ExpressionFragment;
 
 /**

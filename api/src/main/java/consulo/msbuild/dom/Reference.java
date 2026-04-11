@@ -5,10 +5,10 @@ package consulo.msbuild.dom;
 
 import jakarta.annotation.Nonnull;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.NameStrategy;
-import consulo.xml.util.xml.NameStrategyForAttributes;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.NameStrategy;
+import consulo.xml.dom.NameStrategyForAttributes;
 
 /**
  * http://schemas.microsoft.com/developer/msbuild/2003:ReferenceElemType interface.
