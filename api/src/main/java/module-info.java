@@ -5,6 +5,8 @@
 open module consulo.msbuild.api
 {
 	requires transitive consulo.ide.api;
+	requires consulo.compiler.api;
+	requires consulo.process.api;
 	requires transitive com.intellij.xml.api;
 	requires transitive com.intellij.xml.dom.api;
 	requires commons.jexl3;

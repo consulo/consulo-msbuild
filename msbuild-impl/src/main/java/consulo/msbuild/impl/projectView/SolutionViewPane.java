@@ -25,7 +25,7 @@ import consulo.dataContext.DataProvider;
 import consulo.fileEditor.FileEditor;
 import consulo.fileEditor.FileEditorManager;
 import consulo.fileEditor.TextEditor;
-import consulo.ide.ServiceManager;
+import consulo.application.Application;
 import consulo.ide.impl.idea.ide.projectView.impl.*;
 import consulo.language.editor.LangDataKeys;
 import consulo.language.editor.PlatformDataKeys;
@@ -465,7 +465,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane
 	@Nonnull
 	public static SolutionViewPane getInstance(@Nonnull Project project)
 	{
-		return ServiceManager.getService(project, SolutionViewPane.class);
+		return project.getInstance(SolutionViewPane.class);
 	}
 
 	public static final String ID = "SolutionViewPane";

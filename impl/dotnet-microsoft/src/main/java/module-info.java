@@ -8,6 +8,9 @@ module consulo.msbuild.impl.dotnet.microsoft
 	requires consulo.msbuild.lang.impl.csharp;
 	requires consulo.dotnet.psi.impl;
 	requires consulo.dotnet.microsoft;
+	requires consulo.execution.api;
+	requires consulo.execution.debug.api;
+	requires consulo.process.api;
 	requires consulo.dotnet.debugger.impl;
 	requires consulo.dotnet.microsoft.debugger.impl;
 

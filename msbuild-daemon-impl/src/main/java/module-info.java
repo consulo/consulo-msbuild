@@ -5,6 +5,10 @@
 module consulo.msbuild.daemon.impl
 {
 	requires consulo.msbuild.api;
+	requires consulo.build.ui.api;
+	requires consulo.ui.ex.api;
+	requires consulo.execution.api;
+	requires consulo.process.api;
 
 	// TODO remove in future
 	requires java.desktop;

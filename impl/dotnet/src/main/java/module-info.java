@@ -5,6 +5,7 @@
 module consulo.msbuild.impl.dotnet
 {
 	requires transitive consulo.msbuild.api;
+	requires consulo.compiler.api;
 	requires transitive consulo.dotnet.api;
 	requires consulo.dotnet.debugger.impl;
 
