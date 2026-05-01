@@ -161,7 +161,7 @@ public class MSBuildOutOfProjectEditorNotificationProvider implements EditorNoti
 //				VirtualFile parent = projectFile.getParent();
 //				assert parent != null;
 //
-//				String relativePath = VfsUtil.getRelativePath(sourceFile, parent, '\\');
+//				String relativePath = VirtualFileUtil.getRelativePath(sourceFile, parent, '\\');
 //
 //				simpleItem.getInclude().setStringValue(relativePath);
 //
