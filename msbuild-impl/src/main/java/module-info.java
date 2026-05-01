@@ -9,7 +9,7 @@ module consulo.msbuild
 
 	// TODO remove in future
 	requires consulo.ide.impl;
-	requires consulo.ide.api;
+	requires consulo.module.creation.api;
 	requires consulo.language.editor.api;
 	requires consulo.language.impl;
 	requires consulo.compiler.api;

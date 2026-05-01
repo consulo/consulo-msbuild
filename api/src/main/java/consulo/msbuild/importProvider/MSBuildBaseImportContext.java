@@ -1,42 +1,35 @@
 package consulo.msbuild.importProvider;
 
-import consulo.ide.moduleImport.ModuleImportContext;
+import consulo.module.creation.importing.ModuleImportContext;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.project.Project;
-
 import jakarta.annotation.Nullable;
 
 /**
  * @author VISTALL
  * @since 23/01/2021
  */
-public abstract class MSBuildBaseImportContext extends ModuleImportContext
-{
-	private String myMSBuildBundleName;
-	private MSBuildProcessProvider myProvider;
+public abstract class MSBuildBaseImportContext extends ModuleImportContext {
+    private String myMSBuildBundleName;
+    private MSBuildProcessProvider myProvider;
 
-	public MSBuildBaseImportContext(@Nullable Project project)
-	{
-		super(project);
-	}
+    public MSBuildBaseImportContext(@Nullable Project project) {
+        super(project);
+    }
 
-	public void setMSBuildBundleName(String MSBuildBundleName)
-	{
-		myMSBuildBundleName = MSBuildBundleName;
-	}
+    public void setMSBuildBundleName(String MSBuildBundleName) {
+        myMSBuildBundleName = MSBuildBundleName;
+    }
 
-	public String getMSBuildBundleName()
-	{
-		return myMSBuildBundleName;
-	}
+    public String getMSBuildBundleName() {
+        return myMSBuildBundleName;
+    }
 
-	public MSBuildProcessProvider getProvider()
-	{
-		return myProvider;
-	}
+    public MSBuildProcessProvider getProvider() {
+        return myProvider;
+    }
 
-	public void setProvider(MSBuildProcessProvider provider)
-	{
-		myProvider = provider;
-	}
+    public void setProvider(MSBuildProcessProvider provider) {
+        myProvider = provider;
+    }
 }
