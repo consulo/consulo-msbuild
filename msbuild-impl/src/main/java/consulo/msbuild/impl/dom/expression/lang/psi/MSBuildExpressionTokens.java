@@ -17,6 +17,7 @@
 package consulo.msbuild.impl.dom.expression.lang.psi;
 
 import consulo.language.ast.IElementType;
+import consulo.language.ast.StandardTokenTypes;
 import consulo.language.ast.TokenType;
 import consulo.msbuild.impl.dom.expression.lang.MSBuildExpressionLanguage;
 
@@ -24,23 +25,22 @@ import consulo.msbuild.impl.dom.expression.lang.MSBuildExpressionLanguage;
  * @author VISTALL
  * @since 16-Jun-17
  */
-public interface MSBuildExpressionTokens extends TokenType
-{
-	IElementType TEXT = new IElementType("TEXT", MSBuildExpressionLanguage.INSTANCE);
+public interface MSBuildExpressionTokens extends StandardTokenTypes {
+    IElementType TEXT = new IElementType("TEXT", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType SINGLE_QUOTE = new IElementType("SINGLE_QUOTE", MSBuildExpressionLanguage.INSTANCE);
+    IElementType SINGLE_QUOTE = new IElementType("SINGLE_QUOTE", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType PATH_SEPARATOR = new IElementType("PATH_SEPARATOR", MSBuildExpressionLanguage.INSTANCE);
+    IElementType PATH_SEPARATOR = new IElementType("PATH_SEPARATOR", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType MACRO_OPEN = new IElementType("MACRO_OPEN", MSBuildExpressionLanguage.INSTANCE);
+    IElementType MACRO_OPEN = new IElementType("MACRO_OPEN", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType MACRO_STOP = new IElementType("MACRO_STOP", MSBuildExpressionLanguage.INSTANCE);
+    IElementType MACRO_STOP = new IElementType("MACRO_STOP", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType MACRO_NAME = new IElementType("MACRO_NAME", MSBuildExpressionLanguage.INSTANCE);
+    IElementType MACRO_NAME = new IElementType("MACRO_NAME", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType EQEQ = new IElementType("EQEQ", MSBuildExpressionLanguage.INSTANCE);
+    IElementType EQEQ = new IElementType("EQEQ", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType LPAR = new IElementType("LPAR", MSBuildExpressionLanguage.INSTANCE);
+    IElementType LPAR = new IElementType("LPAR", MSBuildExpressionLanguage.INSTANCE);
 
-	IElementType RPAR = new IElementType("RPAR", MSBuildExpressionLanguage.INSTANCE);
+    IElementType RPAR = new IElementType("RPAR", MSBuildExpressionLanguage.INSTANCE);
 }
