@@ -16,7 +16,6 @@ import consulo.ui.ex.content.ContentManager;
 import consulo.ui.ex.toolWindow.ToolWindow;
 import consulo.ui.ex.toolWindow.ToolWindowAnchor;
 import consulo.ui.image.Image;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -24,60 +23,54 @@ import jakarta.annotation.Nonnull;
  * @since 01/01/2021
  */
 @ExtensionImpl
-public class MSBuildToolWindowFactory implements ToolWindowFactory, DumbAware
-{
-	@RequiredUIAccess
-	@Override
-	public void createToolWindowContent(@Nonnull Project project, @Nonnull ToolWindow toolWindow)
-	{
-		ContentManager contentManager = toolWindow.getContentManager();
+public class MSBuildToolWindowFactory implements ToolWindowFactory, DumbAware {
+    public static final String ID = "MSBuild";
 
-		MSBuildToolWindowPanel panel = new MSBuildToolWindowPanel(project);
+    @RequiredUIAccess
+    @Override
+    public void createToolWindowContent(@Nonnull Project project, @Nonnull ToolWindow toolWindow) {
+        ContentManager contentManager = toolWindow.getContentManager();
 
-		Content content = contentManager.getFactory().createContent(panel.getComponent(), null, true);
-		content.setDisposer(panel);
-		contentManager.addContent(content);
+        MSBuildToolWindowPanel panel = new MSBuildToolWindowPanel(project);
 
-		toolWindow.setTitleActions(new RefreshProjectsAction(), AnSeparator.create(), new FilterTargetsAction());
-	}
+        Content content = contentManager.getFactory().createContent(panel.getComponent(), null, true);
+        content.setDisposer(panel);
+        contentManager.addContent(content);
 
-	@Nonnull
-	@Override
-	public String getId()
-	{
-		return "MSBuild";
-	}
+        toolWindow.setTitleActions(new RefreshProjectsAction(), AnSeparator.create(), new FilterTargetsAction());
+    }
 
-	@Nonnull
-	@Override
-	public ToolWindowAnchor getAnchor()
-	{
-		return ToolWindowAnchor.RIGHT;
-	}
+    @Nonnull
+    @Override
+    public String getId() {
+        return ID;
+    }
 
-	@Nonnull
-	@Override
-	public Image getIcon()
-	{
-		return MSBuildIconGroup.msbuildtoolwindow();
-	}
+    @Nonnull
+    @Override
+    public ToolWindowAnchor getAnchor() {
+        return ToolWindowAnchor.RIGHT;
+    }
 
-	@Nonnull
-	@Override
-	public LocalizeValue getDisplayName()
-	{
-		return LocalizeValue.of("MSBuild");
-	}
+    @Nonnull
+    @Override
+    public Image getIcon() {
+        return MSBuildIconGroup.msbuildtoolwindow();
+    }
 
-	@Override
-	public boolean canCloseContents()
-	{
-		return false;
-	}
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.of("MSBuild");
+    }
 
-	@Override
-	public boolean validate(@Nonnull Project project)
-	{
-		return MSBuildSolutionModuleExtension.getSolutionModuleExtension(project) != null;
-	}
+    @Override
+    public boolean canCloseContents() {
+        return false;
+    }
+
+    @Override
+    public boolean validate(@Nonnull Project project) {
+        return MSBuildSolutionModuleExtension.getSolutionModuleExtension(project) != null;
+    }
 }
