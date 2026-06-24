@@ -57,8 +57,7 @@ public class MSBuildLoggingSession implements Disposable {
             else {
                 color = ANSI_BOLD;
             }
-            final String ansiReset = ANSI_RESET;
-            return color + message + ansiReset;
+            return color + message + ANSI_RESET;
         }
     }
 
@@ -82,11 +81,11 @@ public class MSBuildLoggingSession implements Disposable {
         return myId;
     }
 
-    public void acceptMessage(LogMessage logMessage) {
+    public void acceptMessage(@Nonnull LogMessage logMessage) {
         acceptMessage(logMessage.LogText, MessageEvent.Kind.INFO);
     }
 
-    public void acceptMessage(String text, MessageEvent.Kind kind) {
+    public void acceptMessage(@Nonnull String text, @Nonnull MessageEvent.Kind kind) {
         myConsolePrinter.print(text, kind);
     }
 
