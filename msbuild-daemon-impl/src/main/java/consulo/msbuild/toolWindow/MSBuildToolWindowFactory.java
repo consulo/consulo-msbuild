@@ -4,6 +4,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.application.dumb.DumbAware;
 import consulo.localize.LocalizeValue;
 import consulo.msbuild.icon.MSBuildIconGroup;
+import consulo.msbuild.localize.MSBuildLocalize;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.toolWindow.actions.FilterTargetsAction;
 import consulo.msbuild.toolWindow.actions.RefreshProjectsAction;
@@ -61,7 +62,7 @@ public class MSBuildToolWindowFactory implements ToolWindowFactory, DumbAware {
     @Nonnull
     @Override
     public LocalizeValue getDisplayName() {
-        return LocalizeValue.of("MSBuild");
+        return MSBuildLocalize.msbuildName();
     }
 
     @Override

@@ -10,6 +10,7 @@ import consulo.build.ui.progress.BuildProgressDescriptor;
 import consulo.disposer.Disposable;
 import consulo.localize.LocalizeValue;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
+import consulo.msbuild.localize.MSBuildLocalize;
 import consulo.project.Project;
 import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.Nls;
@@ -108,14 +109,14 @@ public class MSBuildLoggingSession implements Disposable
 
 	public void start(ProgressIndicator indicator)
 	{
-		DefaultBuildDescriptor buildDescriptor = new DefaultBuildDescriptor(myId, "MSBuild", StringUtil.notNullize(myProject.getBasePath()), System.currentTimeMillis());
+		DefaultBuildDescriptor buildDescriptor = new DefaultBuildDescriptor(myId, MSBuildLocalize.msbuildName(), StringUtil.notNullize(myProject.getBasePath()), System.currentTimeMillis());
 		myBuildProgress.start(new BuildProgressDescriptor()
 		{
 			@Nonnull
 			@Override
-			public String getTitle()
+			public LocalizeValue getTitle()
 			{
-				return myLoggingGroup.get();
+				return myLoggingGroup;
 			}
 
 			@Override

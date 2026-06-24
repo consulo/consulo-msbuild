@@ -13,6 +13,7 @@ open module consulo.msbuild.api
 
 	exports consulo.msbuild;
 	exports consulo.msbuild.icon;
+	exports consulo.msbuild.localize;
 	exports consulo.msbuild.bundle;
 	exports consulo.msbuild.compiler;
 	exports consulo.msbuild.dom;
