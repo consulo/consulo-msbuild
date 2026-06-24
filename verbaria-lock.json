@@ -3,19 +3,11 @@
   "server" : "https://i.verbaria.org/",
   "project" : "consulo-msbuild",
   "projectVersion" : "master",
-  "generatedAt" : "2026-06-24T11:07:45.304522212Z",
+  "generatedAt" : "2026-06-24T11:49:13.318532098Z",
   "documents" : {
     "consulo.msbuild.MSBuildLocalize" : {
       "source" : {
         "revision" : 1
-      },
-      "translations" : {
-        "en-US" : {
-          "sig" : "44816d4b6e6c422322c4fd4dc6701782",
-          "state" : "Approved",
-          "total" : 1,
-          "translators" : [ "Valery Semenchuk <vistall.valeriy@gmail.com>" ]
-        }
       }
     }
   }
