@@ -2,7 +2,8 @@ package consulo.msbuild.impl.importProvider;
 
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.WriteAction;
+import consulo.application.concurrent.coroutine.ReadLock;
+import consulo.application.concurrent.coroutine.WriteLock;
 import consulo.localize.LocalizeValue;
 import consulo.module.ModifiableModuleModel;
 import consulo.module.Module;
@@ -15,10 +16,12 @@ import consulo.msbuild.impl.VisualStudioSolutionFileType;
 import consulo.msbuild.importProvider.SolutionModuleImportContext;
 import consulo.msbuild.module.extension.MSBuildSolutionMutableModuleExtension;
 import consulo.project.Project;
+import consulo.project.ProjectRunOneService;
 import consulo.project.startup.StartupActivity;
 import consulo.project.startup.StartupManager;
 import consulo.ui.ex.wizard.WizardStep;
 import consulo.ui.image.Image;
+import consulo.util.concurrent.coroutine.Coroutine;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileTypeRegistry;
@@ -106,37 +109,40 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
         consumer.accept(new MSBuildProjectOrModuleNameStep<>(context));
     }
 
-    @RequiredReadAction
     @Override
-    public void process(@Nonnull SolutionModuleImportContext context,
-                        @Nonnull Project project,
-                        @Nonnull ModifiableModuleModel modifiableModuleModel,
-                        @Nonnull Consumer<Module> consumer) {
-        String fileToImport = context.getFileToImport();
+    public Coroutine<Object, Object> process(@Nonnull SolutionModuleImportContext context,
+                                             @Nonnull Project project,
+                                             @Nonnull ModifiableModuleModel modifiableModuleModel,
+                                             @Nonnull Consumer<Module> consumer) {
+        return ReadLock.apply((i, continuation) -> {
 
-        VirtualFile solutionFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
-        assert solutionFile != null;
+                String fileToImport = context.getFileToImport();
 
-        VirtualFile parent = solutionFile.getParent();
+                VirtualFile solutionFile = LocalFileSystem.getInstance().findFileByPath(fileToImport);
+                assert solutionFile != null;
 
-        final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName(), parent, modifiableModuleModel);
+                VirtualFile parent = solutionFile.getParent();
 
-        MSBuildSolutionMutableModuleExtension<?> solExtension = mainModuleModel.getExtensionWithoutCheck(context.getProvider().getSolutionModuleExtensionId());
-        assert solExtension != null;
-        solExtension.setEnabled(true);
-        solExtension.setSolutionFileUrl(solutionFile.getUrl());
-        solExtension.setSdkName(context.getMSBuildBundleName());
-        solExtension.setProcessProviderId(context.getProvider().getId());
+                final ModifiableRootModel mainModuleModel = createModuleWithSingleContent(parent.getName(), parent, modifiableModuleModel);
 
-        WriteAction.run(mainModuleModel::commit);
+                MSBuildSolutionMutableModuleExtension<?> solExtension = mainModuleModel.getExtensionWithoutCheck(context.getProvider().getSolutionModuleExtensionId());
+                assert solExtension != null;
+                solExtension.setEnabled(true);
+                solExtension.setSolutionFileUrl(solutionFile.getUrl());
+                solExtension.setSdkName(context.getMSBuildBundleName());
+                solExtension.setProcessProviderId(context.getProvider().getId());
 
-        consumer.accept(mainModuleModel.getModule());
+                consumer.accept(mainModuleModel.getModule());
 
-        StartupManager.getInstance(project).registerPostStartupActivity((StartupActivity.DumbAware) (ui, porject) -> {
-            MSBuildDaemonService.getInstance(project).forceUpdate();
+                project.getInstance(ProjectRunOneService.class).register(MSBuildRunOnceExtension.ID, new MSBuildRunOnceExtension.Data(""));
 
-            // TODO [VISTALL] create run configurations after reimport
-        });
+                return mainModuleModel;
+            })
+            .toCoroutine()
+            .then(WriteLock.apply((modifiableRootModel, continuation) -> {
+                modifiableRootModel.commit();
+                return null;
+            }));
     }
 
     @RequiredReadAction
