@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface Copy extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the DestinationFiles child.
 	 *
@@ -26,7 +24,6 @@ public interface Copy extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getDestinationFiles();
-
 
 	/**
 	 * Returns the value of the DestinationFolder child.
@@ -36,7 +33,6 @@ public interface Copy extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getDestinationFolder();
 
-
 	/**
 	 * Returns the value of the OverwriteReadOnlyFiles child.
 	 *
@@ -44,7 +40,6 @@ public interface Copy extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getOverwriteReadOnlyFiles();
-
 
 	/**
 	 * Returns the value of the Retries child.
@@ -54,7 +49,6 @@ public interface Copy extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getRetries();
 
-
 	/**
 	 * Returns the value of the RetryDelayMilliseconds child.
 	 *
@@ -62,7 +56,6 @@ public interface Copy extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getRetryDelayMilliseconds();
-
 
 	/**
 	 * Returns the value of the SkipUnchangedFiles child.
@@ -72,7 +65,6 @@ public interface Copy extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getSkipUnchangedFiles();
 
-
 	/**
 	 * Returns the value of the UseHardlinksIfPossible child.
 	 *
@@ -80,7 +72,6 @@ public interface Copy extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getUseHardlinksIfPossible();
-
 
 	/**
 	 * Returns the value of the UseSymboliclinksIfPossible child.
@@ -90,7 +81,6 @@ public interface Copy extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getUseSymboliclinksIfPossible();
 
-
 	/**
 	 * Returns the value of the SourceFiles child.
 	 *
@@ -99,7 +89,6 @@ public interface Copy extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSourceFiles();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -111,8 +100,8 @@ public interface Copy extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -124,8 +113,8 @@ public interface Copy extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -139,8 +128,8 @@ public interface Copy extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -154,8 +143,8 @@ public interface Copy extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -167,6 +156,7 @@ public interface Copy extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -174,7 +164,6 @@ public interface Copy extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

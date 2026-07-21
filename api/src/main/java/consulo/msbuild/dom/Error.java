@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.GenericAttributeValue;
  */
 public interface Error extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the Code child.
 	 *
@@ -25,7 +23,6 @@ public interface Error extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getCode();
-
 
 	/**
 	 * Returns the value of the File child.
@@ -35,7 +32,6 @@ public interface Error extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getFile();
 
-
 	/**
 	 * Returns the value of the HelpKeyword child.
 	 *
@@ -44,7 +40,6 @@ public interface Error extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getHelpKeyword();
 
-
 	/**
 	 * Returns the value of the Text child.
 	 *
@@ -52,7 +47,6 @@ public interface Error extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getText();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -64,8 +58,8 @@ public interface Error extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -77,8 +71,8 @@ public interface Error extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -92,8 +86,8 @@ public interface Error extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -107,8 +101,8 @@ public interface Error extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -120,6 +114,7 @@ public interface Error extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -127,7 +122,6 @@ public interface Error extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

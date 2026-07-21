@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface SignAppxPackage extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AppxPackageToSign child.
 	 *
@@ -28,7 +26,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getAppxPackageToSign();
 
-
 	/**
 	 * Returns the value of the CertificateThumbprint child.
 	 *
@@ -37,7 +34,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getCertificateThumbprint();
 
-
 	/**
 	 * Returns the value of the CertificateFile child.
 	 *
@@ -45,7 +41,6 @@ public interface SignAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getCertificateFile();
-
 
 	/**
 	 * Returns the value of the HashAlgorithmId child.
@@ -56,7 +51,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getHashAlgorithmId();
 
-
 	/**
 	 * Returns the value of the TargetPlatformIdentifier child.
 	 *
@@ -65,7 +59,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
-
 
 	/**
 	 * Returns the value of the TargetPlatformVersion child.
@@ -76,7 +69,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getTargetPlatformVersion();
 
-
 	/**
 	 * Returns the value of the TargetPlatformSdkRootOverride child.
 	 *
@@ -84,7 +76,6 @@ public interface SignAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetPlatformSdkRootOverride();
-
 
 	/**
 	 * Returns the value of the SignAppxPackageExeFullPath child.
@@ -94,7 +85,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getSignAppxPackageExeFullPath();
 
-
 	/**
 	 * Returns the value of the MSBuildArchitecture child.
 	 *
@@ -102,7 +92,6 @@ public interface SignAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getMSBuildArchitecture();
-
 
 	/**
 	 * Returns the value of the EnableSigningChecks child.
@@ -112,7 +101,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getEnableSigningChecks();
 
-
 	/**
 	 * Returns the value of the ExportCertificate child.
 	 *
@@ -120,7 +108,6 @@ public interface SignAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getExportCertificate();
-
 
 	/**
 	 * Returns the value of the ResolvedThumbprint child.
@@ -130,7 +117,6 @@ public interface SignAppxPackage extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getResolvedThumbprint();
 
-
 	/**
 	 * Returns the value of the AppxPackagePublicKeyFile child.
 	 *
@@ -138,7 +124,6 @@ public interface SignAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAppxPackagePublicKeyFile();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -150,8 +135,8 @@ public interface SignAppxPackage extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -163,8 +148,8 @@ public interface SignAppxPackage extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -178,8 +163,8 @@ public interface SignAppxPackage extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -193,8 +178,8 @@ public interface SignAppxPackage extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -206,6 +191,7 @@ public interface SignAppxPackage extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -213,7 +199,6 @@ public interface SignAppxPackage extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

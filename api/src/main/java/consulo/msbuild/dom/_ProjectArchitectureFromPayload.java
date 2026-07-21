@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:20 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import consulo.xml.dom.DomElement;
@@ -16,7 +15,6 @@ import jakarta.annotation.Nonnull;
  */
 public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 {
-
 	/**
 	 * Returns the value of the Condition child.
 	 * <pre>
@@ -27,8 +25,8 @@ public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the Include child.
@@ -40,8 +38,8 @@ public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 	 * @return the value of the Include child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getInclude();
-
 
 	/**
 	 * Returns the value of the Exclude child.
@@ -53,8 +51,8 @@ public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 	 * @return the value of the Exclude child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getExclude();
-
 
 	/**
 	 * Returns the value of the Remove child.
@@ -66,8 +64,8 @@ public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 	 * @return the value of the Remove child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRemove();
-
 
 	/**
 	 * Returns the value of the Update child.
@@ -80,8 +78,8 @@ public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 	 * @return the value of the Update child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getUpdate();
-
 
 	/**
 	 * Returns the value of the Label child.
@@ -93,8 +91,8 @@ public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 	 * @return the value of the Label child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getLabel();
-
 
 	/**
 	 * Returns the value of the MSBuildSourceProjectFile child.
@@ -103,6 +101,4 @@ public interface _ProjectArchitectureFromPayload extends DomElement, SimpleItem
 	 */
 	@Nonnull
 	GenericDomValue<String> getMSBuildSourceProjectFile();
-
-
 }

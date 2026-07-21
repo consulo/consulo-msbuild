@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.GenericDomValue;
  */
 public interface ClCompile extends DomElement, SimpleItem
 {
-
 	/**
 	 * Returns the value of the Condition child.
 	 * <pre>
@@ -29,8 +27,8 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the Include child.
@@ -42,8 +40,8 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return the value of the Include child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getInclude();
-
 
 	/**
 	 * Returns the value of the Exclude child.
@@ -55,8 +53,8 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return the value of the Exclude child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getExclude();
-
 
 	/**
 	 * Returns the value of the Remove child.
@@ -68,8 +66,8 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return the value of the Remove child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRemove();
-
 
 	/**
 	 * Returns the value of the Update child.
@@ -82,8 +80,8 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return the value of the Update child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getUpdate();
-
 
 	/**
 	 * Returns the value of the Label child.
@@ -95,8 +93,8 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return the value of the Label child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getLabel();
-
 
 	/**
 	 * Returns the list of PrecompiledHeader children.
@@ -113,7 +111,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	PrecompiledHeader addPrecompiledHeader();
 
-
 	/**
 	 * Returns the list of AdditionalIncludeDirectories children.
 	 *
@@ -128,7 +125,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addAdditionalIncludeDirectories();
-
 
 	/**
 	 * Returns the list of AdditionalUsingDirectories children.
@@ -145,7 +141,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addAdditionalUsingDirectories();
 
-
 	/**
 	 * Returns the list of CompileAsManaged children.
 	 *
@@ -160,7 +155,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	CompileAsManaged addCompileAsManaged();
-
 
 	/**
 	 * Returns the list of ErrorReporting children.
@@ -177,7 +171,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addErrorReporting();
 
-
 	/**
 	 * Returns the list of WarningLevel children.
 	 *
@@ -192,7 +185,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addWarningLevel();
-
 
 	/**
 	 * Returns the list of MinimalRebuild children.
@@ -209,7 +201,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addMinimalRebuild();
 
-
 	/**
 	 * Returns the list of DebugInformationFormat children.
 	 *
@@ -224,7 +215,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addDebugInformationFormat();
-
 
 	/**
 	 * Returns the list of PreprocessorDefinitions children.
@@ -241,7 +231,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addPreprocessorDefinitions();
 
-
 	/**
 	 * Returns the list of Optimization children.
 	 *
@@ -256,7 +245,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addOptimization();
-
 
 	/**
 	 * Returns the list of BasicRuntimeChecks children.
@@ -273,7 +261,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addBasicRuntimeChecks();
 
-
 	/**
 	 * Returns the list of RuntimeLibrary children.
 	 *
@@ -288,7 +275,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addRuntimeLibrary();
-
 
 	/**
 	 * Returns the list of FunctionLevelLinking children.
@@ -305,7 +291,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addFunctionLevelLinking();
 
-
 	/**
 	 * Returns the list of FloatingPointModel children.
 	 *
@@ -320,7 +305,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addFloatingPointModel();
-
 
 	/**
 	 * Returns the list of IntrinsicFunctions children.
@@ -337,7 +321,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addIntrinsicFunctions();
 
-
 	/**
 	 * Returns the list of PrecompiledHeaderFile children.
 	 *
@@ -352,7 +335,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addPrecompiledHeaderFile();
-
 
 	/**
 	 * Returns the list of MultiProcessorCompilation children.
@@ -369,7 +351,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addMultiProcessorCompilation();
 
-
 	/**
 	 * Returns the list of UseUnicodeForAssemblerListing children.
 	 *
@@ -384,7 +365,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addUseUnicodeForAssemblerListing();
-
 
 	/**
 	 * Returns the list of UndefinePreprocessorDefinitions children.
@@ -401,7 +381,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addUndefinePreprocessorDefinitions();
 
-
 	/**
 	 * Returns the list of StringPooling children.
 	 *
@@ -416,7 +395,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addStringPooling();
-
 
 	/**
 	 * Returns the list of BrowseInformation children.
@@ -433,7 +411,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addBrowseInformation();
 
-
 	/**
 	 * Returns the list of FloatingPointExceptions children.
 	 *
@@ -448,7 +425,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addFloatingPointExceptions();
-
 
 	/**
 	 * Returns the list of CreateHotpatchableImage children.
@@ -465,7 +441,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addCreateHotpatchableImage();
 
-
 	/**
 	 * Returns the list of RuntimeTypeInfo children.
 	 *
@@ -480,7 +455,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addRuntimeTypeInfo();
-
 
 	/**
 	 * Returns the list of OpenMPSupport children.
@@ -497,7 +471,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addOpenMPSupport();
 
-
 	/**
 	 * Returns the list of CallingConvention children.
 	 *
@@ -512,7 +485,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addCallingConvention();
-
 
 	/**
 	 * Returns the list of DisableSpecificWarnings children.
@@ -529,7 +501,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addDisableSpecificWarnings();
 
-
 	/**
 	 * Returns the list of ForcedIncludeFiles children.
 	 *
@@ -544,7 +515,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addForcedIncludeFiles();
-
 
 	/**
 	 * Returns the list of ForcedUsingFiles children.
@@ -561,7 +531,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addForcedUsingFiles();
 
-
 	/**
 	 * Returns the list of ShowIncludes children.
 	 *
@@ -576,7 +545,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addShowIncludes();
-
 
 	/**
 	 * Returns the list of UseFullPaths children.
@@ -593,7 +561,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addUseFullPaths();
 
-
 	/**
 	 * Returns the list of OmitDefaultLibName children.
 	 *
@@ -609,7 +576,6 @@ public interface ClCompile extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addOmitDefaultLibName();
 
-
 	/**
 	 * Returns the list of TreatSpecificWarningsAsErrors children.
 	 *
@@ -624,6 +590,4 @@ public interface ClCompile extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addTreatSpecificWarningsAsErrors();
-
-
 }

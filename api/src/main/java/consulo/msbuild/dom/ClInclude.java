@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.GenericDomValue;
  */
 public interface ClInclude extends DomElement, SimpleItem
 {
-
 	/**
 	 * Returns the value of the Condition child.
 	 * <pre>
@@ -29,8 +27,8 @@ public interface ClInclude extends DomElement, SimpleItem
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the Include child.
@@ -42,8 +40,8 @@ public interface ClInclude extends DomElement, SimpleItem
 	 * @return the value of the Include child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getInclude();
-
 
 	/**
 	 * Returns the value of the Exclude child.
@@ -55,8 +53,8 @@ public interface ClInclude extends DomElement, SimpleItem
 	 * @return the value of the Exclude child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getExclude();
-
 
 	/**
 	 * Returns the value of the Remove child.
@@ -68,8 +66,8 @@ public interface ClInclude extends DomElement, SimpleItem
 	 * @return the value of the Remove child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRemove();
-
 
 	/**
 	 * Returns the value of the Update child.
@@ -82,8 +80,8 @@ public interface ClInclude extends DomElement, SimpleItem
 	 * @return the value of the Update child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getUpdate();
-
 
 	/**
 	 * Returns the value of the Label child.
@@ -95,8 +93,8 @@ public interface ClInclude extends DomElement, SimpleItem
 	 * @return the value of the Label child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getLabel();
-
 
 	/**
 	 * Returns the list of AdditionalIncludeDirectories children.
@@ -112,6 +110,4 @@ public interface ClInclude extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addAdditionalIncludeDirectories();
-
-
 }

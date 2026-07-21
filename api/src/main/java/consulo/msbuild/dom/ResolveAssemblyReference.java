@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface ResolveAssemblyReference extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AllowedAssemblyExtensions child.
 	 *
@@ -26,7 +24,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAllowedAssemblyExtensions();
-
 
 	/**
 	 * Returns the value of the AllowedGlobalAssemblyNamePrefix child.
@@ -36,7 +33,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAllowedGlobalAssemblyNamePrefix();
 
-
 	/**
 	 * Returns the value of the AllowedRelatedFileExtensions child.
 	 *
@@ -44,7 +40,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAllowedRelatedFileExtensions();
-
 
 	/**
 	 * Returns the value of the AppConfigFile child.
@@ -54,7 +49,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAppConfigFile();
 
-
 	/**
 	 * Returns the value of the Assemblies child.
 	 *
@@ -62,7 +56,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAssemblies();
-
 
 	/**
 	 * Returns the value of the AssemblyFiles child.
@@ -72,7 +65,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAssemblyFiles();
 
-
 	/**
 	 * Returns the value of the AutoUnify child.
 	 *
@@ -80,7 +72,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getAutoUnify();
-
 
 	/**
 	 * Returns the value of the CandidateAssemblyFiles child.
@@ -90,7 +81,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getCandidateAssemblyFiles();
 
-
 	/**
 	 * Returns the value of the FilesWritten child.
 	 *
@@ -98,7 +88,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getFilesWritten();
-
 
 	/**
 	 * Returns the value of the FindDependencies child.
@@ -108,7 +97,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getFindDependencies();
 
-
 	/**
 	 * Returns the value of the FindRelatedFiles child.
 	 *
@@ -116,7 +104,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getFindRelatedFiles();
-
 
 	/**
 	 * Returns the value of the FindSatellites child.
@@ -126,7 +113,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getFindSatellites();
 
-
 	/**
 	 * Returns the value of the FindSerializationAssemblies child.
 	 *
@@ -134,7 +120,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getFindSerializationAssemblies();
-
 
 	/**
 	 * Returns the value of the FullFrameworkAssemblyTables child.
@@ -144,7 +129,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getFullFrameworkAssemblyTables();
 
-
 	/**
 	 * Returns the value of the FullFrameworkFolders child.
 	 *
@@ -152,7 +136,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getFullFrameworkFolders();
-
 
 	/**
 	 * Returns the value of the FullTargetFrameworkSubsetNames child.
@@ -162,7 +145,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getFullTargetFrameworkSubsetNames();
 
-
 	/**
 	 * Returns the value of the IgnoreDefaultInstalledAssemblySubsetTables child.
 	 *
@@ -170,7 +152,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreDefaultInstalledAssemblySubsetTables();
-
 
 	/**
 	 * Returns the value of the IgnoreDefaultInstalledAssemblyTables child.
@@ -180,7 +161,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreDefaultInstalledAssemblyTables();
 
-
 	/**
 	 * Returns the value of the InstalledAssemblySubsetTables child.
 	 *
@@ -188,7 +168,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getInstalledAssemblySubsetTables();
-
 
 	/**
 	 * Returns the value of the InstalledAssemblyTables child.
@@ -198,7 +177,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getInstalledAssemblyTables();
 
-
 	/**
 	 * Returns the value of the ProfileName child.
 	 *
@@ -207,7 +185,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getProfileName();
 
-
 	/**
 	 * Returns the value of the PublicKeysRestrictedForGlobalLocation child.
 	 *
@@ -215,7 +192,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getPublicKeysRestrictedForGlobalLocation();
-
 
 	/**
 	 * Returns the value of the SearchPaths child.
@@ -226,7 +202,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getSearchPaths();
 
-
 	/**
 	 * Returns the value of the Silent child.
 	 *
@@ -234,7 +209,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getSilent();
-
 
 	/**
 	 * Returns the value of the StateFile child.
@@ -244,7 +218,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStateFile();
 
-
 	/**
 	 * Returns the value of the TargetedRuntimeVersion child.
 	 *
@@ -252,7 +225,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetedRuntimeVersion();
-
 
 	/**
 	 * Returns the value of the TargetFrameworkDirectories child.
@@ -262,7 +234,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkDirectories();
 
-
 	/**
 	 * Returns the value of the TargetFrameworkMoniker child.
 	 *
@@ -270,7 +241,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkMoniker();
-
 
 	/**
 	 * Returns the value of the TargetFrameworkMonikerDisplayName child.
@@ -280,7 +250,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkMonikerDisplayName();
 
-
 	/**
 	 * Returns the value of the TargetFrameworkSubsets child.
 	 *
@@ -288,7 +257,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkSubsets();
-
 
 	/**
 	 * Returns the value of the TargetFrameworkVersion child.
@@ -298,7 +266,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkVersion();
 
-
 	/**
 	 * Returns the value of the TargetProcessorArchitecture child.
 	 *
@@ -306,7 +273,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetProcessorArchitecture();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -318,8 +284,8 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -331,8 +297,8 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -346,8 +312,8 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -361,8 +327,8 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -374,6 +340,7 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -381,7 +348,6 @@ public interface ResolveAssemblyReference extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }
