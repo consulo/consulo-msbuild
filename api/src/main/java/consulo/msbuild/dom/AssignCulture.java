@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:18 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface AssignCulture extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the Files child.
 	 *
@@ -27,7 +25,6 @@ public interface AssignCulture extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getFiles();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -39,8 +36,8 @@ public interface AssignCulture extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -52,8 +49,8 @@ public interface AssignCulture extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -67,8 +64,8 @@ public interface AssignCulture extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -82,8 +79,8 @@ public interface AssignCulture extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -95,6 +92,7 @@ public interface AssignCulture extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -102,7 +100,6 @@ public interface AssignCulture extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

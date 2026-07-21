@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.GenericAttributeValue;
  */
 public interface ResolveComReference extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the DelaySign child.
 	 *
@@ -25,7 +23,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
-
 
 	/**
 	 * Returns the value of the ExecuteAsTool child.
@@ -35,7 +32,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getExecuteAsTool();
 
-
 	/**
 	 * Returns the value of the IncludeVersionInInteropName child.
 	 *
@@ -43,7 +39,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getIncludeVersionInInteropName();
-
 
 	/**
 	 * Returns the value of the KeyContainer child.
@@ -53,7 +48,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
-
 	/**
 	 * Returns the value of the KeyFile child.
 	 *
@@ -61,7 +55,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
-
 
 	/**
 	 * Returns the value of the NoClassMembers child.
@@ -71,7 +64,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoClassMembers();
 
-
 	/**
 	 * Returns the value of the ResolvedAssemblyReferences child.
 	 *
@@ -79,7 +71,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getResolvedAssemblyReferences();
-
 
 	/**
 	 * Returns the value of the ResolvedFiles child.
@@ -89,7 +80,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getResolvedFiles();
 
-
 	/**
 	 * Returns the value of the ResolvedModules child.
 	 *
@@ -97,7 +87,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getResolvedModules();
-
 
 	/**
 	 * Returns the value of the SdkToolsPath child.
@@ -107,7 +96,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getSdkToolsPath();
 
-
 	/**
 	 * Returns the value of the StateFile child.
 	 *
@@ -115,7 +103,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStateFile();
-
 
 	/**
 	 * Returns the value of the TargetFrameworkVersion child.
@@ -125,7 +112,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkVersion();
 
-
 	/**
 	 * Returns the value of the TargetProcessorArchitecture child.
 	 *
@@ -133,7 +119,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetProcessorArchitecture();
-
 
 	/**
 	 * Returns the value of the TypeLibFiles child.
@@ -143,7 +128,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTypeLibFiles();
 
-
 	/**
 	 * Returns the value of the TypeLibNames child.
 	 *
@@ -152,7 +136,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTypeLibNames();
 
-
 	/**
 	 * Returns the value of the WrapperOutputDirectory child.
 	 *
@@ -160,7 +143,6 @@ public interface ResolveComReference extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getWrapperOutputDirectory();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -174,7 +156,6 @@ public interface ResolveComReference extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getCondition();
 
-
 	/**
 	 * Returns the value of the ContinueOnError child.
 	 * <pre>
@@ -185,8 +166,8 @@ public interface ResolveComReference extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -200,8 +181,8 @@ public interface ResolveComReference extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -215,8 +196,8 @@ public interface ResolveComReference extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -228,6 +209,7 @@ public interface ResolveComReference extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -235,7 +217,6 @@ public interface ResolveComReference extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:18 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.GenericAttributeValue;
  */
 public interface AspNetCompiler extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AllowPartiallyTrustedCallers child.
 	 *
@@ -25,7 +23,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getAllowPartiallyTrustedCallers();
-
 
 	/**
 	 * Returns the value of the Clean child.
@@ -35,7 +32,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getClean();
 
-
 	/**
 	 * Returns the value of the Debug child.
 	 *
@@ -43,7 +39,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getDebug();
-
 
 	/**
 	 * Returns the value of the DelaySign child.
@@ -53,7 +48,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
 
-
 	/**
 	 * Returns the value of the EnvironmentVariables child.
 	 *
@@ -61,7 +55,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
-
 
 	/**
 	 * Returns the value of the FixedNames child.
@@ -71,7 +64,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getFixedNames();
 
-
 	/**
 	 * Returns the value of the Force child.
 	 *
@@ -79,7 +71,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getForce();
-
 
 	/**
 	 * Returns the value of the KeyContainer child.
@@ -89,7 +80,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
-
 	/**
 	 * Returns the value of the KeyFile child.
 	 *
@@ -97,7 +87,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
-
 
 	/**
 	 * Returns the value of the LogStandardErrorAsError child.
@@ -107,7 +96,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
 
-
 	/**
 	 * Returns the value of the MetabasePath child.
 	 *
@@ -115,7 +103,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getMetabasePath();
-
 
 	/**
 	 * Returns the value of the PhysicalPath child.
@@ -125,7 +112,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getPhysicalPath();
 
-
 	/**
 	 * Returns the value of the StandardErrorImportance child.
 	 *
@@ -133,7 +119,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
-
 
 	/**
 	 * Returns the value of the StandardOutputImportance child.
@@ -143,7 +128,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
-
 	/**
 	 * Returns the value of the TargetFrameworkMoniker child.
 	 *
@@ -151,7 +135,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkMoniker();
-
 
 	/**
 	 * Returns the value of the TargetPath child.
@@ -161,7 +144,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetPath();
 
-
 	/**
 	 * Returns the value of the Timeout child.
 	 *
@@ -169,7 +151,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the ToolExe child.
@@ -179,7 +160,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
-
 	/**
 	 * Returns the value of the ToolPath child.
 	 *
@@ -187,7 +167,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getToolPath();
-
 
 	/**
 	 * Returns the value of the Updateable child.
@@ -197,7 +176,6 @@ public interface AspNetCompiler extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getUpdateable();
 
-
 	/**
 	 * Returns the value of the VirtualPath child.
 	 *
@@ -205,7 +183,6 @@ public interface AspNetCompiler extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getVirtualPath();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -217,8 +194,8 @@ public interface AspNetCompiler extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -230,8 +207,8 @@ public interface AspNetCompiler extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -245,8 +222,8 @@ public interface AspNetCompiler extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -260,8 +237,8 @@ public interface AspNetCompiler extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
-	GenericAttributeValue<String> getRuntime();
-
+    @Override
+    GenericAttributeValue<String> getRuntime();
 
 	/**
 	 * Returns the list of Output children.
@@ -273,14 +250,14 @@ public interface AspNetCompiler extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
-	List<Output> getOutputs();
+    @Override
+    List<Output> getOutputs();
 
 	/**
 	 * Adds new child to the list of Output children.
 	 *
 	 * @return created child
 	 */
-	Output addOutput();
-
-
+    @Override
+    Output addOutput();
 }

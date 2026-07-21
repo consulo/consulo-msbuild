@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface StripPrivateSymbols extends DomElement, ToolTask
 {
-
 	/**
 	 * Returns the value of the PdbCopyToolPath child.
 	 *
@@ -27,7 +25,6 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getPdbCopyToolPath();
-
 
 	/**
 	 * Returns the value of the InputPdb child.
@@ -38,7 +35,6 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	@Required
 	GenericAttributeValue<String> getInputPdb();
 
-
 	/**
 	 * Returns the value of the StrippedPdb child.
 	 *
@@ -48,15 +44,14 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	@Required
 	GenericAttributeValue<String> getStrippedPdb();
 
-
 	/**
 	 * Returns the value of the ExitCode child.
 	 *
 	 * @return the value of the ExitCode child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getExitCode();
-
 
 	/**
 	 * Returns the value of the YieldDuringToolExecution child.
@@ -64,8 +59,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the YieldDuringToolExecution child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getYieldDuringToolExecution();
-
 
 	/**
 	 * Returns the value of the UseCommandProcessor child.
@@ -73,8 +68,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the UseCommandProcessor child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getUseCommandProcessor();
-
 
 	/**
 	 * Returns the value of the EchoOff child.
@@ -82,8 +77,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the EchoOff child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getEchoOff();
-
 
 	/**
 	 * Returns the value of the ToolExe child.
@@ -91,8 +86,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the ToolExe child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getToolExe();
-
 
 	/**
 	 * Returns the value of the ToolPath child.
@@ -100,8 +95,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the ToolPath child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getToolPath();
-
 
 	/**
 	 * Returns the value of the EnvironmentVariables child.
@@ -109,8 +104,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the EnvironmentVariables child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getEnvironmentVariables();
-
 
 	/**
 	 * Returns the value of the Timeout child.
@@ -118,8 +113,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the Timeout child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the StandardErrorImportance child.
@@ -127,8 +122,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the StandardErrorImportance child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getStandardErrorImportance();
-
 
 	/**
 	 * Returns the value of the StandardOutputImportance child.
@@ -136,8 +131,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the StandardOutputImportance child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getStandardOutputImportance();
-
 
 	/**
 	 * Returns the value of the LogStandardErrorAsError child.
@@ -145,8 +140,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the LogStandardErrorAsError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -158,8 +153,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -171,8 +166,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -186,8 +181,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -201,8 +196,8 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -214,6 +209,7 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -221,7 +217,6 @@ public interface StripPrivateSymbols extends DomElement, ToolTask
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

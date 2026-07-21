@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:20 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface VCBuild extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AdditionalLibPaths child.
 	 *
@@ -26,7 +24,6 @@ public interface VCBuild extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalLibPaths();
-
 
 	/**
 	 * Returns the value of the AdditionalLinkLibraryPaths child.
@@ -36,7 +33,6 @@ public interface VCBuild extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalLinkLibraryPaths();
 
-
 	/**
 	 * Returns the value of the AdditionalOptions child.
 	 *
@@ -44,7 +40,6 @@ public interface VCBuild extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalOptions();
-
 
 	/**
 	 * Returns the value of the Clean child.
@@ -54,7 +49,6 @@ public interface VCBuild extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getClean();
 
-
 	/**
 	 * Returns the value of the Configuration child.
 	 *
@@ -62,7 +56,6 @@ public interface VCBuild extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getConfiguration();
-
 
 	/**
 	 * Returns the value of the Override child.
@@ -72,7 +65,6 @@ public interface VCBuild extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getOverride();
 
-
 	/**
 	 * Returns the value of the Platform child.
 	 *
@@ -80,7 +72,6 @@ public interface VCBuild extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getPlatform();
-
 
 	/**
 	 * Returns the value of the Projects child.
@@ -91,7 +82,6 @@ public interface VCBuild extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getProjects();
 
-
 	/**
 	 * Returns the value of the Rebuild child.
 	 *
@@ -99,7 +89,6 @@ public interface VCBuild extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getRebuild();
-
 
 	/**
 	 * Returns the value of the SolutionFile child.
@@ -109,7 +98,6 @@ public interface VCBuild extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getSolutionFile();
 
-
 	/**
 	 * Returns the value of the Timeout child.
 	 *
@@ -117,7 +105,6 @@ public interface VCBuild extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the ToolPath child.
@@ -127,7 +114,6 @@ public interface VCBuild extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
-
 	/**
 	 * Returns the value of the UseEnvironment child.
 	 *
@@ -136,7 +122,6 @@ public interface VCBuild extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getUseEnvironment();
 
-
 	/**
 	 * Returns the value of the UserEnvironment child.
 	 *
@@ -144,7 +129,6 @@ public interface VCBuild extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getUserEnvironment();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -156,8 +140,8 @@ public interface VCBuild extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -169,8 +153,8 @@ public interface VCBuild extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -184,8 +168,8 @@ public interface VCBuild extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -199,8 +183,8 @@ public interface VCBuild extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -212,6 +196,7 @@ public interface VCBuild extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -219,7 +204,6 @@ public interface VCBuild extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

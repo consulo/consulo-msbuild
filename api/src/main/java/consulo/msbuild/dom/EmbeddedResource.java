@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import jakarta.annotation.Nonnull;
@@ -21,7 +20,6 @@ import consulo.xml.dom.Required;
 @NameStrategyForAttributes(MSBuildNameStrategy.class)
 public interface EmbeddedResource extends DomElement, SimpleItem
 {
-
 	/**
 	 * Returns the value of the simple content.
 	 *
@@ -38,7 +36,6 @@ public interface EmbeddedResource extends DomElement, SimpleItem
 	 */
 	void setValue(@Nonnull String value);
 
-
 	/**
 	 * Returns the value of the Include child.
 	 * <pre>
@@ -49,8 +46,8 @@ public interface EmbeddedResource extends DomElement, SimpleItem
 	 * @return the value of the Include child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getInclude();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -62,6 +59,7 @@ public interface EmbeddedResource extends DomElement, SimpleItem
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
 
 	@Nonnull

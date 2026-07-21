@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.GenericAttributeValue;
  */
 public interface CodeAnalysis extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AlternativeToolName child.
 	 *
@@ -25,7 +23,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAlternativeToolName();
-
 
 	/**
 	 * Returns the value of the AnalysisTimeout child.
@@ -35,7 +32,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAnalysisTimeout();
 
-
 	/**
 	 * Returns the value of the ApplyLogFileXsl child.
 	 *
@@ -43,7 +39,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getApplyLogFileXsl();
-
 
 	/**
 	 * Returns the value of the Assemblies child.
@@ -53,7 +48,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAssemblies();
 
-
 	/**
 	 * Returns the value of the ConsoleXsl child.
 	 *
@@ -61,7 +55,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getConsoleXsl();
-
 
 	/**
 	 * Returns the value of the Culture child.
@@ -71,7 +64,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getCulture();
 
-
 	/**
 	 * Returns the value of the DependentAssemblyPaths child.
 	 *
@@ -79,7 +71,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getDependentAssemblyPaths();
-
 
 	/**
 	 * Returns the value of the Dictionaries child.
@@ -89,7 +80,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getDictionaries();
 
-
 	/**
 	 * Returns the value of the FilesWritten child.
 	 *
@@ -97,7 +87,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getFilesWritten();
-
 
 	/**
 	 * Returns the value of the ForceOutput child.
@@ -107,7 +96,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getForceOutput();
 
-
 	/**
 	 * Returns the value of the GenerateSuccessFile child.
 	 *
@@ -115,7 +103,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateSuccessFile();
-
 
 	/**
 	 * Returns the value of the IgnoreInvalidTargets child.
@@ -125,7 +112,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreInvalidTargets();
 
-
 	/**
 	 * Returns the value of the IgnoreGeneratedCode child.
 	 *
@@ -133,7 +119,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreGeneratedCode();
-
 
 	/**
 	 * Returns the value of the Imports child.
@@ -143,7 +128,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getImports();
 
-
 	/**
 	 * Returns the value of the LogFile child.
 	 *
@@ -151,7 +135,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getLogFile();
-
 
 	/**
 	 * Returns the value of the LogFileXsl child.
@@ -161,7 +144,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getLogFileXsl();
 
-
 	/**
 	 * Returns the value of the OutputToConsole child.
 	 *
@@ -169,7 +151,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getOutputToConsole();
-
 
 	/**
 	 * Returns the value of the OverrideRuleVisibilities child.
@@ -179,7 +160,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getOverrideRuleVisibilities();
 
-
 	/**
 	 * Returns the value of the PlatformPath child.
 	 *
@@ -187,7 +167,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getPlatformPath();
-
 
 	/**
 	 * Returns the value of the Project child.
@@ -197,7 +176,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getProject();
 
-
 	/**
 	 * Returns the value of the Quiet child.
 	 *
@@ -205,7 +183,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getQuiet();
-
 
 	/**
 	 * Returns the value of the References child.
@@ -215,7 +192,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getReferences();
 
-
 	/**
 	 * Returns the value of the RuleAssemblies child.
 	 *
@@ -223,7 +199,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getRuleAssemblies();
-
 
 	/**
 	 * Returns the value of the Rules child.
@@ -233,7 +208,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getRules();
 
-
 	/**
 	 * Returns the value of the SaveMessagesToReport child.
 	 *
@@ -241,7 +215,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getSaveMessagesToReport();
-
 
 	/**
 	 * Returns the value of the SearchGlobalAssemblyCache child.
@@ -251,7 +224,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getSearchGlobalAssemblyCache();
 
-
 	/**
 	 * Returns the value of the Summary child.
 	 *
@@ -259,7 +231,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getSummary();
-
 
 	/**
 	 * Returns the value of the SuccessFile child.
@@ -269,7 +240,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getSuccessFile();
 
-
 	/**
 	 * Returns the value of the Timeout child.
 	 *
@@ -277,7 +247,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the TreatWarningsAsErrors child.
@@ -287,7 +256,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getTreatWarningsAsErrors();
 
-
 	/**
 	 * Returns the value of the ToolPath child.
 	 *
@@ -296,7 +264,6 @@ public interface CodeAnalysis extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
-
 	/**
 	 * Returns the value of the UpdateProject child.
 	 *
@@ -304,7 +271,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getUpdateProject();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -316,8 +282,8 @@ public interface CodeAnalysis extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -329,8 +295,8 @@ public interface CodeAnalysis extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -344,8 +310,8 @@ public interface CodeAnalysis extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -359,8 +325,8 @@ public interface CodeAnalysis extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -372,6 +338,7 @@ public interface CodeAnalysis extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -379,7 +346,6 @@ public interface CodeAnalysis extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }
