@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the ContentToIndex child.
 	 *
@@ -27,7 +25,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getContentToIndex();
-
 
 	/**
 	 * Returns the value of the MakePriExeFullPath child.
@@ -38,7 +35,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getMakePriExeFullPath();
 
-
 	/**
 	 * Returns the value of the MakePriExtensionPath child.
 	 *
@@ -46,7 +42,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getMakePriExtensionPath();
-
 
 	/**
 	 * Returns the value of the IntermediateDirectory child.
@@ -57,7 +52,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getIntermediateDirectory();
 
-
 	/**
 	 * Returns the value of the DefaultResourceLanguage child.
 	 *
@@ -66,7 +60,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getDefaultResourceLanguage();
-
 
 	/**
 	 * Returns the value of the DefaultResourceQualifiers child.
@@ -77,7 +70,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getDefaultResourceQualifiers();
 
-
 	/**
 	 * Returns the value of the IntermediateFileWrites child.
 	 *
@@ -86,7 +78,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getIntermediateFileWrites();
 
-
 	/**
 	 * Returns the value of the CreatedPriFiles child.
 	 *
@@ -94,7 +85,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getCreatedPriFiles();
-
 
 	/**
 	 * Returns the value of the IntermediateExtension child.
@@ -105,7 +95,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getIntermediateExtension();
 
-
 	/**
 	 * Returns the value of the AdditionalMakepriExeParameters child.
 	 *
@@ -113,7 +102,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalMakepriExeParameters();
-
 
 	/**
 	 * Returns the value of the TargetPlatformIdentifier child.
@@ -124,7 +112,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
 
-
 	/**
 	 * Returns the value of the TargetPlatformVersion child.
 	 *
@@ -133,7 +120,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformVersion();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -145,8 +131,8 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -158,8 +144,8 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -173,8 +159,8 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -188,8 +174,8 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -201,6 +187,7 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -208,7 +195,6 @@ public interface CreatePriFilesForPortableLibraries extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

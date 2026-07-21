@@ -17,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface GetWindowsDesktopSdkDir extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the TargetPlatformIdentifier child.
 	 *
@@ -62,6 +61,7 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
 
 	/**
@@ -89,6 +89,7 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
 
 	/**

@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.Required;
  */
 public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, CreatePriConfigXmlTask
 {
-
 	/**
 	 * Returns the value of the AppxBundleAutoResourcePackageQualifiers child.
 	 *
@@ -27,16 +25,15 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	@Required
 	GenericAttributeValue<String> getAppxBundleAutoResourcePackageQualifiers();
 
-
 	/**
 	 * Returns the value of the PriConfigXmlPath child.
 	 *
 	 * @return the value of the PriConfigXmlPath child.
 	 */
 	@Nonnull
+    @Override
 	@Required
 	GenericAttributeValue<String> getPriConfigXmlPath();
-
 
 	/**
 	 * Returns the value of the PriInitialPath child.
@@ -44,8 +41,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the PriInitialPath child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getPriInitialPath();
-
 
 	/**
 	 * Returns the value of the DefaultResourceLanguage child.
@@ -53,9 +50,9 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the DefaultResourceLanguage child.
 	 */
 	@Nonnull
+    @Override
 	@Required
 	GenericAttributeValue<String> getDefaultResourceLanguage();
-
 
 	/**
 	 * Returns the value of the DefaultResourceQualifiers child.
@@ -63,9 +60,9 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the DefaultResourceQualifiers child.
 	 */
 	@Nonnull
+    @Override
 	@Required
 	GenericAttributeValue<String> getDefaultResourceQualifiers();
-
 
 	/**
 	 * Returns the value of the ConvertDotsToSlashes child.
@@ -73,8 +70,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the ConvertDotsToSlashes child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getConvertDotsToSlashes();
-
 
 	/**
 	 * Returns the value of the IntermediateExtension child.
@@ -82,9 +79,9 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the IntermediateExtension child.
 	 */
 	@Nonnull
+    @Override
 	@Required
 	GenericAttributeValue<String> getIntermediateExtension();
-
 
 	/**
 	 * Returns the value of the PriConfigXmlPackagingSnippetPath child.
@@ -92,8 +89,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the PriConfigXmlPackagingSnippetPath child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getPriConfigXmlPackagingSnippetPath();
-
 
 	/**
 	 * Returns the value of the PriConfigXmlDefaultSnippetPath child.
@@ -101,8 +98,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the PriConfigXmlDefaultSnippetPath child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getPriConfigXmlDefaultSnippetPath();
-
 
 	/**
 	 * Returns the value of the TargetPlatformIdentifier child.
@@ -110,9 +107,9 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the TargetPlatformIdentifier child.
 	 */
 	@Nonnull
+    @Override
 	@Required
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
-
 
 	/**
 	 * Returns the value of the TargetPlatformVersion child.
@@ -120,9 +117,9 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the TargetPlatformVersion child.
 	 */
 	@Nonnull
+    @Override
 	@Required
 	GenericAttributeValue<String> getTargetPlatformVersion();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -134,8 +131,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -147,8 +144,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -162,8 +159,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -177,8 +174,8 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -190,6 +187,7 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -197,7 +195,6 @@ public interface CreatePriConfigXmlWithPackagingElementTask extends DomElement, 
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

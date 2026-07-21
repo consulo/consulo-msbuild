@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.GenericDomValue;
  */
 public interface Manifest extends DomElement, SimpleItem
 {
-
 	/**
 	 * Returns the value of the Condition child.
 	 * <pre>
@@ -29,8 +27,8 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the Include child.
@@ -42,8 +40,8 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return the value of the Include child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getInclude();
-
 
 	/**
 	 * Returns the value of the Exclude child.
@@ -55,8 +53,8 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return the value of the Exclude child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getExclude();
-
 
 	/**
 	 * Returns the value of the Remove child.
@@ -68,8 +66,8 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return the value of the Remove child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRemove();
-
 
 	/**
 	 * Returns the value of the Update child.
@@ -82,8 +80,8 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return the value of the Update child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getUpdate();
-
 
 	/**
 	 * Returns the value of the Label child.
@@ -95,8 +93,8 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return the value of the Label child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getLabel();
-
 
 	/**
 	 * Returns the list of AssemblyIdentity children.
@@ -113,7 +111,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addAssemblyIdentity();
 
-
 	/**
 	 * Returns the list of AdditionalManifestFiles children.
 	 *
@@ -128,7 +125,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addAdditionalManifestFiles();
-
 
 	/**
 	 * Returns the list of InputResourceManifests children.
@@ -145,7 +141,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addInputResourceManifests();
 
-
 	/**
 	 * Returns the list of EnableDPIAwareness children.
 	 *
@@ -160,7 +155,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addEnableDPIAwareness();
-
 
 	/**
 	 * Returns the list of TypeLibraryFile children.
@@ -177,7 +171,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addTypeLibraryFile();
 
-
 	/**
 	 * Returns the list of OutputManifestFile children.
 	 *
@@ -192,7 +185,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addOutputManifestFile();
-
 
 	/**
 	 * Returns the list of SuppressStartupBanner children.
@@ -209,7 +201,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addSuppressStartupBanner();
 
-
 	/**
 	 * Returns the list of VerboseOutput children.
 	 *
@@ -224,7 +215,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addVerboseOutput();
-
 
 	/**
 	 * Returns the list of ResourceOutputFileName children.
@@ -241,7 +231,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addResourceOutputFileName();
 
-
 	/**
 	 * Returns the list of GenerateCatalogFiles children.
 	 *
@@ -256,7 +245,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addGenerateCatalogFiles();
-
 
 	/**
 	 * Returns the list of DependencyInformationFile children.
@@ -273,7 +261,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addDependencyInformationFile();
 
-
 	/**
 	 * Returns the list of ManifestFromManagedAssembly children.
 	 *
@@ -288,7 +275,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addManifestFromManagedAssembly();
-
 
 	/**
 	 * Returns the list of SuppressDependencyElement children.
@@ -305,7 +291,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addSuppressDependencyElement();
 
-
 	/**
 	 * Returns the list of GenerateCategoryTags children.
 	 *
@@ -320,7 +305,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addGenerateCategoryTags();
-
 
 	/**
 	 * Returns the list of RegistrarScriptFile children.
@@ -337,7 +321,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addRegistrarScriptFile();
 
-
 	/**
 	 * Returns the list of ComponentFileName children.
 	 *
@@ -352,7 +335,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addComponentFileName();
-
 
 	/**
 	 * Returns the list of ReplacementsFile children.
@@ -369,7 +351,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addReplacementsFile();
 
-
 	/**
 	 * Returns the list of UpdateFileHashesSearchPath children.
 	 *
@@ -384,7 +365,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	GenericDomValue<String> addUpdateFileHashesSearchPath();
-
 
 	/**
 	 * Returns the list of AdditionalOptions children.
@@ -401,7 +381,6 @@ public interface Manifest extends DomElement, SimpleItem
 	 */
 	GenericDomValue<String> addAdditionalOptions();
 
-
 	/**
 	 * Returns the list of OutputResourceManifests children.
 	 *
@@ -416,6 +395,4 @@ public interface Manifest extends DomElement, SimpleItem
 	 * @return created child
 	 */
 	OutputResourceManifests addOutputResourceManifests();
-
-
 }

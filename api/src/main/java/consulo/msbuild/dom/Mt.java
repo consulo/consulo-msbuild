@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.GenericAttributeValue;
  */
 public interface Mt extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AcceptableNonZeroExitCodes child.
 	 *
@@ -25,7 +23,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAcceptableNonZeroExitCodes();
-
 
 	/**
 	 * Returns the value of the ActiveToolSwitchesValues child.
@@ -35,7 +32,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getActiveToolSwitchesValues();
 
-
 	/**
 	 * Returns the value of the AdditionalManifestFiles child.
 	 *
@@ -43,7 +39,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalManifestFiles();
-
 
 	/**
 	 * Returns the value of the AdditionalOptions child.
@@ -53,7 +48,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalOptions();
 
-
 	/**
 	 * Returns the value of the AssemblyIdentity child.
 	 *
@@ -61,7 +55,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAssemblyIdentity();
-
 
 	/**
 	 * Returns the value of the ComponentFileName child.
@@ -71,7 +64,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getComponentFileName();
 
-
 	/**
 	 * Returns the value of the EmbedManifest child.
 	 *
@@ -79,7 +71,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getEmbedManifest();
-
 
 	/**
 	 * Returns the value of the EnvironmentVariables child.
@@ -89,7 +80,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
 
-
 	/**
 	 * Returns the value of the ExcludedInputPaths child.
 	 *
@@ -97,7 +87,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getExcludedInputPaths();
-
 
 	/**
 	 * Returns the value of the GenerateCatalogFiles child.
@@ -107,7 +96,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateCatalogFiles();
 
-
 	/**
 	 * Returns the value of the GenerateCategoryTags child.
 	 *
@@ -115,7 +103,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateCategoryTags();
-
 
 	/**
 	 * Returns the value of the InputResourceManifests child.
@@ -125,7 +112,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getInputResourceManifests();
 
-
 	/**
 	 * Returns the value of the LogStandardErrorAsError child.
 	 *
@@ -133,7 +119,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
-
 
 	/**
 	 * Returns the value of the ManifestFromManagedAssembly child.
@@ -143,7 +128,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getManifestFromManagedAssembly();
 
-
 	/**
 	 * Returns the value of the MinimalRebuildFromTracking child.
 	 *
@@ -151,7 +135,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getMinimalRebuildFromTracking();
-
 
 	/**
 	 * Returns the value of the OutputManifestFile child.
@@ -161,7 +144,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getOutputManifestFile();
 
-
 	/**
 	 * Returns the value of the OutputResourceManifests child.
 	 *
@@ -169,7 +151,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getOutputResourceManifests();
-
 
 	/**
 	 * Returns the value of the PathOverride child.
@@ -179,7 +160,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getPathOverride();
 
-
 	/**
 	 * Returns the value of the RegistrarScriptFile child.
 	 *
@@ -187,7 +167,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getRegistrarScriptFile();
-
 
 	/**
 	 * Returns the value of the ReplacementsFile child.
@@ -197,7 +176,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getReplacementsFile();
 
-
 	/**
 	 * Returns the value of the ResourceOutputFileName child.
 	 *
@@ -205,7 +183,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getResourceOutputFileName();
-
 
 	/**
 	 * Returns the value of the SkippedExecution child.
@@ -215,7 +192,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getSkippedExecution();
 
-
 	/**
 	 * Returns the value of the Sources child.
 	 *
@@ -223,7 +199,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getSources();
-
 
 	/**
 	 * Returns the value of the SourcesCompiled child.
@@ -233,7 +208,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getSourcesCompiled();
 
-
 	/**
 	 * Returns the value of the StandardErrorImportance child.
 	 *
@@ -241,7 +215,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
-
 
 	/**
 	 * Returns the value of the StandardOutputImportance child.
@@ -251,7 +224,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
-
 	/**
 	 * Returns the value of the SuppressDependencyElement child.
 	 *
@@ -259,7 +231,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getSuppressDependencyElement();
-
 
 	/**
 	 * Returns the value of the SuppressStartupBanner child.
@@ -269,7 +240,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getSuppressStartupBanner();
 
-
 	/**
 	 * Returns the value of the Timeout child.
 	 *
@@ -277,7 +247,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the TLogReadFiles child.
@@ -287,7 +256,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTLogReadFiles();
 
-
 	/**
 	 * Returns the value of the TLogWriteFiles child.
 	 *
@@ -295,7 +263,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTLogWriteFiles();
-
 
 	/**
 	 * Returns the value of the ToolExe child.
@@ -305,7 +272,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
-
 	/**
 	 * Returns the value of the ToolPath child.
 	 *
@@ -313,7 +279,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getToolPath();
-
 
 	/**
 	 * Returns the value of the TrackedInputFilesToIgnore child.
@@ -323,7 +288,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTrackedInputFilesToIgnore();
 
-
 	/**
 	 * Returns the value of the TrackedOutputFilesToIgnore child.
 	 *
@@ -331,7 +295,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTrackedOutputFilesToIgnore();
-
 
 	/**
 	 * Returns the value of the TrackerLogDirectory child.
@@ -341,7 +304,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTrackerLogDirectory();
 
-
 	/**
 	 * Returns the value of the TrackFileAccess child.
 	 *
@@ -349,7 +311,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getTrackFileAccess();
-
 
 	/**
 	 * Returns the value of the TypeLibraryFile child.
@@ -359,7 +320,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTypeLibraryFile();
 
-
 	/**
 	 * Returns the value of the UpdateFileHashes child.
 	 *
@@ -367,7 +327,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getUpdateFileHashes();
-
 
 	/**
 	 * Returns the value of the UpdateFileHashesSearchPath child.
@@ -377,7 +336,6 @@ public interface Mt extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getUpdateFileHashesSearchPath();
 
-
 	/**
 	 * Returns the value of the VerboseOutput child.
 	 *
@@ -385,7 +343,6 @@ public interface Mt extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getVerboseOutput();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -397,8 +354,8 @@ public interface Mt extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -410,8 +367,8 @@ public interface Mt extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -425,8 +382,8 @@ public interface Mt extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -440,8 +397,8 @@ public interface Mt extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -453,6 +410,7 @@ public interface Mt extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -460,7 +418,6 @@ public interface Mt extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }
