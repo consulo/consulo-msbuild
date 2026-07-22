@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.GenericAttributeValue;
  */
 public interface GenerateDeploymentManifest extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AssemblyName child.
 	 *
@@ -25,7 +23,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAssemblyName();
-
 
 	/**
 	 * Returns the value of the AssemblyVersion child.
@@ -35,7 +32,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAssemblyVersion();
 
-
 	/**
 	 * Returns the value of the CreateDesktopShortcut child.
 	 *
@@ -43,7 +39,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getCreateDesktopShortcut();
-
 
 	/**
 	 * Returns the value of the DeploymentUrl child.
@@ -53,7 +48,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getDeploymentUrl();
 
-
 	/**
 	 * Returns the value of the Description child.
 	 *
@@ -61,7 +55,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getDescription();
-
 
 	/**
 	 * Returns the value of the DisallowUrlActivation child.
@@ -71,7 +64,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getDisallowUrlActivation();
 
-
 	/**
 	 * Returns the value of the EntryPoint child.
 	 *
@@ -79,7 +71,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getEntryPoint();
-
 
 	/**
 	 * Returns the value of the ErrorReportUrl child.
@@ -89,7 +80,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getErrorReportUrl();
 
-
 	/**
 	 * Returns the value of the InputManifest child.
 	 *
@@ -97,7 +87,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getInputManifest();
-
 
 	/**
 	 * Returns the value of the Install child.
@@ -107,7 +96,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getInstall();
 
-
 	/**
 	 * Returns the value of the MapFileExtensions child.
 	 *
@@ -115,7 +103,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getMapFileExtensions();
-
 
 	/**
 	 * Returns the value of the MaxTargetPath child.
@@ -125,7 +112,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getMaxTargetPath();
 
-
 	/**
 	 * Returns the value of the MinimumRequiredVersion child.
 	 *
@@ -133,7 +119,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getMinimumRequiredVersion();
-
 
 	/**
 	 * Returns the value of the OutputManifest child.
@@ -143,7 +128,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getOutputManifest();
 
-
 	/**
 	 * Returns the value of the Platform child.
 	 *
@@ -151,7 +135,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getPlatform();
-
 
 	/**
 	 * Returns the value of the Product child.
@@ -161,7 +144,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getProduct();
 
-
 	/**
 	 * Returns the value of the Publisher child.
 	 *
@@ -169,7 +151,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getPublisher();
-
 
 	/**
 	 * Returns the value of the SuiteName child.
@@ -179,7 +160,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getSuiteName();
 
-
 	/**
 	 * Returns the value of the SupportUrl child.
 	 *
@@ -187,7 +167,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getSupportUrl();
-
 
 	/**
 	 * Returns the value of the TargetCulture child.
@@ -197,7 +176,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetCulture();
 
-
 	/**
 	 * Returns the value of the TargetFrameworkMoniker child.
 	 *
@@ -205,7 +183,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkMoniker();
-
 
 	/**
 	 * Returns the value of the TargetFrameworkVersion child.
@@ -215,7 +192,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetFrameworkVersion();
 
-
 	/**
 	 * Returns the value of the TrustUrlParameters child.
 	 *
@@ -223,7 +199,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getTrustUrlParameters();
-
 
 	/**
 	 * Returns the value of the UpdateEnabled child.
@@ -233,7 +208,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getUpdateEnabled();
 
-
 	/**
 	 * Returns the value of the UpdateInterval child.
 	 *
@@ -241,7 +215,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getUpdateInterval();
-
 
 	/**
 	 * Returns the value of the UpdateMode child.
@@ -251,7 +224,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getUpdateMode();
 
-
 	/**
 	 * Returns the value of the UpdateUnit child.
 	 *
@@ -259,7 +231,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getUpdateUnit();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -271,8 +242,8 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -284,8 +255,8 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -299,8 +270,8 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -314,8 +285,8 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -327,6 +298,7 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -334,7 +306,6 @@ public interface GenerateDeploymentManifest extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

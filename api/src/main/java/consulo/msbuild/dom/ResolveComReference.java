@@ -154,6 +154,7 @@ public interface ResolveComReference extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
 
 	/**
