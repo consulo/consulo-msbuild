@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface LC extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the EnvironmentVariables child.
 	 *
@@ -26,7 +24,6 @@ public interface LC extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
-
 
 	/**
 	 * Returns the value of the LicenseTarget child.
@@ -37,7 +34,6 @@ public interface LC extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getLicenseTarget();
 
-
 	/**
 	 * Returns the value of the LogStandardErrorAsError child.
 	 *
@@ -45,7 +41,6 @@ public interface LC extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
-
 
 	/**
 	 * Returns the value of the NoLogo child.
@@ -55,7 +50,6 @@ public interface LC extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoLogo();
 
-
 	/**
 	 * Returns the value of the OutputDirectory child.
 	 *
@@ -63,7 +57,6 @@ public interface LC extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getOutputDirectory();
-
 
 	/**
 	 * Returns the value of the OutputLicense child.
@@ -73,7 +66,6 @@ public interface LC extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getOutputLicense();
 
-
 	/**
 	 * Returns the value of the ReferencedAssemblies child.
 	 *
@@ -82,7 +74,6 @@ public interface LC extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getReferencedAssemblies();
 
-
 	/**
 	 * Returns the value of the SdkToolsPath child.
 	 *
@@ -90,7 +81,6 @@ public interface LC extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getSdkToolsPath();
-
 
 	/**
 	 * Returns the value of the Sources child.
@@ -101,7 +91,6 @@ public interface LC extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getSources();
 
-
 	/**
 	 * Returns the value of the StandardErrorImportance child.
 	 *
@@ -109,7 +98,6 @@ public interface LC extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
-
 
 	/**
 	 * Returns the value of the StandardOutputImportance child.
@@ -119,7 +107,6 @@ public interface LC extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
-
 	/**
 	 * Returns the value of the Timeout child.
 	 *
@@ -127,7 +114,6 @@ public interface LC extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the ToolExe child.
@@ -137,7 +123,6 @@ public interface LC extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
-
 	/**
 	 * Returns the value of the ToolPath child.
 	 *
@@ -145,7 +130,6 @@ public interface LC extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getToolPath();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -157,8 +141,8 @@ public interface LC extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -170,8 +154,8 @@ public interface LC extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -185,8 +169,8 @@ public interface LC extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -200,8 +184,8 @@ public interface LC extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -213,6 +197,7 @@ public interface LC extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -220,7 +205,6 @@ public interface LC extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

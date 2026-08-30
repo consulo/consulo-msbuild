@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:20 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface VCMessage extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the Code child.
 	 *
@@ -28,7 +26,6 @@ public interface VCMessage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getCode();
 
-
 	/**
 	 * Returns the value of the Type child.
 	 *
@@ -37,7 +34,6 @@ public interface VCMessage extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getType();
 
-
 	/**
 	 * Returns the value of the Arguments child.
 	 *
@@ -45,7 +41,6 @@ public interface VCMessage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getArguments();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -57,8 +52,8 @@ public interface VCMessage extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -70,8 +65,8 @@ public interface VCMessage extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -85,8 +80,8 @@ public interface VCMessage extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -100,8 +95,8 @@ public interface VCMessage extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -113,6 +108,7 @@ public interface VCMessage extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -120,7 +116,6 @@ public interface VCMessage extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

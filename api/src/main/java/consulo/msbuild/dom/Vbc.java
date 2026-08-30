@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:20 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import consulo.xml.dom.GenericAttributeValue;
  */
 public interface Vbc extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AdditionalLibPaths child.
 	 *
@@ -25,7 +23,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalLibPaths();
-
 
 	/**
 	 * Returns the value of the AddModules child.
@@ -35,7 +32,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getAddModules();
 
-
 	/**
 	 * Returns the value of the BaseAddress child.
 	 *
@@ -43,7 +39,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getBaseAddress();
-
 
 	/**
 	 * Returns the value of the CodePage child.
@@ -53,7 +48,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getCodePage();
 
-
 	/**
 	 * Returns the value of the DebugType child.
 	 *
@@ -61,7 +55,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getDebugType();
-
 
 	/**
 	 * Returns the value of the DefineConstants child.
@@ -71,7 +64,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getDefineConstants();
 
-
 	/**
 	 * Returns the value of the DelaySign child.
 	 *
@@ -79,7 +71,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getDelaySign();
-
 
 	/**
 	 * Returns the value of the DisabledWarnings child.
@@ -89,7 +80,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getDisabledWarnings();
 
-
 	/**
 	 * Returns the value of the DocumentationFile child.
 	 *
@@ -97,7 +87,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getDocumentationFile();
-
 
 	/**
 	 * Returns the value of the EmitDebugInformation child.
@@ -107,7 +96,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getEmitDebugInformation();
 
-
 	/**
 	 * Returns the value of the EnvironmentVariables child.
 	 *
@@ -115,7 +103,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
-
 
 	/**
 	 * Returns the value of the ErrorReport child.
@@ -125,7 +112,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getErrorReport();
 
-
 	/**
 	 * Returns the value of the FileAlignment child.
 	 *
@@ -133,7 +119,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getFileAlignment();
-
 
 	/**
 	 * Returns the value of the GenerateDocumentation child.
@@ -143,7 +128,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getGenerateDocumentation();
 
-
 	/**
 	 * Returns the value of the Imports child.
 	 *
@@ -151,7 +135,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getImports();
-
 
 	/**
 	 * Returns the value of the KeyContainer child.
@@ -161,7 +144,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getKeyContainer();
 
-
 	/**
 	 * Returns the value of the KeyFile child.
 	 *
@@ -169,7 +151,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getKeyFile();
-
 
 	/**
 	 * Returns the value of the LangVersion child.
@@ -179,7 +160,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getLangVersion();
 
-
 	/**
 	 * Returns the value of the VBRuntime child.
 	 *
@@ -187,7 +167,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getVBRuntime();
-
 
 	/**
 	 * Returns the value of the LinkResources child.
@@ -197,7 +176,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getLinkResources();
 
-
 	/**
 	 * Returns the value of the LogStandardErrorAsError child.
 	 *
@@ -205,7 +183,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
-
 
 	/**
 	 * Returns the value of the MainEntryPoint child.
@@ -215,7 +192,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getMainEntryPoint();
 
-
 	/**
 	 * Returns the value of the ModuleAssemblyName child.
 	 *
@@ -223,7 +199,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getModuleAssemblyName();
-
 
 	/**
 	 * Returns the value of the NoConfig child.
@@ -233,7 +208,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoConfig();
 
-
 	/**
 	 * Returns the value of the NoLogo child.
 	 *
@@ -241,7 +215,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoLogo();
-
 
 	/**
 	 * Returns the value of the NoStandardLib child.
@@ -251,7 +224,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoStandardLib();
 
-
 	/**
 	 * Returns the value of the NoVBRuntimeReference child.
 	 *
@@ -259,7 +231,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoVBRuntimeReference();
-
 
 	/**
 	 * Returns the value of the NoWarnings child.
@@ -269,7 +240,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoWarnings();
 
-
 	/**
 	 * Returns the value of the NoWin32Manifest child.
 	 *
@@ -277,7 +247,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getNoWin32Manifest();
-
 
 	/**
 	 * Returns the value of the Optimize child.
@@ -287,7 +256,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getOptimize();
 
-
 	/**
 	 * Returns the value of the OptionCompare child.
 	 *
@@ -295,7 +263,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getOptionCompare();
-
 
 	/**
 	 * Returns the value of the OptionExplicit child.
@@ -305,7 +272,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getOptionExplicit();
 
-
 	/**
 	 * Returns the value of the OptionInfer child.
 	 *
@@ -313,7 +279,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getOptionInfer();
-
 
 	/**
 	 * Returns the value of the OptionStrict child.
@@ -323,7 +288,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getOptionStrict();
 
-
 	/**
 	 * Returns the value of the OptionStrictType child.
 	 *
@@ -331,7 +295,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getOptionStrictType();
-
 
 	/**
 	 * Returns the value of the OutputAssembly child.
@@ -341,7 +304,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getOutputAssembly();
 
-
 	/**
 	 * Returns the value of the Platform child.
 	 *
@@ -349,7 +311,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getPlatform();
-
 
 	/**
 	 * Returns the value of the References child.
@@ -359,7 +320,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getReferences();
 
-
 	/**
 	 * Returns the value of the RemoveIntegerChecks child.
 	 *
@@ -367,7 +327,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getRemoveIntegerChecks();
-
 
 	/**
 	 * Returns the value of the Resources child.
@@ -377,7 +336,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getResources();
 
-
 	/**
 	 * Returns the value of the ResponseFiles child.
 	 *
@@ -385,7 +343,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getResponseFiles();
-
 
 	/**
 	 * Returns the value of the RootNamespace child.
@@ -395,7 +352,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getRootNamespace();
 
-
 	/**
 	 * Returns the value of the SdkPath child.
 	 *
@@ -403,7 +359,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getSdkPath();
-
 
 	/**
 	 * Returns the value of the Sources child.
@@ -413,7 +368,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getSources();
 
-
 	/**
 	 * Returns the value of the StandardErrorImportance child.
 	 *
@@ -421,7 +375,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
-
 
 	/**
 	 * Returns the value of the StandardOutputImportance child.
@@ -431,7 +384,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
-
 	/**
 	 * Returns the value of the TargetCompactFramework child.
 	 *
@@ -439,7 +391,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getTargetCompactFramework();
-
 
 	/**
 	 * Returns the value of the TargetType child.
@@ -449,7 +400,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetType();
 
-
 	/**
 	 * Returns the value of the Timeout child.
 	 *
@@ -457,7 +407,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the ToolExe child.
@@ -467,7 +416,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
-
 	/**
 	 * Returns the value of the ToolPath child.
 	 *
@@ -475,7 +423,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getToolPath();
-
 
 	/**
 	 * Returns the value of the TreatWarningsAsErrors child.
@@ -485,7 +432,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getTreatWarningsAsErrors();
 
-
 	/**
 	 * Returns the value of the UseHostCompilerIfAvailable child.
 	 *
@@ -493,7 +439,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getUseHostCompilerIfAvailable();
-
 
 	/**
 	 * Returns the value of the Utf8Output child.
@@ -503,7 +448,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getUtf8Output();
 
-
 	/**
 	 * Returns the value of the Verbosity child.
 	 *
@@ -511,7 +455,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getVerbosity();
-
 
 	/**
 	 * Returns the value of the WarningsAsErrors child.
@@ -521,7 +464,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getWarningsAsErrors();
 
-
 	/**
 	 * Returns the value of the WarningsNotAsErrors child.
 	 *
@@ -529,7 +471,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getWarningsNotAsErrors();
-
 
 	/**
 	 * Returns the value of the Win32Icon child.
@@ -539,7 +480,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getWin32Icon();
 
-
 	/**
 	 * Returns the value of the Win32Manifest child.
 	 *
@@ -548,7 +488,6 @@ public interface Vbc extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getWin32Manifest();
 
-
 	/**
 	 * Returns the value of the Win32Resource child.
 	 *
@@ -556,7 +495,6 @@ public interface Vbc extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getWin32Resource();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -568,8 +506,8 @@ public interface Vbc extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -581,8 +519,8 @@ public interface Vbc extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -596,8 +534,8 @@ public interface Vbc extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -611,8 +549,8 @@ public interface Vbc extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -624,6 +562,7 @@ public interface Vbc extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -631,7 +570,6 @@ public interface Vbc extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

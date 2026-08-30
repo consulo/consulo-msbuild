@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:20 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface ValidateAppxPackage extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the SourceAppxManifest child.
 	 *
@@ -27,7 +25,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getSourceAppxManifest();
-
 
 	/**
 	 * Returns the value of the AppxManifest child.
@@ -38,7 +35,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getAppxManifest();
 
-
 	/**
 	 * Returns the value of the StoreAssociationFile child.
 	 *
@@ -46,7 +42,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStoreAssociationFile();
-
 
 	/**
 	 * Returns the value of the PackageArchitecture child.
@@ -57,7 +52,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getPackageArchitecture();
 
-
 	/**
 	 * Returns the value of the AppxPackagePayload child.
 	 *
@@ -66,7 +60,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getAppxPackagePayload();
-
 
 	/**
 	 * Returns the value of the QueryNamespacePrefix child.
@@ -77,7 +70,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getQueryNamespacePrefix();
 
-
 	/**
 	 * Returns the value of the QueryNamespace81Prefix child.
 	 *
@@ -86,7 +78,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getQueryNamespace81Prefix();
-
 
 	/**
 	 * Returns the value of the ManifestImageFileNameQueries child.
@@ -97,7 +88,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getManifestImageFileNameQueries();
 
-
 	/**
 	 * Returns the value of the ResolvedSDKReferences child.
 	 *
@@ -107,7 +97,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getResolvedSDKReferences();
 
-
 	/**
 	 * Returns the value of the AllowDebugFrameworkReferencesInManifest child.
 	 *
@@ -115,7 +104,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getAllowDebugFrameworkReferencesInManifest();
-
 
 	/**
 	 * Returns the value of the ProjectDir child.
@@ -126,7 +114,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getProjectDir();
 
-
 	/**
 	 * Returns the value of the IndexedPayloadFiles child.
 	 *
@@ -134,7 +121,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getIndexedPayloadFiles();
-
 
 	/**
 	 * Returns the value of the MakePriExtensionPath child.
@@ -144,7 +130,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getMakePriExtensionPath();
 
-
 	/**
 	 * Returns the value of the OSMinVersion child.
 	 *
@@ -152,7 +137,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getOSMinVersion();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -164,8 +148,8 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -177,8 +161,8 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -192,8 +176,8 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -207,8 +191,8 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -220,6 +204,7 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -227,7 +212,6 @@ public interface ValidateAppxPackage extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

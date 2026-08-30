@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:20 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface WriteCodeFragment extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AssemblyAttributes child.
 	 *
@@ -26,7 +24,6 @@ public interface WriteCodeFragment extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAssemblyAttributes();
-
 
 	/**
 	 * Returns the value of the Language child.
@@ -37,7 +34,6 @@ public interface WriteCodeFragment extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getLanguage();
 
-
 	/**
 	 * Returns the value of the OutputDirectory child.
 	 *
@@ -46,7 +42,6 @@ public interface WriteCodeFragment extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getOutputDirectory();
 
-
 	/**
 	 * Returns the value of the OutputFile child.
 	 *
@@ -54,7 +49,6 @@ public interface WriteCodeFragment extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getOutputFile();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -66,8 +60,8 @@ public interface WriteCodeFragment extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -79,8 +73,8 @@ public interface WriteCodeFragment extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -94,8 +88,8 @@ public interface WriteCodeFragment extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -109,8 +103,8 @@ public interface WriteCodeFragment extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -122,6 +116,7 @@ public interface WriteCodeFragment extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -129,7 +124,6 @@ public interface WriteCodeFragment extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

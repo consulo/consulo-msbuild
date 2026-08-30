@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -19,7 +18,6 @@ import consulo.xml.dom.Required;
  */
 public interface Exec extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the Command child.
 	 *
@@ -29,7 +27,6 @@ public interface Exec extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getCommand();
 
-
 	/**
 	 * Returns the value of the CustomErrorRegularExpression child.
 	 *
@@ -37,7 +34,6 @@ public interface Exec extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getCustomErrorRegularExpression();
-
 
 	/**
 	 * Returns the value of the CustomWarningRegularExpression child.
@@ -47,7 +43,6 @@ public interface Exec extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getCustomWarningRegularExpression();
 
-
 	/**
 	 * Returns the value of the EnvironmentVariables child.
 	 *
@@ -55,7 +50,6 @@ public interface Exec extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getEnvironmentVariables();
-
 
 	/**
 	 * Returns the value of the IgnoreExitCode child.
@@ -65,7 +59,6 @@ public interface Exec extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreExitCode();
 
-
 	/**
 	 * Returns the value of the IgnoreStandardErrorWarningFormat child.
 	 *
@@ -74,7 +67,6 @@ public interface Exec extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getIgnoreStandardErrorWarningFormat();
 
-
 	/**
 	 * Returns the value of the LogStandardErrorAsError child.
 	 *
@@ -82,7 +74,6 @@ public interface Exec extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getLogStandardErrorAsError();
-
 
 	/**
 	 * Returns the value of the Outputs child.
@@ -93,7 +84,6 @@ public interface Exec extends DomElement, Task
 	@Attribute("Outputs")
 	GenericAttributeValue<String> getOutputsAttr();
 
-
 	/**
 	 * Returns the value of the StandardErrorImportance child.
 	 *
@@ -101,7 +91,6 @@ public interface Exec extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStandardErrorImportance();
-
 
 	/**
 	 * Returns the value of the StandardOutputImportance child.
@@ -111,7 +100,6 @@ public interface Exec extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStandardOutputImportance();
 
-
 	/**
 	 * Returns the value of the StdErrEncoding child.
 	 *
@@ -119,7 +107,6 @@ public interface Exec extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStdErrEncoding();
-
 
 	/**
 	 * Returns the value of the StdOutEncoding child.
@@ -129,7 +116,6 @@ public interface Exec extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStdOutEncoding();
 
-
 	/**
 	 * Returns the value of the Timeout child.
 	 *
@@ -137,7 +123,6 @@ public interface Exec extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTimeout();
-
 
 	/**
 	 * Returns the value of the ToolExe child.
@@ -147,7 +132,6 @@ public interface Exec extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolExe();
 
-
 	/**
 	 * Returns the value of the ToolPath child.
 	 *
@@ -156,7 +140,6 @@ public interface Exec extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getToolPath();
 
-
 	/**
 	 * Returns the value of the WorkingDirectory child.
 	 *
@@ -164,7 +147,6 @@ public interface Exec extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getWorkingDirectory();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -176,8 +158,8 @@ public interface Exec extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -189,8 +171,8 @@ public interface Exec extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -204,8 +186,8 @@ public interface Exec extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
-	GenericAttributeValue<String> getArchitecture();
-
+    @Override
+    GenericAttributeValue<String> getArchitecture();
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -219,8 +201,8 @@ public interface Exec extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -232,6 +214,7 @@ public interface Exec extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -239,7 +222,6 @@ public interface Exec extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

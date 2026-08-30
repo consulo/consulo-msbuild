@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface GenerateResource extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the AdditionalInputs child.
 	 *
@@ -26,7 +24,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getAdditionalInputs();
-
 
 	/**
 	 * Returns the value of the ExcludedInputPaths child.
@@ -36,7 +33,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getExcludedInputPaths();
 
-
 	/**
 	 * Returns the value of the ExecuteAsTool child.
 	 *
@@ -44,7 +40,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getExecuteAsTool();
-
 
 	/**
 	 * Returns the value of the MinimalRebuildFromTracking child.
@@ -54,7 +49,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getMinimalRebuildFromTracking();
 
-
 	/**
 	 * Returns the value of the NeverLockTypeAssemblies child.
 	 *
@@ -62,7 +56,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getNeverLockTypeAssemblies();
-
 
 	/**
 	 * Returns the value of the OutputResources child.
@@ -72,7 +65,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getOutputResources();
 
-
 	/**
 	 * Returns the value of the PublicClass child.
 	 *
@@ -80,7 +72,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getPublicClass();
-
 
 	/**
 	 * Returns the value of the References child.
@@ -90,7 +81,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getReferences();
 
-
 	/**
 	 * Returns the value of the SdkToolsPath child.
 	 *
@@ -98,7 +88,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getSdkToolsPath();
-
 
 	/**
 	 * Returns the value of the Sources child.
@@ -109,7 +98,6 @@ public interface GenerateResource extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getSources();
 
-
 	/**
 	 * Returns the value of the StateFile child.
 	 *
@@ -117,7 +105,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStateFile();
-
 
 	/**
 	 * Returns the value of the StronglyTypedClassName child.
@@ -127,7 +114,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStronglyTypedClassName();
 
-
 	/**
 	 * Returns the value of the StronglyTypedFileName child.
 	 *
@@ -135,7 +121,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStronglyTypedFileName();
-
 
 	/**
 	 * Returns the value of the StronglyTypedLanguage child.
@@ -145,7 +130,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStronglyTypedLanguage();
 
-
 	/**
 	 * Returns the value of the StronglyTypedManifestPrefix child.
 	 *
@@ -153,7 +137,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getStronglyTypedManifestPrefix();
-
 
 	/**
 	 * Returns the value of the StronglyTypedNamespace child.
@@ -163,7 +146,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getStronglyTypedNamespace();
 
-
 	/**
 	 * Returns the value of the TrackerLogDirectory child.
 	 *
@@ -171,7 +153,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getTrackerLogDirectory();
-
 
 	/**
 	 * Returns the value of the TrackFileAccess child.
@@ -181,7 +162,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getTrackFileAccess();
 
-
 	/**
 	 * Returns the value of the UseSourcePath child.
 	 *
@@ -189,7 +169,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<Boolean> getUseSourcePath();
-
 
 	/**
 	 * Returns the value of the ExtractResWFiles child.
@@ -199,7 +178,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<Boolean> getExtractResWFiles();
 
-
 	/**
 	 * Returns the value of the OutputDirectory child.
 	 *
@@ -207,7 +185,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getOutputDirectory();
-
 
 	/**
 	 * Returns the value of the MSBuildRuntime child.
@@ -217,7 +194,6 @@ public interface GenerateResource extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getMSBuildRuntime();
 
-
 	/**
 	 * Returns the value of the MSBuildArchitecture child.
 	 *
@@ -225,7 +201,6 @@ public interface GenerateResource extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getMSBuildArchitecture();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -237,8 +212,8 @@ public interface GenerateResource extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -250,8 +225,8 @@ public interface GenerateResource extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -265,8 +240,8 @@ public interface GenerateResource extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -280,8 +255,8 @@ public interface GenerateResource extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -293,6 +268,7 @@ public interface GenerateResource extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -300,7 +276,6 @@ public interface GenerateResource extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }

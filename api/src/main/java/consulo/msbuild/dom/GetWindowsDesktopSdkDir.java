@@ -1,6 +1,5 @@
 // Generated on Sat Jan 28 04:58:19 MSK 2017
 // DTD/Schema  :    http://schemas.microsoft.com/developer/msbuild/2003
-
 package consulo.msbuild.dom;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import consulo.xml.dom.Required;
  */
 public interface GetWindowsDesktopSdkDir extends DomElement, Task
 {
-
 	/**
 	 * Returns the value of the TargetPlatformIdentifier child.
 	 *
@@ -27,7 +25,6 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	@Nonnull
 	@Required
 	GenericAttributeValue<String> getTargetPlatformIdentifier();
-
 
 	/**
 	 * Returns the value of the TargetPlatformVersion child.
@@ -38,7 +35,6 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	@Required
 	GenericAttributeValue<String> getTargetPlatformVersion();
 
-
 	/**
 	 * Returns the value of the TargetPlatformSdkRootOverride child.
 	 *
@@ -47,7 +43,6 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	@Nonnull
 	GenericAttributeValue<String> getTargetPlatformSdkRootOverride();
 
-
 	/**
 	 * Returns the value of the WindowsDesktopSdkDir child.
 	 *
@@ -55,7 +50,6 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 */
 	@Nonnull
 	GenericAttributeValue<String> getWindowsDesktopSdkDir();
-
 
 	/**
 	 * Returns the value of the Condition child.
@@ -67,8 +61,8 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 * @return the value of the Condition child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getCondition();
-
 
 	/**
 	 * Returns the value of the ContinueOnError child.
@@ -80,8 +74,8 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 * @return the value of the ContinueOnError child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<Boolean> getContinueOnError();
-
 
 	/**
 	 * Returns the value of the Architecture child.
@@ -95,8 +89,8 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 * @return the value of the Architecture child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getArchitecture();
-
 
 	/**
 	 * Returns the value of the Runtime child.
@@ -110,8 +104,8 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 * @return the value of the Runtime child.
 	 */
 	@Nonnull
+    @Override
 	GenericAttributeValue<String> getRuntime();
-
 
 	/**
 	 * Returns the list of Output children.
@@ -123,6 +117,7 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 * @return the list of Output children.
 	 */
 	@Nonnull
+    @Override
 	List<Output> getOutputs();
 
 	/**
@@ -130,7 +125,6 @@ public interface GetWindowsDesktopSdkDir extends DomElement, Task
 	 *
 	 * @return created child
 	 */
+    @Override
 	Output addOutput();
-
-
 }
