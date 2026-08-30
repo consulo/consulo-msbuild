@@ -5,7 +5,6 @@ import consulo.dotnet.debugger.impl.DotNetModuleExtensionWithDebug;
 import consulo.dotnet.module.extension.BaseDotNetModuleExtension;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.module.content.layer.ModuleRootLayer;
-import consulo.msbuild.compiler.MSBuildCompileContext;
 import consulo.msbuild.module.extension.MSBuildProjectModuleExtension;
 import org.jdom.Element;
 
@@ -62,12 +61,6 @@ public abstract class MSBuildBaseDotNetModuleExtension<T extends MSBuildBaseDotN
 	public boolean isSupportCompilation()
 	{
 		return false;
-	}
-
-	@Override
-	public void build(MSBuildCompileContext context)
-	{
-
 	}
 
 	@Override

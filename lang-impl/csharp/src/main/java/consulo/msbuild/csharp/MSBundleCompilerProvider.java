@@ -26,10 +26,10 @@ import consulo.dotnet.compiler.DotNetCompileFailedException;
 import consulo.dotnet.module.extension.DotNetModuleExtension;
 import consulo.dotnet.module.extension.DotNetSimpleModuleExtension;
 import consulo.msbuild.bundle.MSBuildBundleType;
-import consulo.virtualFileSystem.VirtualFile;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author VISTALL
@@ -38,35 +38,35 @@ import jakarta.annotation.Nullable;
 @ExtensionImpl(id = "msbuild", order = "after ms-internal")
 public class MSBundleCompilerProvider extends CSharpCompilerProvider
 {
-	@Nullable
-	@Override
-	public SdkType getBundleType(@Nonnull DotNetSimpleModuleExtension<?> moduleExtension)
-	{
-		// hack - due we can known about MSBuild plugin or Microsoft .NET, double depends option file is not supported
-		if(moduleExtension.getId().equals("microsoft-dotnet"))
-		{
-			return MSBuildBundleType.getInstance();
-		}
-		return null;
-	}
+    @Nullable
+    @Override
+    public SdkType getBundleType(DotNetSimpleModuleExtension<?> moduleExtension)
+    {
+        // hack - due we can known about MSBuild plugin or Microsoft .NET, double depends option file is not supported
+        if(moduleExtension.getId().equals("microsoft-dotnet"))
+        {
+            return MSBuildBundleType.getInstance();
+        }
+        return null;
+    }
 
-	@Override
-	public void setupCompiler(@Nonnull DotNetModuleExtension<?> netExtension,
-			@Nonnull CSharpModuleExtension<?> csharpExtension,
-			@Nonnull MSBaseDotNetCompilerOptionsBuilder builder,
-			@Nullable VirtualFile compilerSdkHome) throws DotNetCompileFailedException
-	{
-		if(compilerSdkHome == null)
-		{
-			throw new DotNetCompileFailedException("Compiler path is not resolved");
-		}
+    @Override
+    public void setupCompiler(DotNetModuleExtension<?> netExtension,
+            CSharpModuleExtension<?> csharpExtension,
+            MSBaseDotNetCompilerOptionsBuilder builder,
+            @Nullable Path compilerSdkHome) throws DotNetCompileFailedException
+    {
+        if(compilerSdkHome == null)
+        {
+            throw new DotNetCompileFailedException("Compiler path is not resolved");
+        }
 
-		VirtualFile compilerPath = compilerSdkHome.findFileByRelativePath("bin/Roslyn/" + CSharpCompilerUtil.COMPILER_NAME);
-		if(compilerPath == null)
-		{
-			compilerPath = compilerSdkHome.findFileByRelativePath("bin/" + CSharpCompilerUtil.COMPILER_NAME);
-		}
+        Path compilerPath = compilerSdkHome.resolve("bin").resolve("Roslyn").resolve(CSharpCompilerUtil.COMPILER_NAME);
+        if(!Files.exists(compilerPath))
+        {
+            compilerPath = compilerSdkHome.resolve("bin").resolve(CSharpCompilerUtil.COMPILER_NAME);
+        }
 
-		setExecutable(csharpExtension, builder, compilerPath);
-	}
+        setExecutable(csharpExtension, builder, compilerPath);
+    }
 }

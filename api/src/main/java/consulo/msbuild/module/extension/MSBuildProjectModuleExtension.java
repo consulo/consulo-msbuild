@@ -1,7 +1,6 @@
 package consulo.msbuild.module.extension;
 
 import consulo.module.extension.ModuleExtension;
-import consulo.msbuild.compiler.MSBuildCompileContext;
 
 /**
  * @author VISTALL
@@ -11,9 +10,6 @@ import consulo.msbuild.compiler.MSBuildCompileContext;
  */
 public interface MSBuildProjectModuleExtension<T extends MSBuildProjectModuleExtension<T>> extends ModuleExtension<T>
 {
-	@Deprecated
-	void build(MSBuildCompileContext context);
-
 	@Deprecated
 	String getConfiguration();
 

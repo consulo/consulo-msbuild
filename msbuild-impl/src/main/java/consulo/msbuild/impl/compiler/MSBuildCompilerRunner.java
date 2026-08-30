@@ -87,11 +87,6 @@ public class MSBuildCompilerRunner implements CompilerRunner {
                     }
 
                     for (MSBuildTargetResult error : runProjectResponse.Result.errors) {
-                        CompilerMessageCategory category = CompilerMessageCategory.ERROR;
-                        if (error.IsWarning) {
-                            category = CompilerMessageCategory.WARNING;
-                        }
-
                         String filePath = error.File;
 
                         String fileUrl = null;
@@ -101,7 +96,12 @@ public class MSBuildCompilerRunner implements CompilerRunner {
                                 fileUrl = VirtualFileUtil.pathToUrl(filePath);
                             }
                         }
-                        compileContext.addMessage(category, error.Message, fileUrl, error.LineNumber, error.ColumnNumber);
+
+                        CompileContext.MessageBuilder messageBuilder = error.IsWarning
+                            ? compileContext.newWarning(LocalizeValue.of(error.Message))
+                            : compileContext.newError(LocalizeValue.of(error.Message));
+
+                        messageBuilder.optionalUrl(fileUrl).position(error.LineNumber, error.ColumnNumber).add();
                     }
                 }
             });

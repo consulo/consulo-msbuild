@@ -5,7 +5,6 @@
 open module consulo.msbuild.api
 {
 	requires consulo.module.creation.api;
-	requires consulo.compiler.api;
 	requires consulo.process.api;
 	requires transitive com.intellij.xml.api;
 	requires transitive com.intellij.xml.dom.api;
@@ -15,7 +14,6 @@ open module consulo.msbuild.api
 	exports consulo.msbuild.icon;
 	exports consulo.msbuild.localize;
 	exports consulo.msbuild.bundle;
-	exports consulo.msbuild.compiler;
 	exports consulo.msbuild.dom;
 	exports consulo.msbuild.dom.annotation;
 	exports consulo.msbuild.dom.expression.evaluate;
