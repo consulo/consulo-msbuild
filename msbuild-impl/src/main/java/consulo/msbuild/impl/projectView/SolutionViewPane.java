@@ -44,12 +44,14 @@ import consulo.project.ui.view.SelectInContext;
 import consulo.project.ui.view.SelectInTarget;
 import consulo.project.ui.view.tree.AbstractTreeNode;
 import consulo.project.ui.view.tree.ViewSettings;
+import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.awt.AutoScrollFromSourceHandler;
 import consulo.ui.ex.awt.tree.AbstractTreeBuilder;
 import consulo.ui.ex.awt.tree.AbstractTreeUpdater;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
@@ -71,7 +73,7 @@ import java.util.Set;
 @ExtensionImpl
 public class SolutionViewPane extends AbstractProjectViewPSIPane {
     private class MyAutoScrollFromSourceHandler extends AutoScrollFromSourceHandler {
-        public MyAutoScrollFromSourceHandler(@Nonnull Project project, @Nonnull JComponent view) {
+        public MyAutoScrollFromSourceHandler(@Nonnull Project project, @Nonnull Component view) {
             super(project, view, project);
         }
 
@@ -234,7 +236,7 @@ public class SolutionViewPane extends AbstractProjectViewPSIPane {
         super(project);
 
         myComponent = buildComponent();
-        myAutoScrollFromSourceHandler = new MyAutoScrollFromSourceHandler(myProject, myComponent);
+        myAutoScrollFromSourceHandler = new MyAutoScrollFromSourceHandler(myProject, TargetAWT.wrap(myComponent));
     }
 
     @Override
