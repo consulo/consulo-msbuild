@@ -88,7 +88,7 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.isFile()) {
+                    if (!file.isDirectory()) {
                         if (FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE) {
                             // already found - return null
                             if (firstSolution != null) {

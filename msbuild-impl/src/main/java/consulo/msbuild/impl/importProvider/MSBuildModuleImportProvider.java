@@ -101,7 +101,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.isFile()) {
+                    if (!file.isDirectory()) {
                         String ext = FileUtil.getExtension(file.getName());
                         if (exts.contains(ext)) {
                             // already found - return null
