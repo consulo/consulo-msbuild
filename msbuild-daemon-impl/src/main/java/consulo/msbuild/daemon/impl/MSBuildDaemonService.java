@@ -130,11 +130,20 @@ public class MSBuildDaemonService implements Disposable {
             return AsyncResult.rejected();
         }
 
-        DaemonStepQueue queue = new DaemonStepQueue();
+        AsyncResult<MSBuildDaemonContext> result = AsyncResult.undefined();
+        myProject.getApplication().executeOnPooledThread(() -> {
+            if (myProject.isDisposed()) {
+                result.setRejected();
+                return;
+            }
 
-        fillDefaultSteps(queue);
+            DaemonStepQueue queue = new DaemonStepQueue();
 
-        return runSteps(queue, null, LocalizeValue.localizeTODO("Update")).doWhenDone(this::createModules);
+            fillDefaultSteps(queue);
+
+            runSteps(queue, null, LocalizeValue.localizeTODO("Update")).doWhenDone(this::createModules).notify(result);
+        });
+        return result;
     }
 
     public void fillDefaultSteps(@Nonnull DaemonStepQueue queue) {
@@ -343,13 +352,13 @@ public class MSBuildDaemonService implements Disposable {
                     final Module finalModuleByName = moduleByName;
                     ThrowableSupplier<ModifiableRootModel, RuntimeException> action =
                         () -> ModuleRootManager.getInstance(finalModuleByName).getModifiableModel();
-                    assert ReadAction.compute(action) != null;
+                    ModifiableRootModel rootModel = ReadAction.compute(action);
 
-                    ReadAction.compute(action).removeAllLayers(true);
+                    rootModel.removeAllLayers(true);
 
-                    importModule(finalModuleByName, ReadAction.compute(action), info, buildProcessProvider, msBuildSdk);
+                    importModule(finalModuleByName, rootModel, info, buildProcessProvider, msBuildSdk);
 
-                    WriteAction.runAndWait(ReadAction.compute(action)::commit);
+                    WriteAction.runAndWait(rootModel::commit);
                 }
 
                 WriteAction.runAndWait(moduleModel::commit);

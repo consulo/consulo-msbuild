@@ -1,21 +1,15 @@
 package consulo.msbuild.impl.importProvider;
 
 import consulo.application.Application;
-import consulo.content.bundle.Sdk;
 import consulo.disposer.Disposable;
 import consulo.localize.LocalizeValue;
 import consulo.module.creation.ui.UnifiedProjectOrModuleNameStep;
-import consulo.module.ui.BundleBox;
-import consulo.module.ui.BundleBoxBuilder;
-import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.importProvider.MSBuildBaseImportContext;
+import consulo.msbuild.importProvider.MSBuildBundleChooser;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.util.FormBuilder;
 import jakarta.annotation.Nonnull;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author VISTALL
@@ -23,9 +17,7 @@ import java.util.Map;
  */
 public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> extends UnifiedProjectOrModuleNameStep<C> {
     private final C myContext;
-    private BundleBox myBundleBox;
-
-    private Map<String, MSBuildProcessProvider> mySdksFromProviders = new HashMap<>();
+    private MSBuildBundleChooser myBundleChooser;
 
     public MSBuildProjectOrModuleNameStep(C context) {
         super(context);
@@ -37,42 +29,17 @@ public class MSBuildProjectOrModuleNameStep<C extends MSBuildBaseImportContext> 
     protected void extend(@Nonnull FormBuilder builder, @Nonnull Disposable uiDisposable) {
         super.extend(builder, uiDisposable);
 
-        BundleBoxBuilder boxBuilder = BundleBoxBuilder.create(uiDisposable);
-        //boxBuilder.withNoneItem("<Auto Select>", PlatformIconGroup.actionsFind());
-        boxBuilder.withSdkTypeFilter(sdkTypeId -> false);
-        myBundleBox = boxBuilder.build();
+        myBundleChooser = new MSBuildBundleChooser(Application.get(), uiDisposable, myContext);
 
-        List<MSBuildProcessProvider> providers = Application.get().getExtensionList(MSBuildProcessProvider.class);
-
-        for (MSBuildProcessProvider buildProcessProvider : providers) {
-            buildProcessProvider.fillBundles(sdk -> {
-                mySdksFromProviders.put(sdk.getName(), buildProcessProvider);
-
-                myBundleBox.addBundleItem(sdk);
-            });
-        }
-
-        Sdk targetSdk = null;
-        for (MSBuildProcessProvider provider : providers) {
-            targetSdk = provider.findBundleForImport(myContext);
-            if (targetSdk != null) {
-                myBundleBox.setSelectedBundle(targetSdk.getName());
-                break;
-            }
-        }
-
-        builder.addLabeled(LocalizeValue.localizeTODO("MSBuild:"), myBundleBox.getComponent());
+        builder.addLabeled(LocalizeValue.localizeTODO("MSBuild:"), myBundleChooser.getComponent());
     }
 
     @Override
     public void onStepLeave(@Nonnull C context) {
-        String bundleName = myBundleBox.getSelectedBundleName();
+        String bundleName = myBundleChooser.getSelectedBundleName();
         if (bundleName != null) {
-            MSBuildProcessProvider msBuildProcessProvider = mySdksFromProviders.get(bundleName);
-
             context.setMSBuildBundleName(bundleName);
-
-            context.setProvider(msBuildProcessProvider);
+            context.setProvider(myBundleChooser.getSelectedProvider());
         }
     }
 }

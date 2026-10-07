@@ -29,8 +29,12 @@ public class MonoMSBuildBundleType extends SdkType {
         return Application.get().getExtensionPoint(SdkType.class).findExtensionOrFail(MonoMSBuildBundleType.class);
     }
 
+    public static File getBinDir(String path) {
+        return new File(path, "bin");
+    }
+
     public static File getMSBuildDll(String path) {
-        return new File(path, "bin/MSBuild.dll");
+        return new File(getBinDir(path), "MSBuild.dll");
     }
 
     public MonoMSBuildBundleType() {

@@ -90,9 +90,15 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 	}
 
 	@Override
+	public File getBinDir(@Nonnull Sdk sdk)
+	{
+		return MonoMSBuildBundleType.getBinDir(sdk.getHomePath());
+	}
+
+	@Override
 	public void doAdditionalCopy(@Nonnull File targetFile, @Nonnull File msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException
 	{
-		File msBuildBinDir = new File(msBuildSdk.getHomePath(), "Bin");
+		File msBuildBinDir = getBinDir(msBuildSdk);
 
 		File configFile = new File(msBuildBinDir, "MSBuild.dll.config");
 		if(configFile.exists())
