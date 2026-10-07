@@ -20,6 +20,7 @@ import consulo.module.content.ModuleRootManager;
 import consulo.module.content.layer.ModifiableRootModel;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
+import consulo.msbuild.MSBuildProjectFile;
 import consulo.msbuild.MSBuildProjectListener;
 import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.daemon.impl.logging.MSBuildLoggingSession;
@@ -378,7 +379,7 @@ public class MSBuildDaemonService implements Disposable {
 
         List<MSBuildEvaluatedItem> evaluateData = new ArrayList<>();
 
-        for (String item : AnalyzeProjectItemsStep.ITEMS) {
+        for (String item : AnalyzeProjectItemsStep.getItemTypes(myProject.getApplication(), projectFile)) {
             Collection<MSBuildEvaluatedItem> items = info.items.get(item);
             evaluateData.addAll(items);
 
@@ -393,7 +394,11 @@ public class MSBuildDaemonService implements Disposable {
         workspaceData.updateData(info.wProject.getId(), module.getName(), evaluateData, info.properties);
 
         // FIXME [VISTALL] rewrite it! old items are deprecated
-        Collection<String> projectCapacility = info.oldItems.get("ProjectCapability");
+        Set<String> projectCapacility = new HashSet<>(info.oldItems.get("ProjectCapability"));
+        MSBuildProjectFile projectFileKind = MSBuildProjectFile.findByExtension(myProject.getApplication(), projectFile.getExtension());
+        if (projectFileKind != null) {
+            projectCapacility.addAll(projectFileKind.getCapabilities());
+        }
 
         List<MSBuildProjectCapability> capabilities = new ArrayList<>();
         for (MSBuildProjectCapability capability : myProject.getApplication().getExtensionList(MSBuildProjectCapability.class)) {
