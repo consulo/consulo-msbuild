@@ -39,9 +39,10 @@ public enum MSBuildVersion
 	Visual_Studio_2015("2015", "14.0"),
 	Visual_Studio_2017("2017", "15.0"),
 	Visual_Studio_2019("2019", "16.0"),
-	Visual_Studio_2022("2022", "17.0");
+	Visual_Studio_2022("2022", "17.0"),
+	Visual_Studio_2026("2026", "18.0");
 
-	public static final Set<String> ourVisualStudioEditions = Set.of("Community", "Professional");
+	public static final Set<String> ourVisualStudioEditions = Set.of("Community", "Professional", "Enterprise", "BuildTools", "Preview", "Insiders");
 
 	private final String myYearVersion;
 	private final String myInternalVersion;
@@ -69,5 +70,12 @@ public enum MSBuildVersion
 	public String getInternalVersion()
 	{
 		return myInternalVersion;
+	}
+
+	@Nonnull
+	public String getMajorVersion()
+	{
+		int dot = myInternalVersion.indexOf('.');
+		return dot < 0 ? myInternalVersion : myInternalVersion.substring(0, dot);
 	}
 }

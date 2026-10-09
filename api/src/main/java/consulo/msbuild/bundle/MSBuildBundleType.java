@@ -36,6 +36,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -131,17 +132,19 @@ public class MSBuildBundleType extends BaseMSBuildBundleType {
             File vsDirectory = new File(programFiles, "Microsoft Visual Studio");
             if (vsDirectory.exists()) {
                 for (MSBuildVersion version : MSBuildVersion.values()) {
-                    for (String visualStudioEdition : MSBuildVersion.ourVisualStudioEditions) {
-                        File vsTargetDirectory = new File(vsDirectory, version.getYearVersion() + "/" + visualStudioEdition);
-                        if (vsTargetDirectory.exists()) {
-                            File msBuildDirectory = new File(vsTargetDirectory, "MSBuild/" + version.getInternalVersion());
-                            if (msBuildDirectory.exists()) {
-                                list.add(new MSBuildInfo(msBuildDirectory, bitness, version, visualStudioEdition));
-                            }
+                    for (String versionDirectory : new LinkedHashSet<>(List.of(version.getYearVersion(), version.getMajorVersion()))) {
+                        for (String visualStudioEdition : MSBuildVersion.ourVisualStudioEditions) {
+                            File vsTargetDirectory = new File(vsDirectory, versionDirectory + "/" + visualStudioEdition);
+                            if (vsTargetDirectory.exists()) {
+                                File msBuildDirectory = new File(vsTargetDirectory, "MSBuild/" + version.getInternalVersion());
+                                if (msBuildDirectory.exists()) {
+                                    list.add(new MSBuildInfo(msBuildDirectory, bitness, version, visualStudioEdition));
+                                }
 
-                            msBuildDirectory = new File(vsTargetDirectory, "MSBuild/Current");
-                            if (msBuildDirectory.exists()) {
-                                list.add(new MSBuildInfo(msBuildDirectory, bitness, version, visualStudioEdition));
+                                msBuildDirectory = new File(vsTargetDirectory, "MSBuild/Current");
+                                if (msBuildDirectory.exists()) {
+                                    list.add(new MSBuildInfo(msBuildDirectory, bitness, version, visualStudioEdition));
+                                }
                             }
                         }
                     }

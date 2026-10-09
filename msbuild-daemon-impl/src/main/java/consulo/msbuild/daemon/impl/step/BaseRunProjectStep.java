@@ -1,10 +1,18 @@
 package consulo.msbuild.daemon.impl.step;
 
+import consulo.application.ReadAction;
+import consulo.module.Module;
+import consulo.module.ModuleManager;
+import consulo.msbuild.MSBuildProjectFile;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
 import consulo.msbuild.daemon.impl.message.model.MSBuildVerbosity;
 import consulo.msbuild.daemon.impl.message.model.RunProjectRequest;
 import consulo.msbuild.daemon.impl.message.model.RunProjectResponse;
 import consulo.msbuild.solution.model.WProject;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+
+import java.util.Map;
 
 import jakarta.annotation.Nonnull;
 
@@ -50,6 +58,32 @@ public abstract class BaseRunProjectStep extends PerProjectRemoteDaemonStep<RunP
 		r.GlobalProperties.put("GenerateResourceMSBuildArchitecture", "CurrentArchitecture");
 		r.GlobalProperties.put("GenerateResourceMSBuildRuntime", "CurrentRuntime");
 
+		fillProjectGlobalProperties(context.getProject(), r.GlobalProperties);
+
 		return r;
+	}
+
+	private void fillProjectGlobalProperties(Project project, Map<String, String> globalProperties)
+	{
+		VirtualFile projectFile = myWProject.getVirtualFile();
+		if(projectFile == null)
+		{
+			return;
+		}
+
+		MSBuildProjectFile projectFileKind = MSBuildProjectFile.findByExtension(project.getApplication(), projectFile.getExtension());
+		if(projectFileKind == null)
+		{
+			return;
+		}
+
+		ReadAction.run(() ->
+		{
+			Module module = ModuleManager.getInstance(project).findModuleByName(myWProject.getName());
+			if(module != null)
+			{
+				projectFileKind.fillGlobalProperties(module, globalProperties);
+			}
+		});
 	}
 }

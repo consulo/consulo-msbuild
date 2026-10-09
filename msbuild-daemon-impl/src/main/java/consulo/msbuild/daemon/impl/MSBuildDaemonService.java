@@ -274,7 +274,7 @@ public class MSBuildDaemonService implements Disposable {
                 myConnection.sendWithResponse(message).getResultSync();
             }
 
-            MSBuildDaemonContext context = new MSBuildDaemonContext(buildProcessProvider, msBuildSdk);
+            MSBuildDaemonContext context = new MSBuildDaemonContext(myProject, buildProcessProvider, msBuildSdk);
 
             MSBuildLoggingSession loggingSession = null;
             DaemonStep wantLogging = queue.find(DaemonStep::wantLogging);

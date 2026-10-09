@@ -5,6 +5,7 @@ import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.daemon.impl.message.model.MSBuildEvaluatedItem;
 import consulo.msbuild.daemon.impl.message.model.ProjectItem;
 import consulo.msbuild.solution.model.WProject;
+import consulo.project.Project;
 import consulo.util.collection.MultiMap;
 
 import jakarta.annotation.Nonnull;
@@ -37,14 +38,23 @@ public class MSBuildDaemonContext
 
 	private final Map<String, PerProjectInfo> myProjectData = new ConcurrentHashMap<>();
 
+	private final Project myProject;
+
 	private final MSBuildProcessProvider myBuildProcessProvider;
 
 	private final Sdk myMSBuildSdk;
 
-	public MSBuildDaemonContext(MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk)
+	public MSBuildDaemonContext(Project project, MSBuildProcessProvider buildProcessProvider, Sdk msBuildSdk)
 	{
+		myProject = project;
 		myBuildProcessProvider = buildProcessProvider;
 		myMSBuildSdk = msBuildSdk;
+	}
+
+	@Nonnull
+	public Project getProject()
+	{
+		return myProject;
 	}
 
 	@Nonnull

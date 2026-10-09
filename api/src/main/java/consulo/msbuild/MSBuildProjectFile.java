@@ -1,13 +1,16 @@
 package consulo.msbuild;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
 import consulo.application.Application;
 import consulo.component.extension.ExtensionPointCacheKey;
+import consulo.module.Module;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -63,5 +66,9 @@ public interface MSBuildProjectFile {
     @Nonnull
     default String getPlatform() {
         return "AnyCPU";
+    }
+
+    @RequiredReadAction
+    default void fillGlobalProperties(@Nonnull Module module, @Nonnull Map<String, String> globalProperties) {
     }
 }
