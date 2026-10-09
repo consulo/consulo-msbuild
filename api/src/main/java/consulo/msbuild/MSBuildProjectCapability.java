@@ -35,6 +35,13 @@ public interface MSBuildProjectCapability {
                       List<? extends MSBuildEvaluatedItem> referencePaths,
                       Set<String> targets);
 
+    default void importItems(Module module,
+                             ModifiableRootModel rootModel,
+                             VirtualFile projectFile,
+                             Map<String, String> properties,
+                             List<? extends MSBuildEvaluatedItem> items) {
+    }
+
     default boolean isApplicable(@Nonnull MSBuildProcessProvider provider) {
         return true;
     }

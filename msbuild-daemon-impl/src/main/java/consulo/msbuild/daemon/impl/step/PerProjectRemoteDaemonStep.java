@@ -7,6 +7,7 @@ import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.model.DataObject;
 import consulo.msbuild.daemon.impl.message.model.ProjectConfigurationInfo;
+import consulo.msbuild.MSBuildProjectConfiguration;
 import consulo.msbuild.MSBuildProjectFile;
 import consulo.msbuild.solution.model.WProject;
 import consulo.virtualFileSystem.VirtualFile;
@@ -42,9 +43,13 @@ public abstract class PerProjectRemoteDaemonStep<Request extends DaemonMessage<R
 		VirtualFile projectFile = myWProject.getVirtualFile();
 		MSBuildProjectFile projectFileKind = MSBuildProjectFile.findByExtension(Application.get(), projectFile.getExtension());
 
+		MSBuildProjectConfiguration configuration = projectFileKind != null
+				? projectFileKind.getProjectConfiguration(projectFile)
+				: new MSBuildProjectConfiguration("Debug", "AnyCPU");
+
 		ProjectConfigurationInfo conf = new ProjectConfigurationInfo();
-		conf.Configuration = projectFileKind != null ? projectFileKind.getConfiguration() : "Debug";
-		conf.Platform = projectFileKind != null ? projectFileKind.getPlatform() : "AnyCPU";
+		conf.Configuration = configuration.configuration();
+		conf.Platform = configuration.platform();
 		conf.ProjectFile = projectFile.getPresentableUrl();
 		conf.ProjectGuid = myWProject.getId();
 

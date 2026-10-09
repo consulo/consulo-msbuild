@@ -6,6 +6,7 @@ import consulo.annotation.component.ExtensionAPI;
 import consulo.application.Application;
 import consulo.component.extension.ExtensionPointCacheKey;
 import consulo.module.Module;
+import consulo.virtualFileSystem.VirtualFile;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -66,6 +67,11 @@ public interface MSBuildProjectFile {
     @Nonnull
     default String getPlatform() {
         return "AnyCPU";
+    }
+
+    @Nonnull
+    default MSBuildProjectConfiguration getProjectConfiguration(@Nonnull VirtualFile projectFile) {
+        return new MSBuildProjectConfiguration(getConfiguration(), getPlatform());
     }
 
     @RequiredReadAction

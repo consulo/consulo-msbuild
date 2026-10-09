@@ -25,6 +25,7 @@ import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 
 import jakarta.annotation.Nonnull;
@@ -72,6 +73,22 @@ public class SolutionVirtualBuilder
 
 			String presentationPath = pathName;
 
+			String independentPath = FileUtil.toSystemIndependentName(pathName);
+			VirtualFile file;
+			if(FileUtil.isAbsolutePlatformIndependent(independentPath))
+			{
+				file = LocalFileSystem.getInstance().findFileByPath(independentPath);
+				String relativePath = FileUtil.getRelativePath(baseDir.getPath(), independentPath, '/');
+				if(relativePath != null && !relativePath.startsWith(".."))
+				{
+					presentationPath = relativePath.replace('/', '\\');
+				}
+			}
+			else
+			{
+				file = baseDir.findFileByRelativePath(independentPath);
+			}
+
 			List<String> split = StringUtil.split(presentationPath, "\\");
 
 			SolutionVirtualDirectory target = root;
@@ -79,8 +96,6 @@ public class SolutionVirtualBuilder
 			{
 				target = target.createOrGetDirectory(split.get(i));
 			}
-
-			VirtualFile file = baseDir.findFileByRelativePath(FileUtil.toSystemIndependentName(pathName));
 
 			String name = ContainerUtil.getLastItem(split);
 			if(consulo.util.lang.StringUtil.isEmpty(name))

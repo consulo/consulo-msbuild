@@ -46,6 +46,7 @@ import consulo.util.io.FileUtil;
 import consulo.util.io.NetUtil;
 import consulo.util.lang.function.ThrowableSupplier;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
@@ -393,8 +394,7 @@ public class MSBuildDaemonService implements Disposable {
             evaluateData.addAll(items);
 
             for (MSBuildEvaluatedItem evaluatedItem : items) {
-                String url = parentDir.getUrl() + "/" + FileUtil.toSystemIndependentName(evaluatedItem.getItemSpec());
-                rootModel.addSingleContentEntry(url);
+                rootModel.addSingleContentEntry(getItemUrl(parentDir, evaluatedItem));
             }
         }
 
@@ -429,7 +429,23 @@ public class MSBuildDaemonService implements Disposable {
                 info.dependencies,
                 info.targets
             );
+
+            capability.importItems(module, rootModel, projectFile, info.properties, evaluateData);
         }
+    }
+
+    @Nonnull
+    private static String getItemUrl(@Nonnull VirtualFile projectDir, @Nonnull MSBuildEvaluatedItem item) {
+        String fullPath = item.getMetadata().get("FullPath");
+        if (fullPath != null && !fullPath.isEmpty()) {
+            return VirtualFileUtil.pathToUrl(FileUtil.toSystemIndependentName(fullPath));
+        }
+
+        String itemSpec = FileUtil.toSystemIndependentName(item.getItemSpec());
+        if (FileUtil.isAbsolutePlatformIndependent(itemSpec)) {
+            return VirtualFileUtil.pathToUrl(itemSpec);
+        }
+        return projectDir.getUrl() + "/" + itemSpec;
     }
 
     @Nonnull

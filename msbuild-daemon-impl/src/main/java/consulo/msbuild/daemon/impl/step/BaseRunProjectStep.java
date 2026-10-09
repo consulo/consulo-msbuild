@@ -53,7 +53,10 @@ public abstract class BaseRunProjectStep extends PerProjectRemoteDaemonStep<RunP
 		// information so we set ContinueOnError. This matches VS on Windows behaviour.
 		r.GlobalProperties.put("ContinueOnError", myContinueOnError ? "ErrorAndContinue" : "ErrorAndStop");
 		r.GlobalProperties.put("Silent", "true");
-		r.GlobalProperties.put("DesignTimeBuild", "true");
+		if(isDesignTimeBuild())
+		{
+			r.GlobalProperties.put("DesignTimeBuild", "true");
+		}
 
 		r.GlobalProperties.put("GenerateResourceMSBuildArchitecture", "CurrentArchitecture");
 		r.GlobalProperties.put("GenerateResourceMSBuildRuntime", "CurrentRuntime");
@@ -61,6 +64,11 @@ public abstract class BaseRunProjectStep extends PerProjectRemoteDaemonStep<RunP
 		fillProjectGlobalProperties(context.getProject(), r.GlobalProperties);
 
 		return r;
+	}
+
+	protected boolean isDesignTimeBuild()
+	{
+		return true;
 	}
 
 	private void fillProjectGlobalProperties(Project project, Map<String, String> globalProperties)

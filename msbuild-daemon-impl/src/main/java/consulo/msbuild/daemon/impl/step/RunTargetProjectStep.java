@@ -37,4 +37,10 @@ public class RunTargetProjectStep extends BaseRunProjectStep
 	{
 		return true;
 	}
+
+	@Override
+	protected boolean isDesignTimeBuild()
+	{
+		return false;
+	}
 }

@@ -1,2 +1,8 @@
 msbuild.name:
     text: MSBuild
+module.extension.project.file.label:
+    text: 'Project file:'
+module.extension.configuration.label:
+    text: 'Configuration:'
+module.extension.executable.label:
+    text: 'Executable:'

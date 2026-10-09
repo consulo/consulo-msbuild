@@ -164,7 +164,10 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 				SetMSBuildConfigProperty(toolset, "RoslynTargetsPath", roslynTargetsPath.getAbsolutePath());
 
 				File vcTargetsPath = new File(devEnvDir, "VC/VCTargets");
-				SetMSBuildConfigProperty(toolset, "VCTargetsPath", vcTargetsPath.getAbsolutePath());
+				if(!hasMSBuildConfigProperty(toolset, "VCTargetsPath") && vcTargetsPath.isDirectory())
+				{
+					SetMSBuildConfigProperty(toolset, "VCTargetsPath", vcTargetsPath.getAbsolutePath());
+				}
 
 			}
 			//			else
@@ -211,7 +214,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 	@Override
 	public int getVersion()
 	{
-		return 2;
+		return 3;
 	}
 
 	@Nonnull
@@ -219,6 +222,18 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider
 	public String getSolutionModuleExtensionId()
 	{
 		return "msbuild-default";
+	}
+
+	private static boolean hasMSBuildConfigProperty(Element toolset, String name)
+	{
+		for(Element property : toolset.getChildren("property"))
+		{
+			if(name.equals(property.getAttributeValue("name")))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static void SetMSBuildConfigProperty(Element toolset, String name, String value)
