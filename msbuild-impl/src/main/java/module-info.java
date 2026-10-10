@@ -26,4 +26,6 @@ module consulo.msbuild
 
 	// opens to MSBuildStandardResourceProvider
 	exports consulo.msbuild.impl to com.intellij.xml;
+
+	opens consulo.msbuild.impl.importProvider to com.google.gson;
 }

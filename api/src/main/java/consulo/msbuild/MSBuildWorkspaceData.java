@@ -7,6 +7,7 @@ import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
 import consulo.component.persist.StoragePathMacros;
+import consulo.platform.Platform;
 import consulo.project.Project;
 import consulo.util.xml.serializer.XmlSerializerUtil;
 import jakarta.annotation.Nonnull;
@@ -98,7 +99,7 @@ public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWor
         projectInfo.items.clear();
 
         projectInfo.moduleName = moduleName;
-        projectInfo.properties = new TreeMap<>(properties);
+        projectInfo.properties = withoutEnvironment(properties);
 
         for (MSBuildEvaluatedItem item : items) {
             ProjectItemInfo projectItemInfo = new ProjectItemInfo();
@@ -125,5 +126,18 @@ public class MSBuildWorkspaceData implements PersistentStateComponent<MSBuildWor
     @Override
     public void loadState(State state) {
         XmlSerializerUtil.copyBean(state, myState);
+    }
+
+    private static TreeMap<String, String> withoutEnvironment(Map<String, String> properties) {
+        Map<String, String> environment = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        environment.putAll(Platform.current().os().environmentVariables());
+
+        TreeMap<String, String> result = new TreeMap<>();
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            if (!Objects.equals(environment.get(entry.getKey()), entry.getValue())) {
+                result.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return result;
     }
 }
