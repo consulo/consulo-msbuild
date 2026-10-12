@@ -14,7 +14,4 @@ module consulo.msbuild.impl.dotnet.mono
 	requires consulo.dotnet.debugger.impl;
 	requires consulo.dotnet.mono.debugger.impl;
 	requires consulo.internal.dotnet.asm;
-
-	// TODO remove in future
-	requires java.desktop;
 }

@@ -19,53 +19,35 @@ package consulo.msbuild.csharp.module.extension;
 import consulo.csharp.base.module.extension.CSharpConfigurationPanel;
 import consulo.csharp.module.extension.CSharpMutableModuleExtension;
 import consulo.disposer.Disposable;
-import consulo.localize.LocalizeValue;
 import consulo.module.content.layer.ModuleRootLayer;
-import consulo.module.extension.swing.SwingMutableModuleExtension;
 import consulo.ui.Component;
-import consulo.ui.Label;
 import consulo.ui.annotation.RequiredUIAccess;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import javax.swing.*;
 
 /**
  * @author VISTALL
  * @since 03-Feb-17
  */
-public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExtension implements CSharpMutableModuleExtension<MSBuildCSharpModuleExtension>, SwingMutableModuleExtension
-{
-	public MSBuildCSharpMutableModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer layer)
-	{
-		super(id, layer);
-	}
+public class MSBuildCSharpMutableModuleExtension extends MSBuildCSharpModuleExtension implements CSharpMutableModuleExtension<MSBuildCSharpModuleExtension> {
+    public MSBuildCSharpMutableModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer layer) {
+        super(id, layer);
+    }
 
-	@RequiredUIAccess
-	@Nullable
-	@Override
-	public Component createConfigurationComponent(@Nonnull Disposable disposable, @Nonnull Runnable runnable)
-	{
-		return Label.create(LocalizeValue.localizeTODO("Unsupported UI"));
-	}
+    @RequiredUIAccess
+    @Nullable
+    @Override
+    public Component createConfigurationComponent(@Nonnull Disposable disposable, @Nonnull Runnable runnable) {
+        return CSharpConfigurationPanel.create(this, disposable);
+    }
 
-	@RequiredUIAccess
-	@Nullable
-	@Override
-	public JComponent createConfigurablePanel(@Nonnull Disposable disposable, @Nonnull Runnable runnable)
-	{
-		return new CSharpConfigurationPanel(this);
-	}
+    @Override
+    public void setEnabled(boolean b) {
+        myIsEnabled = b;
+    }
 
-	@Override
-	public void setEnabled(boolean b)
-	{
-		myIsEnabled = b;
-	}
-
-	@Override
-	public boolean isModified(@Nonnull MSBuildCSharpModuleExtension extension)
-	{
-		return isModifiedImpl(extension);
-	}
+    @Override
+    public boolean isModified(@Nonnull MSBuildCSharpModuleExtension extension) {
+        return isModifiedImpl(extension);
+    }
 }

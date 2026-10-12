@@ -36,15 +36,12 @@ import java.nio.file.Path;
  * @since 08.06.2015
  */
 @ExtensionImpl(id = "msbuild", order = "after ms-internal")
-public class MSBundleCompilerProvider extends CSharpCompilerProvider
-{
+public class MSBundleCompilerProvider extends CSharpCompilerProvider {
     @Nullable
     @Override
-    public SdkType getBundleType(DotNetSimpleModuleExtension<?> moduleExtension)
-    {
+    public SdkType getBundleType(DotNetSimpleModuleExtension<?> moduleExtension) {
         // hack - due we can known about MSBuild plugin or Microsoft .NET, double depends option file is not supported
-        if(moduleExtension.getId().equals("microsoft-dotnet"))
-        {
+        if (moduleExtension.getId().equals("microsoft-dotnet")) {
             return MSBuildBundleType.getInstance();
         }
         return null;
@@ -52,18 +49,15 @@ public class MSBundleCompilerProvider extends CSharpCompilerProvider
 
     @Override
     public void setupCompiler(DotNetModuleExtension<?> netExtension,
-            CSharpModuleExtension<?> csharpExtension,
-            MSBaseDotNetCompilerOptionsBuilder builder,
-            @Nullable Path compilerSdkHome) throws DotNetCompileFailedException
-    {
-        if(compilerSdkHome == null)
-        {
+                              CSharpModuleExtension<?> csharpExtension,
+                              MSBaseDotNetCompilerOptionsBuilder builder,
+                              @Nullable Path compilerSdkHome) throws DotNetCompileFailedException {
+        if (compilerSdkHome == null) {
             throw new DotNetCompileFailedException("Compiler path is not resolved");
         }
 
         Path compilerPath = compilerSdkHome.resolve("bin").resolve("Roslyn").resolve(CSharpCompilerUtil.COMPILER_NAME);
-        if(!Files.exists(compilerPath))
-        {
+        if (!Files.exists(compilerPath)) {
             compilerPath = compilerSdkHome.resolve("bin").resolve(CSharpCompilerUtil.COMPILER_NAME);
         }
 

@@ -10,9 +10,6 @@ module consulo.msbuild.lang.impl.csharp
 	requires com.intellij.xml;
 	requires consulo.csharp.base.impl;
 
-	// TODO remove in future
-	requires java.desktop;
-
 	exports consulo.msbuild.csharp;
 	exports consulo.msbuild.csharp.module.extension;
 }

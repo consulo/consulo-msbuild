@@ -13,7 +13,4 @@ module consulo.msbuild.impl.dotnet.microsoft
 	requires consulo.process.api;
 	requires consulo.dotnet.debugger.impl;
 	requires consulo.dotnet.microsoft.debugger.impl;
-
-	// TODO remove in future
-	requires java.desktop;
 }
