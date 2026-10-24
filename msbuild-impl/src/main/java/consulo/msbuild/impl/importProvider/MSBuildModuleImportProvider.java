@@ -68,7 +68,7 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
     public boolean canImport(@Nonnull File fileOrDirectory) {
         // if target directory contains Solution - do not allow import as MSBuild
         if (fileOrDirectory.isDirectory()) {
-            if (SolutionModuleImportProvider.findSingleSolutionFile(fileOrDirectory) != null) {
+            if (SolutionModuleImportProvider.hasSolutionFile(fileOrDirectory)) {
                 return false;
             }
         }

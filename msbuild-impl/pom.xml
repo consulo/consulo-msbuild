@@ -54,6 +54,8 @@
                         <dependency>consulo.dotnet.microsoft</dependency>
                         <dependency>consulo.dotnet.mono</dependency>
                         <dependency>consulo.csharp</dependency>
+                        <dependency>consulo.fsharp</dependency>
+                        <dependency>consulo.visualBasic.dotnet</dependency>
                         <dependency>consulo.javascript</dependency>
                         <dependency>consulo.nuget</dependency>
                         <dependency>consulo.dap</dependency>
@@ -105,6 +107,16 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>consulo.msbuild-lang.impl.csharp</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>consulo.msbuild-lang.impl.fsharp</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>consulo.msbuild-lang.impl.visualBasic</artifactId>
             <version>${project.version}</version>
         </dependency>
 

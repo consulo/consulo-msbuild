@@ -40,4 +40,6 @@
 	<depends optional="true">consulo.dotnet.microsoft</depends>
 
 	<depends optional="true">consulo.csharp</depends>
+	<depends optional="true">consulo.fsharp</depends>
+	<depends optional="true">consulo.visualBasic.dotnet</depends>
 </consulo-plugin>

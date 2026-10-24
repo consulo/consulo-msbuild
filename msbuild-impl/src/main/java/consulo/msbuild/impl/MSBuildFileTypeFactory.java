@@ -47,7 +47,7 @@ public class MSBuildFileTypeFactory extends FileTypeFactory
 	@Override
 	public void createFileTypes(@Nonnull FileTypeConsumer consumer)
 	{
-		consumer.consume(VisualStudioSolutionFileType.INSTANCE);
+		consumer.consume(VisualStudioSolutionFileType.INSTANCE, "sln;slnx");
 		consumer.consume(XmlFileType.INSTANCE, "resx;settings;config");
 		consumer.consume(XmlFileType.INSTANCE, PROPS_EXT);
 		consumer.consume(XmlFileType.INSTANCE, TARGETS_EXT);

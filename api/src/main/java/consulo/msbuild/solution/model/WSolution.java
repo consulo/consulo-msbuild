@@ -18,6 +18,7 @@ package consulo.msbuild.solution.model;
 
 import consulo.logging.Logger;
 import consulo.msbuild.solution.reader.SlnFile;
+import consulo.msbuild.solution.reader.SlnxReader;
 import consulo.msbuild.solution.reader.SlnProject;
 import consulo.msbuild.solution.reader.SlnSection;
 import consulo.project.Project;
@@ -27,6 +28,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
@@ -50,6 +52,18 @@ public class WSolution
 	public static WSolution build(@Nonnull Project project, @Nonnull VirtualFile solutionVirtualFile)
 	{
 		SlnFile slnFile = new SlnFile();
+		if("slnx".equalsIgnoreCase(solutionVirtualFile.getExtension()))
+		{
+			try (InputStream stream = solutionVirtualFile.getInputStream())
+			{
+				SlnxReader.read(stream, slnFile);
+			}
+			catch(IOException e)
+			{
+				LOG.error(e);
+			}
+			return new WSolution(project, solutionVirtualFile, slnFile);
+		}
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(solutionVirtualFile.getInputStream(), StandardCharsets.UTF_8)))
 		{
 			slnFile.Read(reader);

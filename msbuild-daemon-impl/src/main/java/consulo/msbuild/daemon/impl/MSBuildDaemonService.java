@@ -389,10 +389,16 @@ public class MSBuildDaemonService implements Disposable {
 
         List<MSBuildEvaluatedItem> evaluateData = new ArrayList<>();
 
+        MSBuildProjectFile projectFileType = MSBuildProjectFile.findByExtension(myProject.getApplication(), projectFile.getExtension());
+        Set<String> metadataItemTypes = projectFileType == null ? Set.of() : projectFileType.getMetadataItemTypes();
         for (String item : AnalyzeProjectItemsStep.getItemTypes(myProject.getApplication(), projectFile)) {
             Collection<MSBuildEvaluatedItem> items = info.items.get(item);
             evaluateData.addAll(items);
 
+            if (metadataItemTypes.contains(item)) {
+                // not files
+                continue;
+            }
             for (MSBuildEvaluatedItem evaluatedItem : items) {
                 rootModel.addSingleContentEntry(getItemUrl(parentDir, evaluatedItem));
             }

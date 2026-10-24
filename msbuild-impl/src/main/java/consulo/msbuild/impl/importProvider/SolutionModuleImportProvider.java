@@ -1,7 +1,6 @@
 package consulo.msbuild.impl.importProvider;
 
 import consulo.annotation.access.RequiredReadAction;
-import consulo.annotation.component.ExtensionImpl;
 import consulo.application.concurrent.coroutine.ReadLock;
 import consulo.application.concurrent.coroutine.WriteLock;
 import consulo.localize.LocalizeValue;
@@ -21,6 +20,7 @@ import consulo.project.startup.StartupActivity;
 import consulo.project.startup.StartupManager;
 import consulo.ui.ex.wizard.WizardStep;
 import consulo.ui.image.Image;
+import consulo.util.io.FileUtil;
 import consulo.util.concurrent.coroutine.Coroutine;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
@@ -33,11 +33,18 @@ import java.io.File;
 import java.util.function.Consumer;
 
 /**
+ * Imports one solution format. Each format has own provider, so if directory contains both formats - user will choose import target
+ *
  * @author VISTALL
  * @since 01-Feb-17
  */
-@ExtensionImpl
-public class SolutionModuleImportProvider implements ModuleImportProvider<SolutionModuleImportContext> {
+public abstract class SolutionModuleImportProvider implements ModuleImportProvider<SolutionModuleImportContext> {
+    /**
+     * @return solution file extension without dot
+     */
+    @Nonnull
+    protected abstract String getSolutionExtension();
+
     @Nonnull
     @Override
     public SolutionModuleImportContext createContext(@Nullable Project project) {
@@ -47,7 +54,7 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
     @Nonnull
     @Override
     public LocalizeValue getName() {
-        return LocalizeValue.localizeTODO("Visual Studio");
+        return LocalizeValue.localizeTODO("Visual Studio Solution (." + getSolutionExtension() + ")");
     }
 
     @Nonnull
@@ -67,7 +74,7 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
             return findSingleSolutionFile(fileOrDirectory) != null;
         }
         else {
-            return FileTypeRegistry.getInstance().getFileTypeByFileName(fileOrDirectory.getName()) == VisualStudioSolutionFileType.INSTANCE;
+            return isOwnSolutionFile(fileOrDirectory);
         }
     }
 
@@ -82,26 +89,43 @@ public class SolutionModuleImportProvider implements ModuleImportProvider<Soluti
         return file.getPath();
     }
 
-    public static File findSingleSolutionFile(File directory) {
+    /**
+     * @return solution file of this provider format, null if there no files, or more than one
+     */
+    @Nullable
+    private File findSingleSolutionFile(File directory) {
         File firstSolution = null;
-        if (directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (!file.isDirectory()) {
-                        if (FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE) {
-                            // already found - return null
-                            if (firstSolution != null) {
-                                return null;
-                            }
-
-                            firstSolution = file;
-                        }
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (!file.isDirectory() && isOwnSolutionFile(file)) {
+                    // already found - return null
+                    if (firstSolution != null) {
+                        return null;
                     }
+
+                    firstSolution = file;
                 }
             }
         }
         return firstSolution;
+    }
+
+    private boolean isOwnSolutionFile(File file) {
+        return FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE
+            && getSolutionExtension().equalsIgnoreCase(FileUtil.getExtension(file.getName()));
+    }
+
+    public static boolean hasSolutionFile(File directory) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (!file.isDirectory() && FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

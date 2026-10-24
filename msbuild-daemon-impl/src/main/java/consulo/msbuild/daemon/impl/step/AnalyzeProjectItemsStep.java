@@ -37,12 +37,13 @@ public class AnalyzeProjectItemsStep extends BaseRunProjectStep {
     @Nonnull
     public static String[] getItemTypes(@Nonnull Application application, @Nullable VirtualFile projectFile) {
         MSBuildProjectFile projectFileKind = projectFile == null ? null : MSBuildProjectFile.findByExtension(application, projectFile.getExtension());
-        if (projectFileKind == null || projectFileKind.getItemTypes().isEmpty()) {
+        if (projectFileKind == null || projectFileKind.getItemTypes().isEmpty() && projectFileKind.getMetadataItemTypes().isEmpty()) {
             return ITEMS;
         }
 
         Set<String> itemTypes = new LinkedHashSet<>(Arrays.asList(ITEMS));
         itemTypes.addAll(projectFileKind.getItemTypes());
+        itemTypes.addAll(projectFileKind.getMetadataItemTypes());
         return itemTypes.toArray(String[]::new);
     }
 

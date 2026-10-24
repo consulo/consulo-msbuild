@@ -1,0 +1,6 @@
+<consulo-plugin-requires>
+	<plugins>
+		<plugin>consulo.dotnet</plugin>
+		<plugin>consulo.visualBasic.dotnet</plugin>
+	</plugins>
+</consulo-plugin-requires>

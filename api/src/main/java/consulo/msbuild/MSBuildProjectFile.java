@@ -59,6 +59,15 @@ public interface MSBuildProjectFile {
         return Set.of();
     }
 
+    /**
+     * Item types evaluated for {@link MSBuildProjectCapability#importItems} which are not files, so they are not content
+     * of the module: {@code Import} (project level imports) of Visual Basic.
+     */
+    @Nonnull
+    default Set<String> getMetadataItemTypes() {
+        return Set.of();
+    }
+
     @Nonnull
     default String getConfiguration() {
         return "Debug";

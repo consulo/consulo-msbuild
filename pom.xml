@@ -51,5 +51,7 @@
 
 		<module>msbuild-daemon-impl</module>
 		<module>lang-impl/csharp</module>
+		<module>lang-impl/fsharp</module>
+		<module>lang-impl/visualBasic</module>
 	</modules>
 </project>
