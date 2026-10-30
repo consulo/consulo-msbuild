@@ -25,11 +25,12 @@ import consulo.util.concurrent.coroutine.Coroutine;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileTypeRegistry;
-import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.function.Consumer;
 
 /**
@@ -64,7 +65,8 @@ public abstract class SolutionModuleImportProvider implements ModuleImportProvid
     }
 
     @Override
-    public boolean canImport(@Nonnull File fileOrDirectory) {
+    public boolean canImport(@Nonnull Path path) {
+        File fileOrDirectory = path.toFile();
         if (fileOrDirectory.isDirectory()) {
             // special case. We don't provide importing Unity project via solution file
             if (new File(fileOrDirectory, "ProjectSettings/ProjectSettings.asset").exists()) {
@@ -79,14 +81,14 @@ public abstract class SolutionModuleImportProvider implements ModuleImportProvid
     }
 
     @Override
-    public String getPathToBeImported(@Nonnull VirtualFile file) {
-        if (file.isDirectory()) {
-            File solutionFile = findSingleSolutionFile(VirtualFileUtil.virtualToIoFile(file));
+    public String getPathToBeImported(@Nonnull Path file) {
+        if (Files.isDirectory(file)) {
+            File solutionFile = findSingleSolutionFile(file.toFile());
             if (solutionFile != null) {
                 return solutionFile.getPath();
             }
         }
-        return file.getPath();
+        return file.toString();
     }
 
     /**

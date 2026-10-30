@@ -24,12 +24,13 @@ import consulo.util.concurrent.coroutine.Coroutine;
 import consulo.util.io.FileUtil;
 import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -65,7 +66,8 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
     }
 
     @Override
-    public boolean canImport(@Nonnull File fileOrDirectory) {
+    public boolean canImport(@Nonnull Path path) {
+        File fileOrDirectory = path.toFile();
         // if target directory contains Solution - do not allow import as MSBuild
         if (fileOrDirectory.isDirectory()) {
             if (SolutionModuleImportProvider.hasSolutionFile(fileOrDirectory)) {
@@ -83,14 +85,14 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
     }
 
     @Override
-    public String getPathToBeImported(@Nonnull VirtualFile file) {
-        if (file.isDirectory()) {
-            File solutionFile = findSingleSolutionFile(VirtualFileUtil.virtualToIoFile(file));
+    public String getPathToBeImported(@Nonnull Path file) {
+        if (Files.isDirectory(file)) {
+            File solutionFile = findSingleSolutionFile(file.toFile());
             if (solutionFile != null) {
                 return solutionFile.getPath();
             }
         }
-        return file.getPath();
+        return file.toString();
     }
 
     private File findSingleSolutionFile(File directory) {
