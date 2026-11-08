@@ -18,28 +18,11 @@ package consulo.msbuild.dotnet.impl.library;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.access.RequiredWriteAction;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.application.Application;
-import consulo.document.Document;
-import consulo.document.FileDocumentManager;
 import consulo.dotnet.assembly.summary.DotNetAddableLibrary;
 import consulo.dotnet.assembly.summary.DotNetAddableLibraryProvider;
-import consulo.language.psi.PsiDocumentManager;
-import consulo.language.psi.PsiFile;
-import consulo.language.psi.PsiManager;
-import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.module.content.ModuleRootManager;
-import consulo.msbuild.MSBuildProjectImporter;
 import consulo.msbuild.MSBuildWorkspaceData;
-import consulo.msbuild.dom.ItemGroup;
-import consulo.msbuild.dom.PackageReference;
-import consulo.msbuild.dom.Project;
-import consulo.msbuild.dotnet.impl.module.extension.MSBuildBaseDotNetModuleExtension;
-import consulo.virtualFileSystem.LocalFileSystem;
-import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.dom.DomFileElement;
-import consulo.xml.dom.DomManager;
-import consulo.xml.language.psi.XmlFile;
 import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
@@ -62,7 +45,7 @@ import java.util.stream.Stream;
 public class MSBuildPackageAddableLibraryProvider implements DotNetAddableLibraryProvider {
     private static final Pattern NUSPEC_ID = Pattern.compile("<id>\\s*([^<\\s]+)\\s*</id>");
 
-    private record PackageLibrary(String id, String version, Path file, Path projectFile) implements DotNetAddableLibrary {
+    private record PackageLibrary(String id, String version, Path file) implements DotNetAddableLibrary {
         @Override
         public String getName() {
             return id + " " + version;
@@ -76,68 +59,20 @@ public class MSBuildPackageAddableLibraryProvider implements DotNetAddableLibrar
         @RequiredWriteAction
         @Override
         public void addTo(Module module) {
-            consulo.project.Project project = module.getProject();
-            VirtualFile virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(projectFile);
-            PsiFile psiFile = virtualFile == null ? null : PsiManager.getInstance(project).findFile(virtualFile);
-            if (!(psiFile instanceof XmlFile xmlFile)) {
-                return;
-            }
-            DomFileElement<Project> fileElement = DomManager.getDomManager(project).getFileElement(xmlFile, Project.class);
-            if (fileElement == null) {
-                return;
-            }
-            Project root = fileElement.getRootElement();
-            ItemGroup target = null;
-            for (ItemGroup group : root.getItemGroups()) {
-                for (PackageReference reference : group.getPackageReferences()) {
-                    if (id.equalsIgnoreCase(reference.getInclude().getStringValue())) {
-                        // already there - only the restore is missing
-                        reimport(project, virtualFile);
-                        return;
-                    }
-                }
-                if (target == null && !group.getPackageReferences().isEmpty()) {
-                    target = group;
-                }
-            }
-            if (target == null) {
-                target = root.addItemGroup();
-            }
-            PackageReference reference = target.addPackageReference();
-            reference.getInclude().setStringValue(id);
-            reference.getVersion().setStringValue(version);
-            reimport(project, virtualFile);
-        }
-
-        private static void reimport(consulo.project.Project project, VirtualFile projectFile) {
-            // the import reads the project file from the disk - after the write command that changed it, and after its save
-            Application.get().invokeLater(() -> {
-                PsiDocumentManager.getInstance(project).commitAllDocuments();
-                FileDocumentManager documentManager = FileDocumentManager.getInstance();
-                Document document = documentManager.getCachedDocument(projectFile);
-                if (document != null) {
-                    documentManager.saveDocument(document);
-                }
-                MSBuildProjectImporter.getInstance(project).reimport();
-            }, project.getDisposed());
+            MSBuildPackageReferenceManager.addReference(module, id, version);
         }
     }
 
     @RequiredReadAction
     @Override
     public List<DotNetAddableLibrary> getAddableLibraries(Module module) {
-        if (ModuleUtilCore.getExtension(module, MSBuildBaseDotNetModuleExtension.class) == null) {
+        MSBuildWorkspaceData.ProjectInfo info = MSBuildPackageReferenceManager.findSdkProjectInfo(module);
+        if (info == null) {
             return List.of();
         }
-        MSBuildWorkspaceData.ProjectInfo info = findInfo(module);
-        if (info == null || !"true".equalsIgnoreCase(info.properties.get("UsingMicrosoftNETSdk"))) {
-            // an old-style project references the assemblies of a .NET Framework, not packages - not supported yet
-            return List.of();
-        }
-        String projectFile = info.properties.get("MSBuildProjectFullPath");
         String targetFramework = targetFramework(info);
         Path packageRoot = packageRoot(info);
-        if (projectFile == null || targetFramework == null || packageRoot == null || !Files.isDirectory(packageRoot)) {
+        if (targetFramework == null || packageRoot == null || !Files.isDirectory(packageRoot)) {
             return List.of();
         }
 
@@ -149,7 +84,7 @@ public class MSBuildPackageAddableLibraryProvider implements DotNetAddableLibrar
                 if (used.contains(directoryName.toLowerCase(Locale.ROOT)) || !Files.isDirectory(packageDirectory)) {
                     continue;
                 }
-                addPackage(packageDirectory, targetFramework, Path.of(projectFile), libraries);
+                addPackage(packageDirectory, targetFramework, libraries);
             }
         }
         catch (IOException e) {
@@ -158,7 +93,7 @@ public class MSBuildPackageAddableLibraryProvider implements DotNetAddableLibrar
         return libraries;
     }
 
-    private static void addPackage(Path packageDirectory, String targetFramework, Path projectFile, List<DotNetAddableLibrary> libraries) throws IOException {
+    private static void addPackage(Path packageDirectory, String targetFramework, List<DotNetAddableLibrary> libraries) throws IOException {
         String version = null;
         try (Stream<Path> versions = Files.list(packageDirectory)) {
             for (Path versionDirectory : (Iterable<Path>) versions::iterator) {
@@ -189,7 +124,7 @@ public class MSBuildPackageAddableLibraryProvider implements DotNetAddableLibrar
         try (Stream<Path> files = Files.list(lib.resolve(framework))) {
             for (Path file : (Iterable<Path>) files::iterator) {
                 if (file.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".dll")) {
-                    libraries.add(new PackageLibrary(id, version, file, projectFile));
+                    libraries.add(new PackageLibrary(id, version, file));
                 }
             }
         }
@@ -237,15 +172,6 @@ public class MSBuildPackageAddableLibraryProvider implements DotNetAddableLibrar
             }
         }
         return used;
-    }
-
-    private static MSBuildWorkspaceData.@Nullable ProjectInfo findInfo(Module module) {
-        for (MSBuildWorkspaceData.ProjectInfo info : MSBuildWorkspaceData.getInstance(module.getProject()).getProjectInfos()) {
-            if (module.getName().equals(info.moduleName)) {
-                return info;
-            }
-        }
-        return null;
     }
 
     @Nullable
