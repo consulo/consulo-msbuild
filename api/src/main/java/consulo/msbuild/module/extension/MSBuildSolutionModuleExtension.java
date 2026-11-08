@@ -1,6 +1,7 @@
 package consulo.msbuild.module.extension;
 
 import consulo.application.AccessRule;
+import consulo.application.ReadAction;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.module.ModuleManager;
@@ -8,9 +9,9 @@ import consulo.module.extension.ModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.Collection;
 import java.util.Objects;
 
@@ -18,64 +19,59 @@ import java.util.Objects;
  * @author VISTALL
  * @since 18/01/2021
  */
-public interface MSBuildSolutionModuleExtension<T extends ModuleExtension<T>> extends ModuleExtension<T>
-{
-	@Nullable
-	static MSBuildSolutionModuleExtension<?> getSolutionModuleExtension(@Nonnull Project project)
-	{
-		Module[] modules = AccessRule.read(() -> ModuleManager.getInstance(project).getModules());
-		assert modules != null;
+public interface MSBuildSolutionModuleExtension<T extends ModuleExtension<T>> extends ModuleExtension<T> {
+    @Nullable
+    static MSBuildSolutionModuleExtension<?> getSolutionModuleExtension(@Nonnull Project project) {
+        VirtualFile baseDir = project.getBaseDir();
+        if (baseDir == null) {
+            return null;
+        }
 
-		VirtualFile baseDir = project.getBaseDir();
+        Module[] modules = ReadAction.computeNotNull(() -> ModuleManager.getInstance(project).getModules());
 
-		assert baseDir != null;
+        for (Module module : modules) {
+            VirtualFile moduleDir = module.getModuleDir();
+            if (Objects.equals(baseDir, moduleDir)) {
+                return ReadAction.compute(() -> ModuleUtilCore.getExtension(module, MSBuildSolutionModuleExtension.class));
+            }
+        }
 
-		for(Module module : modules)
-		{
-			VirtualFile moduleDir = module.getModuleDir();
-			if(Objects.equals(baseDir, moduleDir))
-			{
-				return AccessRule.read(() -> ModuleUtilCore.getExtension(module, MSBuildSolutionModuleExtension.class));
-			}
-		}
+        return null;
+    }
 
-		return null;
-	}
+    @Nullable
+    String getSdkName();
 
-	@Nullable
-	String getSdkName();
+    /**
+     * File URL to solution file. If it's not null - {@link #getProjectUrl()} will always return null
+     */
+    @Nullable
+    String getSolutionFileUrl();
 
-	/**
-	 * File URL to solution file. If it's not null - {@link #getProjectUrl()} will always return null
-	 */
-	@Nullable
-	String getSolutionFileUrl();
+    @Nullable
+    String getProjectUrl();
 
-	@Nullable
-	String getProjectUrl();
+    @Nullable
+    VirtualFile getSolutionFile();
 
-	@Nullable
-	VirtualFile getSolutionFile();
+    @Nullable
+    VirtualFile getProjectFile();
 
-	@Nullable
-	VirtualFile getProjectFile();
+    @Nullable
+    String getProjectUUID();
 
-	@Nullable
-	String getProjectUUID();
+    @Nonnull
+    Collection<WProject> getProjects();
 
-	@Nonnull
-	Collection<WProject> getProjects();
+    @Nonnull
+    default Collection<WProject> getValidProjects() {
+        return getProjects()
+            .stream()
+            .filter(wProject -> !wProject.isSolutionFolder())
+            .filter(wProject -> wProject.getFailReason() == null)
+            .toList();
+    }
 
-	@Nonnull
-	default Collection<WProject> getValidProjects()
-	{
-		return getProjects()
-				.stream()
-				.filter(wProject -> !wProject.isSolutionFolder())
-				.filter(wProject -> wProject.getFailReason() == null)
-				.toList();
-	}
-
-	@Nonnull
-	String getProcessProviderId();
+    @Nonnull
+    String getProcessProviderId();
 }
