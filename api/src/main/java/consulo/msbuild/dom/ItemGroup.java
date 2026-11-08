@@ -148,6 +148,13 @@ public interface ItemGroup extends DomElement
 	List<PackageReference> getPackageReferences();
 
 	/**
+	 * Adds new child to the list of PackageReference children.
+	 *
+	 * @return created child
+	 */
+	PackageReference addPackageReference();
+
+	/**
 	 * Returns the list of PreBuildEvent children.
 	 *
 	 * @return the list of PreBuildEvent children.
@@ -184,4 +191,12 @@ public interface ItemGroup extends DomElement
 	 */
 	@SubTagList("Reference")
 	List<Reference> getReferences();
+
+	/**
+	 * Adds new child to the list of Reference children.
+	 *
+	 * @return created child
+	 */
+	@SubTagList("Reference")
+	Reference addReference();
 }

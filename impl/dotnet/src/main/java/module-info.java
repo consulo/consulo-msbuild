@@ -10,5 +10,6 @@ module consulo.msbuild.impl.dotnet
 	requires consulo.dotnet.debugger.impl;
 
 	exports consulo.msbuild.dotnet.impl;
+	exports consulo.msbuild.dotnet.impl.library;
 	exports consulo.msbuild.dotnet.impl.module.extension;
 }
