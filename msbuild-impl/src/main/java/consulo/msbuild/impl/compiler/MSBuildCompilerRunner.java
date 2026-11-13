@@ -9,6 +9,7 @@ import consulo.compiler.*;
 import consulo.dataContext.DataContext;
 import consulo.localize.LocalizeValue;
 import consulo.module.extension.ModuleExtensionHelper;
+import consulo.msbuild.MSBuildImportUtil;
 import consulo.msbuild.daemon.impl.MSBuildDaemonContext;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
 import consulo.msbuild.daemon.impl.message.model.MSBuildTargetResult;
@@ -19,11 +20,11 @@ import consulo.msbuild.daemon.impl.step.RunTargetProjectStep;
 import consulo.msbuild.icon.MSBuildIconGroup;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
-import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author VISTALL
@@ -91,9 +92,10 @@ public class MSBuildCompilerRunner implements CompilerRunner {
 
                         String fileUrl = null;
                         if (filePath != null) {
-                            File file = new File(filePath);
-                            if (file.exists()) {
-                                fileUrl = VirtualFileUtil.pathToUrl(filePath);
+                            // a file of the machine of the project
+                            Path file = MSBuildImportUtil.toPath(compileContext.getProject(), filePath);
+                            if (Files.exists(file)) {
+                                fileUrl = MSBuildImportUtil.pathToUrl(file);
                             }
                         }
 

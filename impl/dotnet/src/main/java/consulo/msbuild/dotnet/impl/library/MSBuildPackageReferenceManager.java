@@ -29,6 +29,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
+import consulo.msbuild.MSBuildImportUtil;
 import consulo.msbuild.MSBuildProjectImporter;
 import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.dom.ItemGroup;
@@ -36,7 +37,6 @@ import consulo.msbuild.dom.PackageReference;
 import consulo.msbuild.dom.Project;
 import consulo.msbuild.dotnet.impl.module.extension.MSBuildBaseDotNetModuleExtension;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.dom.DomFileElement;
 import consulo.xml.dom.DomManager;
@@ -188,7 +188,7 @@ public class MSBuildPackageReferenceManager implements DotNetPackageManager {
     private static @Nullable VirtualFile findProjectFile(Module module) {
         MSBuildWorkspaceData.ProjectInfo info = findSdkProjectInfo(module);
         String projectFile = info == null ? null : info.properties.get("MSBuildProjectFullPath");
-        return projectFile == null ? null : LocalFileSystem.getInstance().findFileByNioFile(Path.of(projectFile));
+        return projectFile == null ? null : MSBuildImportUtil.findFile(module.getProject(), projectFile);
     }
 
     /**

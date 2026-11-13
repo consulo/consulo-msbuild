@@ -23,6 +23,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -75,7 +76,7 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 
 	@Nonnull
 	@Override
-	public GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull File exeFile, int port) throws IOException
+	public GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull Path exeFile, int port) throws IOException
 	{
 		File monoBinRoot = new File(sdk.getHomePath(), "../../../../bin");
 
@@ -83,22 +84,22 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 
 		GeneralCommandLine commandLine = new GeneralCommandLine();
 		commandLine.setExePath(new File(monoRootBinPath, Platform.current().os().isWindows() ? "mono.exe" : "mono").getAbsolutePath());
-		commandLine.addParameter(exeFile.getCanonicalPath());
+		commandLine.addParameter(exeFile.toString());
 		commandLine.addParameter(String.valueOf(port));
 		commandLine.addParameter("true");
 		return commandLine;
 	}
 
 	@Override
-	public File getBinDir(@Nonnull Sdk sdk)
+	public Path getBinDir(@Nonnull Sdk sdk)
 	{
-		return MonoMSBuildBundleType.getBinDir(sdk.getHomePath());
+		return MonoMSBuildBundleType.getBinDir(sdk.getHomePath()).toPath();
 	}
 
 	@Override
-	public void doAdditionalCopy(@Nonnull File targetFile, @Nonnull File msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException
+	public void doAdditionalCopy(@Nonnull File targetFile, @Nonnull Path msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException
 	{
-		File msBuildBinDir = getBinDir(msBuildSdk);
+		File msBuildBinDir = MonoMSBuildBundleType.getBinDir(msBuildSdk.getHomePath());
 
 		File configFile = new File(msBuildBinDir, "MSBuild.dll.config");
 		if(configFile.exists())
@@ -173,9 +174,9 @@ public class MonoMSBuildProcessProvider implements MSBuildProcessProvider
 //				SetMSBuildConfigProperty(searchPaths, path.Property, path.Path, append:true, insertBefore:false);
 			}
 
-			File targetConfigFile = new File(msBuildRunnerDir, targetFile.getName() + ".config");
+			Path targetConfigFile = msBuildRunnerDir.resolve(targetFile.getName() + ".config");
 
-			JDOMUtil.writeDocument(new Document(rootElement), targetConfigFile, "\n");
+			JDOMUtil.writeDocument(new Document(rootElement), targetConfigFile.toString(), "\n");
 		}
 	}
 

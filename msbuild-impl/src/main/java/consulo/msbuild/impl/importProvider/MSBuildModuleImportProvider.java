@@ -28,7 +28,6 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
@@ -67,19 +66,16 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
 
     @Override
     public boolean canImport(@Nonnull Path path) {
-        File fileOrDirectory = path.toFile();
         // if target directory contains Solution - do not allow import as MSBuild
-        if (fileOrDirectory.isDirectory()) {
-            if (SolutionModuleImportProvider.hasSolutionFile(fileOrDirectory)) {
+        if (Files.isDirectory(path)) {
+            if (SolutionModuleImportProvider.hasSolutionFile(path)) {
                 return false;
             }
-        }
 
-        if (fileOrDirectory.isDirectory()) {
-            return findSingleSolutionFile(fileOrDirectory) != null;
+            return findSingleSolutionFile(path) != null;
         }
         else {
-            String ext = FileUtil.getExtension(fileOrDirectory.getName());
+            String ext = FileUtil.getExtension(path.getFileName().toString());
             return MSBuildProjectFile.listAll(myApplication).contains(ext);
         }
     }
@@ -87,34 +83,28 @@ public class MSBuildModuleImportProvider implements ModuleImportProvider<MSBuild
     @Override
     public String getPathToBeImported(@Nonnull Path file) {
         if (Files.isDirectory(file)) {
-            File solutionFile = findSingleSolutionFile(file.toFile());
+            Path solutionFile = findSingleSolutionFile(file);
             if (solutionFile != null) {
-                return solutionFile.getPath();
+                return solutionFile.toString();
             }
         }
         return file.toString();
     }
 
-    private File findSingleSolutionFile(File directory) {
+    @Nullable
+    private Path findSingleSolutionFile(Path directory) {
         Set<String> exts = MSBuildProjectFile.listAll(myApplication);
 
-        File firstSolution = null;
-        if (directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (!file.isDirectory()) {
-                        String ext = FileUtil.getExtension(file.getName());
-                        if (exts.contains(ext)) {
-                            // already found - return null
-                            if (firstSolution != null) {
-                                return null;
-                            }
-
-                            firstSolution = file;
-                        }
-                    }
+        Path firstSolution = null;
+        for (Path file : SolutionModuleImportProvider.listFiles(directory)) {
+            String ext = FileUtil.getExtension(file.getFileName().toString());
+            if (exts.contains(ext)) {
+                // already found - return null
+                if (firstSolution != null) {
+                    return null;
                 }
+
+                firstSolution = file;
             }
         }
         return firstSolution;

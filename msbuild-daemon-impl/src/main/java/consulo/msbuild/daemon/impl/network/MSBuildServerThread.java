@@ -2,12 +2,11 @@ package consulo.msbuild.daemon.impl.network;
 
 import consulo.logging.Logger;
 import consulo.msbuild.daemon.impl.MSBuildDaemonService;
+import consulo.platform.PlatformServerSocket;
+import consulo.platform.PlatformSocket;
 import consulo.util.io.StreamUtil;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.function.Consumer;
 
 /**
@@ -23,26 +22,21 @@ public class MSBuildServerThread extends Thread
 
 	private boolean myShutdown;
 
-	private ServerSocket myServerSocket;
+	private final PlatformServerSocket myServerSocket;
 
-	public MSBuildServerThread(MSBuildDaemonService daemonService, int port, Consumer<MSBuildSocketThread> connectionAcceptor)
+	/**
+	 * @param serverSocket a server socket of the machine of the daemon
+	 */
+	public MSBuildServerThread(MSBuildDaemonService daemonService, PlatformServerSocket serverSocket, Consumer<MSBuildSocketThread> connectionAcceptor)
 	{
-		super("MSBuildServerThread: " + port);
+		super("MSBuildServerThread: " + serverSocket.getPort());
 		myDaemonService = daemonService;
+		myServerSocket = serverSocket;
 		myConnectionAcceptor = connectionAcceptor;
 
 		setDaemon(true);
 
-		try
-		{
-			myServerSocket = new ServerSocket(port, 0, InetAddress.getLoopbackAddress());
-
-			start();
-		}
-		catch(IOException e)
-		{
-			throw new IllegalArgumentException(e);
-		}
+		start();
 	}
 
 	public void shutdown()
@@ -58,7 +52,7 @@ public class MSBuildServerThread extends Thread
 		{
 			try
 			{
-				Socket socket = myServerSocket.accept();
+				PlatformSocket socket = myServerSocket.accept();
 
 				MSBuildSocketThread socketThread = new MSBuildSocketThread(socket, myDaemonService);
 				myConnectionAcceptor.accept(socketThread);
@@ -66,7 +60,10 @@ public class MSBuildServerThread extends Thread
 			}
 			catch(IOException e)
 			{
-				LOG.warn(e);
+				if(!myShutdown)
+				{
+					LOG.warn(e);
+				}
 			}
 		}
 	}

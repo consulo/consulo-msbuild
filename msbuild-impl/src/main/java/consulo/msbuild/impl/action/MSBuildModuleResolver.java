@@ -6,10 +6,10 @@ import consulo.module.Module;
 import consulo.module.ModuleManager;
 import consulo.module.content.NewFileModuleResolver;
 import consulo.module.extension.ModuleExtensionHelper;
+import consulo.msbuild.MSBuildImportUtil;
 import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.project.Project;
-import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
@@ -56,7 +56,7 @@ public class MSBuildModuleResolver implements NewFileModuleResolver {
                 continue;
             }
 
-            VirtualFile projectDirFile = LocalFileSystem.getInstance().findFileByPathIfCached(projectDir);
+            VirtualFile projectDirFile = MSBuildImportUtil.findFile(myProject, projectDir);
             if (projectDirFile == null) {
                 continue;
             }

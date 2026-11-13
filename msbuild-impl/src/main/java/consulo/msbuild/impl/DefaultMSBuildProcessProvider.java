@@ -22,6 +22,7 @@ import org.jdom.JDOMException;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
@@ -98,15 +99,15 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider {
 
     @Nonnull
     @Override
-    public GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull File targetFile, int port) {
+    public GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull Path targetFile, int port) {
         GeneralCommandLine c = new GeneralCommandLine();
-        c.setExePath(targetFile.getPath());
+        c.setExePath(targetFile.toString());
         c.addParameter(String.valueOf(port));
         c.addParameter("true"); // debug
 
         //c.withEnvironment("MSBUILD_EXE_NAME", "MSBuildTaskHost.exe");
         //c.withEnvironment("MSBUILDTASKHOST_EXE_NAME", "MSBuildTaskHost.exe");
-        c.withEnvironment("MSBUILD_EXE_PATH", targetFile.getAbsolutePath());
+        c.withEnvironment("MSBUILD_EXE_PATH", targetFile.toString());
 
         c.withEnvironment("MSBUILDTASKHOSTLOCATION", sdk.getHomePath());
         c.withEnvironment("MSBUILDTASKHOSTLOCATION64", sdk.getHomePath());
@@ -122,7 +123,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider {
     }
 
     @Override
-    public void doAdditionalCopy(@Nonnull File targetFile, @Nonnull File msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException {
+    public void doAdditionalCopy(@Nonnull File targetFile, @Nonnull Path msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException {
         File msBuildBinDir = new File(msBuildSdk.getHomePath(), "Bin");
 
         File configFile = new File(msBuildBinDir, "MSBuild.exe.config");
@@ -193,9 +194,9 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider {
             //				SetMSBuildConfigProperty(searchPaths, path.Property, path.Path, append:true, insertBefore:false);
             //			}
 
-            File targetConfigFile = new File(msBuildRunnerDir, targetFile.getName() + ".config");
+            Path targetConfigFile = msBuildRunnerDir.resolve(targetFile.getName() + ".config");
 
-            JDOMUtil.writeDocument(new Document(rootElement), targetConfigFile, "\n");
+            JDOMUtil.writeDocument(new Document(rootElement), targetConfigFile.toString(), "\n");
         }
     }
 
@@ -203,7 +204,7 @@ public class DefaultMSBuildProcessProvider implements MSBuildProcessProvider {
     public void fillGlobalProperties(@Nonnull Sdk msBuildSdk, @Nonnull Map<String, String> properties) {
         // When running the dev15 MSBuild from commandline or inside MSBuild, it sets "VSToolsPath" correctly. when running from MD, it falls back to a bad default. override it.
         if (Platform.current().os().isWindows()) {
-            File binDir = getBinDir(msBuildSdk);
+            File binDir = new File(msBuildSdk.getHomePath(), "Bin");
 
             String toolsVersion = "16.0";
             properties.put("VSToolsPath", Paths.get(binDir.getAbsolutePath(), "..", "..", "Microsoft", "VisualStudio", "v" + toolsVersion).toFile().getAbsolutePath());

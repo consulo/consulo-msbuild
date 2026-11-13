@@ -4,7 +4,10 @@ import consulo.content.base.ExcludedContentFolderTypeProvider;
 import consulo.logging.Logger;
 import consulo.module.content.layer.ContentEntry;
 import consulo.module.content.layer.ModifiableRootModel;
+import consulo.project.Project;
 import consulo.util.io.FileUtil;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.fileType.FileType;
 import consulo.virtualFileSystem.fileType.FileTypeRegistry;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
@@ -122,9 +125,35 @@ public final class MSBuildImportUtil {
         }
     }
 
+    /**
+     * A url of a path of any machine.
+     */
     @Nonnull
     public static String pathToUrl(@Nonnull Path path) {
-        return VirtualFileUtil.pathToUrl(FileUtil.toSystemIndependentName(path.toString()));
+        String url = VirtualFileManager.getInstance().getUrl(path);
+        return url != null ? url : VirtualFileUtil.pathToUrl(FileUtil.toSystemIndependentName(path.toString()));
+    }
+
+    /**
+     * A path the daemon reports - of the machine of the project.
+     */
+    @Nonnull
+    public static Path toPath(@Nonnull Project project, @Nonnull String path) {
+        VirtualFile baseDir = project.getBaseDir();
+        return baseDir != null ? toPath(baseDir, path) : Path.of(path);
+    }
+
+    @Nullable
+    public static VirtualFile findFile(@Nonnull Project project, @Nonnull String path) {
+        return VirtualFileManager.getInstance().findFileByNioPath(toPath(project, path));
+    }
+
+    /**
+     * A path the daemon reports - of the machine of the project file.
+     */
+    @Nonnull
+    public static Path toPath(@Nonnull VirtualFile projectFile, @Nonnull String path) {
+        return projectFile.toNioPath().getFileSystem().getPath(path);
     }
 
     private static boolean isStrictlyInside(Path dir, Collection<Path> baseDirs) {

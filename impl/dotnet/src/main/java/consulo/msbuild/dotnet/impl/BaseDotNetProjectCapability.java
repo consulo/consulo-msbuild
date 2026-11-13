@@ -20,19 +20,18 @@ import consulo.module.Module;
 import consulo.module.content.layer.ModifiableModuleRootLayer;
 import consulo.module.content.layer.ModifiableRootModel;
 import consulo.msbuild.MSBuildEvaluatedItem;
+import consulo.msbuild.MSBuildImportUtil;
 import consulo.msbuild.MSBuildProcessProvider;
 import consulo.msbuild.MSBuildProjectCapability;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
 import consulo.util.io.FileUtil;
-import consulo.virtualFileSystem.LocalFileSystem;
-import consulo.virtualFileSystem.StandardFileSystems;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
-import consulo.virtualFileSystem.archive.ArchiveFileSystem;
+import consulo.virtualFileSystem.archive.ArchiveVfsUtil;
 import jakarta.annotation.Nonnull;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -96,7 +95,7 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
             if ("ProjectReference".equals(referenceSourceTarget)) {
                 String msBuildSourceProjectFile = referencePath.getMetadata().get("MSBuildSourceProjectFile");
 
-                VirtualFile refProjectFile = LocalFileSystem.getInstance().findFileByPath(msBuildSourceProjectFile);
+                VirtualFile refProjectFile = VirtualFileManager.getInstance().findFileByNioPath(MSBuildImportUtil.toPath(projectFile, msBuildSourceProjectFile));
                 if (refProjectFile != null) {
                     MSBuildSolutionModuleExtension<?> solutionModuleExtension = MSBuildSolutionModuleExtension.getSolutionModuleExtension(module.getProject());
                     if (solutionModuleExtension != null) {
@@ -109,7 +108,11 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
                 }
             }
             else {
-                String archiveUrl = VirtualFileManager.constructUrl(DotNetModuleFileType.PROTOCOL, FileUtil.toSystemIndependentName(fullPath) + ArchiveFileSystem.ARCHIVE_SEPARATOR);
+                // the reference is of the machine of the project
+                String archiveUrl = ArchiveVfsUtil.getArchiveRootUrl(DotNetModuleFileType.PROTOCOL, MSBuildImportUtil.toPath(projectFile, fullPath));
+                if (archiveUrl == null) {
+                    continue;
+                }
 
                 Library library = modifiableLibraryModel.createLibrary(null);
 
@@ -139,8 +142,7 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
             case "GeneratedAssemblyInfoFile": //obj/Debug/net8.0/untitled4.AssemblyInfo.cs
             {
                 assert parent != null;
-                String generatedSourceFile = parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue);
-                String generatedSourceFileUrl = VirtualFileManager.constructUrl(StandardFileSystems.FILE_PROTOCOL, FileUtil.toSystemIndependentName(generatedSourceFile));
+                String generatedSourceFileUrl = MSBuildImportUtil.pathToUrl(parent.toNioPath().resolve(FileUtil.toSystemIndependentName(propertyValue)));
 
                 rootLayer.addContentEntry(generatedSourceFileUrl).addFolder(generatedSourceFileUrl, ProductionContentFolderTypeProvider.getInstance());
                 break;
@@ -167,16 +169,12 @@ public abstract class BaseDotNetProjectCapability implements MSBuildProjectCapab
                 moduleExtension.setFileName(propertyValue + "." + DotNetModuleExtension.OUTPUT_FILE_EXT);
                 break;
             case "OutputPath": {
-                String path = null;
-                if (new File(propertyValue).isAbsolute()) {
-                    moduleExtension.setOutputDir(path = propertyValue);
-                }
-                else {
-                    assert parent != null;
-                    moduleExtension.setOutputDir(path = (parent.getPath() + File.separator + FileUtil.toSystemDependentName(propertyValue)));
-                }
+                // a path of the machine of the project
+                assert parent != null;
+                Path outputDir = parent.toNioPath().resolve(FileUtil.toSystemIndependentName(propertyValue));
+                moduleExtension.setOutputDir(outputDir.toString());
 
-                String url = VirtualFileManager.constructUrl(StandardFileSystems.FILE_PROTOCOL, FileUtil.toSystemIndependentName(path));
+                String url = MSBuildImportUtil.pathToUrl(outputDir);
 
                 rootLayer.addContentEntry(url).addFolder(url, ExcludedContentFolderTypeProvider.getInstance());
 

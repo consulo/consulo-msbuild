@@ -33,6 +33,8 @@ import consulo.msbuild.daemon.impl.network.MSBuildSocketThread;
 import consulo.msbuild.daemon.impl.step.*;
 import consulo.msbuild.module.extension.MSBuildSolutionModuleExtension;
 import consulo.msbuild.solution.model.WProject;
+import consulo.platform.Platform;
+import consulo.platform.PlatformServerSocket;
 import consulo.process.ProcessHandler;
 import consulo.process.ProcessHandlerBuilder;
 import consulo.process.cmd.GeneralCommandLine;
@@ -41,11 +43,10 @@ import consulo.process.event.ProcessListener;
 import consulo.project.Project;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.dataholder.Key;
-import consulo.util.io.FilePermissionCopier;
 import consulo.util.io.FileUtil;
-import consulo.util.io.NetUtil;
 import consulo.util.lang.function.ThrowableSupplier;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -54,11 +55,14 @@ import jakarta.inject.Singleton;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 /**
  * Contains some code parts from MonoDeveloper (MIT)
@@ -84,6 +88,15 @@ public class MSBuildDaemonService implements Disposable {
     private int myPort = -1;
 
     private MSBuildServerThread myServerThread;
+
+    @Nullable
+    private ProcessHandler myProcessHandler;
+
+    /**
+     * The directory of the daemon on another machine - a new one per start.
+     */
+    @Nullable
+    private Path myRemoteRunnerDir;
 
     private AsyncResult<MSBuildSocketThread> mySocketResult = AsyncResult.undefined();
 
@@ -252,7 +265,7 @@ public class MSBuildDaemonService implements Disposable {
             if (myConnection == null) {
                 indicator.setText2("Preparing daemon process...");
 
-                initializeServer();
+                initializeServer(msBuildSdk.getPlatform());
 
                 indicator.setText2("Starting daemon process...");
 
@@ -266,9 +279,13 @@ public class MSBuildDaemonService implements Disposable {
                 socketThread.waitForConnect();
 
                 InitializeRequest message = new InitializeRequest();
-                message.IdeProcessId = (int) ProcessHandle.current().pid();
+                // the daemon lives while the process is there - on another machine it is the daemon itself, the agent ends it
+                ProcessHandler processHandler = myProcessHandler;
+                message.IdeProcessId = isLocal(msBuildSdk) || processHandler == null
+                    ? (int) ProcessHandle.current().pid()
+                    : (int) processHandler.getId();
                 message.CultureName = buildProcessProvider.getLocaleForProcess();
-                message.BinDir = buildProcessProvider.getBinDir(msBuildSdk).getAbsolutePath();
+                message.BinDir = buildProcessProvider.getBinDir(msBuildSdk).toString();
 
                 fillGlobalProperties(message.GlobalProperties, message.BinDir, msBuildSdk, buildProcessProvider);
 
@@ -442,16 +459,28 @@ public class MSBuildDaemonService implements Disposable {
 
     @Nonnull
     private static String getItemUrl(@Nonnull VirtualFile projectDir, @Nonnull MSBuildEvaluatedItem item) {
+        // the paths are of the machine of the project
         String fullPath = item.getMetadata().get("FullPath");
         if (fullPath != null && !fullPath.isEmpty()) {
-            return VirtualFileUtil.pathToUrl(FileUtil.toSystemIndependentName(fullPath));
+            return toUrl(projectDir, fullPath);
         }
 
         String itemSpec = FileUtil.toSystemIndependentName(item.getItemSpec());
         if (FileUtil.isAbsolutePlatformIndependent(itemSpec)) {
-            return VirtualFileUtil.pathToUrl(itemSpec);
+            return toUrl(projectDir, itemSpec);
         }
         return projectDir.getUrl() + "/" + itemSpec;
+    }
+
+    @Nonnull
+    private static String toUrl(@Nonnull VirtualFile projectDir, @Nonnull String path) {
+        Path nioPath = projectDir.toNioPath().getFileSystem().getPath(path);
+        String url = VirtualFileManager.getInstance().getUrl(nioPath);
+        return url != null ? url : VirtualFileUtil.pathToUrl(FileUtil.toSystemIndependentName(path));
+    }
+
+    private static boolean isLocal(@Nonnull Sdk sdk) {
+        return sdk.getHomeNioPath().getFileSystem() == FileSystems.getDefault();
     }
 
     @Nonnull
@@ -465,37 +494,46 @@ public class MSBuildDaemonService implements Disposable {
         throw new IllegalArgumentException("MSBuild provider not found");
     }
 
-    private static File prepareMSBuildBuider(@Nonnull Sdk sdk, @Nonnull MSBuildProcessProvider buildProcessProvider) throws IOException {
-        VirtualFile homeDirectory = sdk.getHomeDirectory();
-
-        int urlHashCode = Math.abs(homeDirectory.getPresentableUrl().hashCode());
-
-        File msBuildRunnerDir = new File(ContainerPathManager.get().getSystemPath(), "MSBuild/msbuild-" + urlHashCode);
-
-        int ver = -1;
-        File versionFile = new File(msBuildRunnerDir, "version.txt");
-        if (versionFile.exists()) {
-            ver = Integer.parseInt(Files.readString(versionFile.toPath()));
-        }
-
+    /**
+     * The daemon on the machine of the bundle - kept in the system directory here, a new directory on another machine.
+     */
+    private Path prepareMSBuildBuider(@Nonnull Sdk sdk, @Nonnull MSBuildProcessProvider buildProcessProvider) throws IOException {
         int requiredVersion = VERSION + buildProcessProvider.getVersion();
-
-        if (ver != requiredVersion) {
-            FileUtil.delete(msBuildRunnerDir);
-        }
 
         File originalExeFile = buildProcessProvider.getTargetFile();
 
-        String fileName = originalExeFile.getName();
+        Path msBuildRunnerDir;
+        if (isLocal(sdk)) {
+            int urlHashCode = Math.abs(sdk.getHomeNioPath().toString().hashCode());
 
-        File msBuildFile = new File(msBuildRunnerDir, fileName);
-        if (msBuildFile.exists()) {
-            return msBuildFile;
+            msBuildRunnerDir = ContainerPathManager.get().getSystemDir().resolve("MSBuild").resolve("msbuild-" + urlHashCode);
+
+            int ver = -1;
+            Path versionFile = msBuildRunnerDir.resolve("version.txt");
+            if (Files.exists(versionFile)) {
+                ver = Integer.parseInt(Files.readString(versionFile));
+            }
+
+            if (ver != requiredVersion) {
+                FileUtil.delete(msBuildRunnerDir);
+            }
+
+            Path msBuildFile = msBuildRunnerDir.resolve(originalExeFile.getName());
+            if (Files.exists(msBuildFile)) {
+                return msBuildFile;
+            }
+
+            Files.createDirectories(msBuildRunnerDir);
+        }
+        else {
+            deleteRemoteRunnerDir();
+
+            msBuildRunnerDir = sdk.getPlatform().fs().createTempDirectory("consulo-msbuild");
+            myRemoteRunnerDir = msBuildRunnerDir;
         }
 
-        FileUtil.createParentDirs(msBuildRunnerDir);
-
-        FileUtil.copy(originalExeFile, msBuildFile, FilePermissionCopier.BY_NIO2);
+        Path msBuildFile = msBuildRunnerDir.resolve(originalExeFile.getName());
+        Files.copy(originalExeFile.toPath(), msBuildFile);
 
         File parentDir = originalExeFile.getParentFile();
 
@@ -503,16 +541,33 @@ public class MSBuildDaemonService implements Disposable {
         for (String additionalPath : additionalPaths) {
             File attachFile = new File(parentDir, FileUtil.getNameWithoutExtension(originalExeFile) + additionalPath);
             if (attachFile.exists()) {
-                File targetPdb = new File(msBuildRunnerDir, attachFile.getName());
-                FileUtil.copy(attachFile, targetPdb, FilePermissionCopier.BY_NIO2);
+                Files.copy(attachFile.toPath(), msBuildRunnerDir.resolve(attachFile.getName()));
             }
         }
 
         buildProcessProvider.doAdditionalCopy(originalExeFile, msBuildRunnerDir, sdk);
 
-        FileUtil.writeToFile(versionFile, String.valueOf(requiredVersion));
+        Files.writeString(msBuildRunnerDir.resolve("version.txt"), String.valueOf(requiredVersion));
 
         return msBuildFile;
+    }
+
+    private void deleteRemoteRunnerDir() {
+        Path runnerDir = myRemoteRunnerDir;
+        myRemoteRunnerDir = null;
+        if (runnerDir == null) {
+            return;
+        }
+
+        try (Stream<Path> children = Files.list(runnerDir)) {
+            for (Path child : children.toList()) {
+                Files.deleteIfExists(child);
+            }
+            Files.deleteIfExists(runnerDir);
+        }
+        catch (IOException e) {
+            LOG.debug(e);
+        }
     }
 
     private void fillGlobalProperties(
@@ -549,11 +604,12 @@ public class MSBuildDaemonService implements Disposable {
     }
 
     private void startServer(@Nonnull Sdk msBuildSdk, @Nonnull MSBuildProcessProvider provider) throws Exception {
-        File exeFile = prepareMSBuildBuider(msBuildSdk, provider);
+        Path exeFile = prepareMSBuildBuider(msBuildSdk, provider);
 
         GeneralCommandLine commandLine = provider.buildCommandLine(msBuildSdk, exeFile, myPort);
 
         ProcessHandler handler = ProcessHandlerBuilder.create(commandLine).silentReader().build();
+        myProcessHandler = handler;
         handler.addProcessListener(new ProcessListener() {
             @Override
             public void processTerminated(ProcessEvent processEvent) {
@@ -572,10 +628,18 @@ public class MSBuildDaemonService implements Disposable {
         handler.startNotify();
     }
 
-    private void initializeServer() throws Exception {
-        myPort = NetUtil.findAvailableSocketPort();
+    /**
+     * The daemon connects to a port of its own machine.
+     */
+    private void initializeServer(@Nonnull Platform platform) throws Exception {
+        if (myServerThread != null) {
+            myServerThread.shutdown();
+        }
 
-        myServerThread = new MSBuildServerThread(this, myPort, it -> mySocketResult.setDone(it));
+        PlatformServerSocket serverSocket = platform.net().bind("127.0.0.1", 0);
+        myPort = serverSocket.getPort();
+
+        myServerThread = new MSBuildServerThread(this, serverSocket, it -> mySocketResult.setDone(it));
     }
 
     @Nullable
@@ -602,5 +666,13 @@ public class MSBuildDaemonService implements Disposable {
         if (myServerThread != null) {
             myServerThread.shutdown();
         }
+
+        // a daemon of another machine does not see the IDE process go
+        ProcessHandler processHandler = myProcessHandler;
+        if (processHandler != null && myRemoteRunnerDir != null) {
+            processHandler.destroyProcess();
+        }
+
+        deleteRemoteRunnerDir();
     }
 }

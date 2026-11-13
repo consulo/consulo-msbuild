@@ -8,12 +8,14 @@ import consulo.internal.dotnet.asm.mbel.AssemblyInfo;
 import consulo.localize.LocalizeValue;
 import consulo.mono.dotnet.icon.MonoDotNetIconGroup;
 import consulo.mono.dotnet.sdk.MonoSdkType;
+import consulo.platform.Platform;
 import consulo.ui.image.Image;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -44,7 +46,8 @@ public class MonoMSBuildBundleType extends SdkType {
     @Nonnull
     @Override
     public Collection<String> suggestHomePaths() {
-        Collection<String> paths = MonoSdkType.getInstance().suggestHomePaths();
+        Collection<String> paths = new ArrayList<>();
+        MonoSdkType.getInstance().collectHomePaths(Platform.current(), path -> paths.add(path.toString()));
 
         Set<String> msBuildPath = new LinkedHashSet<>();
         for (String monoPath : paths) {
@@ -86,7 +89,7 @@ public class MonoMSBuildBundleType extends SdkType {
     @Nullable
     @Override
     public String getVersionString(String sdkHome) {
-        AssemblyInfo assemblyInfo = AssemblyInfoCacheService.getInstance().getAssemblyInfo(getMSBuildDll(sdkHome));
+        AssemblyInfo assemblyInfo = AssemblyInfoCacheService.getInstance().getAssemblyInfo(getMSBuildDll(sdkHome).toPath());
         if (assemblyInfo == null) {
             return null;
         }

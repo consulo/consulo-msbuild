@@ -10,6 +10,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -38,12 +39,18 @@ public interface MSBuildProcessProvider
 	}
 
 	@Nonnull
-	GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull File exeFile, int port) throws IOException;
+	/**
+	 * @param exeFile the daemon on the machine of the bundle
+	 */
+	GeneralCommandLine buildCommandLine(@Nonnull Sdk sdk, @Nonnull Path exeFile, int port) throws IOException;
 
 	@Nonnull
 	File getTargetFile();
 
-	default void doAdditionalCopy(@Nonnull File targetFile, @Nonnull File msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException
+	/**
+	 * @param msBuildRunnerDir the directory of the daemon on the machine of the bundle
+	 */
+	default void doAdditionalCopy(@Nonnull File targetFile, @Nonnull Path msBuildRunnerDir, @Nonnull Sdk msBuildSdk) throws IOException
 	{
 	}
 
@@ -56,9 +63,9 @@ public interface MSBuildProcessProvider
 	{
 	}
 
-	default File getBinDir(@Nonnull Sdk sdk)
+	default Path getBinDir(@Nonnull Sdk sdk)
 	{
-		return new File(sdk.getHomePath(), "Bin");
+		return sdk.getHomeNioPath().resolve("Bin");
 	}
 
 	int getVersion();

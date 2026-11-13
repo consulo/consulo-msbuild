@@ -7,13 +7,13 @@ import consulo.msbuild.daemon.impl.message.BinaryMessage;
 import consulo.msbuild.daemon.impl.message.DaemonConnection;
 import consulo.msbuild.daemon.impl.message.DaemonMessage;
 import consulo.msbuild.daemon.impl.message.model.LogMessage;
+import consulo.platform.PlatformSocket;
 import consulo.util.concurrent.AsyncResult;
 import consulo.util.lang.Pair;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Objects;
@@ -27,7 +27,6 @@ public class MSBuildSocketThread extends Thread
 {
 	private static final Logger LOG = Logger.getInstance(MSBuildSocketThread.class);
 
-	private final Socket mySocket;
 	private final MSBuildDaemonService myDaemonService;
 
 	private final InputStream myInputStream;
@@ -38,10 +37,9 @@ public class MSBuildSocketThread extends Thread
 	private boolean myConnectAccepted;
 	private Thread myParkThread;
 
-	public MSBuildSocketThread(Socket socket, MSBuildDaemonService daemonService) throws IOException
+	public MSBuildSocketThread(PlatformSocket socket, MSBuildDaemonService daemonService) throws IOException
 	{
-		super("MSBuildClientReader: " + socket);
-		mySocket = socket;
+		super("MSBuildClientReader");
 		myDaemonService = daemonService;
 		myInputStream = socket.getInputStream();
 		myOutputStream = socket.getOutputStream();
@@ -55,7 +53,7 @@ public class MSBuildSocketThread extends Thread
 	@Override
 	public void run()
 	{
-		while(mySocket.isConnected())
+		while(true)
 		{
 			try
 			{

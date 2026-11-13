@@ -28,10 +28,12 @@ import consulo.virtualFileSystem.fileType.FileTypeRegistry;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * Imports one solution format. Each format has own provider, so if directory contains both formats - user will choose import target
@@ -66,26 +68,25 @@ public abstract class SolutionModuleImportProvider implements ModuleImportProvid
 
     @Override
     public boolean canImport(@Nonnull Path path) {
-        File fileOrDirectory = path.toFile();
-        if (fileOrDirectory.isDirectory()) {
+        if (Files.isDirectory(path)) {
             // special case. We don't provide importing Unity project via solution file
-            if (new File(fileOrDirectory, "ProjectSettings/ProjectSettings.asset").exists()) {
+            if (Files.exists(path.resolve("ProjectSettings/ProjectSettings.asset"))) {
                 return false;
             }
 
-            return findSingleSolutionFile(fileOrDirectory) != null;
+            return findSingleSolutionFile(path) != null;
         }
         else {
-            return isOwnSolutionFile(fileOrDirectory);
+            return isOwnSolutionFile(path);
         }
     }
 
     @Override
     public String getPathToBeImported(@Nonnull Path file) {
         if (Files.isDirectory(file)) {
-            File solutionFile = findSingleSolutionFile(file.toFile());
+            Path solutionFile = findSingleSolutionFile(file);
             if (solutionFile != null) {
-                return solutionFile.getPath();
+                return solutionFile.toString();
             }
         }
         return file.toString();
@@ -95,39 +96,46 @@ public abstract class SolutionModuleImportProvider implements ModuleImportProvid
      * @return solution file of this provider format, null if there no files, or more than one
      */
     @Nullable
-    private File findSingleSolutionFile(File directory) {
-        File firstSolution = null;
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (!file.isDirectory() && isOwnSolutionFile(file)) {
-                    // already found - return null
-                    if (firstSolution != null) {
-                        return null;
-                    }
-
-                    firstSolution = file;
+    private Path findSingleSolutionFile(Path directory) {
+        Path firstSolution = null;
+        for (Path file : listFiles(directory)) {
+            if (isOwnSolutionFile(file)) {
+                // already found - return null
+                if (firstSolution != null) {
+                    return null;
                 }
+
+                firstSolution = file;
             }
         }
         return firstSolution;
     }
 
-    private boolean isOwnSolutionFile(File file) {
-        return FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE
-            && getSolutionExtension().equalsIgnoreCase(FileUtil.getExtension(file.getName()));
+    private boolean isOwnSolutionFile(Path file) {
+        String name = file.getFileName().toString();
+        return FileTypeRegistry.getInstance().getFileTypeByFileName(name) == VisualStudioSolutionFileType.INSTANCE
+            && getSolutionExtension().equalsIgnoreCase(FileUtil.getExtension(name));
     }
 
-    public static boolean hasSolutionFile(File directory) {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (!file.isDirectory() && FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()) == VisualStudioSolutionFileType.INSTANCE) {
-                    return true;
-                }
+    public static boolean hasSolutionFile(Path directory) {
+        for (Path file : listFiles(directory)) {
+            if (FileTypeRegistry.getInstance().getFileTypeByFileName(file.getFileName().toString()) == VisualStudioSolutionFileType.INSTANCE) {
+                return true;
             }
         }
         return false;
+    }
+
+    /**
+     * The files of a directory of any machine.
+     */
+    static List<Path> listFiles(Path directory) {
+        try (Stream<Path> children = Files.list(directory)) {
+            return children.filter(Files::isRegularFile).toList();
+        }
+        catch (IOException e) {
+            return List.of();
+        }
     }
 
     @Override

@@ -19,14 +19,15 @@ package consulo.msbuild.impl.solution;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.logging.Logger;
 import consulo.msbuild.MSBuildEvaluatedItem;
+import consulo.msbuild.MSBuildImportUtil;
 import consulo.msbuild.MSBuildWorkspaceData;
 import consulo.msbuild.solution.model.WProject;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.io.FileUtil;
 import consulo.util.lang.StringUtil;
-import consulo.virtualFileSystem.LocalFileSystem;
 import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.VirtualFileManager;
 
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
@@ -77,8 +78,9 @@ public class SolutionVirtualBuilder
 			VirtualFile file;
 			if(FileUtil.isAbsolutePlatformIndependent(independentPath))
 			{
-				file = LocalFileSystem.getInstance().findFileByPath(independentPath);
-				String relativePath = FileUtil.getRelativePath(baseDir.getPath(), independentPath, '/');
+				// a path of the machine of the project
+				file = VirtualFileManager.getInstance().findFileByNioPath(MSBuildImportUtil.toPath(baseDir, pathName));
+				String relativePath = FileUtil.getRelativePath(FileUtil.toSystemIndependentName(baseDir.toNioPath().toString()), independentPath, '/');
 				if(relativePath != null && !relativePath.startsWith(".."))
 				{
 					presentationPath = relativePath.replace('/', '\\');
