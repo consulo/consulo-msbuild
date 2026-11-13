@@ -347,7 +347,7 @@ public class MSBuildDaemonService implements Disposable {
 
                     Module moduleByName = moduleModel.findModuleByName(wProject.getName());
                     if (moduleByName == null) {
-                        moduleByName = moduleModel.newModule(wProject.getName(), null);
+                        moduleByName = moduleModel.newModule(wProject.getName(), (String) null);
                     }
 
                     final Module finalModuleByName = moduleByName;
